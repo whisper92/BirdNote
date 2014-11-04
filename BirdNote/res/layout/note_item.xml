@@ -10,14 +10,14 @@
         android:contentDescription="@string/app_name"
         android:id="@+id/id_note_item_thumb_iv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="4"
         android:src="@color/color_show_item" />
 
     <TextView
         android:id="@+id/id_note_item_title_tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@drawable/mark_bg_blue"
         android:gravity="center"

@@ -1,8 +1,23 @@
 package com.bird.dao;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.content.Context;
+import com.bird.utils.*;
+import android.content.*;
 
 public class DbHelper {
+	private Context mContext;
+	private Db mDb;
+	private SQLiteDatabase dbWrite;
+	private SQLiteDatabase dbRead;
+	
+	public DbHelper(Context context){
+		this.mContext=context;
+		mDb=new Db(context);
+		dbRead=mDb.getReadableDatabase();
+		dbWrite=mDb.getWritableDatabase();
+	}
+	
 
 	public void createChildNoteTable(SQLiteDatabase db, int fatherId) {
 		/*
@@ -27,4 +42,11 @@ public class DbHelper {
 				+ "_id integer primary key autoincrement,fatherId integer default "+fatherId+",childId integer default "+childId+"," + "quadrant integer default "+quadrant+",integer x default 0,integer y default 0,textcontent text)";
 		db.execSQL(SQL_CREATE_CHILD_NOTES);
 	}
+	
+	public void createNewNote(ContentValues values){
+		
+		dbWrite.insert(BirdDatabaseConstant.TABLE_NOTES_ID,null,values);
+		dbWrite.close();
+	}
+
 }

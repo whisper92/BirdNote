@@ -4,6 +4,9 @@ import java.io.ByteArrayOutputStream;
 
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.content.Context;
+import android.graphics.drawable.*;
+import android.graphics.*;
 /**
  * 关于Bitmap的工具类
  * @author wangxianpeng
@@ -20,6 +23,12 @@ public class BitmapUtil {
 		}
 
 		return baos.toByteArray();
+	}
+	
+	public static Bitmap drawableToBitmap(Context context,int drawableid){
+	
+	Bitmap bitmap=BitmapFactory.decodeResource(context.getResources(),drawableid);
+      return bitmap;
 	}
 
 }

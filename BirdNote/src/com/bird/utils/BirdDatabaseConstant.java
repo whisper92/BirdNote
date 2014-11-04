@@ -32,7 +32,7 @@ public class BirdDatabaseConstant {
 			"_id integer primary key autoincrement," +
 			"level integer default 0," +
 			"title text default \"note\"," +
-			"childcouont integer default 0," +
+			"textlines integer default 0," +
 			"content blob," +
 			"thumbnail blob)";
 	
