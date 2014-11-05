@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/edit_note_header" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/note_bg" >
+
+        <com.bird.note.ui.PenView
+            android:id="@+id/id_edit_main_pv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </com.bird.note.ui.PenView>
+
+        <com.bird.note.ui.FullScreenEditText
+            android:id="@+id/id_edit_main_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:lineSpacingExtra="5dp"
+            android:maxLines="22"
+            android:singleLine="false"
+            android:textScaleX="1.5" />
+    </FrameLayout>
+
+</LinearLayout>
