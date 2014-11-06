@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.bird.note.R;
 import com.bird.note.model.PenDrawPath;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
@@ -14,6 +15,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
@@ -99,6 +101,8 @@ public class PenView extends View {
 	}
 
 	public void init() {
+		setBackgroundResource(R.drawable.ic_launcher);
+		
 		mDrawPaint = new Paint();
 		mCleanPaint = new Paint();
 		mPath = new Path();
@@ -111,10 +115,12 @@ public class PenView extends View {
 				CommonUtils.getScreenHeight(mContext), Bitmap.Config.ARGB_8888);
 		mCleanBitmap.eraseColor(Color.TRANSPARENT);
 
-		mDrawCanvas = new Canvas(mDrawBitmap);
-		mCleanCanvas = new Canvas(mCleanBitmap);
+		mDrawCanvas = new Canvas();
+		mCleanCanvas = new Canvas();
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		mCleanCanvas.setBitmap(mCleanBitmap);
+		
+		mCleanCanvas.drawBitmap(BitmapUtil.drawableToBitmap(getResources().getDrawable(R.drawable.mark_bg_blue)), 0, 0,null);
 
 		mSavePaths = new ArrayList<PenDrawPath>();
 		mSaveRedoPaths = new ArrayList<PenDrawPath>();
@@ -122,14 +128,9 @@ public class PenView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+		canvas.drawBitmap(mCleanBitmap,0,0,null);
 		if (mPath != null) {
-			canvas.drawPath(mPath, mCurPaint);
-		}
-
-		if (mIsCleanMode) {
-			canvas.drawBitmap(drawClean(mCleanBitmap), 0, 0, null);
-		} else {
-			canvas.drawBitmap(drawPen(mDrawBitmap), 0, 0, null);
+			mDrawCanvas.drawPath(mPath, mCurPaint);
 		}
 		super.onDraw(canvas);
 	}
@@ -137,25 +138,23 @@ public class PenView extends View {
 	/*
 	 * 擦除模式的绘制方法
 	 */
-	public Bitmap drawClean(Bitmap origBitmap) {
-		if (mSavePaths != null) {
-			for (PenDrawPath drawPath : mSavePaths) {
-				mCleanCanvas.drawPath(drawPath.path, drawPath.paint);
-			}
-		}
-		return origBitmap;
-	}
-
-	/*
-	 * 绘图模式的绘制方法
-	 */
-	public Bitmap drawPen(Bitmap origBitmap) {
+	public void drawClean() {
 		if (mSavePaths != null) {
 			for (PenDrawPath drawPath : mSavePaths) {
 				mDrawCanvas.drawPath(drawPath.path, drawPath.paint);
 			}
 		}
-		return origBitmap;
+	}
+
+	/*
+	 * 绘图模式的绘制方法
+	 */
+	public void drawPen() {
+		if (mSavePaths != null) {
+			for (PenDrawPath drawPath : mSavePaths) {
+				mDrawCanvas.drawPath(drawPath.path, drawPath.paint);
+			}
+		}
 	}
 
 	@Override
@@ -166,36 +165,50 @@ public class PenView extends View {
 		float y = event.getY();
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
-			mPath = new Path();
-			mDrawPath = new PenDrawPath();
-			mDrawPath.paint = new Paint(mCurPaint);
-			mDrawPath.path = mPath;
-
-			posX = x;
-			posY = y;
-			mPath.moveTo(x, y);
+			touch_start(x, y);
 			postInvalidate();
 			break;
 
 		case MotionEvent.ACTION_MOVE:
-			float dx = Math.abs(x - posX);
-			float dy = Math.abs(y - posY);
-			if (dx >= TOUCH_TOLERANCE || dy > TOUCH_TOLERANCE) {
-				mPath.quadTo(posX, posY, (x + posX) / 2, (y + posY) / 2);
-				posX = x;
-				posY = y;
-			}
+			touch_move(x, y);
 			postInvalidate();
 			break;
 		case MotionEvent.ACTION_UP:
-			mPath.lineTo(posX, posY);
+			touch_up();
 			mSavePaths.add(mDrawPath);
-			mPath = null;
 			postInvalidate();
 			break;
 
 		}
 		return true;
+	}
+
+	private void touch_start(float x, float y) {
+		mPath.reset();
+		mPath.moveTo(x, y);
+		mDrawPath = new PenDrawPath();
+		mDrawPath.paint = new Paint(mCurPaint);
+		mDrawPath.path = mPath;
+		posX = x;
+		posY = y;
+	}
+
+	private void touch_move(float x, float y) {
+		float dx = Math.abs(x - posX);
+		float dy = Math.abs(y - posY);
+		if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+			mPath.quadTo(posX, posY, (x + posX) / 2, (y + posY) / 2);
+			posX = x;
+			posY = y;
+		}
+	}
+
+	private void touch_up() {
+		mPath.lineTo(posX, posY);
+		// commit the path to our offscreen
+		mCleanCanvas.drawPath(mPath, mCleanPaint);
+		// kill this so we don't double draw
+		mPath.reset();
 	}
 
 	/**
@@ -264,15 +277,21 @@ public class PenView extends View {
 
 	public void setCleanPaint() {
 		mIsCleanMode = true;
-		mCleanPaint.setAlpha(0);
-		mCleanPaint.setColor(Color.BLACK);
-		mCleanPaint.setXfermode(new PorterDuffXfermode(Mode.DST_IN)); // 设置画笔的痕迹是透明的，从而可以看到背景图片
+
+		mCleanPaint.setColor(Color.BLUE);
 		mCleanPaint.setAntiAlias(true);
 		mCleanPaint.setDither(true);
 		mCleanPaint.setStyle(Paint.Style.STROKE);
 		mCleanPaint.setStrokeJoin(Paint.Join.ROUND);
 		mCleanPaint.setStrokeCap(Paint.Cap.ROUND);
-		mCleanPaint.setStrokeWidth(5);
+		mCleanPaint.setStrokeWidth(50);
+		
+		mCleanPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+		mCleanPaint.setAlpha(0);
+		// 设置画笔的痕迹是透明的，从而可以看到背景图片
+
+
+
 		mCurPaint = new Paint(mCleanPaint);
 	}
 
