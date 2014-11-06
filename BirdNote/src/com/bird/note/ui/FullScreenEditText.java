@@ -1,5 +1,7 @@
 package com.bird.note.ui;
 
+import com.bird.note.R;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -13,68 +15,60 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * 编辑文字对应的View
+ * 全屏编辑文字对应的View
  */
 public class FullScreenEditText extends EditText {
 
-	float posX;
-	float posY;
+	private float posX;
+	private float posY;
 
-	Paint mPaint;
-	boolean actionDown = false;
+	private Paint mPaint;
+	private boolean actionDown = false;
+	private int mLines;
+	private int mLength;
 
 	public FullScreenEditText(Context context) {
-		this(context, null);
+		super(context);
+		init(context);
 	}
 
 	public FullScreenEditText(Context context, AttributeSet attrs) {
-		this(context, null, 0);
-
+		super(context, attrs);
+		init(context);
 	}
 
 	public FullScreenEditText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init();
+		init(context);
 	}
 
-	public void init() {
-		mPaint = getPaint();
-	}
-
-	@Override
-	public void addTextChangedListener(TextWatcher watcher) {
-		// TODO Auto-generated method stub
-		super.addTextChangedListener(watcher);
-	}
-
-	@Override
-	public void append(CharSequence text, int start, int end) {
-		// TODO Auto-generated method stub
-		super.append(text, start, end);
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-/*		int action = event.getAction();
-		switch (action) {
-		case MotionEvent.ACTION_DOWN:
-			posX = event.getX();
-			posY = event.getY();
-			actionDown=true;
-			postInvalidate();
-			break ;
-		}*/
-		return super.onTouchEvent(event);
-	}
-/*	
-	@Override
-	protected void dispatchDraw(Canvas canvas) {
-		super.dispatchDraw(canvas);
-		if (actionDown) {
-			canvas.drawText("hello", posX, posY, mPaint);
-			actionDown=false;
+	public String getSpaceString(int length) {
+		String sumLine = "";
+		for (int i = 0; i < length; i++) {
+			sumLine += " ";
 		}
-	}*/
+		return sumLine;
+	}
 
+	public void init(Context context) {
+		mPaint = getPaint();
+		mLines = Integer.valueOf(context.getResources().getString(
+				R.string.fullscreen_edit_line));
+		mLength = Integer.valueOf(context.getResources().getString(
+				R.string.fullscreen_edit_line_lenth));
+		String sum = getSpaceString(mLength) + "\n ";
+		for (int j = 1; j < mLines; j++) {
+			sum = sum + getSpaceString(mLength) + "\n ";
+		}
+		setText(sum);
+	}
 
+	@Override
+	protected void onTextChanged(CharSequence text, int start,
+			int lengthBefore, int lengthAfter) {
+		Log.d("wxp", "  |  start" + start + "  |  " + "lengthBefore" + lengthBefore
+				+ "  |  lengthAfter" + lengthAfter);
+	
+		super.onTextChanged(text, start, lengthBefore, lengthAfter);
+	}
 }

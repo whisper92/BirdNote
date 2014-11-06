@@ -3,4 +3,8 @@
 
     <string name="app_name">BirdNote</string>
 
-</resources>
+    <!-- 插入的行数 -->
+    <string name="fullscreen_edit_line">23</string>
+    <!-- 每行的空格数 -->
+    <string name="fullscreen_edit_line_lenth">50</string>
+</resources>

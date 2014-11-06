@@ -109,10 +109,10 @@ public final class R {
         public static final int tool_slide=0x7f02004b;
     }
     public static final class id {
-        public static final int id_edit_header_rl=0x7f080000;
         public static final int id_edit_main_et=0x7f080009;
-        public static final int id_edit_main_pv=0x7f080008;
+        public static final int id_edit_main_fl=0x7f080008;
         public static final int id_edit_title_clean=0x7f080003;
+        public static final int id_edit_title_header_rl=0x7f080000;
         public static final int id_edit_title_more=0x7f080006;
         public static final int id_edit_title_next=0x7f080005;
         public static final int id_edit_title_pen=0x7f080001;
@@ -138,5 +138,11 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f070000;
+        /**  插入的行数 
+         */
+        public static final int fullscreen_edit_line=0x7f070001;
+        /**  每行的空格数 
+         */
+        public static final int fullscreen_edit_line_lenth=0x7f070002;
     }
 }

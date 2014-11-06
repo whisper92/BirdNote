@@ -40,45 +40,54 @@ public class TestGridViewActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.show_notes);
 		Db db = new Db(this);
-		SQLiteDatabase dbRead = db.getReadableDatabase();	
-		
-		ArrayList<BirdNote> listData=new ArrayList<BirdNote>();	
+		SQLiteDatabase dbRead = db.getReadableDatabase();
+
+		ArrayList<BirdNote> listData = new ArrayList<BirdNote>();
 		for (int i = 0; i < 40; i++) {
-		
-            BirdNote birdNote=new BirdNote();
-            birdNote._id=i;
-            birdNote.level=i;
-            birdNote.title=i+"--->";
-            if (i%4==1) {
-                birdNote.byteArrayNoteThumbnail=BitmapUtil.bitmapToBytes(BitmapUtil.drawableToBitmap(getResources().getDrawable(R.drawable.ic_launcher)));
+
+			BirdNote birdNote = new BirdNote();
+			birdNote._id = i;
+			birdNote.level = i;
+			birdNote.title = i + "--->";
+			if (i % 4 == 1) {
+				birdNote.byteArrayNoteThumbnail = BitmapUtil
+						.bitmapToBytes(BitmapUtil
+								.drawableToBitmap(getResources().getDrawable(
+										R.drawable.ic_launcher)));
 			} else {
-                birdNote.byteArrayNoteThumbnail=BitmapUtil.bitmapToBytes(BitmapUtil.drawableToBitmap(getResources().getDrawable(R.drawable.show_title_add_text)));
+				birdNote.byteArrayNoteThumbnail = BitmapUtil
+						.bitmapToBytes(BitmapUtil
+								.drawableToBitmap(getResources().getDrawable(
+										R.drawable.show_title_add_text)));
 
 			}
-            listData.add(birdNote);
+			listData.add(birdNote);
 		}
 
 		GridView gridView = (GridView) findViewById(R.id.id_show_gv);
-		ShowNoteAdapter noteAdapter = new ShowNoteAdapter(this, listData,gridView);
+		ShowNoteAdapter noteAdapter = new ShowNoteAdapter(this, listData,
+				gridView);
 		gridView.setAdapter(noteAdapter);
 		noteAdapter.notifyDataSetChanged();
-		
-		Log.e("wxp","data length--->"+listData.size());
+
+		Log.e("wxp", "data length--->" + listData.size());
 		addPen = (ImageView) findViewById(R.id.id_show_title_new_pen);
 		addPen.setOnClickListener(this);
 		addText = (ImageView) findViewById(R.id.id_show_title_new_text);
+		addText.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
+		Intent intent = new Intent();
+		intent.setClass(TestGridViewActivity.this, EditNote.class);
 		if (v.getId() == R.id.id_show_title_new_pen) {
-			Intent intent=new Intent();
-			intent.setClass(TestGridViewActivity.this, EditNote.class);
-			startActivity(intent);
+			intent.putExtra("type", R.id.id_edit_title_pen);
 		}
 		if (v.getId() == R.id.id_show_title_new_text) {
-
+			intent.putExtra("type", R.id.id_edit_title_text);
 		}
+		startActivity(intent);
 	}
 
 }
