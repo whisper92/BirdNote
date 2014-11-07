@@ -41,7 +41,7 @@
         android:contentDescription="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_pre"
+        android:src="@drawable/state_menu_undo"
         android:background="@drawable/action_bt_style02_left"
         android:clickable="true" />
     <ImageView
@@ -50,7 +50,7 @@
         android:contentDescription="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_next"
+        android:src="@drawable/state_menu_redo"
         android:background="@drawable/action_bt_style02_right"
         android:clickable="true" />
 

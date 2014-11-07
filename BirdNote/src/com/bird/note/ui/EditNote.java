@@ -1,5 +1,6 @@
 package com.bird.note.ui;
 
+import android.R.integer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,10 +15,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bird.note.R;
-import com.bird.note.test.TestBackPenView;
+import com.bird.note.ui.PenView.OnPathListChangeListener;
 
-
-public class EditNote extends Activity implements OnClickListener{
+public class EditNote extends Activity implements OnClickListener {
 	private FullScreenEditText mEditText;
 	private ImageView edit_Pen;
 	private ImageView edit_Text;
@@ -30,6 +30,9 @@ public class EditNote extends Activity implements OnClickListener{
 	private FrameLayout mWrapFrameLayout;
 	private PenView mPenView;
 	private int mType = 0;
+
+	private boolean mUndoState;
+	private boolean mRedoState;
 	private boolean mFirstComeIn = true;
 
 	@Override
@@ -60,56 +63,101 @@ public class EditNote extends Activity implements OnClickListener{
 		menu_More.setOnClickListener(this);
 		menu_Save.setOnClickListener(this);
 
+		menu_Undo.setEnabled(false);
+		menu_Redo.setEnabled(false);
+
 		mPenView = new PenView(this);
+		mPenView.setOnPathListChangeListenr(new OnPathListChangeListener() {
+
+			@Override
+			public void changeState(int undocount, int redocount) {
+
+				mUndoState=undocount > 0 ? true : false;
+				mRedoState=redocount > 0 ? true : false;			
+				changeStateOfUndoRedo(mUndoState,mRedoState);				
+			}
+		});
 		mPenView.setLayoutParams(new FrameLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		changeCurrentMode(type);
 
 	}
-
+	
+	/**
+	 * 保存和回复撤销和重做图标的状态
+	 */
+	public void changeStateOfUndoRedo(boolean undoState, boolean redoState) {
+		menu_Undo.setEnabled(undoState);
+		menu_Redo.setEnabled(redoState);
+	}
+	
 	/**
 	 * 设置当前的编辑模式
 	 * 
-	 * @param ClickID
+	 * @param clickID
 	 */
-	public void changeCurrentMode(int ClickID) {
-		if (ClickID == R.id.id_edit_title_pen) {
+	public void changeCurrentMode(int clickID) {
+		changeOtherIconState(clickID);
+		if (clickID == R.id.id_edit_title_pen) {
 			if (mFirstComeIn) {
 				mWrapFrameLayout.addView(mPenView);
 				mFirstComeIn = false;
 			}
-			edit_Pen.setSelected(true);
-			edit_Text.setSelected(false);
-			edit_Clean.setSelected(false);
-
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
 			mPenView.initDrawPaint();
+			changeStateOfUndoRedo(mUndoState,mRedoState);
+			
 		}
-		if (ClickID == R.id.id_edit_title_text) {
-			edit_Text.setSelected(true);
-			edit_Pen.setSelected(false);
-			edit_Clean.setSelected(false);
-
+		if (clickID == R.id.id_edit_title_text) {
 			mEditText.bringToFront();
 			mEditText.setCursorVisible(true);
+
 		}
-		if (ClickID == R.id.id_edit_title_clean) {
+		if (clickID == R.id.id_edit_title_clean) {
 			if (mFirstComeIn) {
 				mWrapFrameLayout.addView(mPenView);
 				mFirstComeIn = false;
 			}
-			edit_Clean.setSelected(true);
-			edit_Text.setSelected(false);
-			edit_Pen.setSelected(false);
-
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
-
 			mPenView.setCleanPaint();
+			changeStateOfUndoRedo(mUndoState,mRedoState);
 		}
 
 	}
+
+	public void changeOtherIconState(int clickID) {
+		switch (clickID) {
+		case R.id.id_edit_title_pen:
+			edit_Pen.setSelected(true);
+			edit_Text.setSelected(false);
+			edit_Clean.setSelected(false);
+			menu_Undo.setClickable(true);
+			menu_Redo.setClickable(true);
+			break;
+		case R.id.id_edit_title_text:
+			edit_Text.setSelected(true);
+			edit_Pen.setSelected(false);
+			edit_Clean.setSelected(false);
+			menu_Undo.setEnabled(false);
+			menu_Redo.setEnabled(false);
+
+			break;
+		case R.id.id_edit_title_clean:
+			edit_Clean.setSelected(true);
+			edit_Text.setSelected(false);
+			edit_Pen.setSelected(false);
+			menu_Undo.setClickable(true);
+			menu_Redo.setClickable(true);
+			break;
+
+		default:
+			break;
+		}
+	}
+
+
 
 	@Override
 	public void onClick(View v) {
@@ -150,18 +198,17 @@ public class EditNote extends Activity implements OnClickListener{
 		return super.onKeyDown(keyCode, event);
 	}
 
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.id_edit_menu_save:
-			
+
 			break;
 
 		default:

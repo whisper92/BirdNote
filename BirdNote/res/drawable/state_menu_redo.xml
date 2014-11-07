@@ -1,0 +1,5 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/icon_next_dis" android:state_enabled="false" android:state_selected="false"/>
+    <item android:drawable="@drawable/icon_next" />
+</selector>

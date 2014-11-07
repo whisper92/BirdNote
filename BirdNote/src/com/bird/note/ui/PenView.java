@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import android.R.integer;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -88,8 +89,8 @@ public class PenView extends View {
 	private void init(Context context) {
 		mContext = context;
 		mCurPaint = new Paint();
-		mDrawPaint =DrawPaint.getInstance();
-		mCleanPaint =CleanPaint.getInstance();
+		mDrawPaint = DrawPaint.getInstance();
+		mCleanPaint = CleanPaint.getInstance();
 		mPath = new Path();
 
 		initDrawPaint();
@@ -127,6 +128,7 @@ public class PenView extends View {
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
+			mDeletePath.clear();
 			mPath = new Path();
 			mDrawPath = new DrawPath();
 			mPath.moveTo(x, y);
@@ -151,6 +153,9 @@ public class PenView extends View {
 			mPath.lineTo(posX, posY);
 			mDrawCanvas.drawPath(mPath, mCurPaint);
 			mSavePath.add(mDrawPath);
+			pathListChangeListener.changeState(mSavePath.size(),
+					mDeletePath.size());
+
 			mPath = null;
 			postInvalidate();
 			break;
@@ -202,6 +207,8 @@ public class PenView extends View {
 			temp = iter.next();
 			mDrawCanvas.drawPath(temp.path, temp.paint);
 		}
+		pathListChangeListener
+				.changeState(mSavePath.size(), mDeletePath.size());
 		postInvalidate();
 
 	}
@@ -226,6 +233,8 @@ public class PenView extends View {
 			temp = iter.next();
 			mDrawCanvas.drawPath(temp.path, temp.paint);
 		}
+		pathListChangeListener
+				.changeState(mSavePath.size(), mDeletePath.size());
 		postInvalidate();
 	}
 
@@ -237,8 +246,18 @@ public class PenView extends View {
 	}
 
 	public void setCleanPaint() {
-		mIsCleanMode = true;	
+		mIsCleanMode = true;
 		mCleanPaint.setStrokeWidth(50);
 		mCurPaint = mCleanPaint;
+	}
+
+	OnPathListChangeListener pathListChangeListener;
+
+	public interface OnPathListChangeListener {
+		public void changeState(int undocount, int redocount);
+	}
+
+	public void setOnPathListChangeListenr(OnPathListChangeListener listener) {
+		this.pathListChangeListener = listener;
 	}
 }
