@@ -101,8 +101,10 @@ public class PenView extends View {
 	}
 
 	public void init() {
-		setBackgroundResource(R.drawable.ic_launcher);
-		
+		/*
+		 * 设置背景 setBackgroundResource(R.drawable.ic_launcher);
+		 */
+
 		mDrawPaint = new Paint();
 		mCleanPaint = new Paint();
 		mPath = new Path();
@@ -119,20 +121,22 @@ public class PenView extends View {
 		mCleanCanvas = new Canvas();
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		mCleanCanvas.setBitmap(mCleanBitmap);
-		
-		mCleanCanvas.drawBitmap(BitmapUtil.drawableToBitmap(getResources().getDrawable(R.drawable.mark_bg_blue)), 0, 0,null);
 
+				
+		/* 绘制蒙版
+		  mDrawCanvas.drawBitmap(BitmapUtil.drawableToBitmap(getResources().getDrawable(R.drawable.preview_frame)), 0, 0, null);
+		*/		
 		mSavePaths = new ArrayList<PenDrawPath>();
 		mSaveRedoPaths = new ArrayList<PenDrawPath>();
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		canvas.drawBitmap(mCleanBitmap,0,0,null);
+		canvas.drawBitmap(mDrawBitmap, 0, 0, null);		
 		if (mPath != null) {
 			mDrawCanvas.drawPath(mPath, mCurPaint);
 		}
-		super.onDraw(canvas);
+	//	super.onDraw(canvas);
 	}
 
 	/*
@@ -166,17 +170,16 @@ public class PenView extends View {
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
 			touch_start(x, y);
-			postInvalidate();
+			invalidate();
 			break;
 
 		case MotionEvent.ACTION_MOVE:
 			touch_move(x, y);
-			postInvalidate();
+			invalidate();
 			break;
 		case MotionEvent.ACTION_UP:
-			touch_up();
-			mSavePaths.add(mDrawPath);
-			postInvalidate();
+			touch_up();		
+			invalidate();
 			break;
 
 		}
@@ -188,7 +191,8 @@ public class PenView extends View {
 		mPath.moveTo(x, y);
 		mDrawPath = new PenDrawPath();
 		mDrawPath.paint = new Paint(mCurPaint);
-		mDrawPath.path = mPath;
+		mDrawPath.path = mPath;		
+		mSavePaths.add(mDrawPath);
 		posX = x;
 		posY = y;
 	}
@@ -285,12 +289,10 @@ public class PenView extends View {
 		mCleanPaint.setStrokeJoin(Paint.Join.ROUND);
 		mCleanPaint.setStrokeCap(Paint.Cap.ROUND);
 		mCleanPaint.setStrokeWidth(50);
-		
+
 		mCleanPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
 		mCleanPaint.setAlpha(0);
 		// 设置画笔的痕迹是透明的，从而可以看到背景图片
-
-
 
 		mCurPaint = new Paint(mCleanPaint);
 	}

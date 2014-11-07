@@ -161,7 +161,6 @@ public class MyDrawView extends View {
 
 		// set path
 		mPath = new Path();
-		;
 
 		// converting bitmap into mutable bitmap
 		mBitmap = Bitmap.createBitmap(SCREEN_W, SCREEN_H, Config.ARGB_8888);
