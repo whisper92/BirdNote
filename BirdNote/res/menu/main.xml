@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/id_edit_menu_delete"
+        android:title="@string/edit_menu_delete"/>
+    <item
+        android:id="@+id/id_edit_menu_favor"
+        android:title="@string/edit_menu_favor"/>
+    <item
+        android:id="@+id/id_edit_menu_change_bg"
+        android:title="@string/edit_menu_change_bg"/>
+    <item
+        android:id="@+id/id_edit_menu_change_page"
+        android:title="@string/edit_menu_change_page"/>
+    <item 
+        android:id="@+id/id_edit_menu_mark_colr"
+        android:title="@string/edit_menu_mark_colr"/>
+     <item 
+        android:id="@+id/id_edit_menu_save"
+        android:title="@string/edit_menu_save"/>
+        
+</menu>

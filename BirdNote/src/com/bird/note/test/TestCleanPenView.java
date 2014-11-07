@@ -267,15 +267,6 @@ public class TestCleanPenView extends View {
 		mDrawPaint.setStrokeJoin(Paint.Join.ROUND);
 		mDrawPaint.setStrokeCap(Paint.Cap.ROUND);
 		mDrawPaint.setStrokeWidth(5);
-		/*
-		 * mDrawPaint.setXfermode(new PorterDuffXfermode(Mode.XOR)); //
-		 * 设置画笔的痕迹是透明的，从而可以看到背景图片 mDrawPaint.setAntiAlias(true);
-		 * mDrawPaint.setDither(true); mDrawPaint.setColor(mDrawPaintColor);
-		 * mDrawPaint.setStyle(Paint.Style.STROKE);
-		 * mDrawPaint.setStrokeJoin(Paint.Join.ROUND);
-		 * mDrawPaint.setStrokeCap(Paint.Cap.ROUND);
-		 * mDrawPaint.setStrokeWidth(5);
-		 */
 		mCurPaint = new Paint(mDrawPaint);
 	}
 

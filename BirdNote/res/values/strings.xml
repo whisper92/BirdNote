@@ -2,9 +2,16 @@
 <resources>
 
     <string name="app_name">BirdNote</string>
+    <string name="edit_menu_delete">Delete</string>
+    <string name="edit_menu_favor">Like</string>
+    <string name="edit_menu_change_bg">Background</string>
+    <string name="edit_menu_change_page">Pages</string>
+    <string name="edit_menu_mark_colr">Mark Color</string>
+    <string name="edit_menu_save">Save</string>
 
     <!-- 插入的行数 -->
     <string name="fullscreen_edit_line">23</string>
     <!-- 每行的空格数 -->
     <string name="fullscreen_edit_line_lenth">50</string>
-</resources>
+
+</resources>

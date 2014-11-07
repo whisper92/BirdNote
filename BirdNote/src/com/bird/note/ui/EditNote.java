@@ -13,6 +13,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -93,7 +95,7 @@ public class EditNote extends Activity implements OnClickListener,
 
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
-			//mPenView.initDrawPaint();
+			mPenView.initDrawPaint();
 		}
 		if (ClickID == R.id.id_edit_title_text) {
 			edit_Text.setSelected(true);
@@ -115,7 +117,7 @@ public class EditNote extends Activity implements OnClickListener,
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
 
-			//mPenView.setCleanPaint();
+			mPenView.setCleanPaint();
 		}
 
 	}
@@ -169,4 +171,22 @@ public class EditNote extends Activity implements OnClickListener,
 
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.id_edit_menu_save:
+			
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }

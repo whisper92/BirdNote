@@ -3,4 +3,10 @@
 
     <string name="app_name">笔记本</string>
 
+    <string name="edit_menu_delete">删除</string>
+    <string name="edit_menu_favor">添加至收藏</string>
+    <string name="edit_menu_change_bg">更改背景</string>
+    <string name="edit_menu_change_page">切换页面</string>
+    <string name="edit_menu_mark_colr">标签颜色</string>
+    <string name="edit_menu_save">另存为</string>
 </resources>
