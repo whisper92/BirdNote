@@ -1,10 +1,7 @@
 package com.bird.note.model;
 
-import android.R.integer;
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.EditText;
 
 /**
  * 笔记中每一个文本行对应的类

@@ -1,34 +1,23 @@
 package com.bird.note.ui;
 
-import com.bird.note.R;
-import com.bird.note.test.TestBackPenView;
-import com.bird.note.ui.PenView.OnRedoListener;
-import com.bird.note.ui.PenView.OnUndoListener;
-import com.bird.note.utils.CommonUtils;
-
-import android.R.integer;
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-;
+import com.bird.note.R;
+import com.bird.note.test.TestBackPenView;
 
-public class EditNote extends Activity implements OnClickListener,
-		OnUndoListener, OnRedoListener {
+
+public class EditNote extends Activity implements OnClickListener{
 	private FullScreenEditText mEditText;
 	private ImageView edit_Pen;
 	private ImageView edit_Text;
@@ -39,7 +28,7 @@ public class EditNote extends Activity implements OnClickListener,
 	private ImageView menu_Save;
 
 	private FrameLayout mWrapFrameLayout;
-	private TestBackPenView mPenView;
+	private PenView mPenView;
 	private int mType = 0;
 	private boolean mFirstComeIn = true;
 
@@ -71,7 +60,7 @@ public class EditNote extends Activity implements OnClickListener,
 		menu_More.setOnClickListener(this);
 		menu_Save.setOnClickListener(this);
 
-		mPenView = new TestBackPenView(this);
+		mPenView = new PenView(this);
 		mPenView.setLayoutParams(new FrameLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		changeCurrentMode(type);
@@ -161,15 +150,6 @@ public class EditNote extends Activity implements OnClickListener,
 		return super.onKeyDown(keyCode, event);
 	}
 
-	@Override
-	public void redo(int redoCount) {
-
-	}
-
-	@Override
-	public void undo(int undoCount) {
-
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

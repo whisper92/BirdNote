@@ -2,33 +2,25 @@ package com.bird.note.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
-import com.bird.note.R;
-import com.bird.note.utils.BitmapUtil;
-import com.bird.note.utils.CommonUtils;
-
-import android.R.integer;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bird.note.R;
+import com.bird.note.utils.BitmapUtil;
 
 public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener{
 	private List<BirdNote> mListData;

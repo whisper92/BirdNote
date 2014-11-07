@@ -1,18 +1,12 @@
 package com.bird.note.ui;
 
-import com.bird.note.R;
-
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import com.bird.note.R;
 
 /**
  * 全屏编辑文字对应的View
