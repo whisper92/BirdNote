@@ -1,6 +1,7 @@
 package com.bird.note.ui;
 
 import com.bird.note.R;
+import com.bird.note.test.TestBackPenView;
 import com.bird.note.ui.PenView.OnRedoListener;
 import com.bird.note.ui.PenView.OnUndoListener;
 import com.bird.note.utils.CommonUtils;
@@ -36,7 +37,7 @@ public class EditNote extends Activity implements OnClickListener,
 	private ImageView menu_Save;
 
 	private FrameLayout mWrapFrameLayout;
-	private PenView mPenView;
+	private TestBackPenView mPenView;
 	private int mType = 0;
 	private boolean mFirstComeIn = true;
 
@@ -50,7 +51,7 @@ public class EditNote extends Activity implements OnClickListener,
 	}
 
 	public void init(int type) {
-		mWrapFrameLayout = (FrameLayout) findViewById(R.id.id_edit_main_fl);
+		mWrapFrameLayout = (FrameLayout) findViewById(R.id.id_edit_main_fl_bg);
 		mEditText = (FullScreenEditText) findViewById(R.id.id_edit_main_et);
 		edit_Pen = (ImageView) findViewById(R.id.id_edit_title_pen);
 		edit_Text = (ImageView) findViewById(R.id.id_edit_title_text);
@@ -68,7 +69,7 @@ public class EditNote extends Activity implements OnClickListener,
 		menu_More.setOnClickListener(this);
 		menu_Save.setOnClickListener(this);
 
-		mPenView = new PenView(this);
+		mPenView = new TestBackPenView(this);
 		mPenView.setLayoutParams(new FrameLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		changeCurrentMode(type);
@@ -92,7 +93,7 @@ public class EditNote extends Activity implements OnClickListener,
 
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
-			mPenView.initDrawPaint();
+			//mPenView.initDrawPaint();
 		}
 		if (ClickID == R.id.id_edit_title_text) {
 			edit_Text.setSelected(true);
@@ -114,7 +115,7 @@ public class EditNote extends Activity implements OnClickListener,
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
 
-			mPenView.setCleanPaint();
+			//mPenView.setCleanPaint();
 		}
 
 	}
@@ -123,10 +124,10 @@ public class EditNote extends Activity implements OnClickListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.id_edit_title_pre:
-			mPenView.Undo();
+			mPenView.undo();
 			break;
 		case R.id.id_edit_title_next:
-			mPenView.Redo();
+			mPenView.redo();
 			break;
 		case R.id.id_edit_title_more:
 			Log.e("wxp", "text_lenth" + mEditText.getText().length());

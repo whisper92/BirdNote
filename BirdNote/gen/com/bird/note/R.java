@@ -109,8 +109,9 @@ public final class R {
         public static final int tool_slide=0x7f02004b;
     }
     public static final class id {
-        public static final int id_edit_main_et=0x7f080009;
+        public static final int id_edit_main_et=0x7f08000a;
         public static final int id_edit_main_fl=0x7f080008;
+        public static final int id_edit_main_fl_bg=0x7f080009;
         public static final int id_edit_title_clean=0x7f080003;
         public static final int id_edit_title_header_rl=0x7f080000;
         public static final int id_edit_title_more=0x7f080006;
@@ -119,14 +120,14 @@ public final class R {
         public static final int id_edit_title_pre=0x7f080004;
         public static final int id_edit_title_save=0x7f080007;
         public static final int id_edit_title_text=0x7f080002;
-        public static final int id_note_item_ll=0x7f08000a;
-        public static final int id_note_item_ll_menu=0x7f08000b;
-        public static final int id_note_item_thumb_iv=0x7f08000c;
-        public static final int id_note_item_title_tv=0x7f08000d;
-        public static final int id_show_gv=0x7f08000e;
-        public static final int id_show_title_new_pen=0x7f080010;
-        public static final int id_show_title_new_text=0x7f080011;
-        public static final int id_show_title_rl=0x7f08000f;
+        public static final int id_note_item_ll=0x7f08000b;
+        public static final int id_note_item_ll_menu=0x7f08000c;
+        public static final int id_note_item_thumb_iv=0x7f08000d;
+        public static final int id_note_item_title_tv=0x7f08000e;
+        public static final int id_show_gv=0x7f08000f;
+        public static final int id_show_title_new_pen=0x7f080011;
+        public static final int id_show_title_new_text=0x7f080012;
+        public static final int id_show_title_rl=0x7f080010;
     }
     public static final class layout {
         public static final int edit_note_header=0x7f030000;
