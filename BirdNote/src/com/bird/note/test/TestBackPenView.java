@@ -69,26 +69,16 @@ public class TestBackPenView extends View {
 	private int mDrawPaintColor = 0xFFCCCCCC;
 	private int mDrawPaintWidth = 10;
 
+	private DrawPath mDrawPath = null;
 	/*
 	 * 保存绘制过的所有路径，用于撤销操作
 	 */
-	private List<PenDrawPath> mSavePaths;
+	
+	private List<DrawPath> mSavePath = null;
 	/*
 	 * 保存刚刚撤销操作的路径，用于重做
 	 */
-	private List<PenDrawPath> mSaveRedoPaths;
-
-	// -------------------------------------------------------------------------------------------------------------------//
-
-	// Bitmap mBitmap = null; // used as choosing picture,用于从图库选择的背景图片
-
-	private DrawPath mDrawPath = null;
-	private List<DrawPath> mSavePath = null;
 	private List<DrawPath> mDeletePath = null;
-
-	private int mImageWidth = 480;
-	private int mImageHeight = 800;
-	private int mDrawBitmapDrawHeight = 0;
 
 	public TestBackPenView(Context context, AttributeSet attr, int defStyle) {
 		super(context, attr, defStyle);
@@ -140,9 +130,9 @@ public class TestBackPenView extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 
-		canvas.drawBitmap(mDrawBitmap, 0, 0, mCurPaint);
+		canvas.drawBitmap(mDrawBitmap, 0, 0, null);
 		if (mPath != null) {
-			canvas.drawPath(mPath, mCurPaint);
+			mDrawCanvas.drawPath(mPath, mCurPaint);
 		}
 
 		// canvas.drawRect(10,10,100,100,mPaint);
