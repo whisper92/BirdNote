@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/note_bg_style00" >
 
-            <com.bird.note.ui.FullScreenEditText
+            <com.bird.note.customer.FullScreenEditText
                 android:id="@+id/id_edit_main_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -34,6 +34,14 @@
                 android:singleLine="false"
                 android:textScaleX="1.5" />
         </FrameLayout>
+
+        <com.bird.note.customer.QuadrantThumbnail
+            android:layout_gravity="bottom|right"
+            android:clickable="true" 
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </FrameLayout>
 
 </LinearLayout>
