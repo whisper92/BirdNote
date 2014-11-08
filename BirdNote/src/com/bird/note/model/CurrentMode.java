@@ -1,7 +1,9 @@
 package com.bird.note.model;
 
-public enum CurrentMode {
-	PEN, // 绘图模式
-	TEXT, // 文本编辑模式
-	CLEN// 擦除模式
+import com.bird.note.R;
+
+public class CurrentMode {
+	public static final int M_DRAW = R.id.id_edit_title_pen;
+	public static final int M_TEXT = R.id.id_edit_title_text;
+	public static final int M_CLEAN = R.id.id_edit_title_clean;
 }

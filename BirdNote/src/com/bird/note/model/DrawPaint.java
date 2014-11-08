@@ -2,7 +2,7 @@ package com.bird.note.model;
 
 import android.graphics.Paint;
 
-public class DrawPaint extends AbstractPaint {
+public class DrawPaint  {
 
 	private static Paint drawPaint = new Paint();
 
@@ -16,10 +16,5 @@ public class DrawPaint extends AbstractPaint {
 		drawPaint.setStrokeJoin(Paint.Join.ROUND);
 		drawPaint.setStrokeCap(Paint.Cap.ROUND);
 		return drawPaint;
-	}
-
-	@Override
-	public void setAntilias() {
-		
 	}
 }

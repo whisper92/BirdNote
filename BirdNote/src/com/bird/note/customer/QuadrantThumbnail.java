@@ -86,7 +86,6 @@ public class QuadrantThumbnail extends View {
 			int bottom) {
 		mLeft = left;
 		mTop = top;
-		Log.e("wxp", "mLeft:" + mLeft + "   |   mTop:" + mTop);
 		super.onLayout(changed, left, top, right, bottom);
 	}
 
@@ -126,12 +125,10 @@ public class QuadrantThumbnail extends View {
 			posX = event.getX();
 			posY = event.getY();
 			judgeCurrentQuadrantByClick(posX, posY);
-
 		}
 
 		if (event.getAction() == MotionEvent.ACTION_UP) {
 			toggleScale();
-			Log.e("wxp", "clickyourmother" + mScaled);
 		}
 		return super.onTouchEvent(event);
 	}
@@ -158,7 +155,9 @@ public class QuadrantThumbnail extends View {
 					&& posY < mHeight) {
 				mCurQua = 3;
 			}
+			quadrantChangeListener.changeQua(mCurQua);
 		}
+		
 	}
 
 	/**
@@ -192,11 +191,7 @@ public class QuadrantThumbnail extends View {
 		default:
 			break;
 		}
-
-		canvas.drawBitmap(BitmapUtil.decodeDrawableToBitmap(getResources()
-				.getDrawable(
-						mScaled ? R.drawable.switch_4
-								: R.drawable.switch_4_small)), x, y, null);
+		canvas.drawBitmap(BitmapUtil.decodeDrawableToBitmap(getResources().getDrawable(mScaled ? R.drawable.switch_4: R.drawable.switch_4_small)), x, y, null);
 	}
 
 	/**

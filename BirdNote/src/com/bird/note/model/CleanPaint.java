@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 
-public class CleanPaint extends AbstractPaint{
+public class CleanPaint {
 
 	private static Paint cleanPaint = new Paint();
 
@@ -23,11 +23,6 @@ public class CleanPaint extends AbstractPaint{
 		cleanPaint.setAlpha(0);
 		// 设置画笔的痕迹是透明的，从而可以看到背景图片
 		return cleanPaint;
-	}
-
-	@Override
-	public void setAntilias() {
-		
 	}
 
 }
