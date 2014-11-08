@@ -16,33 +16,19 @@
         android:background="@drawable/note_bg" >
 
         <FrameLayout
-            android:id="@+id/id_edit_main_fl_bg"
+            android:id="@+id/id_edit_main_editfragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/note_bg_style00" >
-
-            <com.bird.note.customer.FullScreenEditText
-                android:id="@+id/id_edit_main_et"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#00000000"
-                android:focusable="true"
-                android:gravity="top"
-                android:inputType="textMultiLine"
-                android:lineSpacingExtra="5dp"
-                android:maxLines="22"
-                android:singleLine="false"
-                android:textScaleX="1.5" />
+            android:layout_height="match_parent" >
         </FrameLayout>
 
         <com.bird.note.customer.QuadrantThumbnail
             android:id="@+id/id_edit_quathumb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:clickable="true" 
             android:layout_marginBottom="10dp"
             android:layout_marginRight="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:clickable="true" />
     </FrameLayout>
 
 </LinearLayout>
