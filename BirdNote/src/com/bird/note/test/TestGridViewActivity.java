@@ -51,13 +51,13 @@ public class TestGridViewActivity extends Activity implements
 			birdNote.title = i + "--->";
 			if (i % 4 == 1) {
 				birdNote.byteArrayNoteThumbnail = BitmapUtil
-						.bitmapToBytes(BitmapUtil
-								.drawableToBitmap(getResources().getDrawable(
+						.decodeBitmapToBytes(BitmapUtil
+								.decodeDrawableToBitmap(getResources().getDrawable(
 										R.drawable.ic_launcher)));
 			} else {
 				birdNote.byteArrayNoteThumbnail = BitmapUtil
-						.bitmapToBytes(BitmapUtil
-								.drawableToBitmap(getResources().getDrawable(
+						.decodeBitmapToBytes(BitmapUtil
+								.decodeDrawableToBitmap(getResources().getDrawable(
 										R.drawable.show_title_add_text)));
 
 			}

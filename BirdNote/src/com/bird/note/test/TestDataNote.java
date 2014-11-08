@@ -17,8 +17,8 @@ public class TestDataNote {
 	
 	public String title="bird_note";
 	
-	public byte[] content=BitmapUtil.drawableToBytes(context, R.drawable.ic_launcher);
+	public byte[] content=BitmapUtil.decodeDrawableToBytes(context, R.drawable.ic_launcher);
 	
-	public byte[] thumbnail=BitmapUtil.drawableToBytes(context, R.drawable.icon_text);
+	public byte[] thumbnail=BitmapUtil.decodeDrawableToBytes(context, R.drawable.icon_text);
 
 }

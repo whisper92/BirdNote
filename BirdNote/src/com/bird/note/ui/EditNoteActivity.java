@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
@@ -18,6 +19,7 @@ import com.bird.note.R;
 import com.bird.note.customer.FullScreenEditText;
 import com.bird.note.customer.PenView;
 import com.bird.note.customer.PenView.OnPathListChangeListener;
+import com.bird.note.customer.QuadrantThumbnail;
 
 public class EditNoteActivity extends Activity implements OnClickListener {
 	private FullScreenEditText mEditText;
@@ -28,6 +30,7 @@ public class EditNoteActivity extends Activity implements OnClickListener {
 	private ImageView menu_Redo;
 	private ImageView menu_More;
 	private ImageView menu_Save;
+	private QuadrantThumbnail quadrantThumbnail;
 
 	private FrameLayout mWrapFrameLayout;
 	private PenView mPenView;
@@ -56,6 +59,7 @@ public class EditNoteActivity extends Activity implements OnClickListener {
 		menu_Redo = (ImageView) findViewById(R.id.id_edit_title_next);
 		menu_More = (ImageView) findViewById(R.id.id_edit_title_more);
 		menu_Save = (ImageView) findViewById(R.id.id_edit_title_save);
+		quadrantThumbnail=(QuadrantThumbnail)findViewById(R.id.id_edit_quathumb);
 
 		edit_Pen.setOnClickListener(this);
 		edit_Text.setOnClickListener(this);
@@ -216,4 +220,5 @@ public class EditNoteActivity extends Activity implements OnClickListener {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
 }

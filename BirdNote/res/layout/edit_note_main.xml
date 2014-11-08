@@ -36,6 +36,7 @@
         </FrameLayout>
 
         <com.bird.note.customer.QuadrantThumbnail
+            android:id="@+id/id_edit_quathumb"
             android:layout_gravity="bottom|right"
             android:clickable="true" 
             android:layout_marginBottom="10dp"

@@ -246,7 +246,7 @@ public class TestCleanPenView extends View {
 
 	public void savePicture() {
 		String filePath = CommonUtils.getSavePath();
-		BitmapUtil.writeFile(BitmapUtil.bitmapToBytes(mDrawBitmap), filePath
+		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap), filePath
 				+ "/hello.png");
 	}
 

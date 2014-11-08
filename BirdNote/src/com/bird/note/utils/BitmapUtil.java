@@ -19,7 +19,7 @@ import android.graphics.*;
  */
 public class BitmapUtil {
 
-	public static byte[] bitmapToBytes(Bitmap bitmap) {
+	public static byte[] decodeBitmapToBytes(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		if (bitmap != null) {
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -30,7 +30,15 @@ public class BitmapUtil {
 		}
 	}
 
-	public static Bitmap drawableToBitmap(Drawable drawable) {
+	public static Bitmap decodeBytesToBitmap(byte[] b) {
+		if (b.length != 0) {
+			return BitmapFactory.decodeByteArray(b, 0, b.length);
+		} else {
+			return null;
+		}
+	}
+
+	public static Bitmap decodeDrawableToBitmap(Drawable drawable) {
 		// 取 drawable 的长宽
 		int w = drawable.getIntrinsicWidth();
 		int h = drawable.getIntrinsicHeight();
@@ -47,21 +55,13 @@ public class BitmapUtil {
 		return bitmap;
 	}
 
-	public static Bitmap bytesToBitmap(byte[] b) {
-		if (b.length != 0) {
-			return BitmapFactory.decodeByteArray(b, 0, b.length);
-		} else {
-			return null;
-		}
-	}
-
-	public static byte[] drawableToBytes(Context context, int sourceID) {
-		return bitmapToBytes(drawableToBitmap(context.getResources()
-				.getDrawable(sourceID)));
+	public static byte[] decodeDrawableToBytes(Context context, int sourceID) {
+		return decodeBitmapToBytes(decodeDrawableToBitmap(context
+				.getResources().getDrawable(sourceID)));
 	}
 
 	// 将byte数组写入sd卡文件中
-	public static void writeFile(byte[] byteArray, String fileName) {
+	public static void writeBytesToFile(byte[] byteArray, String fileName) {
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream(new File(fileName));

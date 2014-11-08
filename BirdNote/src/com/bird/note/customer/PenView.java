@@ -19,12 +19,15 @@ import android.view.View;
 
 import com.bird.note.model.CleanPaint;
 import com.bird.note.model.DrawPaint;
+import com.bird.note.model.PenDrawPath;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
+
 /**
  * 用于涂鸦的View
+ * 
  * @author wangxianpeng
- *
+ * 
  */
 public class PenView extends View {
 	private final float TOUCH_TOLERANCE = 4;
@@ -64,16 +67,16 @@ public class PenView extends View {
 	private int mDrawPaintColor = 0xFFCCCCCC;
 	private int mDrawPaintWidth = 10;
 
-	private DrawPath mDrawPath = null;
-	/*
-	 * 保存绘制过的所有路径，用于撤销操作
-	 */
+	private PenDrawPath mDrawPath = null;
 
-	private List<DrawPath> mSavePath = null;
+	/*
+	 * 保存绘制过的所有路径，用于撤销
+	 */
+	private List<PenDrawPath> mSavePath = null;
 	/*
 	 * 保存刚刚撤销操作的路径，用于重做
 	 */
-	private List<DrawPath> mDeletePath = null;
+	private List<PenDrawPath> mDeletePath = null;
 
 	public PenView(Context context, AttributeSet attr, int defStyle) {
 		super(context, attr, defStyle);
@@ -106,13 +109,8 @@ public class PenView extends View {
 		mDrawCanvas = new Canvas();
 		mDrawCanvas.setBitmap(mDrawBitmap);
 
-		mSavePath = new ArrayList<DrawPath>();
-		mDeletePath = new ArrayList<DrawPath>();
-	}
-
-	private class DrawPath {
-		Path path;
-		Paint paint;
+		mSavePath = new ArrayList<PenDrawPath>();
+		mDeletePath = new ArrayList<PenDrawPath>();
 	}
 
 	@Override
@@ -134,7 +132,7 @@ public class PenView extends View {
 		case MotionEvent.ACTION_DOWN:
 			mDeletePath.clear();
 			mPath = new Path();
-			mDrawPath = new DrawPath();
+			mDrawPath = new PenDrawPath();
 			mPath.moveTo(x, y);
 			mDrawPath.paint = new Paint(mCurPaint);
 			mDrawPath.path = mPath;
@@ -174,7 +172,7 @@ public class PenView extends View {
 
 	public void savePicture() {
 		String filePath = CommonUtils.getSavePath();
-		BitmapUtil.writeFile(BitmapUtil.bitmapToBytes(mDrawBitmap), filePath
+		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap), filePath
 				+ "/hello.png");
 	}
 
@@ -205,8 +203,8 @@ public class PenView extends View {
 				Bitmap.Config.ARGB_8888);
 		mDrawCanvas.setBitmap(mDrawBitmap);
 
-		Iterator<DrawPath> iter = mSavePath.iterator();
-		DrawPath temp;
+		Iterator<PenDrawPath> iter = mSavePath.iterator();
+		PenDrawPath temp;
 		while (iter.hasNext()) {
 			temp = iter.next();
 			mDrawCanvas.drawPath(temp.path, temp.paint);
@@ -231,8 +229,8 @@ public class PenView extends View {
 				Bitmap.Config.ARGB_8888);
 		mDrawCanvas.setBitmap(mDrawBitmap);
 
-		Iterator<DrawPath> iter = mSavePath.iterator();
-		DrawPath temp;
+		Iterator<PenDrawPath> iter = mSavePath.iterator();
+		PenDrawPath temp;
 		while (iter.hasNext()) {
 			temp = iter.next();
 			mDrawCanvas.drawPath(temp.path, temp.paint);

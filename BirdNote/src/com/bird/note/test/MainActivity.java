@@ -42,8 +42,8 @@ public class MainActivity extends Activity
         childNote.noteID=1;
         childNote.quadrant=1;
         childNote.textLines=textLines;
-        childNote.byteArrayChildDrawContent=BitmapUtil.bitmapToBytes(b1);
-        childNote.byteArrayChildThumbnail=BitmapUtil.bitmapToBytes(b2);
+        childNote.byteArrayChildDrawContent=BitmapUtil.decodeBitmapToBytes(b1);
+        childNote.byteArrayChildThumbnail=BitmapUtil.decodeBitmapToBytes(b2);
         
    
         BirdNote birdNote=new BirdNote();
@@ -53,8 +53,8 @@ public class MainActivity extends Activity
         birdNote.level=1;
         birdNote.title="title";
         birdNote.childNotes=childNotes;
-        birdNote.byteArrayNoteContent=BitmapUtil.bitmapToBytes(b1);
-        birdNote.byteArrayNoteThumbnail=BitmapUtil.bitmapToBytes(b2);
+        birdNote.byteArrayNoteContent=BitmapUtil.decodeBitmapToBytes(b1);
+        birdNote.byteArrayNoteThumbnail=BitmapUtil.decodeBitmapToBytes(b2);
         
         bundle.putParcelable("note", childNote);
         bundle.putParcelable("birdnote", birdNote);
