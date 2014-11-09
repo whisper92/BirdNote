@@ -135,12 +135,10 @@ public class EditFragment extends Fragment implements OnClickListener {
 			mEditText.setCursorVisible(false);
 			mPenView.initDrawPaint();
 			changeStateOfUndoRedo(mUndoState, mRedoState);
-
 		}
 		if (clickID == R.id.id_edit_title_text) {
 			mEditText.bringToFront();
 			mEditText.setCursorVisible(true);
-
 		}
 		if (clickID == R.id.id_edit_title_clean) {
 			if (mFirstComeIn) {

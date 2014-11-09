@@ -13,4 +13,9 @@
     <dimen name="dimen_show_gridview_margin">5dp</dimen>
     
     <dimen name="dimen_edit_title_menu_margin">5dp</dimen>
+    
+    <dimen name="dimen_edit_qudrant_margin_right">8dp</dimen>
+    <dimen name="dimen_edit_qudrant_margin_bottom">10dp</dimen>
+    <dimen name="dimen_edit_level_flag_margin_right">5dp</dimen>
+    <dimen name="dimen_edit_level_flag_margin_top">62dp</dimen>
 </resources>

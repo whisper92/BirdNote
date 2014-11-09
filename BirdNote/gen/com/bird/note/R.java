@@ -18,6 +18,10 @@ public final class R {
         public static final int color_show_title_text=0x7f050000;
     }
     public static final class dimen {
+        public static final int dimen_edit_level_flag_margin_right=0x7f06000d;
+        public static final int dimen_edit_level_flag_margin_top=0x7f06000e;
+        public static final int dimen_edit_qudrant_margin_bottom=0x7f06000c;
+        public static final int dimen_edit_qudrant_margin_right=0x7f06000b;
         public static final int dimen_edit_title_menu_margin=0x7f06000a;
         public static final int dimen_show_gridview_margin=0x7f060009;
         public static final int dimen_show_note_item_height=0x7f060004;
@@ -129,11 +133,11 @@ public final class R {
         public static final int id_edit_quathumb=0x7f09000d;
         public static final int id_edit_title_clean=0x7f090006;
         public static final int id_edit_title_header_rl=0x7f090003;
-        public static final int id_edit_title_more=0x7f090009;
+        public static final int id_edit_title_more=0x7f09000a;
         public static final int id_edit_title_next=0x7f090008;
         public static final int id_edit_title_pen=0x7f090004;
         public static final int id_edit_title_pre=0x7f090007;
-        public static final int id_edit_title_save=0x7f09000a;
+        public static final int id_edit_title_save=0x7f090009;
         public static final int id_edit_title_text=0x7f090005;
         public static final int id_note_item_ll=0x7f09000e;
         public static final int id_note_item_ll_menu=0x7f09000f;

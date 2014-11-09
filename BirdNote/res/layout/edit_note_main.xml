@@ -14,8 +14,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="80dp"
+        android:padding="20dp"
+        android:layout_marginRight="@dimen/dimen_edit_level_flag_margin_right"
+        android:layout_marginTop="@dimen/dimen_edit_level_flag_margin_top"
         android:clickable="true" />
 
     <com.bird.note.customer.QuadrantThumbnail
@@ -23,8 +24,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginBottom="@dimen/dimen_edit_qudrant_margin_bottom"
+        android:layout_marginRight="@dimen/dimen_edit_qudrant_margin_right"
         android:clickable="true" />
 
 </FrameLayout>

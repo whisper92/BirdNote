@@ -171,16 +171,16 @@ public class QuadrantThumbnail extends View {
 		int y = 0;
 		switch (qua) {
 		case 0:
-			x = 1;
-			y = 1;
+			x = 2;
+			y = 2;
 			break;
 
 		case 1:
 			x = mWidth / 2 + 1;
-			y = 1;
+			y = 2;
 			break;
 		case 2:
-			x = 1;
+			x = 2;
 			y = mHeight / 2 + 1;
 			break;
 		case 3:
