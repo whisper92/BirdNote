@@ -3,6 +3,7 @@ package com.bird.note.customer;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -81,7 +82,7 @@ public class LevelFlag extends View {
 	public boolean onTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			setBackgroundResource(levelImages[nextLevel(mCurrentLeve)]);
+			setBackgroundResource(levelImages[nextLevel()]);
 			break;
 			
 		case MotionEvent.ACTION_UP:
@@ -96,12 +97,17 @@ public class LevelFlag extends View {
 	/**
 	 * 循环切换level
 	 */
-	public int nextLevel(int level) {
-		if (level == 3) {
-			level = 0;
+	public int nextLevel() {
+		if (mCurrentLeve == 3) {
+			mCurrentLeve = 0;
+			Log.e("wxp", "level------->"+mCurrentLeve);
+			return mCurrentLeve;
 		} else {
-           level+=1;
+			Log.e("wxp", "level------->"+mCurrentLeve);
+			mCurrentLeve= mCurrentLeve +1;
+           return mCurrentLeve;
 		}
-		return level;
+		
+		
 	}
 }
