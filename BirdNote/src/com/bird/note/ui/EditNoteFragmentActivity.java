@@ -22,13 +22,7 @@ import com.bird.note.customer.QuadrantThumbnail.OnQuadrantChangeListener;
 
 public class EditNoteFragmentActivity extends FragmentActivity implements
 		OnClickListener {
-	private ImageView edit_Pen;
-	private ImageView edit_Text;
-	private ImageView edit_Clean;
-	private ImageView menu_Undo;
-	private ImageView menu_Redo;
-	private ImageView menu_More;
-	private ImageView menu_Save;
+
 
 	private QuadrantThumbnail quadrantThumbnail;
 
@@ -36,11 +30,12 @@ public class EditNoteFragmentActivity extends FragmentActivity implements
 	 * 当前所处象限
 	 */
 	private int mCurrentQuadrant = 0;
+	private EditFragment mEditFragment;
 	/*
 	 * 当前所处模式
 	 */
 	public int mCurrentMode = 0;
-	private EditFragment mEditFragment;
+	
 
 	private List<EditFragment> mEditFragmentsList = new ArrayList<EditFragment>();
 	FragmentManager fragmentManager;
@@ -69,13 +64,7 @@ public class EditNoteFragmentActivity extends FragmentActivity implements
 	}
 
 	public void initView(int type) {
-		edit_Pen = (ImageView) findViewById(R.id.id_edit_title_pen);
-		edit_Text = (ImageView) findViewById(R.id.id_edit_title_text);
-		edit_Clean = (ImageView) findViewById(R.id.id_edit_title_clean);
-		menu_Undo = (ImageView) findViewById(R.id.id_edit_title_pre);
-		menu_Redo = (ImageView) findViewById(R.id.id_edit_title_next);
-		menu_More = (ImageView) findViewById(R.id.id_edit_title_more);
-		menu_Save = (ImageView) findViewById(R.id.id_edit_title_save);
+
 		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
 		quadrantThumbnail
 				.setQuadrantChangeListener(new OnQuadrantChangeListener() {
@@ -83,22 +72,15 @@ public class EditNoteFragmentActivity extends FragmentActivity implements
 					@Override
 					public void changeQua(int qua) {
 						Log.e("wxp", "切换至---》" + qua);
+						mCurrentQuadrant=qua;
 						changeToQuadrantAt(qua);
+					
 					}
 				});
 
-		edit_Pen.setOnClickListener(this);
-		edit_Text.setOnClickListener(this);
-		edit_Clean.setOnClickListener(this);
-		menu_Undo.setOnClickListener(this);
-		menu_Redo.setOnClickListener(this);
-		menu_More.setOnClickListener(this);
-		menu_Save.setOnClickListener(this);
 
-		menu_Undo.setEnabled(false);
-		menu_Redo.setEnabled(false);
 
-		changeOtherIconState(mCurrentMode);
+		
 
 	}
 
@@ -135,73 +117,12 @@ public class EditNoteFragmentActivity extends FragmentActivity implements
 		transaction.commit();
 	}
 
-	/**
-	 * 保存和回复撤销和重做图标的状态
-	 */
-	public void changeStateOfUndoRedo(boolean undoState, boolean redoState) {
-		menu_Undo.setEnabled(undoState);
-		menu_Redo.setEnabled(redoState);
-	}
-
-	/**
-	 * 进入某一种模式的时候，要改变其他模式对应的图标的状态
-	 */
-	public void changeOtherIconState(int clickID) {
-		switch (clickID) {
-		case R.id.id_edit_title_pen:
-			edit_Pen.setSelected(true);
-			edit_Text.setSelected(false);
-			edit_Clean.setSelected(false);
-			menu_Undo.setClickable(true);
-			menu_Redo.setClickable(true);
-			break;
-		case R.id.id_edit_title_text:
-			edit_Text.setSelected(true);
-			edit_Pen.setSelected(false);
-			edit_Clean.setSelected(false);
-			menu_Undo.setEnabled(false);
-			menu_Redo.setEnabled(false);
-			break;
-		case R.id.id_edit_title_clean:
-			edit_Clean.setSelected(true);
-			edit_Text.setSelected(false);
-			edit_Pen.setSelected(false);
-			menu_Undo.setClickable(true);
-			menu_Redo.setClickable(true);
-			break;
-
-		default:
-			break;
-		}
-	}
+	
 
 	@Override
 	public void onClick(View v) {
-		changeOtherIconState(v.getId());
-		switch (v.getId()) {
-		case R.id.id_edit_title_pre:
-			mEditFragment.getmPenView().undo();
-			break;
-		case R.id.id_edit_title_next:
-			mEditFragment.getmPenView().redo();
-			break;
-		case R.id.id_edit_title_more:
-			break;
-		case R.id.id_edit_title_save:
-			mEditFragment.getmPenView().savePicture();
-			break;
-		case R.id.id_edit_title_pen:
-			mEditFragment.changeCurrentMode(v.getId());
-			break;
-		case R.id.id_edit_title_text:
-			mEditFragment.changeCurrentMode(v.getId());
-			break;
-		case R.id.id_edit_title_clean:
-			mEditFragment.changeCurrentMode(v.getId());
-			break;
-		default:
-			break;
-		}
+		
+		
 
 	}
 

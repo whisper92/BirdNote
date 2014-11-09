@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/id_edit_main_fl_bg"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/note_bg_style00" >
+    android:orientation="vertical" >
 
-    <com.bird.note.customer.FullScreenEditText
-        android:id="@+id/id_edit_main_et"
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/edit_note_header" />
+
+    <FrameLayout
+        android:id="@+id/id_edit_main_fl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00000000"
-        android:focusable="true"
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        android:lineSpacingExtra="5dp"
-        android:maxLines="22"
-        android:singleLine="false"
-        android:textScaleX="1.5" />
+        android:background="@drawable/note_bg" >
 
-</FrameLayout>
+        <FrameLayout
+            android:id="@+id/id_edit_main_fl_warpper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/note_bg_style00" >
+
+            <com.bird.note.customer.FullScreenEditText
+                android:id="@+id/id_edit_main_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00000000"
+                android:focusable="true"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:lineSpacingExtra="5dp"
+                android:maxLines="22"
+                android:singleLine="false"
+                android:textScaleX="1.5" />
+        </FrameLayout>
+    </FrameLayout>
+
+</LinearLayout>

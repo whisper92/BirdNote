@@ -14,6 +14,7 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -170,10 +171,11 @@ public class PenView extends View {
 		postInvalidate();
 	}
 
-	public void savePicture() {
+	public void savePicture(int mCurrentQuadrant) {
+		Log.e("wxp", "保存："+mCurrentQuadrant);
 		String filePath = CommonUtils.getSavePath();
 		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap), filePath
-				+ "/hello.png");
+				+ "/hello"+mCurrentQuadrant+".png");
 	}
 
 	public void clearImage() {

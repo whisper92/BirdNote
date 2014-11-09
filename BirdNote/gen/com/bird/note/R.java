@@ -116,9 +116,9 @@ public final class R {
     }
     public static final class id {
         public static final int id_edit_main_editfragment=0x7f09000b;
-        public static final int id_edit_main_et=0x7f090001;
-        public static final int id_edit_main_fl=0x7f09000a;
-        public static final int id_edit_main_fl_bg=0x7f090000;
+        public static final int id_edit_main_et=0x7f090002;
+        public static final int id_edit_main_fl=0x7f090000;
+        public static final int id_edit_main_fl_warpper=0x7f090001;
         public static final int id_edit_menu_change_bg=0x7f090017;
         public static final int id_edit_menu_change_page=0x7f090018;
         public static final int id_edit_menu_delete=0x7f090015;
@@ -126,14 +126,14 @@ public final class R {
         public static final int id_edit_menu_mark_colr=0x7f090019;
         public static final int id_edit_menu_save=0x7f09001a;
         public static final int id_edit_quathumb=0x7f09000c;
-        public static final int id_edit_title_clean=0x7f090005;
-        public static final int id_edit_title_header_rl=0x7f090002;
-        public static final int id_edit_title_more=0x7f090008;
-        public static final int id_edit_title_next=0x7f090007;
-        public static final int id_edit_title_pen=0x7f090003;
-        public static final int id_edit_title_pre=0x7f090006;
-        public static final int id_edit_title_save=0x7f090009;
-        public static final int id_edit_title_text=0x7f090004;
+        public static final int id_edit_title_clean=0x7f090006;
+        public static final int id_edit_title_header_rl=0x7f090003;
+        public static final int id_edit_title_more=0x7f090009;
+        public static final int id_edit_title_next=0x7f090008;
+        public static final int id_edit_title_pen=0x7f090004;
+        public static final int id_edit_title_pre=0x7f090007;
+        public static final int id_edit_title_save=0x7f09000a;
+        public static final int id_edit_title_text=0x7f090005;
         public static final int id_note_item_ll=0x7f09000d;
         public static final int id_note_item_ll_menu=0x7f09000e;
         public static final int id_note_item_thumb_iv=0x7f09000f;
