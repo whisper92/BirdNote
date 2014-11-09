@@ -27,7 +27,7 @@ public class EditFragment extends Fragment implements OnClickListener {
 	 * 当前所处的模式：绘画，文字，清除
 	 */
 	public int mCurrentMode = R.id.id_edit_title_pen;
-	public static int mCurrentQuadrant;
+	public int mCurrentQuadrant;
 	private PenView mPenView;
 	/*
 	 * 撤销和重做图标的状态
@@ -51,7 +51,7 @@ public class EditFragment extends Fragment implements OnClickListener {
 		b.putInt("mode", mode);
 		editFragment.setArguments(b);
 		
-		mCurrentQuadrant=qua;
+		
 		return editFragment;
 
 	}
@@ -78,7 +78,8 @@ public class EditFragment extends Fragment implements OnClickListener {
 		Bundle b = this.getArguments();
 		if (b != null) {
 			mCurrentMode = b.getInt("mode");
-			Log.e("wxp", "mCurrentMode-->" + mCurrentMode);
+			mCurrentQuadrant=b.getInt("quadrant");
+			Log.e("wxp", "mCurrentQuadrant-->" + mCurrentQuadrant);
 			changeCurrentMode(mCurrentMode);
 			changeOtherIconState(mCurrentMode);
 		}
