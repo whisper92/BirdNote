@@ -115,17 +115,18 @@ public final class R {
         public static final int tool_slide=0x7f020051;
     }
     public static final class id {
+        public static final int id_edit_level_flag=0x7f09000c;
         public static final int id_edit_main_editfragment=0x7f09000b;
         public static final int id_edit_main_et=0x7f090002;
         public static final int id_edit_main_fl=0x7f090000;
         public static final int id_edit_main_fl_warpper=0x7f090001;
-        public static final int id_edit_menu_change_bg=0x7f090017;
-        public static final int id_edit_menu_change_page=0x7f090018;
-        public static final int id_edit_menu_delete=0x7f090015;
-        public static final int id_edit_menu_favor=0x7f090016;
-        public static final int id_edit_menu_mark_colr=0x7f090019;
-        public static final int id_edit_menu_save=0x7f09001a;
-        public static final int id_edit_quathumb=0x7f09000c;
+        public static final int id_edit_menu_change_bg=0x7f090018;
+        public static final int id_edit_menu_change_page=0x7f090019;
+        public static final int id_edit_menu_delete=0x7f090016;
+        public static final int id_edit_menu_favor=0x7f090017;
+        public static final int id_edit_menu_mark_colr=0x7f09001a;
+        public static final int id_edit_menu_save=0x7f09001b;
+        public static final int id_edit_quathumb=0x7f09000d;
         public static final int id_edit_title_clean=0x7f090006;
         public static final int id_edit_title_header_rl=0x7f090003;
         public static final int id_edit_title_more=0x7f090009;
@@ -134,14 +135,14 @@ public final class R {
         public static final int id_edit_title_pre=0x7f090007;
         public static final int id_edit_title_save=0x7f09000a;
         public static final int id_edit_title_text=0x7f090005;
-        public static final int id_note_item_ll=0x7f09000d;
-        public static final int id_note_item_ll_menu=0x7f09000e;
-        public static final int id_note_item_thumb_iv=0x7f09000f;
-        public static final int id_note_item_title_tv=0x7f090010;
-        public static final int id_show_gv=0x7f090011;
-        public static final int id_show_title_new_pen=0x7f090013;
-        public static final int id_show_title_new_text=0x7f090014;
-        public static final int id_show_title_rl=0x7f090012;
+        public static final int id_note_item_ll=0x7f09000e;
+        public static final int id_note_item_ll_menu=0x7f09000f;
+        public static final int id_note_item_thumb_iv=0x7f090010;
+        public static final int id_note_item_title_tv=0x7f090011;
+        public static final int id_show_gv=0x7f090012;
+        public static final int id_show_title_new_pen=0x7f090014;
+        public static final int id_show_title_new_text=0x7f090015;
+        public static final int id_show_title_rl=0x7f090013;
     }
     public static final class layout {
         public static final int edit_note_fragment=0x7f030000;

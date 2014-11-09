@@ -9,6 +9,15 @@
         android:layout_height="match_parent" >
     </FrameLayout>
 
+    <com.bird.note.customer.LevelFlag
+        android:id="@+id/id_edit_level_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="40dp"
+        android:clickable="true" />
+
     <com.bird.note.customer.QuadrantThumbnail
         android:id="@+id/id_edit_quathumb"
         android:layout_width="wrap_content"
