@@ -117,6 +117,9 @@ public class EditNoteActivity extends FragmentActivity implements
 				text_array[i]=mEditFragment.getTextContent();
                 byte[] qua=mEditFragment.getQuadrantDrawContentBytes();
                 qualist.add(qua);
+			} else {
+				byte[] qua=null;
+				qualist.add(qua);
 			}
 		}
 		String text_content=JsonUtil.createJsonByArray(text_array);
