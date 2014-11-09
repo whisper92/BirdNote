@@ -7,13 +7,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bird.note.R;
@@ -38,24 +36,20 @@ public class EditNoteFragmentActivity extends FragmentActivity implements
 	
 
 	private List<EditFragment> mEditFragmentsList = new ArrayList<EditFragment>();
-	FragmentManager fragmentManager;
+	private FragmentManager fragmentManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_note_main);
-		fragmentManager = getSupportFragmentManager();
-
 		mCurrentMode = getIntent().getIntExtra("type", R.id.id_edit_title_pen);
-
-		mEditFragment = EditFragment
-				.newInstance(mCurrentQuadrant, mCurrentMode);
-
+		mEditFragment = EditFragment.newInstance(mCurrentQuadrant, mCurrentMode);
 		mEditFragmentsList.add(0, mEditFragment);
 		mEditFragmentsList.add(1, null);
 		mEditFragmentsList.add(2, null);
 		mEditFragmentsList.add(3, null);
 		
+		fragmentManager = getSupportFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.replace(R.id.id_edit_main_editfragment, mEditFragment);
 		transaction.commit();
@@ -66,29 +60,17 @@ public class EditNoteFragmentActivity extends FragmentActivity implements
 	public void initView(int type) {
 
 		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
-		quadrantThumbnail
-				.setQuadrantChangeListener(new OnQuadrantChangeListener() {
-
+		quadrantThumbnail.setQuadrantChangeListener(new OnQuadrantChangeListener() {
 					@Override
 					public void changeQua(int qua) {
-						Log.e("wxp", "切换至---》" + qua);
 						mCurrentQuadrant=qua;
-						changeToQuadrantAt(qua);
-					
+						changeToQuadrantAt(qua);			
 					}
 				});
-
-
-
-		
-
 	}
 
 	/**
-	 * 切换到某个象限
-	 * 
-	 * @param qua
-	 * @return
+	 * 切换到某个象限:最初知会实例化第一个象限，只有使用到其他象限时才会实例化该象限的fagment
 	 */
 	public void changeToQuadrantAt(int qua) {
 
@@ -104,16 +86,13 @@ public class EditNoteFragmentActivity extends FragmentActivity implements
 
 		for (int i = 0; i < mEditFragmentsList.size(); i++) {
 			if (i == qua) {
-				Log.e("wxp","show这个---》"+qua);
 				transaction.show(mEditFragment);
 			} else {
 				if (mEditFragmentsList.get(i)!=null) {
-					Log.e("wxp","hide这个---》"+i);
 					transaction.hide(mEditFragmentsList.get(i));
 				}		
 			}
 		}
-		Log.e("wxp","mEditFragmentsList size"+mEditFragmentsList.size());
 		transaction.commit();
 	}
 
@@ -122,8 +101,6 @@ public class EditNoteFragmentActivity extends FragmentActivity implements
 	@Override
 	public void onClick(View v) {
 		
-		
-
 	}
 
 	@Override

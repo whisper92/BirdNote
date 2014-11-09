@@ -49,9 +49,7 @@ public class EditFragment extends Fragment implements OnClickListener {
 		Bundle b = new Bundle();
 		b.putInt("quadrant", qua);
 		b.putInt("mode", mode);
-		editFragment.setArguments(b);
-		
-		
+		editFragment.setArguments(b);	
 		return editFragment;
 
 	}
@@ -79,7 +77,7 @@ public class EditFragment extends Fragment implements OnClickListener {
 		if (b != null) {
 			mCurrentMode = b.getInt("mode");
 			mCurrentQuadrant=b.getInt("quadrant");
-			Log.e("wxp", "mCurrentQuadrant-->" + mCurrentQuadrant);
+
 			changeCurrentMode(mCurrentMode);
 			changeOtherIconState(mCurrentMode);
 		}
@@ -117,8 +115,7 @@ public class EditFragment extends Fragment implements OnClickListener {
                changeStateOfUndoRedo(mUndoState, mRedoState);
 			}
 		});
-		mPenView.setLayoutParams(new FrameLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		mPenView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 	}
 
