@@ -18,17 +18,17 @@ import com.bird.note.utils.BitmapUtil;
  */
 
 public class LevelFlag extends View {
-	private int mCurrentLeve = 0;
+	public int mCurrentLevel = 0;
 
 	private int[] levelImages = { R.drawable.mark_blue, R.drawable.mark_green,
 			R.drawable.mark_yellow, R.drawable.mark_red };
 
 	public int getCurrentLeve() {
-		return mCurrentLeve;
+		return mCurrentLevel;
 	}
 
-	public void setCurrentLeve(int mCurrentLeve) {
-		this.mCurrentLeve = mCurrentLeve;
+	public void setCurrentLeve(int mCurrentLevel) {
+		this.mCurrentLevel = mCurrentLevel;
 	}
 
 	public LevelFlag(Context context, AttributeSet attrs, int defStyle) {
@@ -98,14 +98,12 @@ public class LevelFlag extends View {
 	 * 循环切换level
 	 */
 	public int nextLevel() {
-		if (mCurrentLeve == 3) {
-			mCurrentLeve = 0;
-			Log.e("wxp", "level------->"+mCurrentLeve);
-			return mCurrentLeve;
+		if (mCurrentLevel == 3) {
+			mCurrentLevel = 0;
+			return mCurrentLevel;
 		} else {
-			Log.e("wxp", "level------->"+mCurrentLeve);
-			mCurrentLeve= mCurrentLeve +1;
-           return mCurrentLeve;
+			mCurrentLevel= mCurrentLevel +1;
+           return mCurrentLevel;
 		}
 		
 		

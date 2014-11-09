@@ -61,9 +61,6 @@ public class FullScreenEditText extends EditText {
 	@Override
 	protected void onTextChanged(CharSequence text, int start,
 			int lengthBefore, int lengthAfter) {
-		Log.d("wxp", "  |  start" + start + "  |  " + "lengthBefore" + lengthBefore
-				+ "  |  lengthAfter" + lengthAfter);
-	
 		super.onTextChanged(text, start, lengthBefore, lengthAfter);
 	}
 }

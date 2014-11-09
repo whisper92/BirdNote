@@ -11,7 +11,7 @@ import com.bird.note.model.BirdNote;
 import com.bird.note.model.ChildNote;
 import com.bird.note.model.ShowNoteAdapter;
 import com.bird.note.model.TextLine;
-import com.bird.note.ui.EditNoteFragmentActivity;
+import com.bird.note.ui.EditNoteActivity;
 import com.bird.note.utils.BitmapUtil;
 
 import android.app.*;
@@ -80,7 +80,7 @@ public class TestGridViewActivity extends Activity implements
 	@Override
 	public void onClick(View v) {
 		Intent intent = new Intent();
-		intent.setClass(TestGridViewActivity.this, EditNoteFragmentActivity.class);
+		intent.setClass(TestGridViewActivity.this, EditNoteActivity.class);
 		if (v.getId() == R.id.id_show_title_new_pen) {
 			intent.putExtra("type", R.id.id_edit_title_pen);
 		}

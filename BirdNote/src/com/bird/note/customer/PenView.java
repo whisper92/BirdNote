@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.bird.note.R;
 import com.bird.note.model.CleanPaint;
 import com.bird.note.model.DrawPaint;
 import com.bird.note.model.PenDrawPath;
@@ -55,7 +56,7 @@ public class PenView extends View {
 	 */
 	private Paint mDrawPaint;
 	private Canvas mDrawCanvas;
-	private Bitmap mDrawBitmap;
+	public Bitmap mDrawBitmap;
 
 	/*
 	 * 擦除模式对应的paint,canvas,bitmap
@@ -79,6 +80,8 @@ public class PenView extends View {
 	 */
 	private List<PenDrawPath> mDeletePath = null;
 
+	private int mCanvasWidth=0;
+	private int mCanvasHeight=0;
 	public PenView(Context context, AttributeSet attr, int defStyle) {
 		super(context, attr, defStyle);
 		init(context);
@@ -96,6 +99,9 @@ public class PenView extends View {
 
 	private void init(Context context) {
 		mContext = context;
+		mCanvasWidth=(int)getResources().getDimension(R.dimen.dimen_edit_canvas_width);
+		mCanvasHeight=(int)getResources().getDimension(R.dimen.dimen_edit_canvas_height);
+		
 		mCurPaint = new Paint();
 		mDrawPaint = DrawPaint.getInstance();
 		mCleanPaint = CleanPaint.getInstance();
@@ -103,8 +109,7 @@ public class PenView extends View {
 
 		initDrawPaint();
 
-		mDrawBitmap = Bitmap.createBitmap(CommonUtils.getScreenWidth(mContext),
-				CommonUtils.getScreenHeight(mContext), Bitmap.Config.ARGB_8888);
+		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth,mCanvasHeight, Bitmap.Config.ARGB_8888);
 		mDrawBitmap.eraseColor(Color.TRANSPARENT);
 
 		mDrawCanvas = new Canvas();
@@ -117,7 +122,7 @@ public class PenView extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 
-		canvas.drawBitmap(mDrawBitmap, 0, 0, null);
+		canvas.drawBitmap(mDrawBitmap, 2, 2, null);
 		if (mPath != null) {
 			mDrawCanvas.drawPath(mPath, mCurPaint);
 		}
@@ -172,7 +177,6 @@ public class PenView extends View {
 	}
 
 	public void savePicture(int mCurrentQuadrant) {
-		Log.e("wxp", "保存："+mCurrentQuadrant);
 		String filePath = CommonUtils.getSavePath();
 		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap), filePath
 				+ "/hello"+mCurrentQuadrant+".png");
@@ -182,10 +186,7 @@ public class PenView extends View {
 		mSavePath.clear();
 		mDeletePath.clear();
 
-		int width = mDrawCanvas.getWidth();
-		int height = mDrawCanvas.getHeight();
-		mDrawBitmap = Bitmap.createBitmap(width, height,
-				Bitmap.Config.ARGB_8888);
+		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		postInvalidate();
 
@@ -198,11 +199,7 @@ public class PenView extends View {
 			mSavePath.remove(nSize - 1);
 		} else
 			return;
-
-		int width = mDrawCanvas.getWidth();
-		int height = mDrawCanvas.getHeight();
-		mDrawBitmap = Bitmap.createBitmap(width, height,
-				Bitmap.Config.ARGB_8888);
+		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasWidth,Bitmap.Config.ARGB_8888);
 		mDrawCanvas.setBitmap(mDrawBitmap);
 
 		Iterator<PenDrawPath> iter = mSavePath.iterator();
@@ -225,10 +222,7 @@ public class PenView extends View {
 		} else
 			return;
 
-		int width = mDrawCanvas.getWidth();
-		int height = mDrawCanvas.getHeight();
-		mDrawBitmap = Bitmap.createBitmap(width, height,
-				Bitmap.Config.ARGB_8888);
+		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		mDrawCanvas.setBitmap(mDrawBitmap);
 
 		Iterator<PenDrawPath> iter = mSavePath.iterator();
