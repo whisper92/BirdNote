@@ -172,7 +172,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		case R.id.id_edit_title_more:
 			break;
 		case R.id.id_edit_title_save:
-			//mPenView.savePicture(mCurrentQuadrant);
+			mPenView.savePicture(mCurrentQuadrant);
 			((EditNoteActivity)getActivity()).insertNewNote(((EditNoteActivity)getActivity()).generateNewNote());
 			break;
 		case R.id.id_edit_title_pen:

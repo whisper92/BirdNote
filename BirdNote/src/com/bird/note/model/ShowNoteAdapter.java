@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.bird.note.R;
 import com.bird.note.utils.BitmapUtil;
+import com.bird.note.utils.CommonUtils;
 
 public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener{
 	private List<BirdNote> mListData;
@@ -41,8 +43,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		this.mInflater=context.getLayoutInflater();
 		scroller=new Scroller(context);
 	}
-
-
 
 	/*
 	 * 根据笔记的等级判断他的mark的颜色
@@ -112,7 +112,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Log.e("wxp","getView start");
 		NoteHolder holder=null;
 		BirdNote birdNote=(BirdNote)getItem(position);
 		
@@ -127,9 +126,11 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		}
 
 		holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
+        holder.thumbnail.setBackgroundColor(Color.RED);
+		BitmapUtil.writeBytesToFile(birdNote.thumbnail, CommonUtils.getSavePath()+"/hello.png");
         holder.title.setText(birdNote.title);
         holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
-    	Log.e("wxp","getView end");
+    	
 
 		return convertView;
 	}

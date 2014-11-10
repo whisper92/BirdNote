@@ -65,9 +65,9 @@ public class DbHelper {
 			BirdNote birdNote=new BirdNote();
 			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
 			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
-			byte[] blob = cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
-			Bitmap bmp = BitmapFactory.decodeByteArray(blob, 0, blob.length);  
-			birdNote.thumbnail=BitmapUtil.decodeBitmapToBytes(bmp);
+			//byte[] blob = cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
+			//Bitmap bmp = BitmapFactory.decodeByteArray(blob, 0, blob.length);  
+			birdNote.thumbnail=cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
 			birdNotesList.add(birdNote);	
 		}
 		cursor.close();

@@ -28,6 +28,7 @@ import com.bird.note.customer.QuadrantThumbnail.OnQuadrantChangeListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdNote;
 import com.bird.note.utils.BitmapUtil;
+import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.JsonUtil;
 
 public class EditNoteActivity extends FragmentActivity implements
@@ -116,10 +117,10 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+/*		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			Toast.makeText(EditNoteActivity.this, "确定返回", 500).show();
 			return false;
-		}
+		}*/
 		return super.onKeyDown(keyCode, event);
 	}
 
@@ -210,7 +211,8 @@ public class EditNoteActivity extends FragmentActivity implements
 	public byte[] createThumbnailByQuadrant(){
 		Bitmap bitmap=mEditQuaFragmentsList.get(0).getQuadrantDrawContentBitmap();
 		Bitmap thumbBitmap=Bitmap.createBitmap(bitmap, 0, 0,(int) getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)getResources().getDimension(R.dimen.dimen_create_thumbnail_height));
-		return BitmapUtil.decodeBitmapToBytes(thumbBitmap);
+		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap), CommonUtils.getSavePath()+"/thumb.png");
+		return BitmapUtil.decodeBitmapToBytes(bitmap);
 	}
 
 }

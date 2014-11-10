@@ -41,36 +41,12 @@ public class TestGridViewActivity extends Activity implements
 		setContentView(R.layout.show_notes);
 		Db db = new Db(this);
 		DbHelper dbHelper=new DbHelper(this);
-		SQLiteDatabase dbRead = db.getReadableDatabase();
-        
-		ArrayList<BirdNote> listData = new ArrayList<BirdNote>();
-		for (int i = 0; i < 40; i++) {
-
-			BirdNote birdNote = new BirdNote();
-			birdNote._id = i;
-			birdNote.level = i;
-			birdNote.title = i + "--->";
-			if (i % 4 == 1) {
-				birdNote.thumbnail = BitmapUtil
-						.decodeBitmapToBytes(BitmapUtil
-								.decodeDrawableToBitmap(getResources().getDrawable(
-										R.drawable.ic_launcher)));
-			} else {
-				birdNote.thumbnail = BitmapUtil
-						.decodeBitmapToBytes(BitmapUtil
-								.decodeDrawableToBitmap(getResources().getDrawable(
-										R.drawable.show_title_add_text)));
-
-			}
-			listData.add(birdNote);
-		}
 
 		GridView gridView = (GridView) findViewById(R.id.id_show_gv);
 		ShowNoteAdapter noteAdapter = new ShowNoteAdapter(this,dbHelper.queryShowNotes() ,gridView);
 		gridView.setAdapter(noteAdapter);
 		noteAdapter.notifyDataSetChanged();
 
-		Log.e("wxp", "data length--->" + listData.size());
 		addPen = (ImageView) findViewById(R.id.id_show_title_new_pen);
 		addPen.setOnClickListener(this);
 		addText = (ImageView) findViewById(R.id.id_show_title_new_text);
