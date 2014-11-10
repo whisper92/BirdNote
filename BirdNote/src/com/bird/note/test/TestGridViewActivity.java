@@ -8,7 +8,6 @@ import java.util.Map;
 import com.bird.note.R;
 import com.bird.note.dao.Db;
 import com.bird.note.model.BirdNote;
-import com.bird.note.model.ChildNote;
 import com.bird.note.model.ShowNoteAdapter;
 import com.bird.note.model.TextLine;
 import com.bird.note.ui.EditNoteActivity;
@@ -50,12 +49,12 @@ public class TestGridViewActivity extends Activity implements
 			birdNote.level = i;
 			birdNote.title = i + "--->";
 			if (i % 4 == 1) {
-				birdNote.byteArrayNoteThumbnail = BitmapUtil
+				birdNote.byteArrayThumbnail = BitmapUtil
 						.decodeBitmapToBytes(BitmapUtil
 								.decodeDrawableToBitmap(getResources().getDrawable(
 										R.drawable.ic_launcher)));
 			} else {
-				birdNote.byteArrayNoteThumbnail = BitmapUtil
+				birdNote.byteArrayThumbnail = BitmapUtil
 						.decodeBitmapToBytes(BitmapUtil
 								.decodeDrawableToBitmap(getResources().getDrawable(
 										R.drawable.show_title_add_text)));

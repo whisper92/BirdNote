@@ -25,6 +25,17 @@ public class DbHelper {
 		dbWrite.insert(NotesTable.TABLE_NAME, null, values);
 	}
 	
+	/**
+	 * 插入新的笔记
+	 * @param level : 笔记等级
+	 * @param title : 笔记标题
+	 * @param text_content : 笔记文本内容
+	 * @param qua0 : 0象限绘制内容
+	 * @param qua1 : 1象限绘制内容
+	 * @param qua2 : 2象限绘制内容
+	 * @param qua3 : 3象限绘制内容
+	 * @param thumbnail : 缩略图
+	 */
 	public void insertNewNote(int level,String title,String text_content,byte[] qua0,byte[] qua1,byte[]qua2,byte[] qua3,byte[] thumbnail){
 		ContentValues values=new ContentValues();
 		values.put(NotesTable.LEVEL, level);

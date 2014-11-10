@@ -129,7 +129,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		/*
 		 * 应该在实例化类的时候就判断bitmap是否为空，而不是在这里判断
 		 */
-		holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.byteArrayNoteThumbnail));
+		holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.byteArrayThumbnail));
         holder.title.setText(birdNote.title);
         holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
     	Log.e("wxp","getView end");

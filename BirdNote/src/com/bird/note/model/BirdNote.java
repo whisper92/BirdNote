@@ -26,26 +26,36 @@ public class BirdNote implements Parcelable {
 	 * 标题
 	 */
 	public String title;
-	/*
-	 * 笔记中包含的四个象限的笔记
-	 */
-	public List<ChildNote> childNotes = new ArrayList<ChildNote>();
+	
+	public String textContents;
 
 	/*
 	 * 绘制的内容 public Bitmap drawContent;
 	 */
-	public byte[] byteArrayNoteContent;
+	public byte[] byteArrayQua0=null;
+	public byte[] byteArrayQua1=null;
+	public byte[] byteArrayQua2=null;
+	public byte[] byteArrayQua3=null;
 	/*
 	 * 用于显示在首页的缩略图 public Bitmap thumbnail;
 	 */
-	public byte[] byteArrayNoteThumbnail;
+	public byte[] byteArrayThumbnail=null;
 
-	public String createTime;
-	public String lastEditTime;
+	/*
+	 * public String createTime; public String lastEditTime;
+	 */
+
+	public BirdNote(){
+		
+	}
+	
+	public BirdNote(int level, String title, String textContents, byte[] byteArrayQua0,
+			byte[] byteArrayQua1, byte[] byteArrayQua2, byte[] byteArrayQua3,
+			byte[] byteArrayThumbnail) {
+	}
 
 	@Override
 	public int describeContents() {
-
 		return 0;
 	}
 
@@ -55,9 +65,13 @@ public class BirdNote implements Parcelable {
 		dest.writeInt(_id);
 		dest.writeInt(level);
 		dest.writeString(title);
-		dest.writeTypedList(childNotes);
-		dest.writeByteArray(byteArrayNoteContent);
-		dest.writeByteArray(byteArrayNoteThumbnail);
+		dest.writeString(textContents);
+		dest.writeByteArray(byteArrayQua0);
+		dest.writeByteArray(byteArrayQua1);
+		dest.writeByteArray(byteArrayQua2);
+		dest.writeByteArray(byteArrayQua3);
+		dest.writeByteArray(byteArrayThumbnail);
+		
 	}
 
 	public static final Parcelable.Creator<BirdNote> CREATOR = new Parcelable.Creator<BirdNote>() {
@@ -68,9 +82,13 @@ public class BirdNote implements Parcelable {
 			birdNote._id = source.readInt();
 			birdNote.level = source.readInt();
 			birdNote.title = source.readString();
-			source.readTypedList(birdNote.childNotes, ChildNote.CREATOR);
-			birdNote.byteArrayNoteContent = source.createByteArray();
-			birdNote.byteArrayNoteThumbnail = source.createByteArray();
+			birdNote.textContents = source.readString();
+			birdNote.byteArrayQua0 = source.createByteArray();
+			birdNote.byteArrayQua1 = source.createByteArray();
+			birdNote.byteArrayQua2 = source.createByteArray();
+			birdNote.byteArrayQua3 = source.createByteArray();
+			birdNote.byteArrayThumbnail = source.createByteArray();
+			
 			return birdNote;
 		}
 

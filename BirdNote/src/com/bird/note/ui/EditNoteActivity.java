@@ -2,6 +2,7 @@ package com.bird.note.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +24,7 @@ import com.bird.note.customer.LevelFlag;
 import com.bird.note.customer.QuadrantThumbnail;
 import com.bird.note.customer.QuadrantThumbnail.OnQuadrantChangeListener;
 import com.bird.note.dao.DbHelper;
+import com.bird.note.model.BirdNote;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.JsonUtil;
 
@@ -35,14 +38,14 @@ public class EditNoteActivity extends FragmentActivity implements
 	 * 当前所处象限
 	 */
 	private int mCurrentQuadrant = 0;
-	private EditQuadrantFragment mEditFragment;
+	private EditQuadrantFragment mEditQuaFragment;
 	/*
 	 * 当前所处模式
 	 */
 	public int mCurrentMode = 0;
 	
 
-	private List<EditQuadrantFragment> mEditFragmentsList = new ArrayList<EditQuadrantFragment>();
+	private List<EditQuadrantFragment> mEditQuaFragmentsList = new ArrayList<EditQuadrantFragment>();
 	private FragmentManager fragmentManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +53,15 @@ public class EditNoteActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_note_main);
 		mCurrentMode = getIntent().getIntExtra("type", R.id.id_edit_title_pen);
-		mEditFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrentMode);
-		mEditFragmentsList.add(0, mEditFragment);
-		mEditFragmentsList.add(1, null);
-		mEditFragmentsList.add(2, null);
-		mEditFragmentsList.add(3, null);
+		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrentMode);
+		mEditQuaFragmentsList.add(0, mEditQuaFragment);
+		mEditQuaFragmentsList.add(1, null);
+		mEditQuaFragmentsList.add(2, null);
+		mEditQuaFragmentsList.add(3, null);
 		
 		fragmentManager = getSupportFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.replace(R.id.id_edit_main_editfragment, mEditFragment);
+		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
 		transaction.commit();
 
 		initView(mCurrentMode);
@@ -82,60 +85,28 @@ public class EditNoteActivity extends FragmentActivity implements
 	public void changeToQuadrantAt(int qua) {
 
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		if (mEditFragmentsList.get(qua) == null) {
-			mEditFragment = EditQuadrantFragment.newInstance(qua, R.id.id_edit_title_pen);
-			mEditFragmentsList.remove(qua);
-			mEditFragmentsList.add(qua, mEditFragment);
-			transaction.add(R.id.id_edit_main_editfragment, mEditFragment);
+		if (mEditQuaFragmentsList.get(qua) == null) {
+			mEditQuaFragment = EditQuadrantFragment.newInstance(qua, R.id.id_edit_title_pen);
+			mEditQuaFragmentsList.remove(qua);
+			mEditQuaFragmentsList.add(qua, mEditQuaFragment);
+			transaction.add(R.id.id_edit_main_editfragment, mEditQuaFragment);
 		} else {
-			mEditFragment = mEditFragmentsList.get(qua);
+			mEditQuaFragment = mEditQuaFragmentsList.get(qua);
 		}
 
-		for (int i = 0; i < mEditFragmentsList.size(); i++) {
+		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
 			if (i == qua) {
-				transaction.show(mEditFragment);
+				transaction.show(mEditQuaFragment);
 			} else {
-				if (mEditFragmentsList.get(i)!=null) {
-					transaction.hide(mEditFragmentsList.get(i));
+				if (mEditQuaFragmentsList.get(i)!=null) {
+					transaction.hide(mEditQuaFragmentsList.get(i));
 				}		
 			}
 		}
 		transaction.commit();
 	}
 
-	/**
-	 * 将笔记保存到数据库中
-	 */
-	public void insertNewNote(){
-		int level=mLevelFlag.mCurrentLevel;
-		String title="hello world";
-		String[] text_array=new String[4];
-		List<byte[]> qualist=new ArrayList<byte[]>();
 
-		for (int i = 0; i < mEditFragmentsList.size(); i++) {
-			if (mEditFragmentsList.get(i)!=null) {
-				text_array[i]=mEditFragment.getTextContent();
-                byte[] qua=mEditFragment.getQuadrantDrawContentBytes();
-                qualist.add(qua);
-			} else {
-				byte[] qua=null;
-				qualist.add(qua);
-			}
-		}
-		String text_content=JsonUtil.createJsonByArray(text_array);
-		DbHelper dbHelper=new DbHelper(this);
-		dbHelper.insertNewNote(level, title, text_content, qualist.get(0), qualist.get(1), qualist.get(2), qualist.get(3), createThumbnailByQuadrant());
-	}
-
-	/**
-	 * 根据第一象限的内容生成预览图
-	 * @return
-	 */
-	public byte[] createThumbnailByQuadrant(){
-		Bitmap bitmap=mEditFragmentsList.get(0).getQuadrantDrawContentBitmap();
-		Bitmap thumbBitmap=Bitmap.createBitmap(bitmap, 0, 0,(int) getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)getResources().getDimension(R.dimen.dimen_create_thumbnail_height));
-		return BitmapUtil.decodeBitmapToBytes(thumbBitmap);
-	}
 	@Override
 	public void onClick(View v) {
 		
@@ -167,6 +138,71 @@ public class EditNoteActivity extends FragmentActivity implements
 			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	/**
+	 * 将笔记保存到数据库中
+	 */
+	public void insertNewNote(BirdNote birdNote){
+		DbHelper dbHelper=new DbHelper(this);
+		dbHelper.insertNewNote(birdNote.level, birdNote.title, birdNote.textContents, birdNote.byteArrayQua0, birdNote.byteArrayQua1, birdNote.byteArrayQua2, birdNote.byteArrayQua3, birdNote.byteArrayThumbnail);
+	}
+	
+	/**
+	 * 生成新的笔记对象
+	 */
+	public BirdNote createNewNote(){
+		BirdNote birdNote=new BirdNote();
+		int level=mLevelFlag.mCurrentLevel;
+		String title="hello world";
+		birdNote.level=level;
+		birdNote.title=title;
+		
+		String[] text_array=new String[4];
+		byte[] qua=null;
+		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
+			if (mEditQuaFragmentsList.get(i)!=null) {
+				//如果某个象限已经被实例化，则获取他的内容
+				text_array[i]=mEditQuaFragmentsList.get(i).getTextContent();
+                qua=mEditQuaFragmentsList.get(i).getQuadrantDrawContentBytes();
+			} else {
+				//如果某个象限未被实例化，则将他的内容设置为null
+				text_array[i]=null;
+				qua=null;
+			}
+			
+			  switch (i) {
+				case 0:
+					birdNote.byteArrayQua0=qua;
+					break;
+				case 1:
+					birdNote.byteArrayQua1=qua;
+					break;
+				case 2:
+					birdNote.byteArrayQua2=qua;
+					break;
+				case 3:
+					birdNote.byteArrayQua3=qua;
+					break;
+				default:
+					break;
+				}
+			
+		}
+		String text_content=JsonUtil.createJsonFromStrings(text_array);
+		birdNote.textContents=text_content;
+		birdNote.byteArrayThumbnail=createThumbnailByQuadrant();
+	    return birdNote;
+	}
+
+	/**
+	 * 根据第一象限的内容生成预览图
+	 * @return
+	 */
+	public byte[] createThumbnailByQuadrant(){
+		Bitmap bitmap=mEditQuaFragmentsList.get(0).getQuadrantDrawContentBitmap();
+		Bitmap thumbBitmap=Bitmap.createBitmap(bitmap, 0, 0,(int) getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)getResources().getDimension(R.dimen.dimen_create_thumbnail_height));
+		return BitmapUtil.decodeBitmapToBytes(thumbBitmap);
 	}
 
 }

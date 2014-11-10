@@ -9,23 +9,24 @@ create table notes
 (_id integer primary key autoincrement,
 level integer default 0,
 title text,
+textcontent text,
 qua0 blob,
 qua1 blob,
 qua2 blob,
 qua3 blob,
-thumbnail blob,
-textcontent text)
+thumbnail blob
+)
 ```
 
 Textlines直接以json数组的方式存储,tqua表示所在的象限,tcontent表示内容
 示例：
 ```
 {
-  "textcontent":[
-  {"tqua":"0","tcontext":"hello"},
-  {"tqua":"1","tcontext":"world"},
-  {"tqua":"2","tcontext":"hello"},
-  {"tqua":"3","tcontext":"world"}
+  "textcontents":[
+  {"qua":"0","quatcontent":"hello"},
+  {"qua":"1","quatcontent":"world"},
+  {"qua":"2","quatcontent":"hello"},
+  {"qua":"3","quatcontent":"world"}
   ]
 }
 ```
