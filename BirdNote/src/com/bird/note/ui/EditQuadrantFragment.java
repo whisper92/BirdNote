@@ -222,7 +222,12 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.id_edit_title_save:
 			//mPenView.savePicture(mCurrentQuadrant);
-			saveNewNote();
+			if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
+				saveUpdateNote();
+			} else {
+				saveNewNote();
+			}
+			
 			break;
 		case R.id.id_edit_title_pen:
 			changeCurrentMode(v.getId());
@@ -242,13 +247,22 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		  new Handler().post(new Runnable() {
 			@Override
 			public void run() {			
-				new DbHelper(getActivity()).insertNewNote(getActivity(),((EditNoteActivity)getActivity()).generateNewNote());
+				new DbHelper(getActivity()).insertNewNote(((EditNoteActivity)getActivity()).generateNewNote());
 				((EditNoteActivity)getActivity()).editHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
 			}
-		});
-		  
+		});	  
 	}
 
+	public void saveUpdateNote(){
+		  new Handler().post(new Runnable() {
+			@Override
+			public void run() {			
+				new DbHelper(getActivity()).updateNoteById(((EditNoteActivity)getActivity()).generateNewNote(),mBirdNote._id+"");
+				((EditNoteActivity)getActivity()).editHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
+			}
+		});	  
+	}
+	
 	/**
 	 * 保存和回复撤销和重做图标的状态
 	 */

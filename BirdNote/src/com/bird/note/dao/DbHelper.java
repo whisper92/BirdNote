@@ -52,18 +52,20 @@ public class DbHelper {
 		values.put(NotesTable.BG_ID, bg_id);
 		dbWrite.insert(NotesTable.TABLE_NAME, null, values);
 		dbWrite.close();
-		Log.e("wxp","插入成功");
 	}
 	
 	public void insertNewNote(ContentValues values){
 		dbWrite.insert(NotesTable.TABLE_NAME, null, values);
 	}
 	
-	public void insertNewNote(Context context,BirdNote birdNote){
-		DbHelper dbHelper=new DbHelper(context);
-		dbHelper.insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background);
+	public void insertNewNote(BirdNote birdNote){
+		insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background);
 	}
 	
+	/**
+	 * 查询所有笔记的id，level,title,以及thumbnail，用于首页展示。
+	 * @return
+	 */
 	public List<BirdNote> queryShowNotes(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
 		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, "_id desc");
@@ -86,7 +88,7 @@ public class DbHelper {
 	}
 	
 	/**
-	 * 这个方法由birdnote，以及id，从数据库中查询生成了一个完整的BirdNote.
+	 * 这个方法由birdnote，以及id，从数据库中查询生成了一个完整的BirdNote.用于继续编辑笔记。
 	 * @param birdNote
 	 * @param note_id
 	 * @return
@@ -102,6 +104,25 @@ public class DbHelper {
 		}
         cursor.close();
 		return birdNote;
+	}
+	
+	/**
+	 * 根据id更新笔记
+	 * @param birdNote
+	 * @param note_id
+	 */
+	public void updateNoteById(BirdNote birdNote,String  note_id){
+		ContentValues values=new ContentValues();
+		values.put(NotesTable.LEVEL, birdNote.level);
+		values.put(NotesTable.TITLE, birdNote.title);
+		values.put(NotesTable.TEXTCONTENT, birdNote.textcontents);
+		values.put(NotesTable.QUA0, birdNote.qua0);
+		values.put(NotesTable.QUA1, birdNote.qua1);
+		values.put(NotesTable.QUA2, birdNote.qua2);
+		values.put(NotesTable.QUA3, birdNote.qua3);
+		values.put(NotesTable.THUMBNAIL, birdNote.thumbnail);
+		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
+		dbWrite.close();
 	}
 
 }
