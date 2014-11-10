@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bird.note.R;
+import com.bird.note.ui.EditNoteActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 
@@ -73,7 +75,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	 * 根据id获得缩略图的背景
 	 */
 	public int getThumbnailBgById(int bg_id){
-		Log.e("wxp", "bg_id-------->"+bg_id);
+		
 		int drawableID=R.drawable.note_bg_style00_thumbnail;
 		switch (bg_id) {
 		case 0:
@@ -104,7 +106,14 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
 	
-		Toast.makeText(mContext, mListData.get(position).title, 500).show();
+		Toast.makeText(mContext, mListData.get(position)._id+"", 500).show();
+		Intent intent=new Intent();
+		intent.setClass(mContext, EditNoteActivity.class);
+		intent.putExtra(BirdMessage.START_TYPE_UPDATE, BirdMessage.START_TYPE_UPDATE_VALUE);
+		intent.putExtra(BirdMessage.START_MODE_DRAW, BirdMessage.START_MODE_DRAW_KEY);
+		intent.putExtra(BirdMessage.START_NOTE_ID_KEY, mListData.get(position)._id);
+		
+		mContext.startActivity(intent);
 	}
 
 	@Override

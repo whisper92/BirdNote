@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.json.JSONException;
 
+import android.R.integer;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,17 +44,26 @@ public class EditNoteActivity extends FragmentActivity implements
 	public LevelFlag mLevelFlag;
 	private QuadrantThumbnail quadrantThumbnail;
 
+
+	/*
+	 * 当前所处模式：绘图或文字
+	 */
+	public int mCurrentMode = 0;
+	
+	/*
+	 * 当前的类型：创建或更新
+	 */
+	public int mCurrentType=BirdMessage.START_TYPE_CREATE_VALUE;
+	
+	private EditQuadrantFragment mEditQuaFragment;
 	/*
 	 * 当前所处象限
 	 */
 	private int mCurrentQuadrant = 0;
-	private EditQuadrantFragment mEditQuaFragment;
-	/*
-	 * 当前所处模式
-	 */
-	public int mCurrentMode = 0;
 	
+	private int mNoteID=-1;
 
+	
 	private List<EditQuadrantFragment> mEditQuaFragmentsList = new ArrayList<EditQuadrantFragment>();
 	private FragmentManager fragmentManager;
 	@Override
@@ -61,7 +71,17 @@ public class EditNoteActivity extends FragmentActivity implements
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_note_main);
-		mCurrentMode = getIntent().getIntExtra("type", R.id.id_edit_title_pen);
+		Intent intent=getIntent();
+		mCurrentType=intent.getIntExtra(BirdMessage.START_TYPE_CREATE, BirdMessage.START_TYPE_CREATE_VALUE);
+		if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
+			//若更新笔记，获得传过来的ID
+			mNoteID=intent.getIntExtra(BirdMessage.START_NOTE_ID_KEY, -1);
+		} else {
+			//若创建笔记
+			
+		}
+		mCurrentMode = intent.getIntExtra(BirdMessage.START_MODE_DRAW, R.id.id_edit_title_pen);
+			
 		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrentMode);
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
 		mEditQuaFragmentsList.add(1, null);

@@ -16,6 +16,7 @@ import com.bird.note.R;
 import com.bird.note.dao.Db;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.dao.NotesTable;
+import com.bird.note.model.BirdMessage;
 import com.bird.note.model.ShowNoteAdapter;
 import com.bird.note.ui.EditNoteActivity;
 
@@ -59,11 +60,12 @@ public class TestGridViewActivity extends Activity implements
 		Intent intent = new Intent();
 		intent.setClass(TestGridViewActivity.this, EditNoteActivity.class);
 		if (v.getId() == R.id.id_show_title_new_pen) {
-			intent.putExtra("type", R.id.id_edit_title_pen);
+			intent.putExtra(BirdMessage.START_MODE_DRAW, R.id.id_edit_title_pen);
 		}
 		if (v.getId() == R.id.id_show_title_new_text) {
-			intent.putExtra("type", R.id.id_edit_title_text);
+			intent.putExtra(BirdMessage.START_MODE_TEXT, R.id.id_edit_title_text);
 		}
+		intent.putExtra(BirdMessage.START_TYPE_CREATE, BirdMessage.START_TYPE_CREATE_VALUE);
 		startActivity(intent);
 		//finish();
 	}

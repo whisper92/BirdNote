@@ -66,9 +66,10 @@ public class DbHelper {
 	
 	public List<BirdNote> queryShowNotes(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, "_id desc");
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, "_id desc");
 		while (cursor.moveToNext()) {
 			BirdNote birdNote=new BirdNote();
+			birdNote._id=cursor.getInt(cursor.getColumnIndex(NotesTable._ID));
 			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
 			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
 			//byte[] blob = cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));

@@ -31,11 +31,11 @@ public class JsonUtil {
 		}
 		jsonString+="]}";
 		
-		
+/*		
 		String[] hello=parseJsonToStrings(jsonString);
 		for (int i = 0; i < hello.length; i++) {
 			Log.e("wxp",i+hello[i]);
-		}
+		}*/
 		return jsonString;
 	}
 	
