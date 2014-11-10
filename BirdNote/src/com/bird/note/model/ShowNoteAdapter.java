@@ -109,10 +109,9 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		Toast.makeText(mContext, mListData.get(position)._id+"", 500).show();
 		Intent intent=new Intent();
 		intent.setClass(mContext, EditNoteActivity.class);
-		intent.putExtra(BirdMessage.START_TYPE_UPDATE, BirdMessage.START_TYPE_UPDATE_VALUE);
-		intent.putExtra(BirdMessage.START_MODE_DRAW, BirdMessage.START_MODE_DRAW_KEY);
-		intent.putExtra(BirdMessage.START_NOTE_ID_KEY, mListData.get(position)._id);
-		
+		intent.putExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_UPDATE_VALUE);
+		intent.putExtra(BirdMessage.START_MODE_KEY, BirdMessage.START_MODE_DRAW_KEY);
+		intent.putExtra(BirdMessage.INITENT_PARCEL_NOTE, mListData.get(position));
 		mContext.startActivity(intent);
 	}
 

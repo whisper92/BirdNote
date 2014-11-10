@@ -86,5 +86,25 @@ public class DbHelper {
 		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, null);
         return cursor;
 	}
+	
+	/**
+	 * 这个方法由birdnote，以及id，从数据库中查询生成了一个完整的BirdNote.
+	 * @param birdNote
+	 * @param note_id
+	 * @return
+	 */
+	public BirdNote queryNoteById(BirdNote birdNote,String note_id){
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.TEXTCONTENT,NotesTable.QUA0,NotesTable.QUA1,NotesTable.QUA2,NotesTable.QUA3}, "_id=?", new String[]{"0"}, null, null, null);
+        
+		while (cursor.moveToNext()) {
+			birdNote.textcontents=cursor.getString(cursor.getColumnIndex(NotesTable.TEXTCONTENT));
+			birdNote.qua0=cursor.getBlob(cursor.getColumnIndex(NotesTable.QUA0));
+			birdNote.qua1=cursor.getBlob(cursor.getColumnIndex(NotesTable.QUA1));
+			birdNote.qua2=cursor.getBlob(cursor.getColumnIndex(NotesTable.QUA2));
+			birdNote.qua3=cursor.getBlob(cursor.getColumnIndex(NotesTable.QUA3));
+		}
+        cursor.close();
+		return birdNote;
+	}
 
 }

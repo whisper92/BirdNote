@@ -20,6 +20,7 @@ import com.bird.note.customer.PenView;
 import com.bird.note.customer.PenView.OnPathListChangeListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
+import com.bird.note.model.BirdNote;
 import com.bird.note.test.MainActivity;
 import com.bird.note.utils.BitmapUtil;
 
@@ -35,6 +36,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 * 当前所处的模式：绘画，文字，清除
 	 */
 	public int mCurrentMode = R.id.id_edit_title_pen;
+	public int mCurrentType = BirdMessage.START_TYPE_CREATE_VALUE;
 	public int mCurrentQuadrant;
 	private PenView mPenView;
 	/*
@@ -51,17 +53,36 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	private ImageView menu_Redo;
 	private ImageView menu_More;
 	private ImageView menu_Save;
+	
+	private BirdNote mBirdNote=null;
 
+	/*
+	 * 创建笔记时实例化的方式
+	 */
 	public static EditQuadrantFragment newInstance(int qua, int mode) {
 		EditQuadrantFragment editFragment = new EditQuadrantFragment();
 		Bundle b = new Bundle();
+		b.putInt(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_CREATE_VALUE);
 		b.putInt("quadrant", qua);
 		b.putInt("mode", mode);
 		editFragment.setArguments(b);	
 		return editFragment;
-
 	}
 
+	/*
+	 * 更新笔记时实例化的方式
+	 */
+	public static EditQuadrantFragment newInstance(int qua, int mode,BirdNote birdNote) {
+		EditQuadrantFragment editFragment = new EditQuadrantFragment();
+		Bundle b = new Bundle();
+		b.putInt(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_UPDATE_VALUE);
+		b.putInt("quadrant", qua);
+		b.putInt("mode", mode);
+		b.putParcelable("birdnote", birdNote);
+		editFragment.setArguments(b);	
+		return editFragment;
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,6 +104,14 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 
 		Bundle b = this.getArguments();
 		if (b != null) {
+			mCurrentType=b.getInt(BirdMessage.START_TYPE_KEY);
+			if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
+				mBirdNote=b.getParcelable("birdnote");
+				initUpdateView(mBirdNote);
+			} else {
+				initCreateView();
+			}
+			
 			mCurrentMode = b.getInt("mode");
 			mCurrentQuadrant=b.getInt("quadrant");
 
@@ -90,6 +119,13 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			changeOtherIconState(mCurrentMode);
 		}
 		return view;
+	}
+	
+	public void initCreateView(){
+		
+	}
+	public void initUpdateView(BirdNote mBirdNote){
+		mPenView.setDrawBitmap(BitmapUtil.decodeBytesToBitmap(mBirdNote.qua0));
 	}
 
 	public void initEditFragmentView(View view) {

@@ -6,7 +6,7 @@ package com.bird.note.dao;
  *
  */
 public class NotesTable {
-	public static final String TABLE_NAME=" show_notes";
+	public static final String TABLE_NAME="show_notes";
 	public static final String _ID="_id";
 	public static final String LEVEL="level";
 	public static final String TITLE="title";

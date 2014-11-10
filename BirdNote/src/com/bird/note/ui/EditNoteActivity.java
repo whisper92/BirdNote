@@ -61,9 +61,9 @@ public class EditNoteActivity extends FragmentActivity implements
 	 */
 	private int mCurrentQuadrant = 0;
 	
-	private int mNoteID=-1;
+	private BirdNote mBirdNote=null;
 
-	
+	private DbHelper dbHelper;
 	private List<EditQuadrantFragment> mEditQuaFragmentsList = new ArrayList<EditQuadrantFragment>();
 	private FragmentManager fragmentManager;
 	@Override
@@ -71,17 +71,39 @@ public class EditNoteActivity extends FragmentActivity implements
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_note_main);
+		dbHelper=new DbHelper(this);
 		Intent intent=getIntent();
-		mCurrentType=intent.getIntExtra(BirdMessage.START_TYPE_CREATE, BirdMessage.START_TYPE_CREATE_VALUE);
+		mCurrentType=intent.getIntExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_CREATE_VALUE);
+		
 		if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
 			//若更新笔记，获得传过来的ID
-			mNoteID=intent.getIntExtra(BirdMessage.START_NOTE_ID_KEY, -1);
+			mBirdNote=intent.getParcelableExtra(BirdMessage.INITENT_PARCEL_NOTE);
+			mBirdNote=dbHelper.queryNoteById(mBirdNote, mBirdNote._id+"");
 		} else {
 			//若创建笔记
 			
 		}
-		mCurrentMode = intent.getIntExtra(BirdMessage.START_MODE_DRAW, R.id.id_edit_title_pen);
+		mCurrentMode = intent.getIntExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_pen);
 			
+		initView(mCurrentType);
+	}
+
+	public void initView(int type){
+		if (type==BirdMessage.START_TYPE_CREATE_VALUE) {
+			Log.e("wxp","START_TYPE_CREATE_VALUE"+type);
+			initCreateView(type);
+			
+		}
+        if (type==BirdMessage.START_TYPE_UPDATE_VALUE) {
+        	Log.e("wxp","START_TYPE_UPDATE_VALUE"+type);
+        	initUpdateView(type);
+		}
+	}
+	
+	public void initUpdateView(int type){
+		
+	}
+	public void initCreateView(int type) {
 		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrentMode);
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
 		mEditQuaFragmentsList.add(1, null);
@@ -92,11 +114,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
 		transaction.commit();
-
-		initView(mCurrentMode);
-	}
-
-	public void initView(int type) {
+		
 		mLevelFlag=(LevelFlag)findViewById(R.id.id_edit_level_flag);
 		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
 		quadrantThumbnail.setQuadrantChangeListener(new OnQuadrantChangeListener() {

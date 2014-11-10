@@ -97,6 +97,14 @@ public class PenView extends View {
 		init(context);
 	}
 
+	public Bitmap getDrawBitmap() {
+		return mDrawBitmap;
+	}
+
+	public void setDrawBitmap(Bitmap mDrawBitmap) {
+		this.mDrawBitmap = mDrawBitmap;
+	}
+	
 	private void init(Context context) {
 		mContext = context;
 		mCanvasWidth=(int)getResources().getDimension(R.dimen.dimen_edit_canvas_width);
