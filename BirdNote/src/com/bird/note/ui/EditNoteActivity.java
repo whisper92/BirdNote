@@ -8,10 +8,12 @@ import java.util.Map;
 
 import org.json.JSONException;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,7 +30,9 @@ import com.bird.note.customer.LevelFlag;
 import com.bird.note.customer.QuadrantThumbnail;
 import com.bird.note.customer.QuadrantThumbnail.OnQuadrantChangeListener;
 import com.bird.note.dao.DbHelper;
+import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
+import com.bird.note.test.TestGridViewActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.JsonUtil;
@@ -146,14 +150,6 @@ public class EditNoteActivity extends FragmentActivity implements
 	}
 	
 	/**
-	 * 将笔记保存到数据库中
-	 */
-	public void insertNewNote(BirdNote birdNote){
-		DbHelper dbHelper=new DbHelper(this);
-		dbHelper.insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail);
-	}
-	
-	/**
 	 * 生成新的笔记对象
 	 */
 	public BirdNote generateNewNote(){
@@ -203,6 +199,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		}
 		birdNote.textcontents=text_content;
 		birdNote.thumbnail=createThumbnailByQuadrant();
+		birdNote.background=R.drawable.note_bg_style00;
 	    return birdNote;
 	}
 
@@ -215,4 +212,19 @@ public class EditNoteActivity extends FragmentActivity implements
 		return BitmapUtil.generateThumbnailBytes(this, bitmap);
 	}
 
+	public Handler editHandler=new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case BirdMessage.SAVE_OVER:			
+				Intent intent=new Intent();
+				intent.setClass(EditNoteActivity.this, TestGridViewActivity.class);
+				startActivity(intent);
+				finish();
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
 }

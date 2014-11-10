@@ -16,6 +16,7 @@ public class NotesTable {
 	public static final String QUA2="qua2";
 	public static final String QUA3="qua3";
 	public static final String THUMBNAIL="thumbnail";
+	public static final String BG_ID="background";
 	
     public static final String SQL_CREATE="create table "+TABLE_NAME
     		+"("
@@ -27,5 +28,6 @@ public class NotesTable {
     		+QUA1+" blob,"
     		+QUA2+" blob,"
     		+QUA3+" blob,"
-    		+THUMBNAIL+" blob)";	
+    		+THUMBNAIL+" blob,"
+    		+BG_ID+" integer)";	
 }

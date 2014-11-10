@@ -6,7 +6,6 @@ import java.util.List;
 import com.bird.note.R;
 import com.bird.note.dao.Db;
 import com.bird.note.model.BirdNote;
-import com.bird.note.model.TextLine;
 import com.bird.note.test.TestParcelActivity;
 import com.bird.note.utils.BitmapUtil;
 

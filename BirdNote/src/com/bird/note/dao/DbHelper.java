@@ -28,10 +28,6 @@ public class DbHelper {
 		dbWrite=mDb.getWritableDatabase();
 	}
 	
-	public void insertNewNote(ContentValues values){
-		dbWrite.insert(NotesTable.TABLE_NAME, null, values);
-	}
-	
 	/**
 	 * 插入新的笔记
 	 * @param level : 笔记等级
@@ -43,7 +39,7 @@ public class DbHelper {
 	 * @param qua3 : 3象限绘制内容
 	 * @param thumbnail : 缩略图
 	 */
-	public void insertNewNote(int level,String title,String text_content,byte[] qua0,byte[] qua1,byte[]qua2,byte[] qua3,byte[] thumbnail){
+	public void insertNewNote(int level,String title,String text_content,byte[] qua0,byte[] qua1,byte[]qua2,byte[] qua3,byte[] thumbnail,int bg_id){
 		ContentValues values=new ContentValues();
 		values.put(NotesTable.LEVEL, level);
 		values.put(NotesTable.TITLE, title);
@@ -53,14 +49,24 @@ public class DbHelper {
 		values.put(NotesTable.QUA2, qua2);
 		values.put(NotesTable.QUA3, qua3);
 		values.put(NotesTable.THUMBNAIL, thumbnail);
+		values.put(NotesTable.BG_ID, bg_id);
 		dbWrite.insert(NotesTable.TABLE_NAME, null, values);
 		dbWrite.close();
 		Log.e("wxp","插入成功");
 	}
 	
+	public void insertNewNote(ContentValues values){
+		dbWrite.insert(NotesTable.TABLE_NAME, null, values);
+	}
+	
+	public void insertNewNote(Context context,BirdNote birdNote){
+		DbHelper dbHelper=new DbHelper(context);
+		dbHelper.insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background);
+	}
+	
 	public List<BirdNote> queryShowNotes(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL}, null, null, null, null, null);
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, "_id desc");
 		while (cursor.moveToNext()) {
 			BirdNote birdNote=new BirdNote();
 			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
@@ -68,10 +74,16 @@ public class DbHelper {
 			//byte[] blob = cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
 			//Bitmap bmp = BitmapFactory.decodeByteArray(blob, 0, blob.length);  
 			birdNote.thumbnail=cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
+			birdNote.background=cursor.getInt(cursor.getColumnIndex(NotesTable.BG_ID));
 			birdNotesList.add(birdNote);	
 		}
 		cursor.close();
 		return birdNotesList;
+	}
+	
+	public Cursor queryShowNoteCursor(){
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, null);
+        return cursor;
 	}
 
 }

@@ -31,7 +31,9 @@
         </activity>
         <activity
             android:name="com.bird.note.test.TestGridViewActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" 
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

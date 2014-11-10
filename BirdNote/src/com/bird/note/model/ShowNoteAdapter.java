@@ -68,11 +68,27 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		}
 		return drawableID;
 	}
+	
+	/*
+	 * 根据id获得缩略图的背景
+	 */
+	public int getThumbnailBgById(int bg_id){
+		Log.e("wxp", "bg_id-------->"+bg_id);
+		int drawableID=R.drawable.note_bg_style00_thumbnail;
+		switch (bg_id) {
+		case 0:
+			drawableID=R.drawable.note_bg_style00_thumbnail;
+			break;
 
+		default:
+			break;
+		}
+		return drawableID;
+	}
+	
 	class NoteHolder{
              ImageView thumbnail;
              TextView title;
-
 	}
 
 	@Override
@@ -126,12 +142,12 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		}
 
 		holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
-        holder.thumbnail.setBackgroundColor(Color.RED);
+		//后期缩略图的背景要切一个小一点的图片
+        holder.thumbnail.setBackgroundResource(getThumbnailBgById(birdNote.background));
 		BitmapUtil.writeBytesToFile(birdNote.thumbnail, CommonUtils.getSavePath()+"/hello.png");
         holder.title.setText(birdNote.title);
         holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
     	
-
 		return convertView;
 	}
 	

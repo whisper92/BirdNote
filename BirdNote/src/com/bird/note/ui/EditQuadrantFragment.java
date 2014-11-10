@@ -2,6 +2,7 @@ package com.bird.note.ui;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import com.bird.note.customer.FullScreenEditText;
 import com.bird.note.customer.LevelFlag;
 import com.bird.note.customer.PenView;
 import com.bird.note.customer.PenView.OnPathListChangeListener;
+import com.bird.note.dao.DbHelper;
+import com.bird.note.model.BirdMessage;
 import com.bird.note.test.MainActivity;
 import com.bird.note.utils.BitmapUtil;
 
@@ -172,8 +175,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		case R.id.id_edit_title_more:
 			break;
 		case R.id.id_edit_title_save:
-			mPenView.savePicture(mCurrentQuadrant);
-			((EditNoteActivity)getActivity()).insertNewNote(((EditNoteActivity)getActivity()).generateNewNote());
+			//mPenView.savePicture(mCurrentQuadrant);
+			saveNewNote();
 			break;
 		case R.id.id_edit_title_pen:
 			changeCurrentMode(v.getId());
@@ -187,6 +190,17 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		default:
 			break;
 		}
+	}
+	
+	public void saveNewNote(){
+		  new Handler().post(new Runnable() {
+			@Override
+			public void run() {			
+				new DbHelper(getActivity()).insertNewNote(getActivity(),((EditNoteActivity)getActivity()).generateNewNote());
+				((EditNoteActivity)getActivity()).editHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
+			}
+		});
+		  
 	}
 
 	/**

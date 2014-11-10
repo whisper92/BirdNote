@@ -3,6 +3,8 @@ package com.bird.note.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bird.note.R;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -41,6 +43,10 @@ public class BirdNote implements Parcelable {
 	 */
 	public byte[] thumbnail=null;
 
+	/*
+	 * 使用的背景图片id
+	 */
+	public int background=0;
 	/*
 	 * public String createTime; public String lastEditTime;
 	 */
