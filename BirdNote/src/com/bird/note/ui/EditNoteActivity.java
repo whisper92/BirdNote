@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
+
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -162,7 +164,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		byte[] qua=null;
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
 			if (mEditQuaFragmentsList.get(i)!=null) {
-				//如果某个象限已经被实例化，则获取他的内容
+				//如果某个象限已经被实例化，则获取他的内容,此处有坑，第一象限始终实例化，但是如果不输入文字，他的内容就全是空格，后期要判断一下。
 				text_array[i]=mEditQuaFragmentsList.get(i).getTextContent();
                 qua=mEditQuaFragmentsList.get(i).getQuadrantDrawContentBytes();
 			} else {
@@ -189,7 +191,13 @@ public class EditNoteActivity extends FragmentActivity implements
 				}
 			
 		}
-		String text_content=JsonUtil.createJsonFromStrings(text_array);
+		String text_content="";
+		try {
+			text_content = JsonUtil.createJsonFromStrings(text_array);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		birdNote.textContents=text_content;
 		birdNote.byteArrayThumbnail=createThumbnailByQuadrant();
 	    return birdNote;
