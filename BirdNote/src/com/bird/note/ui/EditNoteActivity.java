@@ -9,6 +9,8 @@ import java.util.Map;
 import org.json.JSONException;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -210,9 +212,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	 */
 	public byte[] createThumbnailByQuadrant(){
 		Bitmap bitmap=mEditQuaFragmentsList.get(0).getQuadrantDrawContentBitmap();
-		Bitmap thumbBitmap=Bitmap.createBitmap(bitmap, 0, 0,(int) getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)getResources().getDimension(R.dimen.dimen_create_thumbnail_height));
-		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap), CommonUtils.getSavePath()+"/thumb.png");
-		return BitmapUtil.decodeBitmapToBytes(bitmap);
+		return BitmapUtil.generateThumbnailBytes(this, bitmap);
 	}
 
 }

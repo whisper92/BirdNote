@@ -177,9 +177,7 @@ public class PenView extends View {
 	}
 
 	public void savePicture(int mCurrentQuadrant) {
-		String filePath = CommonUtils.getSavePath();
-		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap), filePath
-				+ "/hello"+mCurrentQuadrant+".png");
+		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap),  "/hello"+mCurrentQuadrant+".png");
 	}
 
 	public void clearImage() {

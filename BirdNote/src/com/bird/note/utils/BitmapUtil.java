@@ -5,11 +5,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import com.bird.note.R;
+
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.content.Context;
 import android.graphics.drawable.*;
 import android.graphics.*;
+import android.media.ThumbnailUtils;
 
 /**
  * 关于Bitmap的工具类
@@ -60,11 +63,15 @@ public class BitmapUtil {
 				.getResources().getDrawable(sourceID)));
 	}
 
-	// 将byte数组写入sd卡文件中
+	/**
+	 * 将byte数组写入sd卡文件中
+	 * @param byteArray 图片的Byte数组
+	 * @param fileName 保存的文件名称 e.g. hello.png
+	 */
 	public static void writeBytesToFile(byte[] byteArray, String fileName) {
 		FileOutputStream fos;
 		try {
-			fos = new FileOutputStream(new File(fileName));
+			fos = new FileOutputStream(new File(CommonUtils.getSavePath()+"/"+fileName));
 			fos.write(byteArray);
 			fos.flush();
 			fos.close();
@@ -72,7 +79,17 @@ public class BitmapUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
+	/**
+	 * 生成缩略图
+	 * @param context
+	 * @param origBitmap
+	 * @return byte[]
+	 */
+	public static byte[] generateThumbnailBytes(Context context,Bitmap origBitmap){
+		Bitmap thumbBitmap=ThumbnailUtils.extractThumbnail(origBitmap, (int) context.getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)context.getResources().getDimension(R.dimen.dimen_create_thumbnail_height));
+		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(thumbBitmap), "thumb.png");
+		return BitmapUtil.decodeBitmapToBytes(origBitmap);
+	}
 }
