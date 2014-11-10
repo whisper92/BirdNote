@@ -123,14 +123,12 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return mListData.size();
 	}
 

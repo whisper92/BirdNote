@@ -56,8 +56,9 @@ public class PenView extends View {
 	 */
 	private Paint mDrawPaint;
 	private Canvas mDrawCanvas;
-	private Bitmap mDrawBitmap;
-
+	public Bitmap mDrawBitmap;
+	private Bitmap mExistBitmap=null;
+	
 	/*
 	 * 擦除模式对应的paint,canvas,bitmap
 	 */
@@ -83,7 +84,7 @@ public class PenView extends View {
 	private int mCanvasWidth=0;
 	private int mCanvasHeight=0;
 	
-	private Bitmap mExistBitmap=null;
+	
 	
 	public PenView(Context context, AttributeSet attr, int defStyle) {
 		super(context, attr, defStyle);
@@ -119,7 +120,7 @@ public class PenView extends View {
 	 */
 	public void setExistBitmap(Bitmap backBitmap) {
 		this.mExistBitmap= backBitmap;
-		setBackgroundDrawable(BitmapUtil.decodeBitmapToDrawable(mContext, mExistBitmap));
+		//setBackgroundDrawable(BitmapUtil.decodeBitmapToDrawable(mContext, mExistBitmap));
 	}
 	
 	private void init(Context context) {
@@ -148,6 +149,9 @@ public class PenView extends View {
 	public void onDraw(Canvas canvas) {
 
 		canvas.drawBitmap(mDrawBitmap, 2, 2, null);
+/*		if (mExistBitmap!=null) {
+			canvas.drawBitmap(getWholeBitmap(), 0, 0,null);
+		}*/
 		if (mPath != null) {
 			mDrawCanvas.drawPath(mPath, mCurPaint);
 		}
@@ -221,7 +225,12 @@ public class PenView extends View {
 			mSavePath.remove(nSize - 1);
 		} else
 			return;
-		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
+		
+		if (mExistBitmap!=null) {
+			mDrawBitmap = Bitmap.createBitmap(getWholeBitmap(),0,0,mCanvasWidth, mCanvasHeight);
+		} else {
+			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth,mCanvasHeight, Bitmap.Config.ARGB_8888);
+		}
 		mDrawCanvas.setBitmap(mDrawBitmap);
 
 		Iterator<PenDrawPath> iter = mSavePath.iterator();
@@ -244,7 +253,12 @@ public class PenView extends View {
 		} else
 			return;
 
-		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
+		if (mExistBitmap!=null) {
+			mDrawBitmap = Bitmap.createBitmap(getWholeBitmap(),0,0,mCanvasWidth, mCanvasHeight);
+		} else {
+			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth,mCanvasHeight, Bitmap.Config.ARGB_8888);
+		}
+		
 		mDrawCanvas.setBitmap(mDrawBitmap);
 
 		Iterator<PenDrawPath> iter = mSavePath.iterator();
@@ -255,6 +269,16 @@ public class PenView extends View {
 		}
 		pathListChangeListener
 				.changeState(mSavePath.size(), mDeletePath.size());
+		postInvalidate();
+	}
+	
+	public void invalidateExistBitmap(){
+		if (mExistBitmap!=null) {
+			mDrawBitmap = Bitmap.createBitmap(getWholeBitmap(),0,0,mCanvasWidth, mCanvasHeight);
+		} else {
+			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth,mCanvasHeight, Bitmap.Config.ARGB_8888);
+		}
+		mDrawCanvas.setBitmap(mDrawBitmap);
 		postInvalidate();
 	}
 

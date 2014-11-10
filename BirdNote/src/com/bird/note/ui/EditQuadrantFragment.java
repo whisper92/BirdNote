@@ -130,12 +130,30 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		if (type==BirdMessage.START_TYPE_UPDATE_VALUE) {
 			initUpdateView(type,mBirdNote);
 		}
+		mPenView.setOnPathListChangeListenr(new OnPathListChangeListener() {
+			@Override
+			public void changeState(int undocount, int redocount) {
+				mUndoState = undocount > 0 ? true : false;
+				mRedoState = redocount > 0 ? true : false;
+               changeStateOfUndoRedo(mUndoState, mRedoState);
+			}
+		});
+		mPenView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 	}
 	public void initCreateView(int type){
+		mPenView = new PenView(getActivity());
 		
 	}
+	
+	/**
+	 * 将已经存在的内容绘制到penView上去
+	 * @param type
+	 * @param mBirdNote
+	 */
 	public void initUpdateView(int type,BirdNote mBirdNote){
+		mPenView = new PenView(getActivity());
 		mPenView.setExistBitmap(BitmapUtil.decodeBytesToBitmap(mBirdNote.qua0));
+		mPenView.invalidateExistBitmap();
 	}
 
 	public void initEditFragmentView(View view) {
@@ -161,16 +179,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		menu_Undo.setEnabled(false);
 		menu_Redo.setEnabled(false);
 		
-		mPenView = new PenView(getActivity());
-		mPenView.setOnPathListChangeListenr(new OnPathListChangeListener() {
-			@Override
-			public void changeState(int undocount, int redocount) {
-				mUndoState = undocount > 0 ? true : false;
-				mRedoState = redocount > 0 ? true : false;
-               changeStateOfUndoRedo(mUndoState, mRedoState);
-			}
-		});
-		mPenView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		
 
 	}
 
@@ -316,10 +325,10 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 * @return
 	 */
 	public byte[] getQuadrantDrawContentBytes(){
-		return BitmapUtil.decodeBitmapToBytes(mPenView.getWholeBitmap());
+		return BitmapUtil.decodeBitmapToBytes(mPenView.mDrawBitmap);
 	}
 	public Bitmap getQuadrantDrawContentBitmap(){
-		return mPenView.getWholeBitmap();
+		return mPenView.mDrawBitmap;
 	}
 
 }
