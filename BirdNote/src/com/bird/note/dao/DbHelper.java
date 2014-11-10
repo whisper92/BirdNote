@@ -1,9 +1,16 @@
 package com.bird.note.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.content.Context;
 
+import com.bird.note.model.BirdNote;
 import com.bird.note.utils.*;
 
 import android.content.*;
@@ -49,6 +56,22 @@ public class DbHelper {
 		dbWrite.insert(NotesTable.TABLE_NAME, null, values);
 		dbWrite.close();
 		Log.e("wxp","插入成功");
+	}
+	
+	public List<BirdNote> queryShowNotes(){
+		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL}, null, null, null, null, null);
+		while (cursor.moveToNext()) {
+			BirdNote birdNote=new BirdNote();
+			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
+			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
+			byte[] blob = cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
+			Bitmap bmp = BitmapFactory.decodeByteArray(blob, 0, blob.length);  
+			birdNote.thumbnail=BitmapUtil.decodeBitmapToBytes(bmp);
+			birdNotesList.add(birdNote);	
+		}
+		cursor.close();
+		return birdNotesList;
 	}
 
 }

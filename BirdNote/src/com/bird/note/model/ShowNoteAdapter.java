@@ -29,7 +29,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	private LayoutInflater mInflater;
 	
 	private Scroller scroller;
-	public ShowNoteAdapter(Activity context, ArrayList<BirdNote> listData,
+	public ShowNoteAdapter(Activity context, List<BirdNote> listData,
 			GridView gridView) {
 		super();
 
@@ -125,11 +125,8 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		}else {
 			holder=(NoteHolder)convertView.getTag();
 		}
-		
-		/*
-		 * 应该在实例化类的时候就判断bitmap是否为空，而不是在这里判断
-		 */
-		holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.byteArrayThumbnail));
+
+		holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
         holder.title.setText(birdNote.title);
         holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
     	Log.e("wxp","getView end");

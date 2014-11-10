@@ -27,19 +27,19 @@ public class BirdNote implements Parcelable {
 	 */
 	public String title;
 	
-	public String textContents;
+	public String textcontents;
 
 	/*
 	 * 绘制的内容 public Bitmap drawContent;
 	 */
-	public byte[] byteArrayQua0=null;
-	public byte[] byteArrayQua1=null;
-	public byte[] byteArrayQua2=null;
-	public byte[] byteArrayQua3=null;
+	public byte[] qua0=null;
+	public byte[] qua1=null;
+	public byte[] qua2=null;
+	public byte[] qua3=null;
 	/*
 	 * 用于显示在首页的缩略图 public Bitmap thumbnail;
 	 */
-	public byte[] byteArrayThumbnail=null;
+	public byte[] thumbnail=null;
 
 	/*
 	 * public String createTime; public String lastEditTime;
@@ -65,12 +65,12 @@ public class BirdNote implements Parcelable {
 		dest.writeInt(_id);
 		dest.writeInt(level);
 		dest.writeString(title);
-		dest.writeString(textContents);
-		dest.writeByteArray(byteArrayQua0);
-		dest.writeByteArray(byteArrayQua1);
-		dest.writeByteArray(byteArrayQua2);
-		dest.writeByteArray(byteArrayQua3);
-		dest.writeByteArray(byteArrayThumbnail);
+		dest.writeString(textcontents);
+		dest.writeByteArray(qua0);
+		dest.writeByteArray(qua1);
+		dest.writeByteArray(qua2);
+		dest.writeByteArray(qua3);
+		dest.writeByteArray(thumbnail);
 		
 	}
 
@@ -82,12 +82,12 @@ public class BirdNote implements Parcelable {
 			birdNote._id = source.readInt();
 			birdNote.level = source.readInt();
 			birdNote.title = source.readString();
-			birdNote.textContents = source.readString();
-			birdNote.byteArrayQua0 = source.createByteArray();
-			birdNote.byteArrayQua1 = source.createByteArray();
-			birdNote.byteArrayQua2 = source.createByteArray();
-			birdNote.byteArrayQua3 = source.createByteArray();
-			birdNote.byteArrayThumbnail = source.createByteArray();
+			birdNote.textcontents = source.readString();
+			birdNote.qua0 = source.createByteArray();
+			birdNote.qua1 = source.createByteArray();
+			birdNote.qua2 = source.createByteArray();
+			birdNote.qua3 = source.createByteArray();
+			birdNote.thumbnail = source.createByteArray();
 			
 			return birdNote;
 		}

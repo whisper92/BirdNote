@@ -147,13 +147,13 @@ public class EditNoteActivity extends FragmentActivity implements
 	 */
 	public void insertNewNote(BirdNote birdNote){
 		DbHelper dbHelper=new DbHelper(this);
-		dbHelper.insertNewNote(birdNote.level, birdNote.title, birdNote.textContents, birdNote.byteArrayQua0, birdNote.byteArrayQua1, birdNote.byteArrayQua2, birdNote.byteArrayQua3, birdNote.byteArrayThumbnail);
+		dbHelper.insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail);
 	}
 	
 	/**
 	 * 生成新的笔记对象
 	 */
-	public BirdNote createNewNote(){
+	public BirdNote generateNewNote(){
 		BirdNote birdNote=new BirdNote();
 		int level=mLevelFlag.mCurrentLevel;
 		String title="hello world";
@@ -175,16 +175,16 @@ public class EditNoteActivity extends FragmentActivity implements
 			
 			  switch (i) {
 				case 0:
-					birdNote.byteArrayQua0=qua;
+					birdNote.qua0=qua;
 					break;
 				case 1:
-					birdNote.byteArrayQua1=qua;
+					birdNote.qua1=qua;
 					break;
 				case 2:
-					birdNote.byteArrayQua2=qua;
+					birdNote.qua2=qua;
 					break;
 				case 3:
-					birdNote.byteArrayQua3=qua;
+					birdNote.qua3=qua;
 					break;
 				default:
 					break;
@@ -198,8 +198,8 @@ public class EditNoteActivity extends FragmentActivity implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		birdNote.textContents=text_content;
-		birdNote.byteArrayThumbnail=createThumbnailByQuadrant();
+		birdNote.textcontents=text_content;
+		birdNote.thumbnail=createThumbnailByQuadrant();
 	    return birdNote;
 	}
 
