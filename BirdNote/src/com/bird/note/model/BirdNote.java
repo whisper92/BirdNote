@@ -57,7 +57,7 @@ public class BirdNote implements Parcelable {
 	
 	public BirdNote(int level, String title, String textContents, byte[] byteArrayQua0,
 			byte[] byteArrayQua1, byte[] byteArrayQua2, byte[] byteArrayQua3,
-			byte[] byteArrayThumbnail) {
+			byte[] byteArrayThumbnail,int background) {
 	}
 
 	@Override
@@ -77,6 +77,7 @@ public class BirdNote implements Parcelable {
 		dest.writeByteArray(qua2);
 		dest.writeByteArray(qua3);
 		dest.writeByteArray(thumbnail);
+		dest.writeInt(background);
 		
 	}
 
@@ -94,6 +95,7 @@ public class BirdNote implements Parcelable {
 			birdNote.qua2 = source.createByteArray();
 			birdNote.qua3 = source.createByteArray();
 			birdNote.thumbnail = source.createByteArray();
+			birdNote.background = source.readInt();
 			
 			return birdNote;
 		}

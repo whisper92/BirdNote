@@ -253,10 +253,10 @@ public class CreateQuadrantFragment extends Fragment implements OnClickListener 
 	 * @return
 	 */
 	public byte[] getQuadrantDrawContentBytes(){
-		return BitmapUtil.decodeBitmapToBytes(mPenView.mDrawBitmap);
+		return BitmapUtil.decodeBitmapToBytes(mPenView.getWholeBitmap());
 	}
 	public Bitmap getQuadrantDrawContentBitmap(){
-		return mPenView.mDrawBitmap;
+		return mPenView.getWholeBitmap();
 	}
 
 }

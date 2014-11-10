@@ -29,11 +29,12 @@ public class LevelFlag extends View {
 
 	public void setCurrentLeve(int mCurrentLevel) {
 		this.mCurrentLevel = mCurrentLevel;
+		setBackgroundResource(levelImages[mCurrentLevel]);
 	}
 
 	public LevelFlag(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-        setBackgroundResource(R.drawable.mark_blue);
+        setBackgroundResource(levelImages[mCurrentLevel]);
 	}
 
 	public LevelFlag(Context context, AttributeSet attrs) {

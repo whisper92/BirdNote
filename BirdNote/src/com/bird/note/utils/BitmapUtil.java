@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import com.bird.note.R;
+import com.bird.note.dao.Db;
 
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -56,6 +57,11 @@ public class BitmapUtil {
 		// 把 drawable 内容画到画布中
 		drawable.draw(canvas);
 		return bitmap;
+	}
+	
+	public static Drawable decodeBitmapToDrawable(Context context,Bitmap bitmap){
+			 BitmapDrawable bd= new BitmapDrawable(context.getResources(), bitmap);
+			 return bd;
 	}
 
 	public static byte[] decodeDrawableToBytes(Context context, int sourceID) {

@@ -56,7 +56,7 @@ public class PenView extends View {
 	 */
 	private Paint mDrawPaint;
 	private Canvas mDrawCanvas;
-	public Bitmap mDrawBitmap;
+	private Bitmap mDrawBitmap;
 
 	/*
 	 * 擦除模式对应的paint,canvas,bitmap
@@ -82,6 +82,9 @@ public class PenView extends View {
 
 	private int mCanvasWidth=0;
 	private int mCanvasHeight=0;
+	
+	private Bitmap mExistBitmap=null;
+	
 	public PenView(Context context, AttributeSet attr, int defStyle) {
 		super(context, attr, defStyle);
 		init(context);
@@ -97,12 +100,26 @@ public class PenView extends View {
 		init(context);
 	}
 
-	public Bitmap getDrawBitmap() {
-		return mDrawBitmap;
+	/**
+	 * 获取完成的bitmap 
+	 * @return
+	 */
+	public Bitmap getWholeBitmap(){
+		Bitmap wholeBitmap=Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
+		Canvas wholeCanvas=new Canvas(wholeBitmap);
+		if (mExistBitmap!=null) {
+			wholeCanvas.drawBitmap(mExistBitmap, 0, 0,null);
+		}
+		wholeCanvas.drawBitmap(mDrawBitmap, 0, 0,null);
+		return wholeBitmap;
 	}
-
-	public void setDrawBitmap(Bitmap mDrawBitmap) {
-		this.mDrawBitmap = mDrawBitmap;
+	
+	/**
+	 * 如果是更新笔记的话，要设置已经存在的内容
+	 */
+	public void setExistBitmap(Bitmap backBitmap) {
+		this.mExistBitmap= backBitmap;
+		setBackgroundDrawable(BitmapUtil.decodeBitmapToDrawable(mContext, mExistBitmap));
 	}
 	
 	private void init(Context context) {
@@ -191,7 +208,6 @@ public class PenView extends View {
 	public void clearImage() {
 		mSavePath.clear();
 		mDeletePath.clear();
-
 		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		postInvalidate();
@@ -205,7 +221,7 @@ public class PenView extends View {
 			mSavePath.remove(nSize - 1);
 		} else
 			return;
-		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasWidth,Bitmap.Config.ARGB_8888);
+		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		mDrawCanvas.setBitmap(mDrawBitmap);
 
 		Iterator<PenDrawPath> iter = mSavePath.iterator();

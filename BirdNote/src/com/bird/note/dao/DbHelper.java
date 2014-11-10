@@ -72,8 +72,6 @@ public class DbHelper {
 			birdNote._id=cursor.getInt(cursor.getColumnIndex(NotesTable._ID));
 			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
 			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
-			//byte[] blob = cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
-			//Bitmap bmp = BitmapFactory.decodeByteArray(blob, 0, blob.length);  
 			birdNote.thumbnail=cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
 			birdNote.background=cursor.getInt(cursor.getColumnIndex(NotesTable.BG_ID));
 			birdNotesList.add(birdNote);	
@@ -94,8 +92,7 @@ public class DbHelper {
 	 * @return
 	 */
 	public BirdNote queryNoteById(BirdNote birdNote,String note_id){
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.TEXTCONTENT,NotesTable.QUA0,NotesTable.QUA1,NotesTable.QUA2,NotesTable.QUA3}, "_id=?", new String[]{"0"}, null, null, null);
-        
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.TEXTCONTENT,NotesTable.QUA0,NotesTable.QUA1,NotesTable.QUA2,NotesTable.QUA3}, "_id=?", new String[]{note_id}, null, null, null);
 		while (cursor.moveToNext()) {
 			birdNote.textcontents=cursor.getString(cursor.getColumnIndex(NotesTable.TEXTCONTENT));
 			birdNote.qua0=cursor.getBlob(cursor.getColumnIndex(NotesTable.QUA0));

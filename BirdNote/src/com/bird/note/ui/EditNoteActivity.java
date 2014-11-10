@@ -81,27 +81,46 @@ public class EditNoteActivity extends FragmentActivity implements
 			mBirdNote=dbHelper.queryNoteById(mBirdNote, mBirdNote._id+"");
 		} else {
 			//若创建笔记
-			
 		}
+		
 		mCurrentMode = intent.getIntExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_pen);
 			
 		initView(mCurrentType);
 	}
 
 	public void initView(int type){
+		
+		mLevelFlag=(LevelFlag)findViewById(R.id.id_edit_level_flag);
+		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
+		quadrantThumbnail.setQuadrantChangeListener(new OnQuadrantChangeListener() {
+					@Override
+					public void changeQua(int qua) {
+						mCurrentQuadrant=qua;
+						changeToQuadrantAt(qua);			
+					}
+				});
+		
 		if (type==BirdMessage.START_TYPE_CREATE_VALUE) {
-			Log.e("wxp","START_TYPE_CREATE_VALUE"+type);
 			initCreateView(type);
 			
 		}
         if (type==BirdMessage.START_TYPE_UPDATE_VALUE) {
-        	Log.e("wxp","START_TYPE_UPDATE_VALUE"+type);
         	initUpdateView(type);
 		}
 	}
 	
 	public void initUpdateView(int type){
+		mLevelFlag.setCurrentLeve(mBirdNote.level);
+		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrentMode,mBirdNote);
+		mEditQuaFragmentsList.add(0, mEditQuaFragment);
+		mEditQuaFragmentsList.add(1, null);
+		mEditQuaFragmentsList.add(2, null);
+		mEditQuaFragmentsList.add(3, null);
 		
+		fragmentManager = getSupportFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
+		transaction.commit();
 	}
 	public void initCreateView(int type) {
 		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrentMode);
@@ -114,16 +133,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
 		transaction.commit();
-		
-		mLevelFlag=(LevelFlag)findViewById(R.id.id_edit_level_flag);
-		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
-		quadrantThumbnail.setQuadrantChangeListener(new OnQuadrantChangeListener() {
-					@Override
-					public void changeQua(int qua) {
-						mCurrentQuadrant=qua;
-						changeToQuadrantAt(qua);			
-					}
-				});
+
 	}
 
 	/**
