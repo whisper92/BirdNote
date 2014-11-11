@@ -120,7 +120,6 @@ public class PenView extends View {
 	 */
 	public void setExistBitmap(Bitmap backBitmap) {
 		this.mExistBitmap= backBitmap;
-		//setBackgroundDrawable(BitmapUtil.decodeBitmapToDrawable(mContext, mExistBitmap));
 	}
 	
 	private void init(Context context) {
@@ -149,9 +148,7 @@ public class PenView extends View {
 	public void onDraw(Canvas canvas) {
 
 		canvas.drawBitmap(mDrawBitmap, 2, 2, null);
-/*		if (mExistBitmap!=null) {
-			canvas.drawBitmap(getWholeBitmap(), 0, 0,null);
-		}*/
+
 		if (mPath != null) {
 			mDrawCanvas.drawPath(mPath, mCurPaint);
 		}

@@ -25,6 +25,7 @@ import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.test.MainActivity;
 import com.bird.note.utils.BitmapUtil;
+import com.bird.note.utils.NoteApplication;
 
 public class EditQuadrantFragment extends Fragment implements OnClickListener {
 
@@ -58,7 +59,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	private ImageView menu_More;
 	private ImageView menu_Save;
 	
-
+    private NoteApplication mNoteApplication;
+	
 	/*
 	 * 创建笔记时实例化的方式
 	 */
@@ -76,11 +78,10 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	/*
 	 * 更新笔记时实例化的方式
 	 */
-	public static EditQuadrantFragment newInstance(int note_id, int mode,QuadrantContent quadrantContent) {
+	public static EditQuadrantFragment newInstance(int mode,QuadrantContent quadrantContent) {
 		EditQuadrantFragment editFragment = new EditQuadrantFragment();
 		Bundle b = new Bundle();
 		b.putInt(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_UPDATE_VALUE);
-		b.putInt("note_id", note_id);
 		b.putInt("type", BirdMessage.START_TYPE_UPDATE_VALUE);
 		b.putInt("quadrant", quadrantContent.quadrant);
 		b.putInt("mode", mode);
@@ -105,14 +106,16 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.edit_note_fragment, container,
 				false);
+		mNoteApplication=(NoteApplication)getActivity().getApplication();
+		mNoteId = mNoteApplication.getEditNoteId();
 		initEditFragmentView(view);
 
 		Bundle b = this.getArguments();
 		if (b != null) {
 			mCurrentType=b.getInt(BirdMessage.START_TYPE_KEY);
 			if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
-				quadrantContent=b.getParcelable("quadrantContent");
-				mNoteId = b.getInt("note_id");
+				quadrantContent=b.getParcelable("quadrantContent");			
+				DBUG.e(mNoteId+"TTTTTTTTTTTTMMMMMMMMMMMMMMMMDDDDDDDDDDDDDDDDD");
 			} else {
 			
 			}
@@ -237,9 +240,11 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.id_edit_title_save:
 			//mPenView.savePicture(mCurrentQuadrant);
-			if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
+			if ((((EditNoteActivity)getActivity()).mNoteEditType)==BirdMessage.NOTE_EDIT_TYPE_UPDATE) {
+				DBUG.e("保存修改过的笔记");
 				saveUpdateNote();
 			} else {
+				DBUG.e("保存新建的笔记");
 				saveNewNote();
 			}
 			

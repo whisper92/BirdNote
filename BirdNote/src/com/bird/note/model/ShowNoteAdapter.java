@@ -25,6 +25,7 @@ import com.bird.note.R;
 import com.bird.note.ui.EditNoteActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
+import com.bird.note.utils.NoteApplication;
 
 public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener{
 	private List<BirdNote> mListData;
@@ -112,6 +113,9 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		intent.putExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_UPDATE_VALUE);
 		intent.putExtra(BirdMessage.START_MODE_KEY, BirdMessage.START_MODE_DRAW_KEY);
 		intent.putExtra(BirdMessage.INITENT_PARCEL_NOTE, mListData.get(position));
+		NoteApplication noteApplication=(NoteApplication)mContext.getApplicationContext();
+		noteApplication.setCurrentNoteEidtType(BirdMessage.NOTE_EDIT_TYPE_UPDATE);
+		noteApplication.setEditNoteId(mListData.get(position)._id);
 		mContext.startActivity(intent);
 	}
 

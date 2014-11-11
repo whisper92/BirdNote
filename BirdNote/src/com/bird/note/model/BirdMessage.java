@@ -1,12 +1,13 @@
 package com.bird.note.model;
 
+import android.R.integer;
 import android.util.Log;
 
 import com.bird.note.R;
 
 public class BirdMessage {
 	/*
-	 * 要启动的类型：创建或更新
+	 * 要启动的某个象限的编辑类型：创建或更新
 	 */
 	public static final String START_TYPE_KEY="start_type";
 	/*
@@ -23,7 +24,7 @@ public class BirdMessage {
 	public static final String INITENT_PARCEL_NOTE="parcel_note";
 	
 	/*
-	 * 要启动的模式：绘图或文字编辑
+	 * 要启动的某个象限的编辑模式：绘图或文字编辑
 	 */
 	public static final String START_MODE_KEY="start_mode";
 	/*
@@ -35,6 +36,11 @@ public class BirdMessage {
 	 */
 	public static final int START_MODE_TEXT_KEY=R.id.id_edit_title_text;
 	
+	/*
+	 * 整个笔记的编辑模式：创建或更新
+	 */
+	public static final int NOTE_EDIT_TYPE_CREATE=103;
+    public static final int NOTE_EDIT_TYPE_UPDATE=104;
 
 	
 	/*

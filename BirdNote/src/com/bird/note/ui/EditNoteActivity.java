@@ -35,10 +35,10 @@ import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
-import com.bird.note.test.TestGridViewActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.JsonUtil;
+import com.bird.note.utils.NoteApplication;
 
 public class EditNoteActivity extends FragmentActivity implements
 		OnClickListener {
@@ -67,13 +67,19 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	private DbHelper dbHelper;
 	private List<EditQuadrantFragment> mEditQuaFragmentsList = new ArrayList<EditQuadrantFragment>();
-	List<QuadrantContent> quaList;
+	private List<QuadrantContent> quaList;
 	private FragmentManager fragmentManager;
+	public int mNoteEditType=BirdMessage.NOTE_EDIT_TYPE_CREATE;
+	public int mNoteId=-1;
+	private NoteApplication mNoteApplication=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_note_main);
+		mNoteApplication=(NoteApplication)getApplication();
+		mNoteEditType=mNoteApplication.getCurrentNoteEidtType();
+		
 		dbHelper=new DbHelper(this);
 		Intent intent=getIntent();
 		mCurrentType=intent.getIntExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_CREATE_VALUE);
@@ -133,11 +139,11 @@ public class EditNoteActivity extends FragmentActivity implements
 			mEditQuaFragment = mEditQuaFragmentsList.get(qua);
 			if (!mEditQuaFragment.isAdded()) {
 				transaction.add(R.id.id_edit_main_editfragment, mEditQuaFragment);
-			}
-			
-			Log.e("wxp","当前象限"+qua);
+			}					
 		}
-
+		
+		Log.e("wxp","当前象限"+qua);
+		
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
 			if (i == qua) {
 				transaction.show(mEditQuaFragment);
@@ -164,7 +170,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		while (iterator.hasNext()) {
 			quadrantContent = (QuadrantContent) iterator.next();
 			if (quadrantContent != null) {
-				EditQuadrantFragment editQuadrantFragment=EditQuadrantFragment.newInstance(mBirdNote._id, mCurrentMode,quadrantContent);
+				EditQuadrantFragment editQuadrantFragment=EditQuadrantFragment.newInstance(mCurrentMode,quadrantContent);
 				mEditQuaFragmentsList.remove(quadrantContent.quadrant);
 				mEditQuaFragmentsList.add(quadrantContent.quadrant, editQuadrantFragment);
 				Log.e("wxp", "添加了的象限"+quadrantContent.quadrant);
@@ -250,6 +256,7 @@ public class EditNoteActivity extends FragmentActivity implements
 				//如果某个象限已经被实例化，则获取他的内容,此处有坑，第一象限始终实例化，但是如果不输入文字，他的内容就全是空格，后期要判断一下。
 				text_array[i]=mEditQuaFragmentsList.get(i).getTextContent();
                 qua=mEditQuaFragmentsList.get(i).getQuadrantDrawContentBytes();
+                DBUG.e("生成第"+i+"象限内容"+qua.length);
 			} else {
 				//如果某个象限未被实例化，则将他的内容设置为null
 				text_array[i]=null;
@@ -301,7 +308,7 @@ public class EditNoteActivity extends FragmentActivity implements
 			switch (msg.what) {
 			case BirdMessage.SAVE_OVER:			
 				Intent intent=new Intent();
-				intent.setClass(EditNoteActivity.this, TestGridViewActivity.class);
+				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
 				startActivity(intent);
 				finish();
 				break;
