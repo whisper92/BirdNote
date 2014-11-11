@@ -20,6 +20,7 @@ import android.view.View;
 
 import com.bird.note.R;
 import com.bird.note.model.CleanPaint;
+import com.bird.note.model.DBUG;
 import com.bird.note.model.DrawPaint;
 import com.bird.note.model.PenDrawPath;
 import com.bird.note.utils.BitmapUtil;
@@ -279,6 +280,7 @@ public class PenView extends View {
 			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth,mCanvasHeight, Bitmap.Config.ARGB_8888);
 		}
 		mDrawCanvas.setBitmap(mDrawBitmap);
+		DBUG.e("已经有的内容"+mDrawBitmap.getByteCount());
 		postInvalidate();
 	}
 

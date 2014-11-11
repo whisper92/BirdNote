@@ -60,7 +60,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	private ImageView menu_Save;
 	
     private NoteApplication mNoteApplication;
-	
+
+    private int[] mEditedQuadrants;
 	/*
 	 * 创建笔记时实例化的方式
 	 */
@@ -108,6 +109,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 				false);
 		mNoteApplication=(NoteApplication)getActivity().getApplication();
 		mNoteId = mNoteApplication.getEditNoteId();
+		mEditedQuadrants=mNoteApplication.getEditedQuadrants();
+		
 		initEditFragmentView(view);
 
 		Bundle b = this.getArguments();
@@ -118,14 +121,16 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 				DBUG.e(mNoteId+"TTTTTTTTTTTTMMMMMMMMMMMMMMMMDDDDDDDDDDDDDDDDD");
 			} else {
 			
-			}
+			}	
 			
-			mCurrentMode = b.getInt("mode");
-			mCurrentType = b.getInt("type");
-			mCurrentQuadrant=b.getInt("quadrant");
-           initView(mCurrentType);
-			changeCurrentMode(mCurrentMode);
-			changeOtherIconState(mCurrentMode);
+		mCurrentMode = b.getInt("mode");
+		mCurrentType = b.getInt("type");
+		mCurrentQuadrant=b.getInt("quadrant");
+		mEditedQuadrants[mCurrentQuadrant]=1;
+		mNoteApplication.setEditedQuadrants(mEditedQuadrants);
+        initView(mCurrentType);
+		changeCurrentMode(mCurrentMode);
+		changeOtherIconState(mCurrentMode);
 		}
 		return view;
 	}
@@ -277,8 +282,10 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		  new Handler().post(new Runnable() {
 			@Override
 			public void run() {			
-				DBUG.e("update id"+mNoteId);
-				new DbHelper(getActivity()).updateNoteById(((EditNoteActivity)getActivity()).generateNewNote(),mNoteId+"");
+				
+				NoteApplication noteApplication=(NoteApplication)getActivity().getApplication();
+				DBUG.e("update id"+noteApplication.getEditNoteId());
+				new DbHelper(getActivity()).updateNoteById(((EditNoteActivity)getActivity()).generateNewNote(),noteApplication.getEditNoteId()+"");
 				((EditNoteActivity)getActivity()).editHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
 			}
 		});	  
@@ -348,4 +355,11 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		return mPenView.mDrawBitmap;
 	}
 
+	public QuadrantContent generateEditQuadrantContent(){
+		QuadrantContent quadrantContent=new QuadrantContent();
+		quadrantContent.quadrant=mCurrentQuadrant;
+		quadrantContent.quadrantdraw=getQuadrantDrawContentBytes();
+		quadrantContent.textcontent=getTextContent();
+		return quadrantContent;
+	}
 }

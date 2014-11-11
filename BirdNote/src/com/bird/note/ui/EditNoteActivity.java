@@ -67,11 +67,12 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	private DbHelper dbHelper;
 	private List<EditQuadrantFragment> mEditQuaFragmentsList = new ArrayList<EditQuadrantFragment>();
-	private List<QuadrantContent> quaList;
+	private List<QuadrantContent> mQuaList;
 	private FragmentManager fragmentManager;
 	public int mNoteEditType=BirdMessage.NOTE_EDIT_TYPE_CREATE;
 	public int mNoteId=-1;
 	private NoteApplication mNoteApplication=null;
+	private int[] mEditedQuadrant;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -79,6 +80,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		setContentView(R.layout.edit_note_main);
 		mNoteApplication=(NoteApplication)getApplication();
 		mNoteEditType=mNoteApplication.getCurrentNoteEidtType();
+		mEditedQuadrant=mNoteApplication.getEditedQuadrants();
 		
 		dbHelper=new DbHelper(this);
 		Intent intent=getIntent();
@@ -164,8 +166,8 @@ public class EditNoteActivity extends FragmentActivity implements
 		mEditQuaFragmentsList.add(2, null);
 		mEditQuaFragmentsList.add(3, null);
 		
-		quaList=dbHelper.generateQuadrantFromNote(mBirdNote);
-		Iterator< QuadrantContent> iterator=quaList.iterator();
+		mQuaList=dbHelper.generateQuadrantFromNote(mBirdNote);
+		Iterator< QuadrantContent> iterator=mQuaList.iterator();
 		QuadrantContent quadrantContent;
 		while (iterator.hasNext()) {
 			quadrantContent = (QuadrantContent) iterator.next();
@@ -173,15 +175,20 @@ public class EditNoteActivity extends FragmentActivity implements
 				EditQuadrantFragment editQuadrantFragment=EditQuadrantFragment.newInstance(mCurrentMode,quadrantContent);
 				mEditQuaFragmentsList.remove(quadrantContent.quadrant);
 				mEditQuaFragmentsList.add(quadrantContent.quadrant, editQuadrantFragment);
+				
 				Log.e("wxp", "添加了的象限"+quadrantContent.quadrant);
 			}
 			
 		}
 		
+		/*
+		 * 先默认0，后期要改成可以进入任意象限
+		 */
 		mEditQuaFragment = mEditQuaFragmentsList.get(0);
 		mEditQuaFragmentsList.remove(0);
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
-
+		mEditedQuadrant[0]=1;
+		mNoteApplication.setEditedQuadrants(mEditedQuadrant);
 		
 		fragmentManager = getSupportFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -244,6 +251,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	 */
 	public BirdNote generateNewNote(){
 		BirdNote birdNote=new BirdNote();
+		int[] edited=mNoteApplication.getEditedQuadrants();
 		int level=mLevelFlag.mCurrentLevel;
 		String title="hello world";
 		birdNote.level=level;
@@ -254,9 +262,18 @@ public class EditNoteActivity extends FragmentActivity implements
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
 			if (mEditQuaFragmentsList.get(i)!=null) {
 				//如果某个象限已经被实例化，则获取他的内容,此处有坑，第一象限始终实例化，但是如果不输入文字，他的内容就全是空格，后期要判断一下。
-				text_array[i]=mEditQuaFragmentsList.get(i).getTextContent();
-                qua=mEditQuaFragmentsList.get(i).getQuadrantDrawContentBytes();
-                DBUG.e("生成第"+i+"象限内容"+qua.length);
+						
+                  
+                    	  	if (edited[i]==1) {
+                    	  		DBUG.e("编辑过的象限"+i);
+                    	  		text_array[i]=mEditQuaFragmentsList.get(i).getTextContent();
+        		                qua=mEditQuaFragmentsList.get(i).getQuadrantDrawContentBytes();			
+							} else {
+								DBUG.e("么有编辑过的象限"+i);
+								text_array[i]=mQuaList.get(i).textcontent;
+								qua=mQuaList.get(i).quadrantdraw;
+							
+					}
 			} else {
 				//如果某个象限未被实例化，则将他的内容设置为null
 				text_array[i]=null;
