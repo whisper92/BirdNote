@@ -64,6 +64,7 @@ public class ShowNotesActivity extends Activity implements
 		intent.putExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_CREATE_VALUE);
 		NoteApplication noteApplication=(NoteApplication)getApplication();
 		noteApplication.setCurrentNoteEidtType(BirdMessage.NOTE_EDIT_TYPE_CREATE);
+		noteApplication.setEditedQuadrants(new int[]{0,0,0,0});
 		startActivity(intent);
 		//finish();
 	}

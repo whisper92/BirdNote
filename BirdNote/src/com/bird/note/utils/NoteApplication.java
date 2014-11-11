@@ -60,17 +60,4 @@ public class NoteApplication extends Application{
 	}
 	
 	
-	
-	/*
-	 * 保存已经更新过的象限
-	 */
-	public List<QuadrantContent> EditedQuadrantContents=new ArrayList<QuadrantContent>();
-	public List<QuadrantContent> getEditedQuadrantContents() {
-		return EditedQuadrantContents;
-	}
-	public void setEditedQuadrantContents(
-			List<QuadrantContent> editedQuadrantContents) {
-		EditedQuadrantContents = editedQuadrantContents;
-	}
-	
 }

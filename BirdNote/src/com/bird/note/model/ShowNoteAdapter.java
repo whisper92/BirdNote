@@ -116,6 +116,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		NoteApplication noteApplication=(NoteApplication)mContext.getApplicationContext();
 		noteApplication.setCurrentNoteEidtType(BirdMessage.NOTE_EDIT_TYPE_UPDATE);
 		noteApplication.setEditNoteId(mListData.get(position)._id);
+		noteApplication.setEditedQuadrants(new int[]{0,0,0,0});
 		mContext.startActivity(intent);
 	}
 
