@@ -33,6 +33,7 @@ import com.bird.note.customer.QuadrantThumbnail.OnQuadrantChangeListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
+import com.bird.note.model.QuadrantContent;
 import com.bird.note.test.TestGridViewActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
@@ -76,8 +77,9 @@ public class EditNoteActivity extends FragmentActivity implements
 		mCurrentType=intent.getIntExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_CREATE_VALUE);
 		
 		if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
-			//若更新笔记，获得传过来的ID
+			//若更新笔记，获得传过来Note(不完整)
 			mBirdNote=intent.getParcelableExtra(BirdMessage.INITENT_PARCEL_NOTE);
+			//查询获取完整的Note
 			mBirdNote=dbHelper.queryNoteById(mBirdNote, mBirdNote._id+"");
 		} else {
 			//若创建笔记
@@ -85,10 +87,15 @@ public class EditNoteActivity extends FragmentActivity implements
 		
 		mCurrentMode = intent.getIntExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_pen);
 			
-		initView(mCurrentType);
+		try {
+			initView(mCurrentType);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void initView(int type){
+	public void initView(int type) throws JSONException{
 		
 		mLevelFlag=(LevelFlag)findViewById(R.id.id_edit_level_flag);
 		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
@@ -109,33 +116,6 @@ public class EditNoteActivity extends FragmentActivity implements
 		}
 	}
 	
-	public void initUpdateView(int type){
-		mLevelFlag.setCurrentLeve(mBirdNote.level);
-		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrentMode,mBirdNote);
-		mEditQuaFragmentsList.add(0, mEditQuaFragment);
-		mEditQuaFragmentsList.add(1, null);
-		mEditQuaFragmentsList.add(2, null);
-		mEditQuaFragmentsList.add(3, null);
-		
-		fragmentManager = getSupportFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
-		transaction.commit();
-	}
-	public void initCreateView(int type) {
-		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrentMode);
-		mEditQuaFragmentsList.add(0, mEditQuaFragment);
-		mEditQuaFragmentsList.add(1, null);
-		mEditQuaFragmentsList.add(2, null);
-		mEditQuaFragmentsList.add(3, null);
-		
-		fragmentManager = getSupportFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
-		transaction.commit();
-
-	}
-
 	/**
 	 * 切换到某个象限:最初知会实例化第一个象限，只有使用到其他象限时才会实例化该象限的fagment
 	 */
@@ -162,6 +142,46 @@ public class EditNoteActivity extends FragmentActivity implements
 		}
 		transaction.commit();
 	}
+
+	public void initUpdateView(int type) throws JSONException{
+		mLevelFlag.setCurrentLeve(mBirdNote.level);
+		
+		mEditQuaFragmentsList.add(0, null);
+		mEditQuaFragmentsList.add(1, null);
+		mEditQuaFragmentsList.add(2, null);
+		mEditQuaFragmentsList.add(3, null);
+		Log.e("wxp","hehenidaye"+mBirdNote.qua0.length);
+		List<QuadrantContent> quaList=dbHelper.generateQuadrantFromNote(mBirdNote);
+		Iterator< QuadrantContent> iterator=quaList.iterator();
+		while (iterator.hasNext()) {
+			QuadrantContent quadrantContent = (QuadrantContent) iterator.next();
+			EditQuadrantFragment editQuadrantFragment=EditQuadrantFragment.newInstance(mBirdNote._id, mCurrentMode,quadrantContent);
+			mEditQuaFragmentsList.add(quadrantContent.quadrant, editQuadrantFragment);
+		}
+		
+		mEditQuaFragment = mEditQuaFragmentsList.get(0);
+		mEditQuaFragmentsList.add(0, mEditQuaFragment);
+
+		
+		fragmentManager = getSupportFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
+		transaction.commit();
+	}
+	public void initCreateView(int type) {
+		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrentMode);
+		mEditQuaFragmentsList.add(0, mEditQuaFragment);
+		mEditQuaFragmentsList.add(1, null);
+		mEditQuaFragmentsList.add(2, null);
+		mEditQuaFragmentsList.add(3, null);
+		
+		fragmentManager = getSupportFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
+		transaction.commit();
+
+	}
+
 
 
 	@Override

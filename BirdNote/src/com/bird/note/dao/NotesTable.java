@@ -30,4 +30,8 @@ public class NotesTable {
     		+QUA3+" blob,"
     		+THUMBNAIL+" blob,"
     		+BG_ID+" integer)";	
+    
+    public static final String TEXTCONTENT_HEADER="textcontents";
+    public static final String TEXTCONTENT_OBJECT_QUA="qua";
+    public static final String TEXTCONTENT_OBJECT_QUACONTENT="quacontent";
 }

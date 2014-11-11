@@ -272,6 +272,9 @@ public class PenView extends View {
 		postInvalidate();
 	}
 	
+	/**
+	 * 刷新已经存在的内容
+	 */
 	public void invalidateExistBitmap(){
 		if (mExistBitmap!=null) {
 			mDrawBitmap = Bitmap.createBitmap(getWholeBitmap(),0,0,mCanvasWidth, mCanvasHeight);

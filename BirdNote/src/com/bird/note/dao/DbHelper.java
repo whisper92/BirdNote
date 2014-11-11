@@ -3,6 +3,8 @@ package com.bird.note.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.content.Context;
 
 import com.bird.note.model.BirdNote;
+import com.bird.note.model.QuadrantContent;
 import com.bird.note.utils.*;
 
 import android.content.*;
@@ -104,6 +107,60 @@ public class DbHelper {
 		}
         cursor.close();
 		return birdNote;
+	}
+	
+	/**
+	 * 从一个笔记中生成四个象限的内容
+	 * @param birdNote
+	 * @return
+	 * @throws JSONException 
+	 */
+	public List<QuadrantContent> generateQuadrantFromNote(BirdNote birdNote) throws JSONException{
+		List<QuadrantContent> quadrantContentList=new ArrayList<QuadrantContent>();
+		String[] textconrents=JsonUtil.parseJsonToStrings(birdNote.textcontents);
+		for (int i = 0; i < 4; i++) {		
+			switch (i) {
+			case 0:
+				if (birdNote.qua0!=null&&textconrents[0]!=null) {
+					QuadrantContent quadrantContent=new QuadrantContent();
+					quadrantContent.quadrant=i;
+					quadrantContent.quadrantdraw=birdNote.qua0;
+					quadrantContent.textcontent=textconrents[0];
+					quadrantContentList.add(0, quadrantContent);
+				}
+				break;
+			case 1:
+				if (birdNote.qua1!=null&&textconrents[1]!=null) {
+					QuadrantContent quadrantContent=new QuadrantContent();
+					quadrantContent.quadrant=i;
+					quadrantContent.quadrantdraw=birdNote.qua1;
+					quadrantContent.textcontent=textconrents[1];
+					quadrantContentList.add(1, quadrantContent);
+				}
+				break;
+			case 2:
+				if (birdNote.qua2!=null&&textconrents[2]!=null) {
+					QuadrantContent quadrantContent=new QuadrantContent();
+					quadrantContent.quadrant=i;
+					quadrantContent.quadrantdraw=birdNote.qua2;
+					quadrantContent.textcontent=textconrents[2];
+					quadrantContentList.add(2, quadrantContent);
+				}
+				break;
+			case 3:
+				if (birdNote.qua3!=null&&textconrents[3]!=null) {
+					QuadrantContent quadrantContent=new QuadrantContent();
+					quadrantContent.quadrant=i;
+					quadrantContent.quadrantdraw=birdNote.qua3;
+					quadrantContent.textcontent=textconrents[3];
+					quadrantContentList.add(3, quadrantContent);
+				}
+				break;
+			default:
+				break;
+			}	
+		}
+		return quadrantContentList;
 	}
 	
 	/**
