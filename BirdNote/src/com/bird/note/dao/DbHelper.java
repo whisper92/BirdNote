@@ -116,6 +116,7 @@ public class DbHelper {
 	 * @throws JSONException 
 	 */
 	public List<QuadrantContent> generateQuadrantFromNote(BirdNote birdNote) throws JSONException{
+		
 		List<QuadrantContent> quadrantContentList=new ArrayList<QuadrantContent>();
 		String[] textconrents=JsonUtil.parseJsonToStrings(birdNote.textcontents);
 		for (int i = 0; i < 4; i++) {		
@@ -123,37 +124,49 @@ public class DbHelper {
 			case 0:
 				if (birdNote.qua0!=null&&textconrents[0]!=null) {
 					QuadrantContent quadrantContent=new QuadrantContent();
-					quadrantContent.quadrant=i;
+					quadrantContent.quadrant=0;
 					quadrantContent.quadrantdraw=birdNote.qua0;
 					quadrantContent.textcontent=textconrents[0];
 					quadrantContentList.add(0, quadrantContent);
+					Log.e("wxp","0象限内容长度"+quadrantContent.quadrantdraw.length);
+				} else {
+					quadrantContentList.add(0, null);
 				}
 				break;
 			case 1:
 				if (birdNote.qua1!=null&&textconrents[1]!=null) {
 					QuadrantContent quadrantContent=new QuadrantContent();
-					quadrantContent.quadrant=i;
+					quadrantContent.quadrant=1;
 					quadrantContent.quadrantdraw=birdNote.qua1;
 					quadrantContent.textcontent=textconrents[1];
 					quadrantContentList.add(1, quadrantContent);
+					Log.e("wxp","1象限内容长度"+quadrantContent.quadrantdraw.length);
+				}else {
+					quadrantContentList.add(1, null);
 				}
 				break;
 			case 2:
 				if (birdNote.qua2!=null&&textconrents[2]!=null) {
 					QuadrantContent quadrantContent=new QuadrantContent();
-					quadrantContent.quadrant=i;
+					quadrantContent.quadrant=2;
 					quadrantContent.quadrantdraw=birdNote.qua2;
 					quadrantContent.textcontent=textconrents[2];
 					quadrantContentList.add(2, quadrantContent);
+					Log.e("wxp","2象限内容长度"+quadrantContent.quadrantdraw.length);
+				}else {
+					quadrantContentList.add(2, null);
 				}
 				break;
 			case 3:
 				if (birdNote.qua3!=null&&textconrents[3]!=null) {
 					QuadrantContent quadrantContent=new QuadrantContent();
-					quadrantContent.quadrant=i;
+					quadrantContent.quadrant=3;
 					quadrantContent.quadrantdraw=birdNote.qua3;
 					quadrantContent.textcontent=textconrents[3];
 					quadrantContentList.add(3, quadrantContent);
+					Log.e("wxp","3象限内容长度"+quadrantContent.quadrantdraw.length);
+				}else {
+					quadrantContentList.add(3, null);
 				}
 				break;
 			default:

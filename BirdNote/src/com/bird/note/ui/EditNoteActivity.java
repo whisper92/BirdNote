@@ -33,6 +33,7 @@ import com.bird.note.customer.QuadrantThumbnail.OnQuadrantChangeListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
+import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.test.TestGridViewActivity;
 import com.bird.note.utils.BitmapUtil;
@@ -66,6 +67,7 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	private DbHelper dbHelper;
 	private List<EditQuadrantFragment> mEditQuaFragmentsList = new ArrayList<EditQuadrantFragment>();
+	List<QuadrantContent> quaList;
 	private FragmentManager fragmentManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,15 +90,15 @@ public class EditNoteActivity extends FragmentActivity implements
 		mCurrentMode = intent.getIntExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_pen);
 			
 		try {
-			initView(mCurrentType);
+			initActivityView(mCurrentType);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void initView(int type) throws JSONException{
-		
+	public void initActivityView(int type) throws JSONException{
+		DBUG.e("initAcitivityView");
 		mLevelFlag=(LevelFlag)findViewById(R.id.id_edit_level_flag);
 		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
 		quadrantThumbnail.setQuadrantChangeListener(new OnQuadrantChangeListener() {
@@ -120,15 +122,20 @@ public class EditNoteActivity extends FragmentActivity implements
 	 * 切换到某个象限:最初知会实例化第一个象限，只有使用到其他象限时才会实例化该象限的fagment
 	 */
 	public void changeToQuadrantAt(int qua) {
-
+		DBUG.e("changeToQuadrantAt"+qua);
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		if (mEditQuaFragmentsList.get(qua) == null) {
-			mEditQuaFragment = EditQuadrantFragment.newInstance(qua, R.id.id_edit_title_pen);
+			mEditQuaFragment = EditQuadrantFragment.newInstance(qua, R.id.id_edit_title_pen);			
 			mEditQuaFragmentsList.remove(qua);
 			mEditQuaFragmentsList.add(qua, mEditQuaFragment);
 			transaction.add(R.id.id_edit_main_editfragment, mEditQuaFragment);
 		} else {
 			mEditQuaFragment = mEditQuaFragmentsList.get(qua);
+			if (!mEditQuaFragment.isAdded()) {
+				transaction.add(R.id.id_edit_main_editfragment, mEditQuaFragment);
+			}
+			
+			Log.e("wxp","当前象限"+qua);
 		}
 
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
@@ -144,22 +151,29 @@ public class EditNoteActivity extends FragmentActivity implements
 	}
 
 	public void initUpdateView(int type) throws JSONException{
+		DBUG.e("initUpdateView"+type);
 		mLevelFlag.setCurrentLeve(mBirdNote.level);
-		
 		mEditQuaFragmentsList.add(0, null);
 		mEditQuaFragmentsList.add(1, null);
 		mEditQuaFragmentsList.add(2, null);
 		mEditQuaFragmentsList.add(3, null);
-		Log.e("wxp","hehenidaye"+mBirdNote.qua0.length);
-		List<QuadrantContent> quaList=dbHelper.generateQuadrantFromNote(mBirdNote);
+		
+		quaList=dbHelper.generateQuadrantFromNote(mBirdNote);
 		Iterator< QuadrantContent> iterator=quaList.iterator();
+		QuadrantContent quadrantContent;
 		while (iterator.hasNext()) {
-			QuadrantContent quadrantContent = (QuadrantContent) iterator.next();
-			EditQuadrantFragment editQuadrantFragment=EditQuadrantFragment.newInstance(mBirdNote._id, mCurrentMode,quadrantContent);
-			mEditQuaFragmentsList.add(quadrantContent.quadrant, editQuadrantFragment);
+			quadrantContent = (QuadrantContent) iterator.next();
+			if (quadrantContent != null) {
+				EditQuadrantFragment editQuadrantFragment=EditQuadrantFragment.newInstance(mBirdNote._id, mCurrentMode,quadrantContent);
+				mEditQuaFragmentsList.remove(quadrantContent.quadrant);
+				mEditQuaFragmentsList.add(quadrantContent.quadrant, editQuadrantFragment);
+				Log.e("wxp", "添加了的象限"+quadrantContent.quadrant);
+			}
+			
 		}
 		
 		mEditQuaFragment = mEditQuaFragmentsList.get(0);
+		mEditQuaFragmentsList.remove(0);
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
 
 		
@@ -168,7 +182,9 @@ public class EditNoteActivity extends FragmentActivity implements
 		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
 		transaction.commit();
 	}
+	
 	public void initCreateView(int type) {
+		DBUG.e("initCreateView"+type);
 		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrentMode);
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
 		mEditQuaFragmentsList.add(1, null);

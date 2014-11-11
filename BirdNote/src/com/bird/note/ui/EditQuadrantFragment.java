@@ -21,6 +21,7 @@ import com.bird.note.customer.PenView.OnPathListChangeListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
+import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.test.MainActivity;
 import com.bird.note.utils.BitmapUtil;
@@ -111,12 +112,11 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mCurrentType=b.getInt(BirdMessage.START_TYPE_KEY);
 			if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
 				quadrantContent=b.getParcelable("quadrantContent");
-				
+				mNoteId = b.getInt("note_id");
 			} else {
 			
 			}
 			
-			mNoteId = b.getInt("note_id");
 			mCurrentMode = b.getInt("mode");
 			mCurrentType = b.getInt("type");
 			mCurrentQuadrant=b.getInt("quadrant");
@@ -128,6 +128,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 	
 	public void initView(int type){
+		DBUG.e("initView"+mCurrentQuadrant);
 		if (type==BirdMessage.START_TYPE_CREATE_VALUE) {
 			initCreateView(type);
 		}
@@ -144,6 +145,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		});
 		mPenView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 	}
+	
 	public void initCreateView(int type){
 		mPenView = new PenView(getActivity());
 		
@@ -155,12 +157,14 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 * @param mBirdNote
 	 */
 	public void initUpdateView(int type,QuadrantContent quadrantContent){
+		DBUG.e("initUpdateView"+type);
 		mPenView = new PenView(getActivity());
 		mPenView.setExistBitmap(BitmapUtil.decodeBytesToBitmap(quadrantContent.quadrantdraw));
 		mPenView.invalidateExistBitmap();
 	}
 
 	public void initEditFragmentView(View view) {
+		DBUG.e("initEditFragmentView");
 		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
 		mEditText = (FullScreenEditText) view.findViewById(R.id.id_edit_main_et);
 		edit_Pen = (ImageView) view.findViewById(R.id.id_edit_title_pen);
@@ -268,6 +272,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		  new Handler().post(new Runnable() {
 			@Override
 			public void run() {			
+				DBUG.e("update id"+mNoteId);
 				new DbHelper(getActivity()).updateNoteById(((EditNoteActivity)getActivity()).generateNewNote(),mNoteId+"");
 				((EditNoteActivity)getActivity()).editHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
 			}
@@ -319,7 +324,12 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 * @return
 	 */
 	public String getTextContent(){
-		return mEditText.getText().toString();
+		if (mEditText!=null) {
+			return mEditText.getText().toString();
+		} else {
+			return null;
+		}
+		
 	}
 	
 	/**
