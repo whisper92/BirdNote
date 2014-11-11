@@ -128,7 +128,6 @@ public class DbHelper {
 					quadrantContent.quadrantdraw=birdNote.qua0;
 					quadrantContent.textcontent=textconrents[0];
 					quadrantContentList.add(0, quadrantContent);
-					Log.e("wxp","0象限内容长度"+quadrantContent.quadrantdraw.length);
 				} else {
 					quadrantContentList.add(0, null);
 				}
@@ -140,7 +139,6 @@ public class DbHelper {
 					quadrantContent.quadrantdraw=birdNote.qua1;
 					quadrantContent.textcontent=textconrents[1];
 					quadrantContentList.add(1, quadrantContent);
-					Log.e("wxp","1象限内容长度"+quadrantContent.quadrantdraw.length);
 				}else {
 					quadrantContentList.add(1, null);
 				}
@@ -152,7 +150,6 @@ public class DbHelper {
 					quadrantContent.quadrantdraw=birdNote.qua2;
 					quadrantContent.textcontent=textconrents[2];
 					quadrantContentList.add(2, quadrantContent);
-					Log.e("wxp","2象限内容长度"+quadrantContent.quadrantdraw.length);
 				}else {
 					quadrantContentList.add(2, null);
 				}
@@ -164,7 +161,6 @@ public class DbHelper {
 					quadrantContent.quadrantdraw=birdNote.qua3;
 					quadrantContent.textcontent=textconrents[3];
 					quadrantContentList.add(3, quadrantContent);
-					Log.e("wxp","3象限内容长度"+quadrantContent.quadrantdraw.length);
 				}else {
 					quadrantContentList.add(3, null);
 				}

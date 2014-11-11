@@ -118,7 +118,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mCurrentType=b.getInt(BirdMessage.START_TYPE_KEY);
 			if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
 				quadrantContent=b.getParcelable("quadrantContent");			
-				DBUG.e(mNoteId+"TTTTTTTTTTTTMMMMMMMMMMMMMMMMDDDDDDDDDDDDDDDDD");
 			} else {
 			
 			}	
@@ -136,7 +135,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 	
 	public void initView(int type){
-		DBUG.e("initView"+mCurrentQuadrant);
 		if (type==BirdMessage.START_TYPE_CREATE_VALUE) {
 			initCreateView(type);
 		}
@@ -165,14 +163,12 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 * @param mBirdNote
 	 */
 	public void initUpdateView(int type,QuadrantContent quadrantContent){
-		DBUG.e("initUpdateView"+type);
 		mPenView = new PenView(getActivity());
 		mPenView.setExistBitmap(BitmapUtil.decodeBytesToBitmap(quadrantContent.quadrantdraw));
 		mPenView.invalidateExistBitmap();
 	}
 
 	public void initEditFragmentView(View view) {
-		DBUG.e("initEditFragmentView");
 		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
 		mEditText = (FullScreenEditText) view.findViewById(R.id.id_edit_main_et);
 		edit_Pen = (ImageView) view.findViewById(R.id.id_edit_title_pen);
@@ -246,10 +242,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		case R.id.id_edit_title_save:
 			//mPenView.savePicture(mCurrentQuadrant);
 			if ((((EditNoteActivity)getActivity()).mNoteEditType)==BirdMessage.NOTE_EDIT_TYPE_UPDATE) {
-				DBUG.e("保存修改过的笔记");
 				saveUpdateNote();
 			} else {
-				DBUG.e("保存新建的笔记");
 				saveNewNote();
 			}
 			
@@ -284,7 +278,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			public void run() {			
 				
 				NoteApplication noteApplication=(NoteApplication)getActivity().getApplication();
-				DBUG.e("update id"+noteApplication.getEditNoteId());
 				new DbHelper(getActivity()).updateNoteById(((EditNoteActivity)getActivity()).generateNewNote(),noteApplication.getEditNoteId()+"");
 				((EditNoteActivity)getActivity()).editHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
 			}

@@ -149,7 +149,6 @@ public class PenView extends View {
 	public void onDraw(Canvas canvas) {
 
 		canvas.drawBitmap(mDrawBitmap, 2, 2, null);
-
 		if (mPath != null) {
 			mDrawCanvas.drawPath(mPath, mCurPaint);
 		}
@@ -225,7 +224,7 @@ public class PenView extends View {
 			return;
 		
 		if (mExistBitmap!=null) {
-			mDrawBitmap = Bitmap.createBitmap(getWholeBitmap(),0,0,mCanvasWidth, mCanvasHeight);
+			mDrawBitmap = Bitmap.createBitmap(mExistBitmap,0,0,mCanvasWidth, mCanvasHeight).copy(Bitmap.Config.ARGB_8888, true);
 		} else {
 			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth,mCanvasHeight, Bitmap.Config.ARGB_8888);
 		}
@@ -252,7 +251,7 @@ public class PenView extends View {
 			return;
 
 		if (mExistBitmap!=null) {
-			mDrawBitmap = Bitmap.createBitmap(getWholeBitmap(),0,0,mCanvasWidth, mCanvasHeight);
+			mDrawBitmap = Bitmap.createBitmap(mExistBitmap,0,0,mCanvasWidth, mCanvasHeight).copy(Bitmap.Config.ARGB_8888, true);
 		} else {
 			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth,mCanvasHeight, Bitmap.Config.ARGB_8888);
 		}
@@ -280,7 +279,6 @@ public class PenView extends View {
 			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth,mCanvasHeight, Bitmap.Config.ARGB_8888);
 		}
 		mDrawCanvas.setBitmap(mDrawBitmap);
-		DBUG.e("已经有的内容"+mDrawBitmap.getByteCount());
 		postInvalidate();
 	}
 
