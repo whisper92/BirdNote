@@ -9,6 +9,11 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.WindowManager;
 
+/**
+ * 通用工具类
+ * @author wangxianpeng
+ *
+ */
 public class CommonUtils {
 
 	/*

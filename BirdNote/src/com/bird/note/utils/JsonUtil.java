@@ -11,6 +11,11 @@ import com.bird.note.dao.NotesTable;
 
 import android.util.Log;
 
+/**
+ * json工具类
+ * @author root
+ *
+ */
 public class JsonUtil {
 
 	/**
