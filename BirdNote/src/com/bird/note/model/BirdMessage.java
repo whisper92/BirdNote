@@ -35,6 +35,10 @@ public class BirdMessage {
 	 * 文字编辑模式
 	 */
 	public static final int START_MODE_TEXT_KEY=R.id.id_edit_title_text;
+	/*
+	 * 橡皮擦编辑模式
+	 */
+	public static final int START_MODE_CLEAN_KEY=R.id.id_edit_title_clean;
 	
 	/*
 	 * 整个笔记的编辑模式：创建或更新
@@ -47,6 +51,15 @@ public class BirdMessage {
 	 * 新建笔记，保存完成之后，返回首页
 	 */
     public static final int SAVE_OVER=201;
+    
+    /*
+     * 保存画笔配置
+     */
+    public static final String SP_PAINT_KEY="saved_paint";
+    public static final String SP_PAINT_COLOR="save_paint_color";
+    public static final String SP_PAINT_WIDTH="saved_paint_width";
+    public static final String SP_PAINT_CLEAN_WIDTH="saved_clean_pain_width";
+    
     
 
 }

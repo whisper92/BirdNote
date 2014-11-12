@@ -28,4 +28,12 @@
     <!-- 创建缩略图的宽高 -->
     <dimen name="dimen_create_thumbnail_width">90dp</dimen> 
     <dimen name="dimen_create_thumbnail_height">140dp</dimen> 
+    
+    <dimen name="dimen_pop_pen_title_margintop">15dp</dimen> 
+    <dimen name="dimen_pop_pen_title_marginleft">10dp</dimen> 
+    <dimen name="dimen_pop_pen_title_height">35dp</dimen> 
+    <dimen name="dimen_pop_pen_title_size">18dp</dimen> 
+    <dimen name="dimen_pop_pen_item_margin_top">10dp</dimen> 
+    
+    <dimen name="dimen_pop_pen_color_item_size">23dp</dimen> 
 </resources>

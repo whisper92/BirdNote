@@ -3,7 +3,10 @@ package com.bird.note.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +20,7 @@ import com.bird.note.dao.Db;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.dao.NotesTable;
 import com.bird.note.model.BirdMessage;
+import com.bird.note.model.DBUG;
 import com.bird.note.model.ShowNoteAdapter;
 import com.bird.note.ui.EditNoteActivity;
 import com.bird.note.utils.NoteApplication;
@@ -49,6 +53,14 @@ public class ShowNotesActivity extends Activity implements
 		addPen.setOnClickListener(this);
 		addText = (ImageView) findViewById(R.id.id_show_title_new_text);
 		addText.setOnClickListener(this);
+		
+		SharedPreferences sharedPreferences=getSharedPreferences(BirdMessage.SP_PAINT_KEY, Context.MODE_PRIVATE);
+		int color=sharedPreferences.getInt(BirdMessage.SP_PAINT_COLOR, Color.GRAY);
+		int width=sharedPreferences.getInt(BirdMessage.SP_PAINT_WIDTH, 5);
+		int clean_width=sharedPreferences.getInt(BirdMessage.SP_PAINT_CLEAN_WIDTH, 3);
+        DBUG.e("paint"+color+"wid"+width);
+        
+		
 	}
 
 	@Override

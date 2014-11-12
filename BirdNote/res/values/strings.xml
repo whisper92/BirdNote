@@ -14,4 +14,7 @@
     <!-- 每行的空格数 -->
     <string name="fullscreen_edit_line_lenth">50</string>
 
+    <string name="pop_pen_title">Pen Setting</string>
+    <string name="pop_eraser_title">Eraser Setting</string>
+     <string name="pop_eraser_clear_all">Clear All</string>
 </resources>
