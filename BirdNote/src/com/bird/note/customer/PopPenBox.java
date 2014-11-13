@@ -12,6 +12,7 @@ import com.bird.note.model.SavedPaint;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -61,6 +62,8 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 		this.setContentView(rootView);
 		this.setWidth(LayoutParams.WRAP_CONTENT);
 		this.setHeight(LayoutParams.WRAP_CONTENT);
+		this.setOutsideTouchable(true);
+		this.setBackgroundDrawable(new BitmapDrawable());
 		
 		SeekBar penSize = (SeekBar) rootView.findViewById(R.id.id_choose_pen_seekbar);
 		penSize.setProgress((int) (MAX*mSelectPaintWidth/SavedPaint.DEFAULT_PAINT_MAX_WIDTH));
@@ -78,6 +81,7 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				selectProcess = seekBar.getProgress();
+				mSavedPaint.savePaintWidth(SavedPaint.DEFAULT_PAINT_MAX_WIDTH*selectProcess/MAX);
 			}
 
 			@Override

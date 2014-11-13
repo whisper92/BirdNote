@@ -318,7 +318,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 */
 	public void togglePenBox(int mode){
 		if (mode==BirdMessage.START_MODE_DRAW_KEY) {
-			if (!mPenBoxOpened) {
+			if (!mPenBoxOpened||(!mPopPenBox.isShowing())) {
 				if (mPenHasSelected>1) {
 					mPenHasSelected=1;
 					mPopPenBox.showAsDropDown(edit_Pen);
@@ -341,7 +341,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 */
 	public void toggleEraserBox(int mode){
 		if (mode==BirdMessage.START_MODE_CLEAN_KEY) {
-			if (!mEraserBoxOpened) {
+			if (!mEraserBoxOpened||(!mPopEraserBox.isShowing())) {
 				if (mEraserHasSelected>1) {				
 					mPopEraserBox.showAsDropDown(edit_Clean);
 					mEraserBoxOpened=true;
@@ -456,5 +456,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		quadrantContent.textcontent=getTextContent();
 		return quadrantContent;
 	}
+
+
 	
 }

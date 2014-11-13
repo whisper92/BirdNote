@@ -23,6 +23,7 @@ import com.bird.note.model.CleanPaint;
 import com.bird.note.model.DBUG;
 import com.bird.note.model.DrawPaint;
 import com.bird.note.model.PenDrawPath;
+import com.bird.note.model.SavedPaint;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 
@@ -68,9 +69,9 @@ public class PenView extends View {
 	/*
 	 * 绘图模式的画笔颜色和粗细
 	 */
-	private int mDrawPaintColor = 0xff000000;
-	private float mDrawPaintWidth = 5f;
-	
+	private int mDrawPaintColor = SavedPaint.DEFAULT_PAINT_COLOR;
+	private float mDrawPaintWidth = SavedPaint.DEFAULT_PAINT_WIDTH;
+	private SavedPaint mSavedPaint;
 	private PenDrawPath mDrawPath = null;
 
 	/*
@@ -149,6 +150,7 @@ public class PenView extends View {
 		mCurPaint = new Paint();
 		mDrawPaint = DrawPaint.getInstance();
 		mCleanPaint = CleanPaint.getInstance();
+		mSavedPaint = new SavedPaint(context);
 		mPath = new Path();
 
 		initDrawPaint();
@@ -302,14 +304,14 @@ public class PenView extends View {
 
 	public void initDrawPaint() {
 		mIsCleanMode = false;
-		mDrawPaint.setColor(mDrawPaintColor);
-		mDrawPaint.setStrokeWidth(mDrawPaintWidth);
+		mDrawPaint.setColor(mSavedPaint.getSavedPaintColor());
+		mDrawPaint.setStrokeWidth(mSavedPaint.getSavedPaintWidth());
 		mCurPaint = mDrawPaint;
 	}
 
 	public void setCleanPaint() {
 		mIsCleanMode = true;
-		mCleanPaint.setStrokeWidth(50);
+		mCleanPaint.setStrokeWidth(mSavedPaint.getSavedPaintWidth());
 		mCurPaint = mCleanPaint;
 	}
 

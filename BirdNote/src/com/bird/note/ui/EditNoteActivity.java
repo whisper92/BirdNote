@@ -112,7 +112,7 @@ public class EditNoteActivity extends FragmentActivity implements
 					@Override
 					public void changeQua(int qua) {
 						mCurrentQuadrant=qua;
-						changeToQuadrantAt(qua);
+						changeToQuadrantAt(qua);					
 					}
 				});
 		
