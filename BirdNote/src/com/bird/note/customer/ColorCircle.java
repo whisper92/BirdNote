@@ -1,9 +1,11 @@
 package com.bird.note.customer;
 
 import com.bird.note.model.DBUG;
+import com.bird.note.model.SavedPaint;
 
 import android.R.integer;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -13,8 +15,8 @@ import android.view.View;
 public class ColorCircle extends View{
 
 	Paint mPaint;
-	float width=5f;
-	int color=0xff000000;
+	float width=SavedPaint.DEFAULT_PAINT_WIDTH;
+	int color=SavedPaint.DEFAULT_PAINT_COLOR;
 	public ColorCircle(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
         init(context);
@@ -36,8 +38,9 @@ public class ColorCircle extends View{
 		mPaint.setStyle(Paint.Style.FILL);	
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		mPaint.setColor(color);
-		mPaint.setStrokeWidth(1);
+		SharedPreferences sp= context.getSharedPreferences(SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
+		mPaint.setColor(sp.getInt(SavedPaint.SP_PAINT_COLOR, SavedPaint.DEFAULT_PAINT_COLOR));
+		mPaint.setStrokeWidth(sp.getFloat(SavedPaint.SP_PAINT_WIDTH, SavedPaint.DEFAULT_PAINT_WIDTH));
 	}
 	
 	public void setPaintWidth(float width){

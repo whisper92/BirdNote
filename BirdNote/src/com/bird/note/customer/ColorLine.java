@@ -1,7 +1,10 @@
 package com.bird.note.customer;
 
+import com.bird.note.model.SavedPaint;
+
 import android.R.integer;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -41,8 +44,9 @@ public class ColorLine extends View {
 		mPaint.setStyle(Paint.Style.STROKE);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		mPaint.setColor(mPaintColor);
-		mPaint.setStrokeWidth(mPaintWidth);
+		SharedPreferences sp= context.getSharedPreferences(SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
+		mPaint.setColor(sp.getInt(SavedPaint.SP_PAINT_COLOR, SavedPaint.DEFAULT_PAINT_COLOR));
+		mPaint.setStrokeWidth(sp.getFloat(SavedPaint.SP_PAINT_WIDTH, SavedPaint.DEFAULT_PAINT_WIDTH));
 	}
 
 	public void setPaint(Paint savedPaint){

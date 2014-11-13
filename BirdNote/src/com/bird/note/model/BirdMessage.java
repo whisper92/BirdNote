@@ -52,13 +52,7 @@ public class BirdMessage {
 	 */
     public static final int SAVE_OVER=201;
     
-    /*
-     * 保存画笔配置
-     */
-    public static final String SP_PAINT_KEY="saved_paint";
-    public static final String SP_PAINT_COLOR="save_paint_color";
-    public static final String SP_PAINT_WIDTH="saved_paint_width";
-    public static final String SP_PAINT_CLEAN_WIDTH="saved_clean_pain_width";
+
     
     
 

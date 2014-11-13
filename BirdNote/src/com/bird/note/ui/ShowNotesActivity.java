@@ -21,6 +21,7 @@ import com.bird.note.dao.DbHelper;
 import com.bird.note.dao.NotesTable;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.DBUG;
+import com.bird.note.model.SavedPaint;
 import com.bird.note.model.ShowNoteAdapter;
 import com.bird.note.ui.EditNoteActivity;
 import com.bird.note.utils.NoteApplication;
@@ -52,14 +53,7 @@ public class ShowNotesActivity extends Activity implements
 		addPen = (ImageView) findViewById(R.id.id_show_title_new_pen);
 		addPen.setOnClickListener(this);
 		addText = (ImageView) findViewById(R.id.id_show_title_new_text);
-		addText.setOnClickListener(this);
-		
-		SharedPreferences sharedPreferences=getSharedPreferences(BirdMessage.SP_PAINT_KEY, Context.MODE_PRIVATE);
-		int color=sharedPreferences.getInt(BirdMessage.SP_PAINT_COLOR, Color.GRAY);
-		int width=sharedPreferences.getInt(BirdMessage.SP_PAINT_WIDTH, 5);
-		int clean_width=sharedPreferences.getInt(BirdMessage.SP_PAINT_CLEAN_WIDTH, 3);
-        DBUG.e("paint"+color+"wid"+width);
-        
+		addText.setOnClickListener(this);        
 		
 	}
 

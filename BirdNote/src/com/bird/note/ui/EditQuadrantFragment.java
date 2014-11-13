@@ -33,6 +33,7 @@ import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
+import com.bird.note.model.SavedPaint;
 import com.bird.note.test.MainActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.NoteApplication;
@@ -82,6 +83,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 
     private float mSelectPaintWidth;
     private int mSelectPaintColor;
+    
+    private SavedPaint mSavedPaint;
 	/*
 	 * 创建笔记时实例化的方式
 	 */
@@ -215,12 +218,15 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		
 		mHeaderLayout=(RelativeLayout)view.findViewById(R.id.id_edit_title_header_rl);
 		mPopPenBox=new PopPenBox(getActivity());
+		mSavedPaint = new SavedPaint(getActivity());
 		mPopPenBox.setOnPaintChangedListener(new OnPaintChangedListener() {
 			
 			@Override
 			public void changePaint(Paint paint) {
 				mPenView.setDrawPaintColor(paint.getColor());
 				mPenView.setDrawPaintWidth(paint.getStrokeWidth());
+				mSavedPaint.savePaintColor(paint.getColor());
+				mSavedPaint.savePaintWidth(paint.getStrokeWidth());
 			}
 		});
 		mPopEraserBox=new PopEraserBox(getActivity());
