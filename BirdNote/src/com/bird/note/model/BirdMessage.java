@@ -52,6 +52,8 @@ public class BirdMessage {
 	 */
     public static final int SAVE_OVER=201;
     
+    public static final int DELETE_OVER=201;
+    
 
     
     

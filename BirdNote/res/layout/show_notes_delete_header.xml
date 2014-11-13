@@ -1,32 +1,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/id_show_title_rl"
+    android:id="@+id/id_show_title_delete_menu_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
     android:background="@drawable/action_bar" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_show_titile_height"
-        android:layout_marginLeft="@dimen/dimen_show_titile_text_margin_left"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textColor="@color/color_show_title_text"
-        android:textSize="@dimen/dimen_show_titile_text_size" />
-
-    <ImageView
-        android:id="@+id/id_show_title_new_pen"
+    <Button
+        android:id="@+id/id_show_title_delete_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/id_show_title_new_text"
+        android:layout_marginLeft="@dimen/dimen_show_titile_text_margin_left"
+        android:background="@drawable/action_bt_style01_left"
+        android:gravity="center"
+        android:text="@string/show_menu_delete_confirm"
+        android:textColor="@color/color_show_title_text" />
+
+    <Button
+        android:id="@+id/id_show_title_delete_select_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/id_show_title_delete_cancle"
         android:background="@drawable/action_bt_style01_left"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/icon_new_pen" />
+        android:gravity="center"
+        android:text="@string/show_menu_delete_selectall" />
 
-    <ImageView
-        android:id="@+id/id_show_title_new_text"
+    <Button
+        android:id="@+id/id_show_title_delete_cancle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -35,6 +38,7 @@
         android:background="@drawable/action_bt_style01_right"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/icon_new_text" />
+        android:gravity="center"
+        android:text="@string/show_menu_delete_cancel" />
 
 </RelativeLayout>

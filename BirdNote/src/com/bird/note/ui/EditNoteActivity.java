@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.RelativeLayout;
 
 import com.bird.note.R;
 import com.bird.note.customer.LevelFlag;
@@ -96,6 +97,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	}
 
 	public void initActivityView(int type) throws JSONException{
+
 		mLevelFlag=(LevelFlag)findViewById(R.id.id_edit_level_flag);
 		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
 		quadrantThumbnail.setQuadrantChangeListener(new OnQuadrantChangeListener() {

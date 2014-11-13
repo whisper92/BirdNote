@@ -199,5 +199,15 @@ public class DbHelper {
 		dbWrite.delete(NotesTable.TABLE_NAME, "_id=?", new String[]{note_id});
 		dbWrite.close();
 	}
+	
+	public void deleteNoteByIds(String[] note_ids){
+		for (int i = 0; i < note_ids.length; i++) {
+			if (!note_ids[i].equals(String.valueOf(-1))) {
+				dbWrite.delete(NotesTable.TABLE_NAME, "_id=?", new String[]{note_ids[i]});
+			}
+			
+		}
+	}
+	
 
 }

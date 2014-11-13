@@ -13,9 +13,12 @@
     <string name="fullscreen_edit_line">23</string>
     <!-- 每行的空格数 -->
     <string name="fullscreen_edit_line_lenth">50</string>
-
     <string name="pop_pen_title">Pen Setting</string>
     <string name="pop_eraser_title">Eraser Setting</string>
-     <string name="pop_eraser_clear_all">Clear All</string>
-     <string name="show_menu_search">Search</string>
+    <string name="pop_eraser_clear_all">Clear All</string>
+    <string name="show_menu_search">Search</string>
+    <string name="show_menu_delete_confirm">OK</string>
+    <string name="show_menu_delete_cancel">Cancel</string>
+    <string name="show_menu_delete_selectall">All</string>
+
 </resources>

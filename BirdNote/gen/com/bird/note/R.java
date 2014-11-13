@@ -169,12 +169,12 @@ public final class R {
         public static final int id_edit_main_et=0x7f090009;
         public static final int id_edit_main_fl=0x7f090007;
         public static final int id_edit_main_fl_warpper=0x7f090008;
-        public static final int id_edit_menu_change_bg=0x7f090030;
-        public static final int id_edit_menu_change_page=0x7f090031;
-        public static final int id_edit_menu_delete=0x7f09002e;
-        public static final int id_edit_menu_favor=0x7f09002f;
-        public static final int id_edit_menu_mark_colr=0x7f090032;
-        public static final int id_edit_menu_saveas=0x7f090033;
+        public static final int id_edit_menu_change_bg=0x7f090034;
+        public static final int id_edit_menu_change_page=0x7f090035;
+        public static final int id_edit_menu_delete=0x7f090032;
+        public static final int id_edit_menu_favor=0x7f090033;
+        public static final int id_edit_menu_mark_colr=0x7f090036;
+        public static final int id_edit_menu_saveas=0x7f090037;
         public static final int id_edit_note_fragment_root=0x7f090006;
         public static final int id_edit_quathumb=0x7f090014;
         public static final int id_edit_title_clean=0x7f09000d;
@@ -191,11 +191,15 @@ public final class R {
         public static final int id_note_item_title_tv=0x7f090018;
         public static final int id_penbox_choosecolor_ll=0x7f090019;
         public static final int id_show_gv=0x7f09002a;
-        public static final int id_show_menu_mutil_delete=0x7f090034;
-        public static final int id_show_menu_search=0x7f090035;
-        public static final int id_show_title_new_pen=0x7f09002c;
-        public static final int id_show_title_new_text=0x7f09002d;
-        public static final int id_show_title_rl=0x7f09002b;
+        public static final int id_show_menu_mutil_delete=0x7f090038;
+        public static final int id_show_menu_search=0x7f090039;
+        public static final int id_show_title_delete_cancle=0x7f09002e;
+        public static final int id_show_title_delete_confirm=0x7f09002c;
+        public static final int id_show_title_delete_menu_rl=0x7f09002b;
+        public static final int id_show_title_delete_select_all=0x7f09002d;
+        public static final int id_show_title_new_pen=0x7f090030;
+        public static final int id_show_title_new_text=0x7f090031;
+        public static final int id_show_title_rl=0x7f09002f;
     }
     public static final class layout {
         public static final int edit_note_choose_earser=0x7f030000;
@@ -209,7 +213,8 @@ public final class R {
         public static final int pen_box_choose_color=0x7f030008;
         public static final int quadrant_thumbnail=0x7f030009;
         public static final int show_notes=0x7f03000a;
-        public static final int show_notes_header=0x7f03000b;
+        public static final int show_notes_delete_header=0x7f03000b;
+        public static final int show_notes_header=0x7f03000c;
     }
     public static final class menu {
         public static final int edit_menu=0x7f080000;
@@ -232,6 +237,9 @@ public final class R {
         public static final int pop_eraser_clear_all=0x7f07000b;
         public static final int pop_eraser_title=0x7f07000a;
         public static final int pop_pen_title=0x7f070009;
+        public static final int show_menu_delete_cancel=0x7f07000e;
+        public static final int show_menu_delete_confirm=0x7f07000d;
+        public static final int show_menu_delete_selectall=0x7f07000f;
         public static final int show_menu_search=0x7f07000c;
     }
 }

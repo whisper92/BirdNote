@@ -11,10 +11,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
@@ -25,12 +29,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bird.note.R;
+import com.bird.note.dao.DbHelper;
 import com.bird.note.ui.EditNoteActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
 
-public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener{
+public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener,MultiChoiceModeListener{
 	private List<BirdNote> mListData;
 	private GridView mGridView;
 	private Context mContext;
@@ -38,7 +43,11 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	private Scroller scroller;
 	
 	private boolean mDeleteState=false;
-	private int[] mDeleteIds;
+	private DbHelper mDbHelper;
+	/*
+	 * 用于保存要删除的笔记的id：如果要删除，则该位置的id为笔记id，否则为-1
+	 */
+	private String[] mDeleteIds;
 	
 	private Map<Integer, Boolean> mToDeleteNote =new HashMap<Integer, Boolean>();
 	public boolean ismDeleteState() {
@@ -47,6 +56,12 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 
 	public void setDeleteState(boolean mDeleteState) {
 		this.mDeleteState = mDeleteState;
+		mDeleteIds = new String[mListData.size()];
+		//初始化设置所有位置为-1
+		for (int i = 0; i < mListData.size(); i++) {
+			mDeleteIds[i]=String.valueOf(-1);
+		}
+		mDbHelper = new DbHelper(mContext);
 	}
 	
 	public boolean getDeleteState(){
@@ -62,12 +77,10 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		this.mGridView = gridView;
 		mGridView.setOnItemClickListener(this);
 		mGridView.setOnItemLongClickListener(this);
+		//mGridView.setMultiChoiceModeListener(this);
 		this.mInflater=context.getLayoutInflater();
 		scroller=new Scroller(context);
-		mDeleteIds = new int[listData.size()];
-		for (int i = 0; i < listData.size(); i++) {
-			mDeleteIds[i]=-1;
-		}
+
 	}
 
 	/*
@@ -127,21 +140,50 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		return true;
 	}
 
+	/**
+	 * 全选
+	 */
+	public void selectAll(){
+		if (mDeleteState) {
+			for (int i = 0; i <getCount(); i++) {				
+				mDeleteIds[i]=getItem(i)._id+"";
+				notifyDataSetChanged();
+			}
+		}
+		
+	}
+	/**
+	 * 取消
+	 */
+	public void cancelDelete(){
+		for (int i = 0; i < getCount(); i++) {
+			mDeleteIds[i]=String.valueOf(-1);
+			notifyDataSetChanged();
+		}
+	}
+	
+	/**
+	 * 获取要删除的笔记id数组
+	 * @return
+	 */
+	public String[] getSelectedNote(){
+		return mDeleteIds;
+	}
+	
+	public void confirm(){
+		
+	}
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
 		BirdNote birdNote=getItem(position);
 		if (mDeleteState) {
-			DBUG.e("选择了"+mListData.get(position)._id+"   |   "+mDeleteIds);
-			if (mDeleteIds[position] == -1) {
-				mDeleteIds[position] = birdNote._id;
+			if (mDeleteIds[position].equals(String.valueOf(-1))) {
+				mDeleteIds[position] = mListData.get(position)._id+"";
 				view.setBackgroundColor(Color.BLACK);
 			} else {
-				mDeleteIds[position] = -1;
+				mDeleteIds[position] = String.valueOf(-1);
 				view.setBackgroundDrawable(null);
 			}
-			
-			
-			
 
 		}else {
 			Intent intent=new Intent();
@@ -185,23 +227,67 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
             holder.thumbnail=(ImageView)convertView.findViewById(R.id.id_note_item_thumb_iv);
             holder.title=(TextView)convertView.findViewById(R.id.id_note_item_title_tv);
             convertView.setTag(holder);
+
 		}else {
 			holder=(NoteHolder)convertView.getTag();
 		}
 
-		holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
-		//后期缩略图的背景要切一个小一点的图片
-        holder.thumbnail.setBackgroundResource(getThumbnailBgById(birdNote.background));
-		BitmapUtil.writeBytesToFile(birdNote.thumbnail, CommonUtils.getSavePath()+"/hello.png");
-        holder.title.setText(birdNote.title);
-        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
-    	
+			holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
+			//后期缩略图的背景要切一个小一点的图片
+	        holder.thumbnail.setBackgroundResource(getThumbnailBgById(birdNote.background));
+			BitmapUtil.writeBytesToFile(birdNote.thumbnail, CommonUtils.getSavePath()+"/hello.png");
+	        holder.title.setText(birdNote.title);
+	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
+	        
+	        if (mDeleteState) {
+			   if (!mDeleteIds[position].equals(String.valueOf(-1))) {
+				    DBUG.e("删除"+mDeleteIds[position]);
+					convertView.setBackgroundColor(Color.BLACK);			
+		    	} else if (mDeleteIds[position].equals(String.valueOf(-1))){
+		    		DBUG.e("取消"+mDeleteIds[position]);
+				    convertView.setBackgroundDrawable(null);
+			    }
+		    }
+
+        
+
 		return convertView;
 	}
 	
 	@Override
 	public int getItemViewType(int position) {	
 		return getItem(position).level;
+	}
+
+	@Override
+	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onDestroyActionMode(ActionMode mode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onItemCheckedStateChanged(ActionMode mode, int position,
+			long id, boolean checked) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
