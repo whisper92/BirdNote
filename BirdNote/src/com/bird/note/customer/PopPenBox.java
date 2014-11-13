@@ -1,5 +1,10 @@
 package com.bird.note.customer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.bird.note.R;
 import com.bird.note.model.DBUG;
 
@@ -16,45 +21,86 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 
 /**
  * 选择画笔颜色和粗细的弹出框
+ * 
  * @author wangxianpeng
- *
+ * 
  */
-public class PopPenBox extends PopupWindow {
+public class PopPenBox extends PopupWindow implements OnClickListener{
 
 	LayoutInflater inflater;
 	View rootView;
-	public PopPenBox(Context context,OnClickListener po) {
-                 inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                 rootView=inflater.inflate(R.layout.edit_note_choose_pen, null);
-                 this.setContentView(rootView);
-                 this.setWidth(LayoutParams.WRAP_CONTENT);
-                 this.setHeight(LayoutParams.WRAP_CONTENT);
+	float MAX = 100;
+	int selectProcess = 0;
+    public 	float paintWidth = 1;
+	public ColorCircle mColorCircle;
+    public ColorLine mColorLine;
+    public static List<Map<Integer, Integer>> mColorList=new ArrayList<Map<Integer, Integer>>();
+    public static int[] mColorImages=new int[]{
+    		R.id.id_color_00,R.id.id_color_01,R.id.id_color_02,R.id.id_color_03,R.id.id_color_04,R.id.id_color_05,R.id.id_color_06,R.id.id_color_07,
+    		R.id.id_color_08,R.id.id_color_09,R.id.id_color_10,R.id.id_color_11,R.id.id_color_12,R.id.id_color_13,R.id.id_color_14,R.id.id_color_15};
+    public static int[] mColors=new int[]{
+    		0xff16cc79,0xff01932e,0xff04672e,0xffff82c9,0xffff365b,0xffff0000,0xffff6000,0xffa5a5a5,
+    		0xff727272,0xff363636,0xff38a8fe,0xff3467fe,0xff005aff,0xfffcff0c,0xffffffff,0xff000000
+    };
+	public Map<Integer, Integer> mColorsMap=new HashMap<Integer, Integer>();
+    public void initColor(){
+    	for (int i = 0; i < mColorImages.length; i++) {
+    		mColorsMap.put(mColorImages[i], mColors[i]);
+			mColorList.add(mColorsMap);
+		}
+    }
+    private Integer mSelectPaintColor;
+	public PopPenBox(Context context) {
+		initColor();
+		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		rootView = inflater.inflate(R.layout.edit_note_choose_pen, null);
+		this.setContentView(rootView);
+		this.setWidth(LayoutParams.WRAP_CONTENT);
+		this.setHeight(LayoutParams.WRAP_CONTENT);
+		
+		SeekBar penSize = (SeekBar) rootView.findViewById(R.id.id_choose_pen_seekbar);
+		mColorCircle = (ColorCircle) rootView.findViewById(R.id.id_choose_pen_circle);
+		mColorLine=(ColorLine) rootView.findViewById(R.id.id_choose_pen_line);
+		for (int i = 0; i < mColorImages.length; i++) {
+			ImageView imageView=(ImageView)rootView.findViewById(mColorImages[i]);
+			imageView.setOnClickListener(this);
+		}
+		
+		penSize.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				selectProcess = seekBar.getProgress();
 
-               //  ImageView img=(ImageView)rootView.findViewById(R.id.id_pop_pen);
-                // img.setOnClickListener(po);
-                 //SeekBar penSize=(SeekBar)rootView.findViewById(R.id.id_pop_pen_size);
-                /* penSize.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-					
-					@Override
-					public void onStopTrackingTouch(SeekBar seekBar) {
-						//Toast.makeText(context, seekBar.getMax(), duration).show();
-						DBUG.e("这么长"+seekBar.getMax()+"选了这么多"+seekBar.getProgress());
-						
-					}
-					
-					@Override
-					public void onStartTrackingTouch(SeekBar seekBar) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void onProgressChanged(SeekBar seekBar, int progress,
-							boolean fromUser) {
-						// TODO Auto-generated method stub
-						
-					}
-				});*/
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				paintWidth = progress / MAX * 20;
+				mColorCircle.setPaintWidth(paintWidth);
+				mColorLine.setPaintWidth(paintWidth);
+			}
+		});
+	}
+	@Override
+	public void onClick(View v) {
+		for (int i = 0; i < mColorImages.length; i++) {
+			if (mColorImages[i] == v.getId()) {
+				mSelectPaintColor=mColorsMap.get(v.getId());
+				mColorCircle.setPaintColor(mSelectPaintColor);
+				mColorLine.setPaintColor(mSelectPaintColor);
+				((ImageView)v).setBackgroundResource(R.drawable.tool_color_sel);	
+			} else {
+				((ImageView)rootView.findViewById(mColorImages[i])).setBackgroundDrawable(null);
+			}
+			
+		}
+		
 	}
 }

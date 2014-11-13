@@ -1,5 +1,6 @@
 package com.bird.note.customer;
 
+import android.R.integer;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,15 +19,15 @@ import android.view.View;
 public class ColorLine extends View {
 
 	Paint mPaint;
-	Path mPath;
-
+    float mPaintWidth=1.0f;
+    int mPaintColor=0x16cc79;
 	public ColorLine(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
 	}
 
 	public ColorLine(Context context, AttributeSet attrs) {
-		this(context, null, 0);
+		this(context, attrs, 0);
 	}
 
 	public ColorLine(Context context) {
@@ -40,10 +41,26 @@ public class ColorLine extends View {
 		mPaint.setStyle(Paint.Style.STROKE);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		mPaint.setColor(Color.GREEN);
-		mPaint.setStrokeWidth(1);
+		mPaint.setColor(mPaintColor);
+		mPaint.setStrokeWidth(mPaintWidth);
 	}
 
+	public void setPaint(Paint savedPaint){
+		mPaint.setColor(savedPaint.getColor());
+		mPaint.setStrokeWidth(savedPaint.getStrokeWidth());
+	}
+	
+	public void setPaintWidth(float width){
+		this.mPaintWidth=width;
+		mPaint.setStrokeWidth(width);
+		invalidate();
+	}
+	
+	public void setPaintColor(int color){
+		this.mPaintColor=color;
+		mPaint.setColor(color);
+		invalidate();
+	}
 	@Override
 	protected void onDraw(Canvas canvas) {
 

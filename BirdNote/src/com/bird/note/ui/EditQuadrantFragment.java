@@ -78,6 +78,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
     private int mPenHasSelected=0;
     private int mEraserHasSelected=0;
 
+    private float mSelectPaintWidth;
+    private int mSelectPaintColor;
 	/*
 	 * 创建笔记时实例化的方式
 	 */
@@ -163,7 +165,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			public void changeState(int undocount, int redocount) {
 				mUndoState = undocount > 0 ? true : false;
 				mRedoState = redocount > 0 ? true : false;
-               changeStateOfUndoRedo(mUndoState, mRedoState);
+                changeStateOfUndoRedo(mUndoState, mRedoState);
+                
 			}
 		});
 		mPenView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -209,14 +212,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		menu_Redo.setEnabled(false);
 		
 		mHeaderLayout=(RelativeLayout)view.findViewById(R.id.id_edit_title_header_rl);
-		mPopPenBox=new PopPenBox(getActivity(),new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-
-				
-			}
-		});
+		mPopPenBox=new PopPenBox(getActivity());
 		mPopEraserBox=new PopEraserBox(getActivity());
 		mPopMenu=new PopMenuEditNote(getActivity());
 
@@ -444,4 +440,5 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		quadrantContent.textcontent=getTextContent();
 		return quadrantContent;
 	}
+	
 }
