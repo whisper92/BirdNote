@@ -69,7 +69,7 @@ public class PenView extends View {
 	 * 绘图模式的画笔颜色和粗细
 	 */
 	private int mDrawPaintColor = 0xff000000;
-	private float mDrawPaintWidth = 1f;
+	private float mDrawPaintWidth = 5f;
 	
 	private PenDrawPath mDrawPath = null;
 

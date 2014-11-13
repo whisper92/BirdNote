@@ -5,153 +5,153 @@
     android:layout_height="wrap_content"
     android:background="@drawable/tool_color"
     android:clickable="true"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="1px"
         android:clickable="true"
         android:gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:padding="1px" >
 
         <ImageView
             android:id="@+id/id_color_00"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:adjustViewBounds="true"
-            android:background="@drawable/tool_color_sel"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_00" />
 
         <ImageView
             android:id="@+id/id_color_01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_01" />
 
         <ImageView
             android:id="@+id/id_color_02"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_02" />
 
         <ImageView
             android:id="@+id/id_color_03"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_03" />
 
         <ImageView
             android:id="@+id/id_color_04"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_04" />
 
         <ImageView
             android:id="@+id/id_color_05"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_05" />
 
         <ImageView
             android:id="@+id/id_color_06"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_06" />
 
         <ImageView
             android:id="@+id/id_color_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_14" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="1px"
         android:clickable="true"
         android:gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:padding="1px" >
 
         <ImageView
             android:id="@+id/id_color_07"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_07" />
 
         <ImageView
             android:id="@+id/id_color_08"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_08" />
 
         <ImageView
             android:id="@+id/id_color_09"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_09" />
 
         <ImageView
             android:id="@+id/id_color_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_10" />
 
         <ImageView
             android:id="@+id/id_color_11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_11" />
 
         <ImageView
             android:id="@+id/id_color_12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_12" />
 
         <ImageView
             android:id="@+id/id_color_13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_13" />
 
         <ImageView
             android:id="@+id/id_color_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="1px"
+            android:background="@drawable/tool_color_sel"
             android:clickable="true"
+            android:padding="1px"
             android:src="@drawable/tool_color_15" />
     </LinearLayout>
 

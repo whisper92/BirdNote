@@ -33,8 +33,8 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 	View rootView;
 	float MAX = 100;
 	int selectProcess = 0;
-    private Integer mSelectPaintColor;
-    private float mSelectPaintWidth = 1;
+    private Integer mSelectPaintColor = 0xff000000;
+    private float mSelectPaintWidth = 5;
 	public ColorCircle mColorCircle;
     public ColorLine mColorLine;
     public static int[] mColorImages=new int[]{
@@ -63,6 +63,7 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 		this.setHeight(LayoutParams.WRAP_CONTENT);
 		
 		SeekBar penSize = (SeekBar) rootView.findViewById(R.id.id_choose_pen_seekbar);
+		penSize.setProgress(25);
 		mColorCircle = (ColorCircle) rootView.findViewById(R.id.id_choose_pen_circle);
 		mColorLine=(ColorLine) rootView.findViewById(R.id.id_choose_pen_line);
 		for (int i = 0; i < mColorImages.length; i++) {

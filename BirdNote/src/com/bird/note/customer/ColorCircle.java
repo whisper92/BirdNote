@@ -13,8 +13,8 @@ import android.view.View;
 public class ColorCircle extends View{
 
 	Paint mPaint;
-	float width=10f;
-	int color=0xff16cc79;
+	float width=5f;
+	int color=0xff000000;
 	public ColorCircle(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
         init(context);

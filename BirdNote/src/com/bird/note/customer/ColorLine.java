@@ -19,8 +19,8 @@ import android.view.View;
 public class ColorLine extends View {
 
 	Paint mPaint;
-    float mPaintWidth=1.0f;
-    int mPaintColor=0x16cc79;
+    float mPaintWidth=5f;
+    int mPaintColor=0xff000000;
 	public ColorLine(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
