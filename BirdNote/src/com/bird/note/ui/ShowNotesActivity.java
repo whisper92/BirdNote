@@ -109,10 +109,10 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		case R.id.id_show_title_delete_cancle:
 			mShowTitle.setVisibility(View.VISIBLE);
 			mShowDeleteTitle.setVisibility(View.GONE);
+			mNoteAdapter.setDeleteState(false);
 			mNoteAdapter.cancelDelete();
 			break;
 		case R.id.id_show_title_delete_select_all:
-			mNoteAdapter.setDeleteState(false);
 			mNoteAdapter.selectAll();
 			break;
 		default:
