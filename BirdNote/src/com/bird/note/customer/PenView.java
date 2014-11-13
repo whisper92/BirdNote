@@ -68,9 +68,9 @@ public class PenView extends View {
 	/*
 	 * 绘图模式的画笔颜色和粗细
 	 */
-	private int mDrawPaintColor = 0xFFCCCCCC;
-	private int mDrawPaintWidth = 10;
-
+	private int mDrawPaintColor = 0xff000000;
+	private float mDrawPaintWidth = 1f;
+	
 	private PenDrawPath mDrawPath = null;
 
 	/*
@@ -102,6 +102,24 @@ public class PenView extends View {
 		init(context);
 	}
 
+	public int getDrawPaintColor() {
+		return mDrawPaintColor;
+	}
+
+	public void setDrawPaintColor(int color) {
+		this.mDrawPaintColor = color;
+		mDrawPaint.setColor(color);
+	}
+
+	public float getDrawPaintWidth() {
+		return mDrawPaintWidth;
+	}
+
+	public void setDrawPaintWidth(float width) {
+		this.mDrawPaintWidth = width;
+		mDrawPaint.setStrokeWidth(width);
+	}
+	
 	/**
 	 * 获取完成的bitmap 
 	 * @return
@@ -285,7 +303,7 @@ public class PenView extends View {
 	public void initDrawPaint() {
 		mIsCleanMode = false;
 		mDrawPaint.setColor(mDrawPaintColor);
-		mDrawPaint.setStrokeWidth(5);
+		mDrawPaint.setStrokeWidth(mDrawPaintWidth);
 		mCurPaint = mDrawPaint;
 	}
 

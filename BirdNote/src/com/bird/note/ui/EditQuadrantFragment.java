@@ -2,6 +2,7 @@ package com.bird.note.ui;
 
 import android.R.integer;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import com.bird.note.customer.PopMenuEditNote;
 import com.bird.note.customer.PopPenBox;
 import com.bird.note.customer.PenView;
 import com.bird.note.customer.PenView.OnPathListChangeListener;
+import com.bird.note.customer.PopPenBox.OnPaintChangedListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
@@ -213,6 +215,14 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		
 		mHeaderLayout=(RelativeLayout)view.findViewById(R.id.id_edit_title_header_rl);
 		mPopPenBox=new PopPenBox(getActivity());
+		mPopPenBox.setOnPaintChangedListener(new OnPaintChangedListener() {
+			
+			@Override
+			public void changePaint(Paint paint) {
+				mPenView.setDrawPaintColor(paint.getColor());
+				mPenView.setDrawPaintWidth(paint.getStrokeWidth());
+			}
+		});
 		mPopEraserBox=new PopEraserBox(getActivity());
 		mPopMenu=new PopMenuEditNote(getActivity());
 
