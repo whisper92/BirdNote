@@ -31,10 +31,10 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
  */
 public class PopPenBox extends PopupWindow implements OnClickListener{
 
-	LayoutInflater inflater;
-	View rootView;
-	float MAX = 100;
-	int selectProcess = 0;
+	private LayoutInflater inflater;
+	private View rootView;
+	private float MAX = 100;
+	private int selectProcess = 0;
     private int mSelectPaintColor = SavedPaint.DEFAULT_PAINT_COLOR;
     private float mSelectPaintWidth = SavedPaint.DEFAULT_PAINT_WIDTH;
 	public ColorCircle mColorCircle;
@@ -82,6 +82,7 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				selectProcess = seekBar.getProgress();
 				mSavedPaint.savePaintWidth(SavedPaint.DEFAULT_PAINT_MAX_WIDTH*selectProcess/MAX);
+				onPaintChangedListener.changePaint(getChoosePaint());
 			}
 
 			@Override
@@ -92,8 +93,7 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 					boolean fromUser) {
 				mSelectPaintWidth = progress / MAX * SavedPaint.DEFAULT_PAINT_MAX_WIDTH;
 				mColorCircle.setPaintWidth(mSelectPaintWidth);
-				mColorLine.setPaintWidth(mSelectPaintWidth);
-				onPaintChangedListener.changePaint(getChoosePaint());
+				mColorLine.setPaintWidth(mSelectPaintWidth);			
 			}
 		});
 	}

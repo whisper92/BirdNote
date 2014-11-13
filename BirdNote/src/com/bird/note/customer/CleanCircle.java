@@ -12,22 +12,21 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class ColorCircle extends View{
+public class CleanCircle extends View{
 
 	Paint mPaint;
-	float width=SavedPaint.DEFAULT_PAINT_WIDTH;
-	int color=SavedPaint.DEFAULT_PAINT_COLOR;
-	public ColorCircle(Context context, AttributeSet attrs, int defStyle) {
+	float width=SavedPaint.DEFAULT_CLEAN_PAINT_WIDTH;
+	public CleanCircle(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
         init(context);
 	}
 
-	public ColorCircle(Context context, AttributeSet attrs) {
+	public CleanCircle(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 
 	}
 
-	public ColorCircle(Context context) {
+	public CleanCircle(Context context) {
 		this(context, null);
 
 	}
@@ -39,21 +38,13 @@ public class ColorCircle extends View{
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
 		SharedPreferences sp= context.getSharedPreferences(SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
-		color = sp.getInt(SavedPaint.SP_PAINT_COLOR, SavedPaint.DEFAULT_PAINT_COLOR);
-		width =  sp.getFloat(SavedPaint.SP_PAINT_WIDTH, SavedPaint.DEFAULT_PAINT_WIDTH);
-		
-		mPaint.setColor(color);
+		width =  sp.getFloat(SavedPaint.SP_PAINT_CLEAN_WIDTH, SavedPaint.DEFAULT_CLEAN_PAINT_WIDTH);
 		mPaint.setStrokeWidth(width);
+		mPaint.setColor(Color.WHITE);
 	}
 	
-	public void setPaintWidth(float width){
+	public void setCleanPaintWidth(float width){
 		this.width=width;
-		invalidate();
-	}
-	
-	public void setPaintColor(int color){
-		this.color=color;
-		mPaint.setColor(color);
 		invalidate();
 	}
 	

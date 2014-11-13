@@ -45,8 +45,10 @@ public class ColorLine extends View {
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
 		SharedPreferences sp= context.getSharedPreferences(SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
-		mPaint.setColor(sp.getInt(SavedPaint.SP_PAINT_COLOR, SavedPaint.DEFAULT_PAINT_COLOR));
-		mPaint.setStrokeWidth(sp.getFloat(SavedPaint.SP_PAINT_WIDTH, SavedPaint.DEFAULT_PAINT_WIDTH));
+		mPaintColor = sp.getInt(SavedPaint.SP_PAINT_COLOR, SavedPaint.DEFAULT_PAINT_COLOR);
+		mPaintWidth =  sp.getFloat(SavedPaint.SP_PAINT_WIDTH, SavedPaint.DEFAULT_PAINT_WIDTH);
+		mPaint.setColor(mPaintColor);
+		mPaint.setStrokeWidth(mPaintWidth);
 	}
 
 	public void setPaint(Paint savedPaint){

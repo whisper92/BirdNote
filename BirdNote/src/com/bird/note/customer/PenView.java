@@ -311,7 +311,7 @@ public class PenView extends View {
 
 	public void setCleanPaint() {
 		mIsCleanMode = true;
-		mCleanPaint.setStrokeWidth(mSavedPaint.getSavedPaintWidth());
+		mCleanPaint.setStrokeWidth(mSavedPaint.getSavedCleanPaintWidth());
 		mCurPaint = mCleanPaint;
 	}
 

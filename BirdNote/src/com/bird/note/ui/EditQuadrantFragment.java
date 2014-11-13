@@ -23,6 +23,7 @@ import com.bird.note.R;
 import com.bird.note.customer.FullScreenEditText;
 import com.bird.note.customer.LevelFlag;
 import com.bird.note.customer.PopEraserBox;
+import com.bird.note.customer.PopEraserBox.OnEraserChangedListener;
 import com.bird.note.customer.PopMenuEditNote;
 import com.bird.note.customer.PopPenBox;
 import com.bird.note.customer.PenView;
@@ -229,7 +230,22 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 				mSavedPaint.savePaintWidth(paint.getStrokeWidth());
 			}
 		});
-		mPopEraserBox=new PopEraserBox(getActivity());
+		mPopEraserBox=new PopEraserBox(getActivity(),new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+                //清除全部
+				
+			}
+		});
+		mPopEraserBox.setOnPaintChangedListener(new OnEraserChangedListener() {
+			
+			@Override
+			public void changePaint(Paint paint) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		mPopMenu=new PopMenuEditNote(getActivity());
 
 	}
