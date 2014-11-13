@@ -1,6 +1,7 @@
 package com.bird.note.dao;
 
 import com.bird.note.dao.BirdDatabaseConstant;
+import com.bird.note.model.DBUG;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -19,7 +20,7 @@ public class Db extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(NotesTable.SQL_CREATE);
-		Log.d("wxp","create table success...");
+		DBUG.e("create table success...");
 	}
 
 	@Override

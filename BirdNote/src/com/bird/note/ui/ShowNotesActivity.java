@@ -1,5 +1,7 @@
 package com.bird.note.ui;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +11,8 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -20,6 +24,7 @@ import com.bird.note.dao.Db;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.dao.NotesTable;
 import com.bird.note.model.BirdMessage;
+import com.bird.note.model.BirdNote;
 import com.bird.note.model.DBUG;
 import com.bird.note.model.SavedPaint;
 import com.bird.note.model.ShowNoteAdapter;
@@ -36,19 +41,21 @@ public class ShowNotesActivity extends Activity implements
 	ImageView addPen;
 	ImageView addText;
  
-	ShowNoteAdapter noteAdapter=null;
-	DbHelper dbHelper=null;
-	GridView gridView=null;
+	ShowNoteAdapter mNoteAdapter=null;
+	DbHelper mDbHelper=null;
+	GridView mGridView=null;
+	List<BirdNote> mBirdNotes=null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.show_notes);
-		dbHelper=new DbHelper(this);
-		gridView = (GridView) findViewById(R.id.id_show_gv);
-	    noteAdapter = new ShowNoteAdapter(this,dbHelper.queryShowNotes() ,gridView);
-		gridView.setAdapter(noteAdapter);
-		noteAdapter.notifyDataSetChanged();
+		mDbHelper=new DbHelper(this);
+		mGridView = (GridView) findViewById(R.id.id_show_gv);
+		mBirdNotes=mDbHelper.queryShowNotes();
+	    mNoteAdapter = new ShowNoteAdapter(this,mDbHelper.queryShowNotes() ,mGridView);
+	    mGridView.setAdapter(mNoteAdapter);
+		mNoteAdapter.notifyDataSetChanged();
 
 		addPen = (ImageView) findViewById(R.id.id_show_title_new_pen);
 		addPen.setOnClickListener(this);
@@ -77,16 +84,38 @@ public class ShowNotesActivity extends Activity implements
 	
 	@Override
 	protected void onRestart() {
-		noteAdapter= new ShowNoteAdapter(this,dbHelper.queryShowNotes() ,gridView); 
-	    noteAdapter.notifyDataSetChanged();
-	    if (gridView!=null) {
-	    	gridView.setAdapter(noteAdapter);
+		mNoteAdapter= new ShowNoteAdapter(this,mDbHelper.queryShowNotes() ,mGridView); 
+	    mNoteAdapter.notifyDataSetChanged();
+	    if (mGridView!=null) {
+	    	mGridView.setAdapter(mNoteAdapter);
 		}    
 		super.onRestart();
 	}
 	@Override
 	protected void onStart() {
 		super.onStart();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.show_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.id_show_menu_mutil_delete:
+             if (mNoteAdapter!=null && mBirdNotes!=null && mBirdNotes.size()>0) {
+				mNoteAdapter.setDeleteState(true);
+			}
+			break;
+		case R.id.id_show_menu_search:
+			break;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 }

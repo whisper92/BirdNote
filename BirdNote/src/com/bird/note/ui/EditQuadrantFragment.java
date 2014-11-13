@@ -234,16 +234,15 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			
 			@Override
 			public void onClick(View v) {
-                //清除全部
-				
+               mPenView.clearAll();			
 			}
 		});
 		mPopEraserBox.setOnPaintChangedListener(new OnEraserChangedListener() {
 			
 			@Override
 			public void changePaint(Paint paint) {
-				// TODO Auto-generated method stub
-				
+				mPenView.setCleanPaintWidth(paint.getStrokeWidth());
+				mSavedPaint.saveCleanPaintWidth(paint.getStrokeWidth());
 			}
 		});
 		mPopMenu=new PopMenuEditNote(getActivity());

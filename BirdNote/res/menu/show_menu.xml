@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/id_show_menu_mutil_delete"
+        android:title="@string/edit_menu_delete"/>
+     <item 
+        android:id="@+id/id_show_menu_search"
+        android:title="@string/show_menu_search"/>
+        
+</menu>

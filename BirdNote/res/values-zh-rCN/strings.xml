@@ -8,8 +8,9 @@
     <string name="edit_menu_change_bg">更改背景</string>
     <string name="edit_menu_change_page">切换页面</string>
     <string name="edit_menu_mark_colr">标签颜色</string>
-    <string name="edit_menu_save">另存为</string>
+    <string name="edit_menu_saveas">另存为</string>
     <string name="pop_pen_title">笔设置</string>
     <string name="pop_eraser_title">橡皮擦</string>
     <string name="pop_eraser_clear_all">清除全部</string>
+    <string name="show_menu_search">搜索</string>
 </resources>

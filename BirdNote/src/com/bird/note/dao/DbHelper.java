@@ -190,5 +190,14 @@ public class DbHelper {
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
 		dbWrite.close();
 	}
+	
+	/**
+	 * 根据id删除笔记
+	 * @param note_id
+	 */
+	public void deleteNoteById(String note_id){
+		dbWrite.delete(NotesTable.TABLE_NAME, "_id=?", new String[]{note_id});
+		dbWrite.close();
+	}
 
 }

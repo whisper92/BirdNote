@@ -1,8 +1,11 @@
 package com.bird.note.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -32,8 +35,24 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	private GridView mGridView;
 	private Context mContext;
 	private LayoutInflater mInflater;
-	
 	private Scroller scroller;
+	
+	private boolean mDeleteState=false;
+	private int[] mDeleteIds;
+	
+	private Map<Integer, Boolean> mToDeleteNote =new HashMap<Integer, Boolean>();
+	public boolean ismDeleteState() {
+		return mDeleteState;
+	}
+
+	public void setDeleteState(boolean mDeleteState) {
+		this.mDeleteState = mDeleteState;
+	}
+	
+	public boolean getDeleteState(){
+		return mDeleteState;
+	}
+
 	public ShowNoteAdapter(Activity context, List<BirdNote> listData,
 			GridView gridView) {
 		super();
@@ -45,6 +64,10 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		mGridView.setOnItemLongClickListener(this);
 		this.mInflater=context.getLayoutInflater();
 		scroller=new Scroller(context);
+		mDeleteIds = new int[listData.size()];
+		for (int i = 0; i < listData.size(); i++) {
+			mDeleteIds[i]=-1;
+		}
 	}
 
 	/*
@@ -106,18 +129,32 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
-	
-		Toast.makeText(mContext, mListData.get(position)._id+"", 500).show();
-		Intent intent=new Intent();
-		intent.setClass(mContext, EditNoteActivity.class);
-		intent.putExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_UPDATE_VALUE);
-		intent.putExtra(BirdMessage.START_MODE_KEY, BirdMessage.START_MODE_DRAW_KEY);
-		intent.putExtra(BirdMessage.INITENT_PARCEL_NOTE, mListData.get(position));
-		NoteApplication noteApplication=(NoteApplication)mContext.getApplicationContext();
-		noteApplication.setCurrentNoteEidtType(BirdMessage.NOTE_EDIT_TYPE_UPDATE);
-		noteApplication.setEditNoteId(mListData.get(position)._id);
-		noteApplication.setEditedQuadrants(new int[]{0,0,0,0});
-		mContext.startActivity(intent);
+		BirdNote birdNote=getItem(position);
+		if (mDeleteState) {
+			DBUG.e("选择了"+mListData.get(position)._id+"   |   "+mDeleteIds);
+			if (mDeleteIds[position] == -1) {
+				mDeleteIds[position] = birdNote._id;
+				view.setBackgroundColor(Color.BLACK);
+			} else {
+				mDeleteIds[position] = -1;
+				view.setBackgroundDrawable(null);
+			}
+			
+			
+			
+
+		}else {
+			Intent intent=new Intent();
+			intent.setClass(mContext, EditNoteActivity.class);
+			intent.putExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_UPDATE_VALUE);
+			intent.putExtra(BirdMessage.START_MODE_KEY, BirdMessage.START_MODE_DRAW_KEY);
+			intent.putExtra(BirdMessage.INITENT_PARCEL_NOTE, mListData.get(position));
+			NoteApplication noteApplication=(NoteApplication)mContext.getApplicationContext();
+			noteApplication.setCurrentNoteEidtType(BirdMessage.NOTE_EDIT_TYPE_UPDATE);
+			noteApplication.setEditNoteId(mListData.get(position)._id);
+			noteApplication.setEditedQuadrants(new int[]{0,0,0,0});
+			mContext.startActivity(intent);
+		}
 	}
 
 	@Override

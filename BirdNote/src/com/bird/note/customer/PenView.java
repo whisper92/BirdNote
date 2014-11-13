@@ -65,6 +65,7 @@ public class PenView extends View {
 	 * 擦除模式对应的paint,canvas,bitmap
 	 */
 	private Paint mCleanPaint;
+	private float mCleanPaintWidth = SavedPaint.DEFAULT_CLEAN_PAINT_WIDTH;
 
 	/*
 	 * 绘图模式的画笔颜色和粗细
@@ -103,24 +104,7 @@ public class PenView extends View {
 		init(context);
 	}
 
-	public int getDrawPaintColor() {
-		return mDrawPaintColor;
-	}
 
-	public void setDrawPaintColor(int color) {
-		this.mDrawPaintColor = color;
-		mDrawPaint.setColor(color);
-	}
-
-	public float getDrawPaintWidth() {
-		return mDrawPaintWidth;
-	}
-
-	public void setDrawPaintWidth(float width) {
-		this.mDrawPaintWidth = width;
-		mDrawPaint.setStrokeWidth(width);
-	}
-	
 	/**
 	 * 获取完成的bitmap 
 	 * @return
@@ -226,7 +210,7 @@ public class PenView extends View {
 		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap),  "/hello"+mCurrentQuadrant+".png");
 	}
 
-	public void clearImage() {
+	public void clearAll() {
 		mSavePath.clear();
 		mDeletePath.clear();
 		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
@@ -304,17 +288,47 @@ public class PenView extends View {
 
 	public void initDrawPaint() {
 		mIsCleanMode = false;
-		mDrawPaint.setColor(mSavedPaint.getSavedPaintColor());
-		mDrawPaint.setStrokeWidth(mSavedPaint.getSavedPaintWidth());
+		mDrawPaintColor = mSavedPaint.getSavedPaintColor();
+		mDrawPaintWidth=mSavedPaint.getSavedPaintWidth();
+		mDrawPaint.setColor(mDrawPaintColor);
+		mDrawPaint.setStrokeWidth(mDrawPaintWidth);
 		mCurPaint = mDrawPaint;
 	}
 
 	public void setCleanPaint() {
 		mIsCleanMode = true;
-		mCleanPaint.setStrokeWidth(mSavedPaint.getSavedCleanPaintWidth());
+		mCleanPaintWidth=mSavedPaint.getSavedCleanPaintWidth();
+		mCleanPaint.setStrokeWidth(mCleanPaintWidth);
 		mCurPaint = mCleanPaint;
 	}
+	
+	public void setCleanPaintWidth(float width){
+		this.mCleanPaintWidth = width;
+		mCleanPaint.setStrokeWidth(width);
+	}
+	
+	public float getCleanPaintWidth(){
+		return mCleanPaintWidth;
+	}
+	
+	public int getDrawPaintColor() {
+		return mDrawPaintColor;
+	}
 
+	public void setDrawPaintColor(int color) {
+		this.mDrawPaintColor = color;
+		mDrawPaint.setColor(color);
+	}
+
+	public float getDrawPaintWidth() {
+		return mDrawPaintWidth;
+	}
+
+	public void setDrawPaintWidth(float width) {
+		this.mDrawPaintWidth = width;
+		mDrawPaint.setStrokeWidth(width);
+	}
+	
 	OnPathListChangeListener pathListChangeListener;
 
 	public interface OnPathListChangeListener {

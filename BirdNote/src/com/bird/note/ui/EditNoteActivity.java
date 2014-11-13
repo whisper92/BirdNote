@@ -1,30 +1,23 @@
 package com.bird.note.ui;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONException;
 
-import android.R.integer;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 import com.bird.note.R;
 import com.bird.note.customer.LevelFlag;
@@ -33,10 +26,8 @@ import com.bird.note.customer.QuadrantThumbnail.OnQuadrantChangeListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
-import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.utils.BitmapUtil;
-import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.JsonUtil;
 import com.bird.note.utils.NoteApplication;
 
@@ -70,7 +61,6 @@ public class EditNoteActivity extends FragmentActivity implements
 	private List<QuadrantContent> mQuaList;
 	private FragmentManager fragmentManager;
 	public int mNoteEditType=BirdMessage.NOTE_EDIT_TYPE_CREATE;
-	public int mNoteId=-1;
 	private NoteApplication mNoteApplication=null;
 	private int[] mEditedQuadrant;
 	@Override
@@ -223,17 +213,22 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.edit_menu, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.id_edit_menu_save:
+		case R.id.id_edit_menu_saveas:
 
 			break;
-
+		case R.id.id_edit_menu_delete:
+			if (mBirdNote!=null) {
+				dbHelper.deleteNoteById(mBirdNote._id+"");
+				finish();
+			}
+			break;
 		default:
 			break;
 		}

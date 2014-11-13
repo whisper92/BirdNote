@@ -7,7 +7,7 @@
     <string name="edit_menu_change_bg">Background</string>
     <string name="edit_menu_change_page">Pages</string>
     <string name="edit_menu_mark_colr">Mark Color</string>
-    <string name="edit_menu_save">Save</string>
+    <string name="edit_menu_saveas">Save</string>
 
     <!-- 插入的行数 -->
     <string name="fullscreen_edit_line">23</string>
@@ -17,4 +17,5 @@
     <string name="pop_pen_title">Pen Setting</string>
     <string name="pop_eraser_title">Eraser Setting</string>
      <string name="pop_eraser_clear_all">Clear All</string>
+     <string name="show_menu_search">Search</string>
 </resources>
