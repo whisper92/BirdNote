@@ -47,7 +47,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	/*
 	 * 用于保存要删除的笔记的id：如果要删除，则该位置的id为笔记id，否则为-1
 	 */
-	private String[] mDeleteIds;
+	private String[] mDeleteIds = null;
 	
 	private Map<Integer, Boolean> mToDeleteNote =new HashMap<Integer, Boolean>();
 	public boolean ismDeleteState() {
@@ -245,10 +245,11 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			   if (!mDeleteIds[position].equals(String.valueOf(-1))) {
 				    DBUG.e("删除"+mDeleteIds[position]);
 					convertView.setBackgroundColor(Color.BLACK);			
-		    	} else if (mDeleteIds[position].equals(String.valueOf(-1))){
-		    		DBUG.e("取消"+mDeleteIds[position]);
-				    convertView.setBackgroundDrawable(null);
-			    }
+		    	}
+		    } else if ((mDeleteIds!=null)){
+		    	if(mDeleteIds[position].equals(String.valueOf(-1))){
+		    		convertView.setBackgroundDrawable(null);
+		    	} 
 		    }
 
         
