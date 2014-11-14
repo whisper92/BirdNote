@@ -17,6 +17,7 @@ public class NotesTable {
 	public static final String QUA3="qua3";
 	public static final String THUMBNAIL="thumbnail";
 	public static final String BG_ID="background";
+	public static final String STAR="star";
 	
     public static final String SQL_CREATE="create table "+TABLE_NAME
     		+"("
@@ -29,7 +30,8 @@ public class NotesTable {
     		+QUA2+" blob,"
     		+QUA3+" blob,"
     		+THUMBNAIL+" blob,"
-    		+BG_ID+" integer)";	
+    		+BG_ID+" integer,"
+    		+STAR+" integer)";	
     
     public static final String TEXTCONTENT_HEADER="textcontents";
     public static final String TEXTCONTENT_OBJECT_QUA="qua";

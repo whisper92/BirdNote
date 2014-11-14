@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.bird.note.R;
 
+import android.R.integer;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -48,8 +49,15 @@ public class BirdNote implements Parcelable {
 	 */
 	public int background=0;
 	/*
+	 * 收藏
+	 */
+	public int star=0;
+	
+	/*
 	 * public String createTime; public String lastEditTime;
 	 */
+	
+	
 
 	public BirdNote(){
 		
@@ -57,7 +65,7 @@ public class BirdNote implements Parcelable {
 	
 	public BirdNote(int level, String title, String textContents, byte[] byteArrayQua0,
 			byte[] byteArrayQua1, byte[] byteArrayQua2, byte[] byteArrayQua3,
-			byte[] byteArrayThumbnail,int background) {
+			byte[] byteArrayThumbnail,int background,int star) {
 	}
 
 	@Override
@@ -78,6 +86,7 @@ public class BirdNote implements Parcelable {
 		dest.writeByteArray(qua3);
 		dest.writeByteArray(thumbnail);
 		dest.writeInt(background);
+		dest.writeInt(star);
 		
 	}
 
@@ -96,7 +105,7 @@ public class BirdNote implements Parcelable {
 			birdNote.qua3 = source.createByteArray();
 			birdNote.thumbnail = source.createByteArray();
 			birdNote.background = source.readInt();
-			
+			birdNote.star = source.readInt();
 			return birdNote;
 		}
 

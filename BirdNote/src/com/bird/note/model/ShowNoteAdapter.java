@@ -160,8 +160,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			mDeleteIds[i]=String.valueOf(-1);
 			notifyDataSetChanged();
 		}
-		
-		
 	}
 	
 	/**

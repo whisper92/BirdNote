@@ -222,6 +222,11 @@ public class EditNoteActivity extends FragmentActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.id_edit_menu_star:
+			if (mBirdNote!=null) {
+               dbHelper.starNoteById(mBirdNote._id+"");
+			}
+			break;
 		case R.id.id_edit_menu_saveas:
 
 			break;

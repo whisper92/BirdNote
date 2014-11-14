@@ -14,7 +14,8 @@ qua0 blob,
 qua1 blob,
 qua2 blob,
 qua3 blob,
-thumbnail blob
+thumbnail blob,
+star integer default 0
 )
 ```
 

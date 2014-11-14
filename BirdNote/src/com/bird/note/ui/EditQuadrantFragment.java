@@ -218,33 +218,10 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		menu_Redo.setEnabled(false);
 		
 		mHeaderLayout=(RelativeLayout)view.findViewById(R.id.id_edit_title_header_rl);
-		mPopPenBox=new PopPenBox(getActivity());
+	
 		mSavedPaint = new SavedPaint(getActivity());
-		mPopPenBox.setOnPaintChangedListener(new OnPaintChangedListener() {
-			
-			@Override
-			public void changePaint(Paint paint) {
-				mPenView.setDrawPaintColor(paint.getColor());
-				mPenView.setDrawPaintWidth(paint.getStrokeWidth());
-				mSavedPaint.savePaintColor(paint.getColor());
-				mSavedPaint.savePaintWidth(paint.getStrokeWidth());
-			}
-		});
-		mPopEraserBox=new PopEraserBox(getActivity(),new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-               mPenView.clearAll();			
-			}
-		});
-		mPopEraserBox.setOnPaintChangedListener(new OnEraserChangedListener() {
-			
-			@Override
-			public void changePaint(Paint paint) {
-				mPenView.setCleanPaintWidth(paint.getStrokeWidth());
-				mSavedPaint.saveCleanPaintWidth(paint.getStrokeWidth());
-			}
-		});
+		
+		
 		mPopMenu=new PopMenuEditNote(getActivity());
 
 	}
@@ -327,11 +304,43 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		toggleEraserBox(mCurrentMode);
 	}
 	
+	public void createPenBox(){
+		mPopPenBox=new PopPenBox(getActivity());
+		mPopPenBox.setOnPaintChangedListener(new OnPaintChangedListener() {
+			
+			@Override
+			public void changePaint(Paint paint) {
+				mPenView.setDrawPaintColor(paint.getColor());
+				mPenView.setDrawPaintWidth(paint.getStrokeWidth());
+				mSavedPaint.savePaintColor(paint.getColor());
+				mSavedPaint.savePaintWidth(paint.getStrokeWidth());
+			}
+		});
+	}
+	
+	public void createEraserBox(){
+       mPopEraserBox=new PopEraserBox(getActivity(),new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+               mPenView.clearAll();			
+			}
+		});
+		mPopEraserBox.setOnPaintChangedListener(new OnEraserChangedListener() {
+			
+			@Override
+			public void changePaint(Paint paint) {
+				mPenView.setCleanPaintWidth(paint.getStrokeWidth());
+				mSavedPaint.saveCleanPaintWidth(paint.getStrokeWidth());
+			}
+		});
+	}
 	/**
 	 * 开关笔刷设置框
 	 * @param mode
 	 */
 	public void togglePenBox(int mode){
+		createPenBox();
 		if (mode==BirdMessage.START_MODE_DRAW_KEY) {
 			if (!mPenBoxOpened||(!mPopPenBox.isShowing())) {
 				if (mPenHasSelected>1) {
@@ -355,6 +364,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 * @param mode
 	 */
 	public void toggleEraserBox(int mode){
+		 createEraserBox();
 		if (mode==BirdMessage.START_MODE_CLEAN_KEY) {
 			if (!mEraserBoxOpened||(!mPopEraserBox.isShowing())) {
 				if (mEraserHasSelected>1) {				
@@ -385,7 +395,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 
 	public void saveUpdateNote(){
-		  new Handler().post(new Runnable() {
+		DialogManager.createTitleInputDialog(getActivity());
+/*		  new Handler().post(new Runnable() {
 			@Override
 			public void run() {			
 				
@@ -393,7 +404,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 				new DbHelper(getActivity()).updateNoteById(((EditNoteActivity)getActivity()).generateNewNote(),noteApplication.getEditNoteId()+"");
 				((EditNoteActivity)getActivity()).editHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
 			}
-		});	  
+		});	  */
 	}
 	
 	/**

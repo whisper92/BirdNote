@@ -34,7 +34,7 @@ import com.bird.note.utils.CommonUtils;
  * 
  */
 public class PenView extends View {
-	private final float TOUCH_TOLERANCE = 4;
+	private final float TOUCH_TOLERANCE = 0;
 	private Context mContext;
 	/*
 	 * 当前使用的Paint
@@ -164,8 +164,14 @@ public class PenView extends View {
 		float x = event.getX();
 		float y = event.getY();
 
+		float downx = 0 ;
+		float downy = 0 ;
+		
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
+			downx = event.getRawX();
+			downy = event.getRawY();
+
 			mDeletePath.clear();
 			mPath = new Path();
 			mDrawPath = new PenDrawPath();
@@ -188,14 +194,16 @@ public class PenView extends View {
 			postInvalidate();
 			break;
 		case MotionEvent.ACTION_UP:
-			mPath.lineTo(posX, posY);
-			mDrawCanvas.drawPath(mPath, mCurPaint);
-			mSavePath.add(mDrawPath);
-			pathListChangeListener.changeState(mSavePath.size(),
-					mDeletePath.size());
 
-			mPath = null;
-			postInvalidate();
+			if ((Math.abs(downx-event.getX())) >= 4 || (Math.abs(downy-event.getY()))> 4) {
+				mPath.lineTo(posX, posY);
+				mDrawCanvas.drawPath(mPath, mCurPaint);
+				mSavePath.add(mDrawPath);
+				pathListChangeListener.changeState(mSavePath.size(),
+						mDeletePath.size());
+				mPath = null;
+				postInvalidate();
+			}
 			break;
 		}
 		return true;

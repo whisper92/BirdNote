@@ -4,7 +4,7 @@
         android:id="@+id/id_edit_menu_delete"
         android:title="@string/edit_menu_delete"/>
     <item
-        android:id="@+id/id_edit_menu_favor"
+        android:id="@+id/id_edit_menu_star"
         android:title="@string/edit_menu_favor"/>
     <item
         android:id="@+id/id_edit_menu_change_bg"

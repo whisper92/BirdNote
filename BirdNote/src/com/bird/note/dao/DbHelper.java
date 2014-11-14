@@ -13,6 +13,7 @@ import android.util.Log;
 import android.content.Context;
 
 import com.bird.note.model.BirdNote;
+import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.utils.*;
 
@@ -42,7 +43,7 @@ public class DbHelper {
 	 * @param qua3 : 3象限绘制内容
 	 * @param thumbnail : 缩略图
 	 */
-	public void insertNewNote(int level,String title,String text_content,byte[] qua0,byte[] qua1,byte[]qua2,byte[] qua3,byte[] thumbnail,int bg_id){
+	public void insertNewNote(int level,String title,String text_content,byte[] qua0,byte[] qua1,byte[]qua2,byte[] qua3,byte[] thumbnail,int bg_id,int star){
 		ContentValues values=new ContentValues();
 		values.put(NotesTable.LEVEL, level);
 		values.put(NotesTable.TITLE, title);
@@ -53,6 +54,7 @@ public class DbHelper {
 		values.put(NotesTable.QUA3, qua3);
 		values.put(NotesTable.THUMBNAIL, thumbnail);
 		values.put(NotesTable.BG_ID, bg_id);
+		values.put(NotesTable.STAR, star);
 		dbWrite.insert(NotesTable.TABLE_NAME, null, values);
 		dbWrite.close();
 	}
@@ -62,7 +64,7 @@ public class DbHelper {
 	}
 	
 	public void insertNewNote(BirdNote birdNote){
-		insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background);
+		insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background,birdNote.star);
 	}
 	
 	/**
@@ -188,6 +190,7 @@ public class DbHelper {
 		values.put(NotesTable.QUA3, birdNote.qua3);
 		values.put(NotesTable.THUMBNAIL, birdNote.thumbnail);
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
+		DBUG.e("update note success...");
 		dbWrite.close();
 	}
 	
@@ -197,6 +200,7 @@ public class DbHelper {
 	 */
 	public void deleteNoteById(String note_id){
 		dbWrite.delete(NotesTable.TABLE_NAME, "_id=?", new String[]{note_id});
+		DBUG.e("delete note success...");
 		dbWrite.close();
 	}
 	
@@ -204,9 +208,20 @@ public class DbHelper {
 		for (int i = 0; i < note_ids.length; i++) {
 			if (!note_ids[i].equals(String.valueOf(-1))) {
 				dbWrite.delete(NotesTable.TABLE_NAME, "_id=?", new String[]{note_ids[i]});
-			}
-			
+			}		
 		}
+		DBUG.e("delete notes success...");
+	}
+	
+	/**
+	 * 添加至收藏
+	 * @param note_id
+	 */
+	public void starNoteById(String note_id){
+		ContentValues values=new ContentValues();
+		values.put(NotesTable.STAR, 1);
+		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
+		DBUG.e("star note success...");
 	}
 	
 

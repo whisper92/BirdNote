@@ -172,9 +172,9 @@ public final class R {
         public static final int id_edit_menu_change_bg=0x7f090034;
         public static final int id_edit_menu_change_page=0x7f090035;
         public static final int id_edit_menu_delete=0x7f090032;
-        public static final int id_edit_menu_favor=0x7f090033;
         public static final int id_edit_menu_mark_colr=0x7f090036;
         public static final int id_edit_menu_saveas=0x7f090037;
+        public static final int id_edit_menu_star=0x7f090033;
         public static final int id_edit_note_fragment_root=0x7f090006;
         public static final int id_edit_quathumb=0x7f090014;
         public static final int id_edit_title_clean=0x7f09000d;
