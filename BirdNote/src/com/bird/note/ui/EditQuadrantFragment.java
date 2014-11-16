@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.bird.note.R;
+import com.bird.note.customer.BirdAlertDialog;
 import com.bird.note.customer.FullScreenEditText;
 import com.bird.note.customer.LevelFlag;
 import com.bird.note.customer.PopEraserBox;
@@ -222,9 +223,28 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		mSavedPaint = new SavedPaint(getActivity());
 		
 		
-		mPopMenu=new PopMenuEditNote(getActivity());
+		mPopMenu=new PopMenuEditNote(getActivity(),popMenuListener);
 
 	}
+	
+	public OnClickListener popMenuListener=new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			closePopMenu();
+			if (v.getId() == R.id.id_popmenu_delete) {           
+				BirdAlertDialog birdAlertDialog=new BirdAlertDialog(getActivity(),R.style.birdalertdialog,new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Log.e("wxp","haha");
+					}
+				});
+				birdAlertDialog.show();
+			}
+			
+		}
+	};
 
 	/**
 	 * 设置当前的编辑模式
@@ -277,9 +297,11 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mPenView.redo();
 			break;
 		case R.id.id_edit_title_more:
+			togglePopMenu();
 			break;
 		case R.id.id_edit_title_save:
 			//mPenView.savePicture(mCurrentQuadrant);
+			closePopMenu();
 			if ((((EditNoteActivity)getActivity()).mNoteEditType)==BirdMessage.NOTE_EDIT_TYPE_UPDATE) {
 				saveUpdateNote();
 			} else {
@@ -302,6 +324,23 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		}
 		togglePenBox(mCurrentMode);
 		toggleEraserBox(mCurrentMode);
+	}
+	
+	public boolean closePopMenu(){
+		if (mPopMenu!=null &&mPopMenu.isShowing()) {
+			mPopMenu.dismiss();
+			return true;		
+		} else {
+			return false;
+		}
+		
+	}
+	public void togglePopMenu(){
+		if (mPopMenu!=null && (!mPopMenu.isShowing())) {
+			mPopMenu.showAtLocation(mWrapFrameLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+		} else {
+			mPopMenu.dismiss();
+		}
 	}
 	
 	public void createPenBox(){
@@ -385,6 +424,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	
 	
 	public void saveNewNote(){
+		DialogManager.createTitleInputDialog(getActivity());
 		  new Handler().post(new Runnable() {
 			@Override
 			public void run() {			
@@ -395,8 +435,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 
 	public void saveUpdateNote(){
-		DialogManager.createTitleInputDialog(getActivity());
-/*		  new Handler().post(new Runnable() {
+		
+		  new Handler().post(new Runnable() {
 			@Override
 			public void run() {			
 				
@@ -404,7 +444,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 				new DbHelper(getActivity()).updateNoteById(((EditNoteActivity)getActivity()).generateNewNote(),noteApplication.getEditNoteId()+"");
 				((EditNoteActivity)getActivity()).editHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
 			}
-		});	  */
+		});	  
 	}
 	
 	/**

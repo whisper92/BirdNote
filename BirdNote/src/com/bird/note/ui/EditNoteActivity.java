@@ -206,18 +206,20 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-/*		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			Toast.makeText(EditNoteActivity.this, "确定返回", 500).show();
+	   if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			//Toast.makeText(EditNoteActivity.this, "确定返回", 500).show();
+		   if (mEditQuaFragment.closePopMenu()) {
+			   return mEditQuaFragment.closePopMenu();
+		   }
+		}
+		if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
+			mEditQuaFragment.togglePopMenu();
 			return false;
-		}*/
+		}
 		return super.onKeyDown(keyCode, event);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.edit_menu, menu);
-		return true;
-	}
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

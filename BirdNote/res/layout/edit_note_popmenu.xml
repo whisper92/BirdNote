@@ -2,11 +2,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
-    
-<include 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    layout="@layout/edit_note_header"/>
-    
+    android:background="@drawable/menu_bg"
+    android:orientation="vertical"
+    android:padding="20dp" >
+    <Button
+        android:padding="10dp"
+        android:id="@+id/id_popmenu_delete"
+        android:text="@string/edit_menu_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/pop_menu_item"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/color_show_item"
+        />
+    <Button
+        android:padding="10dp"
+        android:id="@+id/id_popmenu_star"
+        android:text="@string/edit_menu_favor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/pop_menu_item"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/color_show_item"
+        />
+    <Button
+        android:padding="10dp"
+        android:id="@+id/id_popmenu_change_bg"
+        android:text="@string/edit_menu_change_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/pop_menu_item"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/color_show_item"
+        />
+    <Button
+        android:padding="10dp"
+        android:id="@+id/id_popmenu_saveas"
+        android:text="@string/edit_menu_saveas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/pop_menu_item"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/color_show_item"
+        />
+    <Button
+        android:padding="10dp"
+        android:id="@+id/id_popmenu_cancle"
+        android:text="@string/show_menu_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/menu_cancle_bg"
+        android:textColor="@color/color_show_item"
+        />
+
 </LinearLayout>

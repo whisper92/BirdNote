@@ -17,8 +17,9 @@
     <string name="pop_eraser_title">Eraser Setting</string>
     <string name="pop_eraser_clear_all">Clear All</string>
     <string name="show_menu_search">Search</string>
-    <string name="show_menu_delete_confirm">OK</string>
-    <string name="show_menu_delete_cancel">Cancel</string>
+    <string name="show_menu_confirm">OK</string>
+    <string name="show_menu_cancel">Cancel</string>
     <string name="show_menu_delete_selectall">All</string>
 
+    <string name="alert_delete_content">The note willd be deleted!</string>
 </resources>

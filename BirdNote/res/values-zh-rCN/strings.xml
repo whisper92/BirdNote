@@ -13,7 +13,9 @@
     <string name="pop_eraser_title">橡皮擦</string>
     <string name="pop_eraser_clear_all">清除全部</string>
     <string name="show_menu_search">搜索</string>
-    <string name="show_menu_delete_confirm">确认</string>
-    <string name="show_menu_delete_cancel">取消</string>
+    <string name="show_menu_confirm">确认</string>
+    <string name="show_menu_cancel">取消</string>
     <string name="show_menu_delete_selectall">全选</string>
+    
+    <string name="alert_delete_content">当前笔记将被删除!</string>
 </resources>

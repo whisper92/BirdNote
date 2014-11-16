@@ -13,7 +13,7 @@
         android:layout_marginLeft="@dimen/dimen_show_titile_text_margin_left"
         android:background="@drawable/action_bt_style01_left"
         android:gravity="center"
-        android:text="@string/show_menu_delete_confirm"
+        android:text="@string/show_menu_confirm"
         android:textColor="@color/color_show_title_text" />
 
     <Button
@@ -39,6 +39,6 @@
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:gravity="center"
-        android:text="@string/show_menu_delete_cancel" />
+        android:text="@string/show_menu_cancel" />
 
 </RelativeLayout>

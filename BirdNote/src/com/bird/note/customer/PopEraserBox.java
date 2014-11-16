@@ -48,8 +48,10 @@ public class PopEraserBox extends PopupWindow {
                  this.setContentView(rootView);
                  this.setWidth(LayoutParams.WRAP_CONTENT);
                  this.setHeight(LayoutParams.WRAP_CONTENT);
-         		this.setOutsideTouchable(true);
-        		this.setBackgroundDrawable(new BitmapDrawable());
+         		this.setFocusable(true); 
+        		this.setOutsideTouchable(true); 
+        		this.update(); 
+        		this.setBackgroundDrawable(new BitmapDrawable()); 
         		
         		mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
         			@Override
