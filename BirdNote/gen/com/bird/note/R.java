@@ -18,15 +18,19 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int color_alert_dialog_bg=0x7f060002;
+        public static final int color_alert_dialog_bg=0x7f060004;
+        public static final int color_alert_dialog_full_bg=0x7f060003;
+        public static final int color_alert_dialog_text=0x7f060002;
         public static final int color_show_item=0x7f060001;
         public static final int color_show_title_text=0x7f060000;
+        public static final int color_wait_dialog_bg=0x7f060005;
     }
     public static final class dimen {
         public static final int dimen_create_thumbnail_height=0x7f070012;
         /**  创建缩略图的宽高 
          */
         public static final int dimen_create_thumbnail_width=0x7f070011;
+        public static final int dimen_dialog_width=0x7f070019;
         public static final int dimen_edit_canvas_height=0x7f070001;
         /**  画板的宽高 
          */
@@ -58,6 +62,7 @@ public final class R {
         /**  首页标题栏
          */
         public static final int dimen_show_titile_text_size=0x7f070002;
+        public static final int dimen_waitdialog_width=0x7f07001a;
     }
     public static final class drawable {
         public static final int action_bar=0x7f020000;
@@ -150,90 +155,97 @@ public final class R {
         public static final int tool_color_sel=0x7f020057;
         public static final int tool_line=0x7f020058;
         public static final int tool_slide=0x7f020059;
+        public static final int w=0x7f02005a;
     }
     public static final class id {
         public static final int id_alertdiaolg_cancel=0x7f0b0001;
         public static final int id_alertdiaolg_confirm=0x7f0b0002;
         public static final int id_alertdiaolg_content=0x7f0b0000;
-        public static final int id_choose_eraser_circle=0x7f0b0004;
-        public static final int id_choose_eraser_clean_all=0x7f0b0005;
-        public static final int id_choose_eraser_seekbar=0x7f0b0003;
-        public static final int id_choose_pen_circle=0x7f0b0008;
-        public static final int id_choose_pen_line=0x7f0b0006;
-        public static final int id_choose_pen_seekbar=0x7f0b0007;
-        public static final int id_color_00=0x7f0b0022;
-        public static final int id_color_01=0x7f0b0023;
-        public static final int id_color_02=0x7f0b0024;
-        public static final int id_color_03=0x7f0b0025;
-        public static final int id_color_04=0x7f0b0026;
-        public static final int id_color_05=0x7f0b0027;
-        public static final int id_color_06=0x7f0b0028;
-        public static final int id_color_07=0x7f0b002a;
-        public static final int id_color_08=0x7f0b002b;
-        public static final int id_color_09=0x7f0b002c;
-        public static final int id_color_10=0x7f0b002d;
-        public static final int id_color_11=0x7f0b002e;
-        public static final int id_color_12=0x7f0b002f;
-        public static final int id_color_13=0x7f0b0030;
-        public static final int id_color_14=0x7f0b0029;
-        public static final int id_color_15=0x7f0b0031;
-        public static final int id_edit_level_flag=0x7f0b0016;
-        public static final int id_edit_main_editfragment=0x7f0b0015;
-        public static final int id_edit_main_et=0x7f0b000c;
-        public static final int id_edit_main_fl=0x7f0b000a;
-        public static final int id_edit_main_fl_warpper=0x7f0b000b;
-        public static final int id_edit_menu_change_bg=0x7f0b003c;
-        public static final int id_edit_menu_change_page=0x7f0b003d;
-        public static final int id_edit_menu_delete=0x7f0b003a;
-        public static final int id_edit_menu_mark_colr=0x7f0b003e;
-        public static final int id_edit_menu_saveas=0x7f0b003f;
-        public static final int id_edit_menu_star=0x7f0b003b;
-        public static final int id_edit_note_fragment_root=0x7f0b0009;
-        public static final int id_edit_quathumb=0x7f0b0017;
-        public static final int id_edit_title_clean=0x7f0b0010;
-        public static final int id_edit_title_header_rl=0x7f0b000d;
-        public static final int id_edit_title_more=0x7f0b0014;
-        public static final int id_edit_title_next=0x7f0b0012;
-        public static final int id_edit_title_pen=0x7f0b000e;
-        public static final int id_edit_title_pre=0x7f0b0011;
-        public static final int id_edit_title_save=0x7f0b0013;
-        public static final int id_edit_title_text=0x7f0b000f;
-        public static final int id_note_item_ll=0x7f0b001d;
-        public static final int id_note_item_ll_menu=0x7f0b001e;
-        public static final int id_note_item_thumb_iv=0x7f0b001f;
-        public static final int id_note_item_title_tv=0x7f0b0020;
-        public static final int id_penbox_choosecolor_ll=0x7f0b0021;
-        public static final int id_popmenu_cancle=0x7f0b001c;
-        public static final int id_popmenu_change_bg=0x7f0b001a;
-        public static final int id_popmenu_delete=0x7f0b0018;
-        public static final int id_popmenu_saveas=0x7f0b001b;
-        public static final int id_popmenu_star=0x7f0b0019;
-        public static final int id_show_gv=0x7f0b0032;
-        public static final int id_show_menu_mutil_delete=0x7f0b0040;
-        public static final int id_show_menu_search=0x7f0b0041;
-        public static final int id_show_title_delete_cancle=0x7f0b0036;
-        public static final int id_show_title_delete_confirm=0x7f0b0034;
-        public static final int id_show_title_delete_menu_rl=0x7f0b0033;
-        public static final int id_show_title_delete_select_all=0x7f0b0035;
-        public static final int id_show_title_new_pen=0x7f0b0038;
-        public static final int id_show_title_new_text=0x7f0b0039;
-        public static final int id_show_title_rl=0x7f0b0037;
+        public static final int id_alertdiaolg_input_title=0x7f0b0003;
+        public static final int id_choose_eraser_circle=0x7f0b0007;
+        public static final int id_choose_eraser_clean_all=0x7f0b0008;
+        public static final int id_choose_eraser_seekbar=0x7f0b0006;
+        public static final int id_choose_pen_circle=0x7f0b000b;
+        public static final int id_choose_pen_line=0x7f0b0009;
+        public static final int id_choose_pen_seekbar=0x7f0b000a;
+        public static final int id_color_00=0x7f0b0026;
+        public static final int id_color_01=0x7f0b0027;
+        public static final int id_color_02=0x7f0b0028;
+        public static final int id_color_03=0x7f0b0029;
+        public static final int id_color_04=0x7f0b002a;
+        public static final int id_color_05=0x7f0b002b;
+        public static final int id_color_06=0x7f0b002c;
+        public static final int id_color_07=0x7f0b002e;
+        public static final int id_color_08=0x7f0b002f;
+        public static final int id_color_09=0x7f0b0030;
+        public static final int id_color_10=0x7f0b0031;
+        public static final int id_color_11=0x7f0b0032;
+        public static final int id_color_12=0x7f0b0033;
+        public static final int id_color_13=0x7f0b0034;
+        public static final int id_color_14=0x7f0b002d;
+        public static final int id_color_15=0x7f0b0035;
+        public static final int id_edit_level_flag=0x7f0b0019;
+        public static final int id_edit_main_editfragment=0x7f0b0018;
+        public static final int id_edit_main_et=0x7f0b000f;
+        public static final int id_edit_main_fl=0x7f0b000d;
+        public static final int id_edit_main_fl_warpper=0x7f0b000e;
+        public static final int id_edit_menu_change_bg=0x7f0b0040;
+        public static final int id_edit_menu_change_page=0x7f0b0041;
+        public static final int id_edit_menu_delete=0x7f0b003e;
+        public static final int id_edit_menu_mark_colr=0x7f0b0042;
+        public static final int id_edit_menu_saveas=0x7f0b0043;
+        public static final int id_edit_menu_star=0x7f0b003f;
+        public static final int id_edit_note_fragment_root=0x7f0b000c;
+        public static final int id_edit_quathumb=0x7f0b001a;
+        public static final int id_edit_title_clean=0x7f0b0013;
+        public static final int id_edit_title_header_rl=0x7f0b0010;
+        public static final int id_edit_title_more=0x7f0b0017;
+        public static final int id_edit_title_next=0x7f0b0015;
+        public static final int id_edit_title_pen=0x7f0b0011;
+        public static final int id_edit_title_pre=0x7f0b0014;
+        public static final int id_edit_title_save=0x7f0b0016;
+        public static final int id_edit_title_text=0x7f0b0012;
+        public static final int id_note_item_ll=0x7f0b0021;
+        public static final int id_note_item_ll_menu=0x7f0b0022;
+        public static final int id_note_item_thumb_iv=0x7f0b0023;
+        public static final int id_note_item_title_tv=0x7f0b0024;
+        public static final int id_penbox_choosecolor_ll=0x7f0b0025;
+        public static final int id_popmenu_cancle=0x7f0b0020;
+        public static final int id_popmenu_change_bg=0x7f0b001e;
+        public static final int id_popmenu_delete=0x7f0b001c;
+        public static final int id_popmenu_root=0x7f0b001b;
+        public static final int id_popmenu_saveas=0x7f0b001f;
+        public static final int id_popmenu_star=0x7f0b001d;
+        public static final int id_show_gv=0x7f0b0036;
+        public static final int id_show_menu_mutil_delete=0x7f0b0044;
+        public static final int id_show_menu_search=0x7f0b0045;
+        public static final int id_show_title_delete_cancle=0x7f0b003a;
+        public static final int id_show_title_delete_confirm=0x7f0b0038;
+        public static final int id_show_title_delete_menu_rl=0x7f0b0037;
+        public static final int id_show_title_delete_select_all=0x7f0b0039;
+        public static final int id_show_title_new_pen=0x7f0b003c;
+        public static final int id_show_title_new_text=0x7f0b003d;
+        public static final int id_show_title_rl=0x7f0b003b;
+        public static final int id_wait_dialog_content=0x7f0b0005;
+        public static final int progressBar1=0x7f0b0004;
     }
     public static final class layout {
         public static final int birdalertdialog=0x7f030000;
-        public static final int edit_note_choose_earser=0x7f030001;
-        public static final int edit_note_choose_pen=0x7f030002;
-        public static final int edit_note_fragment=0x7f030003;
-        public static final int edit_note_header=0x7f030004;
-        public static final int edit_note_main=0x7f030005;
-        public static final int edit_note_popmenu=0x7f030006;
-        public static final int main=0x7f030007;
-        public static final int note_item=0x7f030008;
-        public static final int pen_box_choose_color=0x7f030009;
-        public static final int quadrant_thumbnail=0x7f03000a;
-        public static final int show_notes=0x7f03000b;
-        public static final int show_notes_delete_header=0x7f03000c;
-        public static final int show_notes_header=0x7f03000d;
+        public static final int birdinputtitledialog=0x7f030001;
+        public static final int birdwaitdialog=0x7f030002;
+        public static final int edit_note_choose_earser=0x7f030003;
+        public static final int edit_note_choose_pen=0x7f030004;
+        public static final int edit_note_fragment=0x7f030005;
+        public static final int edit_note_header=0x7f030006;
+        public static final int edit_note_main=0x7f030007;
+        public static final int edit_note_popmenu=0x7f030008;
+        public static final int main=0x7f030009;
+        public static final int note_item=0x7f03000a;
+        public static final int pen_box_choose_color=0x7f03000b;
+        public static final int quadrant_thumbnail=0x7f03000c;
+        public static final int show_notes=0x7f03000d;
+        public static final int show_notes_delete_header=0x7f03000e;
+        public static final int show_notes_header=0x7f03000f;
     }
     public static final class menu {
         public static final int edit_menu=0x7f0a0000;
@@ -242,6 +254,7 @@ public final class R {
     public static final class string {
         public static final int alert_delete_content=0x7f080010;
         public static final int app_name=0x7f080000;
+        public static final int deleteing_note=0x7f080012;
         public static final int edit_menu_change_bg=0x7f080003;
         public static final int edit_menu_change_page=0x7f080004;
         public static final int edit_menu_delete=0x7f080001;
@@ -254,9 +267,11 @@ public final class R {
         /**  每行的空格数 
          */
         public static final int fullscreen_edit_line_lenth=0x7f080008;
+        public static final int input_title_dialog_title=0x7f080011;
         public static final int pop_eraser_clear_all=0x7f08000b;
         public static final int pop_eraser_title=0x7f08000a;
         public static final int pop_pen_title=0x7f080009;
+        public static final int saveing_note=0x7f080013;
         public static final int show_menu_cancel=0x7f08000e;
         public static final int show_menu_confirm=0x7f08000d;
         public static final int show_menu_delete_selectall=0x7f08000f;

@@ -18,4 +18,8 @@
     <string name="show_menu_delete_selectall">全选</string>
     
     <string name="alert_delete_content">当前笔记将被删除!</string>
+    <string name="input_title_dialog_title">请输入标题!</string>
+    
+    <string name="deleteing_note">正在删除笔记...</string>
+    <string name="saveing_note">正在保存笔记...</string>
 </resources>

@@ -22,4 +22,8 @@
     <string name="show_menu_delete_selectall">All</string>
 
     <string name="alert_delete_content">The note willd be deleted!</string>
+    
+    <string name="input_title_dialog_title">Plese input the title!</string>
+    <string name="deleteing_note">deleteing note...</string>
+    <string name="saveing_note">saveing note...</string>
 </resources>

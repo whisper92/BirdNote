@@ -16,17 +16,20 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 
 import com.bird.note.R;
+import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.customer.LevelFlag;
 import com.bird.note.customer.QuadrantThumbnail;
 import com.bird.note.customer.QuadrantThumbnail.OnQuadrantChangeListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
+import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.JsonUtil;
@@ -64,11 +67,15 @@ public class EditNoteActivity extends FragmentActivity implements
 	public int mNoteEditType=BirdMessage.NOTE_EDIT_TYPE_CREATE;
 	private NoteApplication mNoteApplication=null;
 	private int[] mEditedQuadrant;
+	
+	public String mTitleString="";
+	private BirdWaitDialog mWaitDialog = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_note_main);
+		mWaitDialog  =new BirdWaitDialog(this, R.style.birdalertdialog);
 		mNoteApplication=(NoteApplication)getApplication();
 		mNoteEditType=mNoteApplication.getCurrentNoteEidtType();
 		mEditedQuadrant=mNoteApplication.getEditedQuadrants();
@@ -80,6 +87,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
 			//若更新笔记，获得传过来Note(不完整)
 			mBirdNote=intent.getParcelableExtra(BirdMessage.INITENT_PARCEL_NOTE);
+			mTitleString = mBirdNote.title;
 			//查询获取完整的Note
 			mBirdNote=dbHelper.queryNoteById(mBirdNote, mBirdNote._id+"");
 		} else {
@@ -200,26 +208,19 @@ public class EditNoteActivity extends FragmentActivity implements
 
 
 	@Override
-	public void onClick(View v) {
-		
+	public void onClick(View v) {	
+	
 	}
-
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-	   if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			//Toast.makeText(EditNoteActivity.this, "确定返回", 500).show();
-		   if (mEditQuaFragment.closePopMenu()) {
-			   return mEditQuaFragment.closePopMenu();
-		   }
-		}
+		DBUG.e("activity中的onkeydown");
 		if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
 			mEditQuaFragment.togglePopMenu();
-			return false;
+			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-
-	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -233,10 +234,7 @@ public class EditNoteActivity extends FragmentActivity implements
 
 			break;
 		case R.id.id_edit_menu_delete:
-			if (mBirdNote!=null) {
-				dbHelper.deleteNoteById(mBirdNote._id+"");
-				finish();
-			}
+
 			break;
 		default:
 			break;
@@ -244,6 +242,12 @@ public class EditNoteActivity extends FragmentActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 	
+	public void deleteNote(){
+		if (mBirdNote!=null) {
+			dbHelper.deleteNoteById(mBirdNote._id+"");
+		}
+		editHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);
+	}
 	/**
 	 * 生成新的笔记对象
 	 */
@@ -251,9 +255,14 @@ public class EditNoteActivity extends FragmentActivity implements
 		BirdNote birdNote=new BirdNote();
 		int[] edited=mNoteApplication.getEditedQuadrants();
 		int level=mLevelFlag.mCurrentLevel;
-		String title="hello world";
+		String title=mEditQuaFragment.mTitleString;
 		birdNote.level=level;
-		birdNote.title=title;
+		if (mCurrentType == BirdMessage.START_TYPE_CREATE_VALUE) {
+			birdNote.title=title;
+		} else {
+			birdNote.title = mTitleString;
+		}
+		
 		
 		String[] text_array=new String[4];
 		byte[] qua=null;
@@ -318,14 +327,27 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	public Handler editHandler=new Handler(){
 		public void handleMessage(android.os.Message msg) {
+			Intent intent=new Intent();
 			switch (msg.what) {
 			case BirdMessage.SAVE_OVER:			
-				Intent intent=new Intent();
 				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
 				startActivity(intent);
 				finish();
 				break;
-
+			case BirdMessage.DELETE_OVER:		
+				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
+				startActivity(intent);
+				finish();
+				break;				
+			case BirdMessage.SAVE_RUNNABLE_START:
+				mWaitDialog.setWaitContent(getString(R.string.saveing_note));
+				mWaitDialog.show();
+				break;
+			case BirdMessage.DELETE_RUNNABLE_START:
+				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
+				mWaitDialog.show();
+				break;
+				
 			default:
 				break;
 			}

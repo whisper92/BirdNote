@@ -32,6 +32,7 @@
         android:scaleType="centerCrop"
         android:text="@string/app_name"
         android:textColor="@color/color_show_item"
-        android:textSize="@dimen/dimen_show_titile_text_size" />
+        android:textSize="@dimen/dimen_show_titile_text_size"
+        android:singleLine="true" />
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.bird.note.utils;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 
 import android.R.integer;
 import android.content.Context;
@@ -53,5 +54,11 @@ public class CommonUtils {
 			dirFile.mkdir();
 		}
 		return filePath;
+	}
+	
+	public static String getCurrentTime(){
+		SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("yyMMddhhmm");     
+		String   date   =   sDateFormat.format(new   java.util.Date()); 
+		return "BIRD"+date;
 	}
 }

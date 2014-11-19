@@ -18,6 +18,7 @@ public class BirdMessage {
 	 * 更新笔记
 	 */
 	public static final int START_TYPE_UPDATE_VALUE=102;
+	public static final String START_TYPE_UPDATE_TITLE_KEY="note_title";
 	/*
 	 * intent传递序列化对象
 	 */
@@ -47,12 +48,14 @@ public class BirdMessage {
     public static final int NOTE_EDIT_TYPE_UPDATE=104;
 
 	
+    public static final int SAVE_RUNNABLE_START=201;
+    public static final int DELETE_RUNNABLE_START=202;
 	/*
 	 * 新建笔记，保存完成之后，返回首页
 	 */
-    public static final int SAVE_OVER=201;
+    public static final int SAVE_OVER=203;
     
-    public static final int DELETE_OVER=201;
+    public static final int DELETE_OVER=204;
     
 
     

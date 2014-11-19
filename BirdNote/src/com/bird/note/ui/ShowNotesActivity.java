@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bird.note.R;
+import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
@@ -43,10 +44,12 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	private DbHelper mDbHelper=null;
 	private GridView mGridView=null;
 	private List<BirdNote> mBirdNotes=null;
+	private BirdWaitDialog mWaitDialog = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.show_notes);
+		mWaitDialog  =new BirdWaitDialog(this, R.style.birdalertdialog);
 		mDbHelper=new DbHelper(this);
 		mShowTitle=(RelativeLayout)findViewById(R.id.id_show_title_rl);
 		mShowDeleteTitle = (RelativeLayout) findViewById(R.id.id_show_title_delete_menu_rl);
@@ -90,19 +93,8 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			startActivity(intent);
 			break;
 		case R.id.id_show_title_delete_confirm:
-			showHandler.post(new Runnable() {
-				
-				@Override
-				public void run() {
-					mDbHelper.deleteNoteByIds(mNoteAdapter.getSelectedNote());
-					mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
-				    mNoteAdapter.notifyDataSetChanged();
-				    if (mGridView!=null) {
-				    	mGridView.setAdapter(mNoteAdapter);
-					}  
-					showHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);
-				}
-			});
+			showHandler.sendEmptyMessage(BirdMessage.DELETE_RUNNABLE_START);
+			showHandler.postDelayed(DeleteNotesRunnable,300);
 			mShowTitle.setVisibility(View.VISIBLE);
 			mShowDeleteTitle.setVisibility(View.GONE);
 			break;
@@ -121,6 +113,19 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		
 		//finish();
 	}
+	
+	public Runnable DeleteNotesRunnable = new Runnable() {	
+		@Override
+		public void run() {
+			mDbHelper.deleteNoteByIds(mNoteAdapter.getSelectedNote());
+			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
+		    mNoteAdapter.notifyDataSetChanged();
+		    if (mGridView!=null) {
+		    	mGridView.setAdapter(mNoteAdapter);
+			}  
+			showHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);		
+		}
+	};
 	
 	@Override
 	protected void onRestart() {
@@ -163,7 +168,11 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	private Handler showHandler=new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what==BirdMessage.DELETE_OVER) {
-				
+				mWaitDialog.dismiss();
+			}
+			if (msg.what==BirdMessage.DELETE_RUNNABLE_START) {
+				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
+				mWaitDialog.show();
 			}
 		};
 	};

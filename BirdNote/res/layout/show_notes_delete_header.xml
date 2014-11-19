@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dimen_show_titile_text_margin_left"
-        android:background="@drawable/action_bt_style01_left"
+        android:background="@drawable/action_bt_style01_all"
         android:gravity="center"
         android:text="@string/show_menu_confirm"
         android:textColor="@color/color_show_title_text" />

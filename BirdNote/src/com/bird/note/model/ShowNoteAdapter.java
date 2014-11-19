@@ -179,7 +179,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		if (mDeleteState) {
 			if (mDeleteIds[position].equals(String.valueOf(-1))) {
 				mDeleteIds[position] = mListData.get(position)._id+"";
-				view.setBackgroundColor(Color.BLACK);
+				view.setBackgroundColor(Color.RED);
 			} else {
 				mDeleteIds[position] = String.valueOf(-1);
 				view.setBackgroundDrawable(null);
@@ -191,6 +191,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			intent.putExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_UPDATE_VALUE);
 			intent.putExtra(BirdMessage.START_MODE_KEY, BirdMessage.START_MODE_DRAW_KEY);
 			intent.putExtra(BirdMessage.INITENT_PARCEL_NOTE, mListData.get(position));
+			intent.putExtra(BirdMessage.START_TYPE_UPDATE_TITLE_KEY, mListData.get(position).title);
 			NoteApplication noteApplication=(NoteApplication)mContext.getApplicationContext();
 			noteApplication.setCurrentNoteEidtType(BirdMessage.NOTE_EDIT_TYPE_UPDATE);
 			noteApplication.setEditNoteId(mListData.get(position)._id);
@@ -242,7 +243,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	        if (mDeleteState) {
 			   if (!mDeleteIds[position].equals(String.valueOf(-1))) {
 				    DBUG.e("删除"+mDeleteIds[position]);
-					convertView.setBackgroundColor(Color.BLACK);			
+					convertView.setBackgroundColor(Color.RED);			
 		    	}
 		    } else if ((mDeleteIds!=null)){
 		    	if(mDeleteIds[position].equals(String.valueOf(-1))){

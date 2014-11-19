@@ -9,12 +9,21 @@
         android:id="@+id/id_alertdiaolg_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/menu_cancle_bg"
         android:padding="10dp"
-        android:text="@string/alert_delete_content"
+        android:text="@string/input_title_dialog_title"
         android:textSize="@dimen/dimen_show_titile_text_size"
         android:textColor="@color/color_alert_dialog_text" />
 
+    <EditText
+        android:id="@+id/id_alertdiaolg_input_title"
+        android:background="#ffffffff"
+        android:layout_margin="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dimen_show_titile_text_size"
+        android:padding="10dp"
+        android:singleLine="true" />
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

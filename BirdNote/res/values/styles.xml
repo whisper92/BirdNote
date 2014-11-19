@@ -9,5 +9,9 @@
     <style name="birdalertdialog" parent="@android:Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/color_alert_dialog_bg</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
+
 </resources>
