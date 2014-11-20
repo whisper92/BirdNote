@@ -2,9 +2,14 @@ package com.bird.note.utils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.bird.note.model.DBUG;
 
 import android.R.integer;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -60,5 +65,25 @@ public class CommonUtils {
 		SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("yyMMddhhmm");     
 		String   date   =   sDateFormat.format(new   java.util.Date()); 
 		return "BIRD"+date;
+	}
+	
+	/**
+	 * 将整个内容平分成每行宽度相等的字符串
+	 * @param origContent
+	 * @return
+	 */
+	public static List<String> measureTextAndSplit(Context context,String origContent,float textsize,int maxWidth){
+		List<String> textLines=new ArrayList<String>();
+		
+		Paint paint=new Paint();
+		paint.setTextSize(dpToPx(context, textsize));
+		int count = origContent.length();
+		int i = 0;
+		int j = 0;
+		DBUG.e("length---->"+count);
+		for ( i = 0; i <count; i++) {
+			
+		}
+		return textLines;
 	}
 }

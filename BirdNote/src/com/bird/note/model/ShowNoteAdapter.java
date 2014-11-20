@@ -87,7 +87,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	 * 根据笔记的等级判断他的mark的颜色
 	 */
 	public int getMarkByLevel(int level){
-		level=level%4;
 		int drawableID=0;
 		switch (level) {
 		case 0:
@@ -179,10 +178,10 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		if (mDeleteState) {
 			if (mDeleteIds[position].equals(String.valueOf(-1))) {
 				mDeleteIds[position] = mListData.get(position)._id+"";
-				view.setBackgroundColor(Color.RED);
+				view.findViewById(R.id.id_note_item_title_tv).setBackgroundColor(Color.BLACK);
 			} else {
 				mDeleteIds[position] = String.valueOf(-1);
-				view.setBackgroundDrawable(null);
+				view.findViewById(R.id.id_note_item_title_tv).setBackgroundResource(getMarkByLevel(mListData.get(position).level));
 			}
 
 		}else {
@@ -236,18 +235,17 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
 			//后期缩略图的背景要切一个小一点的图片
 	        holder.thumbnail.setBackgroundResource(getThumbnailBgById(birdNote.background));
-			BitmapUtil.writeBytesToFile(birdNote.thumbnail, CommonUtils.getSavePath()+"/hello.png");
 	        holder.title.setText(birdNote.title);
 	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
 	        
 	        if (mDeleteState) {
 			   if (!mDeleteIds[position].equals(String.valueOf(-1))) {
 				    DBUG.e("删除"+mDeleteIds[position]);
-					convertView.setBackgroundColor(Color.RED);			
+				    holder.title.setBackgroundColor(Color.BLACK);			
 		    	}
 		    } else if ((mDeleteIds!=null)){
 		    	if(mDeleteIds[position].equals(String.valueOf(-1))){
-		    		convertView.setBackgroundDrawable(null);
+
 		    	} 
 		    }
 

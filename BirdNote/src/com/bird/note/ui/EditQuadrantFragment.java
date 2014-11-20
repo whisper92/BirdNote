@@ -1,11 +1,19 @@
 package com.bird.note.ui;
 
+import java.util.List;
+
+import android.app.ActivityManager;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +41,7 @@ import com.bird.note.model.BirdMessage;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.model.SavedPaint;
 import com.bird.note.utils.BitmapUtil;
+import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
 
 public class EditQuadrantFragment extends Fragment implements OnClickListener {
@@ -197,6 +206,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		mPenView = new PenView(getActivity());
 		mPenView.setExistBitmap(BitmapUtil.decodeBytesToBitmap(quadrantContent.quadrantdraw));
 		mPenView.invalidateExistBitmap();
+		
+		mEditText.setText(quadrantContent.textcontent);
 	}
 
 	public void initEditFragmentView(View view) {
@@ -440,7 +451,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 
 	public void saveUpdateNote(){	 
 		mainHandler.sendEmptyMessage(BirdMessage.SAVE_RUNNABLE_START);
-		 mainHandler.postDelayed(SaveUpdateNoteRunnable,300);	  
+		new SaveUpdateNoteThread().start();
 	}
 	
 	/**
@@ -510,7 +521,54 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	public Bitmap getQuadrantDrawContentBitmap(){
 		return mPenView.mDrawBitmap;
 	}
+	
+	/**
+	 * 通过获取屏幕截图的方式产生内容
+	 * @return
+	 */
+	public Bitmap getQuadrantDrawAndTextBitmap(){
+		// 获取windows中最顶层的view
+        View view = getActivity().getWindow().getDecorView();
+        view.buildDrawingCache();
+        // 获取状态栏高度
+        Rect rect = new Rect();
+        view.getWindowVisibleDisplayFrame(rect);
+        int statusBarHeights = rect.top;
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        // 获取屏幕宽和高
+        int widths = display.getWidth();
+        int heights = display.getHeight();
+        // 允许当前窗口保存缓存信息
+        view.setDrawingCacheEnabled(true);
+        // 去掉状态栏
+        Bitmap bmp = Bitmap.createBitmap(view.getDrawingCache(), 0,
+        		heights-mPenView.mCanvasHeight+50, mPenView.mCanvasWidth, mPenView.mCanvasHeight-150);
+        // 销毁缓存信息
+        view.destroyDrawingCache();
+       
+		return bmp;
+	}
 
+	/**
+	 * 自绘内容,未完成。。。
+	 * @return
+	 */
+	public Bitmap getDrawAndText(){
+		Bitmap drawAndTextBitmap=Bitmap.createBitmap(mPenView.mCanvasWidth, mPenView.mCanvasHeight, Bitmap.Config.ARGB_8888);
+		Canvas drawAndTextCanvas =new Canvas(drawAndTextBitmap);
+		drawAndTextCanvas.setBitmap(drawAndTextBitmap);
+
+		mEditText.setDrawingCacheEnabled(true);
+       Bitmap textBmp = Bitmap.createBitmap(mEditText.getDrawingCache(), 0,
+               0, mEditText.getMeasuredWidth(), mEditText.getMeasuredWidth());
+       mEditText.destroyDrawingCache();
+       
+       drawAndTextCanvas.drawBitmap(mPenView.mDrawBitmap,new Matrix(),null);
+       drawAndTextCanvas.drawBitmap(textBmp, new Matrix(),null);
+       
+		return drawAndTextBitmap;
+	}
+	
 	public QuadrantContent generateEditQuadrantContent(){
 		QuadrantContent quadrantContent=new QuadrantContent();
 		quadrantContent.quadrant=mCurrentQuadrant;
@@ -531,28 +589,28 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 				 mTitleString=mBirdInputTitleDialog.getTitle();
 				 mBirdInputTitleDialog.dismiss();
 				 mainHandler.sendEmptyMessage(BirdMessage.SAVE_RUNNABLE_START);		
-				 mainHandler.postDelayed(SaveNewNoteRunnable,300);	  
+				 new SaveNewNoteThread().start();
 			}				
 		}
 	};
 	
-	public Runnable SaveNewNoteRunnable = new Runnable() {
-		@Override
-		public void run() {
+   private  class SaveNewNoteThread extends Thread{
+	   @Override
+	public void run() {
 			new DbHelper(getActivity()).insertNewNote(((EditNoteActivity)getActivity()).generateNewNote());					
-			mainHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);		
-		}
-	};
+			mainHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);	
+	}	   
+   }
 	
-	public Runnable SaveUpdateNoteRunnable = new Runnable() {	
-		@Override
-		public void run() {			
+   private  class SaveUpdateNoteThread extends Thread{
+	   @Override
+	public void run() {
 			NoteApplication noteApplication=(NoteApplication)getActivity().getApplication();
 			new DbHelper(getActivity()).updateNoteById(((EditNoteActivity)getActivity()).generateNewNote(),noteApplication.getEditNoteId()+"");
-			mainHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);		
-		}
-	};
-	
+			mainHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);	
+	}	   
+   }
+   
 	/**
 	 * 监听确认删除笔记
 	 */

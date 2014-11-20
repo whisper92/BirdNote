@@ -77,7 +77,7 @@ public class BitmapUtil {
 	public static void writeBytesToFile(byte[] byteArray, String fileName) {
 		FileOutputStream fos;
 		try {
-			fos = new FileOutputStream(new File(CommonUtils.getSavePath()+"/"+fileName));
+			fos = new FileOutputStream(new File(CommonUtils.getSavePath()+"/"+fileName+".png"));
 			fos.write(byteArray);
 			fos.flush();
 			fos.close();
@@ -95,7 +95,6 @@ public class BitmapUtil {
 	 */
 	public static byte[] generateThumbnailBytes(Context context,Bitmap origBitmap){
 		Bitmap thumbBitmap=ThumbnailUtils.extractThumbnail(origBitmap, (int) context.getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)context.getResources().getDimension(R.dimen.dimen_create_thumbnail_height));
-		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(thumbBitmap), "thumb.png");
-		return BitmapUtil.decodeBitmapToBytes(origBitmap);
+		return BitmapUtil.decodeBitmapToBytes(thumbBitmap);
 	}
 }

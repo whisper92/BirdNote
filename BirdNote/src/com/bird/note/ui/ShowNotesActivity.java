@@ -152,7 +152,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.id_show_menu_mutil_delete:
-             if (mNoteAdapter!=null && mBirdNotes!=null && mBirdNotes.size()>0) {
+             if ((mNoteAdapter.getDeleteState()==false)&&mNoteAdapter!=null && mBirdNotes!=null && mBirdNotes.size()>0) {
 				mNoteAdapter.setDeleteState(true);
 				mShowTitle.setVisibility(View.GONE);
 				mShowDeleteTitle.setVisibility(View.VISIBLE);

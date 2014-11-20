@@ -84,8 +84,8 @@ public class PenView extends View {
 	 */
 	private List<PenDrawPath> mDeletePath = null;
 
-	private int mCanvasWidth=0;
-	private int mCanvasHeight=0;
+	public int mCanvasWidth=0;
+	public int mCanvasHeight=0;
 	
 	
 	
