@@ -222,8 +222,13 @@ public class PenView extends View {
 		mSavePath.clear();
 		mDeletePath.clear();
 		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
-		mDrawCanvas.setBitmap(mDrawBitmap);
+		mDrawCanvas.setBitmap(mDrawBitmap);	
+		mExistBitmap = null;
+		mDrawCanvas.drawBitmap(mDrawBitmap, 2,2,mCleanPaint);
 		postInvalidate();
+		mSavePath.clear();
+		mDeletePath.clear();
+		pathListChangeListener.changeState(mSavePath.size(), mDeletePath.size());
 
 	}
 

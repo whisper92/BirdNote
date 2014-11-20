@@ -129,7 +129,8 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	
 	@Override
 	protected void onRestart() {
-		mNoteAdapter= new ShowNoteAdapter(this,mDbHelper.queryShowNotes() ,mGridView); 
+		mBirdNotes=mDbHelper.queryShowNotes();
+		mNoteAdapter= new ShowNoteAdapter(this,mBirdNotes,mGridView); 
 	    mNoteAdapter.notifyDataSetChanged();
 	    if (mGridView!=null) {
 	    	mGridView.setAdapter(mNoteAdapter);
