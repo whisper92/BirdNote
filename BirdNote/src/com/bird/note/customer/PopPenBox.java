@@ -39,26 +39,33 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
     private float mSelectPaintWidth = SavedPaint.DEFAULT_PAINT_WIDTH;
 	public ColorCircle mColorCircle;
     public ColorLine mColorLine;
-
+    private Context mContext; 
 	public Map<Integer, Integer> mColorsMap=new HashMap<Integer, Integer>();
-	
+	public Map<Integer, Integer> mProgressDrawables=new HashMap<Integer, Integer>();
 	private Paint mChoosePaint;
 	private SavedPaint mSavedPaint;
+	private SeekBar penSize;
     public void initColor(){
     	for (int i = 0; i < SavedPaint.mColorImages.length; i++) {
     		mColorsMap.put(SavedPaint.mColorImages[i], SavedPaint.mColors[i]);
 		}
+    	
+		for (int i = 0; i < SavedPaint.mColors.length; i++) {
+			mProgressDrawables.put(SavedPaint.mColors[i], SavedPaint.mProgressDrawable[i]);
+		}
+		
     }
 
 	public PopPenBox(Context context) {
 		initColor();
+		mContext = context;
 		mChoosePaint=DrawPaint.getInstance();
 		mSavedPaint = new SavedPaint(context);
 		mSelectPaintColor = mSavedPaint.getSavedPaintColor();
 		mSelectPaintWidth = mSavedPaint.getSavedPaintWidth();
 		
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		rootView = inflater.inflate(R.layout.edit_note_choose_pen, null);
+		rootView = inflater.inflate(R.layout.pen_box_choose_pen, null);
 		this.setContentView(rootView);
 		this.setWidth(LayoutParams.WRAP_CONTENT);
 		this.setHeight(LayoutParams.WRAP_CONTENT);
@@ -69,8 +76,10 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 		this.setBackgroundDrawable(new BitmapDrawable()); 
 		
 		
-		SeekBar penSize = (SeekBar) rootView.findViewById(R.id.id_choose_pen_seekbar);
+		 penSize = (SeekBar) rootView.findViewById(R.id.id_choose_pen_seekbar);
 		penSize.setProgress((int) (MAX*mSelectPaintWidth/SavedPaint.DEFAULT_PAINT_MAX_WIDTH));
+		penSize.setProgressDrawable(context.getResources().getDrawable(getProgressDrawableByColorId(mSelectPaintColor)));
+		
 		mColorCircle = (ColorCircle) rootView.findViewById(R.id.id_choose_pen_circle);
 		mColorLine=(ColorLine) rootView.findViewById(R.id.id_choose_pen_line);
 		for (int i = 0; i < SavedPaint.mColorImages.length; i++) {
@@ -102,6 +111,11 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 		});
 	}
 	
+
+	public int getProgressDrawableByColorId(int color){
+		return mProgressDrawables.get(color);
+	}
+	
 	OnPaintChangedListener onPaintChangedListener;
 	public void setOnPaintChangedListener(OnPaintChangedListener listener){
 		onPaintChangedListener=listener;
@@ -123,10 +137,12 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 				mColorCircle.setPaintColor(mSelectPaintColor);
 				mColorLine.setPaintColor(mSelectPaintColor);
 				((ImageView)v).setBackgroundResource(R.drawable.tool_color_sel);
+				penSize.setProgressDrawable(mContext.getResources().getDrawable(getProgressDrawableByColorId(mSelectPaintColor)));
 				onPaintChangedListener.changePaint(getChoosePaint());
 			} else {
 				((ImageView)rootView.findViewById(SavedPaint.mColorImages[i])).setBackgroundDrawable(null);
 			}
 		}
+		dismiss();
 	}
 }

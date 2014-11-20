@@ -20,6 +20,10 @@ public class SavedPaint {
 		0xff727272,0xff363636,0xff38a8fe,0xff3467fe,0xff005aff,0xfffcff0c,0xffffffff,0xff000000
 		};
 
+    public static int[] mProgressDrawable=new int[]{
+    	R.drawable.seekbar_drawable00,R.drawable.seekbar_drawable01,R.drawable.seekbar_drawable02,R.drawable.seekbar_drawable03,R.drawable.seekbar_drawable04,R.drawable.seekbar_drawable05,R.drawable.seekbar_drawable06,R.drawable.seekbar_drawable07
+    	,R.drawable.seekbar_drawable08,R.drawable.seekbar_drawable09,R.drawable.seekbar_drawable10,R.drawable.seekbar_drawable11,R.drawable.seekbar_drawable12,R.drawable.seekbar_drawable13,R.drawable.seekbar_drawable14,R.drawable.seekbar_drawable15
+    };
     public static final String SP_PAINT_KEY="saved_paint";
     public static final String SP_PAINT_COLOR="save_paint_color";
     public static final String SP_PAINT_WIDTH="saved_paint_width";
