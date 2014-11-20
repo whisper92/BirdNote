@@ -3,7 +3,7 @@
 
     
     <item android:id="@android:id/progress">
-        <clip android:drawable="@drawable/pro_00" />  
+        <clip android:drawable="@drawable/pro_02" />  
     </item>
 
 </layer-list>
