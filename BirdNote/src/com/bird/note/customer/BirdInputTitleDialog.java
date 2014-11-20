@@ -17,8 +17,8 @@ import com.bird.note.utils.CommonUtils;
 public class BirdInputTitleDialog extends Dialog {
 	Context mContext;
 	android.view.View.OnClickListener listener;
-
 	EditText mEditText;
+	
 	public BirdInputTitleDialog(Context context,
 			android.view.View.OnClickListener listener) {
 		super(context);

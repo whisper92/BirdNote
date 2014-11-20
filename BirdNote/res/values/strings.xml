@@ -26,4 +26,5 @@
     <string name="input_title_dialog_title">Plese input the title!</string>
     <string name="deleteing_note">deleteing note...</string>
     <string name="saveing_note">saveing note...</string>
+    <string name="alert_clear_all">Can not restore after clear all！</string>
 </resources>

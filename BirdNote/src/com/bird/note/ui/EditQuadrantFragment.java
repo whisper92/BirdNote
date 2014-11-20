@@ -161,6 +161,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		}
 		
 		mainHandler = ((EditNoteActivity)getActivity()).editHandler;
+		mBirdAlertDialog=new BirdAlertDialog(getActivity(),R.style.birdalertdialog);
 		return view;
 	}
 	
@@ -237,7 +238,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		public void onClick(View v) {
 			closePopMenu();
 			if (v.getId() == R.id.id_popmenu_delete) {           
-				mBirdAlertDialog=new BirdAlertDialog(getActivity(),R.style.birdalertdialog);
+				
+				mBirdAlertDialog.setAlertContent(getString(R.string.alert_delete_content));
 				mBirdAlertDialog.setOnConfirmListener(ConfirmDeleteNoteListener);
 				mBirdAlertDialog.show();
 				
@@ -363,7 +365,13 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			
 			@Override
 			public void onClick(View v) {
-               mPenView.clearAll();			
+				if (mPopEraserBox.isShowing()) {
+					mPopEraserBox.dismiss();
+				}
+				mBirdAlertDialog.setAlertContent(getString(R.string.alert_clear_all));
+				mBirdAlertDialog.setOnConfirmListener(ConfirmClearAllListener);
+				mBirdAlertDialog.show();
+               		
 			}
 		});
 		mPopEraserBox.setOnPaintChangedListener(new OnEraserChangedListener() {
@@ -563,6 +571,15 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		@Override
 		public void run() {
 			((EditNoteActivity)getActivity()).deleteNote();	
+		}
+	};
+	
+	public OnClickListener ConfirmClearAllListener =new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			mPenView.clearAll();
+			mBirdAlertDialog.dismiss();
 		}
 	};
 	

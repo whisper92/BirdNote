@@ -252,6 +252,7 @@ public final class R {
         public static final int show_menu=0x7f0a0001;
     }
     public static final class string {
+        public static final int alert_clear_all=0x7f080014;
         public static final int alert_delete_content=0x7f080010;
         public static final int app_name=0x7f080000;
         public static final int deleteing_note=0x7f080012;

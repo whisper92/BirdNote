@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/menu_cancle_bg"
         android:padding="10dp"
-        android:text="@string/alert_delete_content"
         android:textSize="@dimen/dimen_show_titile_text_size"
         android:textColor="@color/color_alert_dialog_text" />
 

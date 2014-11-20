@@ -15,7 +15,8 @@ import com.bird.note.R;
 public class BirdAlertDialog extends Dialog {
 	Context mContext;
 	android.view.View.OnClickListener listener;
-
+	String mAlertContent="ALERT!";
+	TextView mAlertTextView;
 	public BirdAlertDialog(Context context) {
 		super(context);
 		init(context);
@@ -41,6 +42,9 @@ public class BirdAlertDialog extends Dialog {
 		setContentView(R.layout.birdalertdialog);
 		TextView mCancleTextView = (TextView) findViewById(R.id.id_alertdiaolg_cancel);
 		TextView mConfirmTextView = (TextView) findViewById(R.id.id_alertdiaolg_confirm);
+		mAlertTextView = (TextView)findViewById(R.id.id_alertdiaolg_content);
+		mAlertTextView.setText(mAlertContent);
+		
 		mConfirmTextView.setOnClickListener(listener);
 		mCancleTextView.setOnClickListener(new android.view.View.OnClickListener() {
 			
@@ -51,4 +55,8 @@ public class BirdAlertDialog extends Dialog {
 		});
 	}
 
+	public void setAlertContent(String alertContent){
+		this.mAlertContent= alertContent;
+	}
+	
 }
