@@ -4,11 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include layout="@layout/show_notes_header" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/action_bar" >
 
-    <include
-        layout="@layout/show_notes_delete_header"
-        android:visibility="gone" />
+        <include layout="@layout/show_notes_header" />
+
+        <include
+            layout="@layout/show_notes_delete_header"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

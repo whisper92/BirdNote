@@ -2,6 +2,10 @@ package com.bird.note.ui;
 
 import java.util.List;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -95,14 +99,16 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		case R.id.id_show_title_delete_confirm:
 			showHandler.sendEmptyMessage(BirdMessage.DELETE_RUNNABLE_START);
 			showHandler.postDelayed(DeleteNotesRunnable,300);
-			mShowTitle.setVisibility(View.VISIBLE);
-			mShowDeleteTitle.setVisibility(View.GONE);
+/*			mShowTitle.setVisibility(View.VISIBLE);
+			mShowDeleteTitle.setVisibility(View.GONE);*/
+			startShowNoamralTitle();
 			break;
 		case R.id.id_show_title_delete_cancle:
-			mShowTitle.setVisibility(View.VISIBLE);
-			mShowDeleteTitle.setVisibility(View.GONE);	
+/*			mShowTitle.setVisibility(View.VISIBLE);
+			mShowDeleteTitle.setVisibility(View.GONE);	*/
 			mNoteAdapter.cancelDelete();
 			mNoteAdapter.setDeleteState(false);
+			startShowNoamralTitle();
 			break;
 		case R.id.id_show_title_delete_select_all:
 			mNoteAdapter.selectAll();
@@ -148,14 +154,87 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		return true;
 	}
 
+	public void startShowMenuTitle(){
+		Animator animatorSetOut=AnimatorInflater.loadAnimator(this, R.anim.normal_flip_out);
+		Animator animatorSetIn=AnimatorInflater.loadAnimator(this, R.anim.menu_flip_in);
+		animatorSetOut.setTarget(mShowTitle);
+		animatorSetIn.setTarget(mShowDeleteTitle);
+		animatorSetOut.start();
+		animatorSetIn.start();
+		
+		animatorSetOut.addListener(new Animator.AnimatorListener() {
+			
+			@Override
+			public void onAnimationStart(Animator animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animator animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				mShowTitle.setVisibility(View.GONE);				
+				mShowDeleteTitle.setVisibility(View.VISIBLE);
+				
+			}
+			
+			@Override
+			public void onAnimationCancel(Animator animation) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+	}
+	
+	public void startShowNoamralTitle(){
+		final Animator animatorSetIn=AnimatorInflater.loadAnimator(this, R.anim.normal_flip_in);
+        Animator animatorSetOut=AnimatorInflater.loadAnimator(this, R.anim.menu_flip_out);
+		animatorSetOut.setTarget(mShowDeleteTitle);
+		animatorSetIn.setTarget(mShowTitle);
+		animatorSetOut.start();
+		animatorSetIn.start();
+		
+		animatorSetOut.addListener(new Animator.AnimatorListener() {
+			
+			@Override
+			public void onAnimationStart(Animator animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animator animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				mShowTitle.setVisibility(View.VISIBLE);				
+				mShowDeleteTitle.setVisibility(View.GONE);
+				
+			}
+			
+			@Override
+			public void onAnimationCancel(Animator animation) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.id_show_menu_mutil_delete:
              if ((mNoteAdapter.getDeleteState()==false)&&mNoteAdapter!=null && mBirdNotes!=null && mBirdNotes.size()>0) {
 				mNoteAdapter.setDeleteState(true);
-				mShowTitle.setVisibility(View.GONE);
-				mShowDeleteTitle.setVisibility(View.VISIBLE);
+				startShowMenuTitle();		
 			}
 			break;
 		case R.id.id_show_menu_search:
@@ -166,6 +245,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		return super.onOptionsItemSelected(item);
 	}
 	
+
 	private Handler showHandler=new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what==BirdMessage.DELETE_OVER) {
