@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <LinearLayout
+<!--     <LinearLayout
         android:layout_marginTop="@dimen/dimen_show_note_item_paddingtop"
         android:id="@+id/id_note_item_ll_menu"
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:background="@color/color_show_item"
          >
     </LinearLayout>
-
+ -->
     <ImageView
         android:id="@+id/id_note_item_thumb_iv"
         android:layout_width="match_parent"

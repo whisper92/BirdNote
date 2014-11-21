@@ -166,13 +166,13 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			
 			@Override
 			public void onAnimationStart(Animator animation) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void onAnimationRepeat(Animator animation) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
@@ -185,7 +185,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			
 			@Override
 			public void onAnimationCancel(Animator animation) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 		});
@@ -204,13 +204,13 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			
 			@Override
 			public void onAnimationStart(Animator animation) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
 			@Override
 			public void onAnimationRepeat(Animator animation) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
@@ -223,7 +223,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			
 			@Override
 			public void onAnimationCancel(Animator animation) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 		});
@@ -246,7 +246,33 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	}
 	
 
-	private Handler showHandler=new Handler(){
+	public Runnable deleteSingleNoteRunnable = new Runnable() {	
+		@Override
+		public void run() {
+			mDbHelper.deleteNoteById(mNoteAdapter.getSingleNoteId()+"");
+			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
+		    mNoteAdapter.notifyDataSetChanged();
+		    if (mGridView!=null) {
+		    	mGridView.setAdapter(mNoteAdapter);
+			}  
+			showHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);	
+		}
+	};
+	
+	public Runnable changeMarkColorRunnable = new Runnable() {	
+		@Override
+		public void run() {
+			mDbHelper.updateLevelById(mNoteAdapter.getSingleNoteId()+"",mNoteAdapter.chooseLevel);
+			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
+		    mNoteAdapter.notifyDataSetChanged();
+		    if (mGridView!=null) {
+		    	mGridView.setAdapter(mNoteAdapter);
+			}  
+			showHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);	
+		}
+	};
+	
+	public Handler showHandler=new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what==BirdMessage.DELETE_OVER) {
 				mWaitDialog.dismiss();
@@ -255,6 +281,18 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
 				mWaitDialog.show();
 			}
+			if (msg.what==BirdMessage.DELETE_SINGLE_NOTE_RUNNABLE_START) {
+				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
+				mWaitDialog.show();
+				post(deleteSingleNoteRunnable);
+			}
+			
+			if (msg.what==BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START) {
+				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
+				mWaitDialog.show();
+				post(changeMarkColorRunnable);
+			}
+			
 		};
 	};
 	

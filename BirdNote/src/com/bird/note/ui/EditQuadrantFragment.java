@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
@@ -267,6 +268,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	public void changeCurrentMode(int clickID) {
 		mCurrentMode = clickID;
 		if (clickID == R.id.id_edit_title_pen) {
+			hideInputMethod();
 			if (mFirstComeIn) {
 				mWrapFrameLayout.addView(mPenView);
 				mFirstComeIn = false;
@@ -285,6 +287,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mEraserHasSelected=0;
 		}
 		if (clickID == R.id.id_edit_title_clean) {
+			hideInputMethod();
 			if (mFirstComeIn) {
 				mWrapFrameLayout.addView(mPenView);
 				mFirstComeIn = false;
@@ -641,4 +644,12 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		}
 	};
 	
+	
+	public void hideInputMethod(){
+		View view = getActivity().getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputmanger = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+	}
 }

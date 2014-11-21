@@ -6,16 +6,20 @@ import java.util.List;
 import java.util.Map;
 
 import android.R.integer;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.util.Log;
 import android.view.ActionMode;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AbsListView.MultiChoiceModeListener;
@@ -29,8 +33,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bird.note.R;
+import com.bird.note.customer.BirdAlertDialog;
+import com.bird.note.customer.BirdWaitDialog;
+import com.bird.note.customer.PopChangeMarkColor;
+import com.bird.note.customer.PopMenuEditNote;
+import com.bird.note.customer.PopMenuShowNote;
+import com.bird.note.customer.PopPenBox;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.ui.EditNoteActivity;
+import com.bird.note.ui.ShowNotesActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
@@ -129,16 +140,92 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
              TextView title;
 	}
 
+	public Runnable scrollRunnable = new Runnable() {
+		
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+
+	
+	int singleNoteId=-1;
+	public int getSingleNoteId() {
+		return singleNoteId;
+	}
+
+	public void setSingleNoteId(int singleNoteId) {
+		this.singleNoteId = singleNoteId;
+	}
+	
+
+	
+	PopMenuShowNote popMenu= null;
+	BirdAlertDialog birdAlertDialog = null;
+	PopChangeMarkColor popChangeMarkColor = null;
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position,long arg3) {
-		//view.scrollTo(0, view.getHeight());
-		/*ObjectAnimator oaAnimator=ObjectAnimator.ofFloat(view, "translationY", CommonUtils.dpToPx(mContext, mContext.getResources().getDimension(R.dimen.dimen_show_note_item_menu_height)));
-		ObjectAnimator oaAnimator=ObjectAnimator.ofFloat(view, "translationY",view.getHeight());
-		oaAnimator.setDuration(500);
-		oaAnimator.start();*/
+		setSingleNoteId(getItem(position)._id);
+		final View rootView = view;
+		popMenu =new PopMenuShowNote(mContext,new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (v.getId() == R.id.id_popmenu_delete) {
+					birdAlertDialog = new BirdAlertDialog(mContext, R.style.birdalertdialog);
+					birdAlertDialog.setAlertContent(mContext.getString(R.string.alert_delete_content));
+					popMenu.dismiss();					
+					birdAlertDialog.setOnConfirmListener(deleteListener);
+					birdAlertDialog.show();
+				}
+				
+				if (v.getId() == R.id.id_popmenu_mark_color) {				
+					popMenu.dismiss();		
+					popChangeMarkColor = new PopChangeMarkColor(mContext, changeMarkColorListener);
+					popChangeMarkColor.showAtLocation(rootView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+				}
+				
+			}
+		});
+		popMenu.showAtLocation(view, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+		
 		return true;
 	}
 
+	public int chooseLevel=-1;
+	public OnClickListener changeMarkColorListener =new OnClickListener() {					
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.id_pop_mark_bg_blue:
+				chooseLevel=0;
+				break;
+            case R.id.id_pop_mark_bg_green:
+            	chooseLevel=1;
+				break;
+            case R.id.id_pop_mark_bg_yellow:
+            	chooseLevel=2;
+				break;
+            case R.id.id_pop_mark_bg_red:
+            	chooseLevel=3;
+				break;
+			default:
+				break;
+			}
+			popChangeMarkColor.dismiss();
+		   ((ShowNotesActivity)mContext).showHandler.sendEmptyMessage(BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START);															
+		}
+	};
+	
+	public OnClickListener deleteListener =new OnClickListener() {					
+		@Override
+		public void onClick(View v) {	
+			    birdAlertDialog.dismiss();
+				((ShowNotesActivity)mContext).showHandler.sendEmptyMessage(BirdMessage.DELETE_SINGLE_NOTE_RUNNABLE_START);															
+		}
+	};
+	
 	/**
 	 * 全选
 	 */

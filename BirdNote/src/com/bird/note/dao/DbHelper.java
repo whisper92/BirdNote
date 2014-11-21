@@ -201,7 +201,6 @@ public class DbHelper {
 	public void deleteNoteById(String note_id){
 		dbWrite.delete(NotesTable.TABLE_NAME, "_id=?", new String[]{note_id});
 		DBUG.e("delete note success...");
-		dbWrite.close();
 	}
 	
 	public void deleteNoteByIds(String[] note_ids){
@@ -223,6 +222,18 @@ public class DbHelper {
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
 		DBUG.e("star note success...");
 	}
+	
+	/**
+	 * 更改等级
+	 * @param note_id
+	 */
+	public void updateLevelById(String note_id,int level){
+		ContentValues values=new ContentValues();
+		values.put(NotesTable.LEVEL, level);
+		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
+		DBUG.e("updateLevelById success...");
+	}
+	
 	
 
 }
