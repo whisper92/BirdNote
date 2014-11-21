@@ -257,9 +257,39 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 				
 			}
 			
+           if (v.getId() == R.id.id_popmenu_saveas) {           
+				
+        	   mBirdInputTitleDialog=new BirdInputTitleDialog(getActivity(), R.style.birdalertdialog);
+       		   mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveAsPngListener);
+       		   mBirdInputTitleDialog.setTitleString(getString(R.string.save_as_title));
+       		   mBirdInputTitleDialog.show();		
+				
+			}
+			
 		}
 	};
+	
+	public Bitmap getTextBitmap(){
+		mEditText.setDrawingCacheEnabled(true);
+        // 去掉状态栏
+        Bitmap bmp = Bitmap.createBitmap(mEditText.getDrawingCache(), 0,
+        		0, mEditText.getWidth(), mEditText.getHeight());
+        // 销毁缓存信息
+        mEditText.destroyDrawingCache();
+        return bmp;
+	}
+	
 
+	public OnClickListener ConfirmSaveAsPngListener = new OnClickListener() {	
+		@Override
+		public void onClick(View v) {
+              
+             Bitmap bitmap= BitmapUtil.mergeBitmap(BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(R.drawable.note_bg_style00)),mPenView.mDrawBitmap, getTextBitmap());
+              BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap),  "/"+mBirdInputTitleDialog.getContent()+""+mCurrentQuadrant);
+              mBirdInputTitleDialog.dismiss();
+		}
+	};
+	
 	/**
 	 * 设置当前的编辑模式
 	 * 
@@ -589,7 +619,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		@Override
 		public void onClick(View v) {
 			if (v.getId() == R.id.id_alertdiaolg_confirm) {
-				 mTitleString=mBirdInputTitleDialog.getTitle();
+				 mTitleString=mBirdInputTitleDialog.getContent();
 				 mBirdInputTitleDialog.dismiss();
 				 mainHandler.sendEmptyMessage(BirdMessage.SAVE_RUNNABLE_START);		
 				 new SaveNewNoteThread().start();

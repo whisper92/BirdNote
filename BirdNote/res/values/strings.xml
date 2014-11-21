@@ -27,4 +27,5 @@
     <string name="deleteing_note">deleteing note...</string>
     <string name="saveing_note">saveing note...</string>
     <string name="alert_clear_all">Can not restore after clear all！</string>
+    <string name="save_as_title">Save As Png！</string>
 </resources>

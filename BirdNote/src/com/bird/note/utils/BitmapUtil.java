@@ -97,4 +97,17 @@ public class BitmapUtil {
 		Bitmap thumbBitmap=ThumbnailUtils.extractThumbnail(origBitmap, (int) context.getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)context.getResources().getDimension(R.dimen.dimen_create_thumbnail_height));
 		return BitmapUtil.decodeBitmapToBytes(thumbBitmap);
 	}
+	
+	/**
+	 * 合并图层
+	 */
+	public static Bitmap mergeBitmap(Bitmap bmpBg,Bitmap drawBmp,Bitmap textBmp){
+		Bitmap bitmap = Bitmap.createBitmap(bmpBg.getWidth(), bmpBg.getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas();
+		canvas.setBitmap(bitmap);
+		canvas.drawBitmap(bmpBg,0, 0, null);
+		canvas.drawBitmap(drawBmp,0, 0, null);	
+		canvas.drawBitmap(textBmp,8, 4, null);
+		return bitmap;
+	}
 }

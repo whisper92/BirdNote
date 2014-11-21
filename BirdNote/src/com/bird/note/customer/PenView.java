@@ -152,7 +152,7 @@ public class PenView extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 
-		canvas.drawBitmap(mDrawBitmap, 2, 2, null);
+		canvas.drawBitmap(mDrawBitmap, 0, 0, null);
 		if (mPath != null) {
 			mDrawCanvas.drawPath(mPath, mCurPaint);
 		}
@@ -214,8 +214,8 @@ public class PenView extends View {
 		postInvalidate();
 	}
 
-	public void savePicture(int mCurrentQuadrant) {
-		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap),  "/hello"+mCurrentQuadrant+".png");
+	public void savePicture(int mCurrentQuadrant,String filename) {
+		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap),  "/"+filename+""+mCurrentQuadrant);
 	}
 
 	public void clearAll() {
@@ -224,7 +224,7 @@ public class PenView extends View {
 		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		mDrawCanvas.setBitmap(mDrawBitmap);	
 		mExistBitmap = null;
-		mDrawCanvas.drawBitmap(mDrawBitmap, 2,2,mCleanPaint);
+		mDrawCanvas.drawBitmap(mDrawBitmap, 0,0,mCleanPaint);
 		postInvalidate();
 		mSavePath.clear();
 		mDeletePath.clear();
@@ -341,6 +341,7 @@ public class PenView extends View {
 		this.mDrawPaintWidth = width;
 		mDrawPaint.setStrokeWidth(width);
 	}
+	
 	
 	OnPathListChangeListener pathListChangeListener;
 

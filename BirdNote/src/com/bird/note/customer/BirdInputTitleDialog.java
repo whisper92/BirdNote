@@ -18,7 +18,16 @@ public class BirdInputTitleDialog extends Dialog {
 	Context mContext;
 	android.view.View.OnClickListener listener;
 	EditText mEditText;
-	
+	String mTitleString="";
+	TextView mTitleTextView;
+	public String getTitleString() {
+		return mTitleString;
+	}
+
+	public void setTitleString(String mTitle) {
+		this.mTitleString = mTitle;	
+	}
+
 	public BirdInputTitleDialog(Context context,
 			android.view.View.OnClickListener listener) {
 		super(context);
@@ -34,7 +43,7 @@ public class BirdInputTitleDialog extends Dialog {
 		this.mContext = context;
 	}
 
-	public String getTitle(){
+	public String getContent(){
 		return mEditText.getText().toString();
 	}
 	
@@ -47,6 +56,9 @@ public class BirdInputTitleDialog extends Dialog {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.birdinputtitledialog);
+		mTitleTextView = (TextView) findViewById(R.id.id_alertdiaolg_content);
+		mTitleTextView.setText(mTitleString);
+		
 		TextView mCancleTextView = (TextView) findViewById(R.id.id_alertdiaolg_cancel);
 		TextView mConfirmTextView = (TextView) findViewById(R.id.id_alertdiaolg_confirm);
 		mEditText = (EditText) findViewById(R.id.id_alertdiaolg_input_title);

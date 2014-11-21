@@ -314,6 +314,7 @@ public final class R {
         public static final int pop_eraser_clear_all=0x7f07000b;
         public static final int pop_eraser_title=0x7f07000a;
         public static final int pop_pen_title=0x7f070009;
+        public static final int save_as_title=0x7f070015;
         public static final int saveing_note=0x7f070013;
         public static final int show_menu_cancel=0x7f07000e;
         public static final int show_menu_confirm=0x7f07000d;
