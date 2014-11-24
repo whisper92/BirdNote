@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/note_bg_style00" >
 
-            <EditText
+            <com.bird.note.customer.FullText
                 android:id="@+id/id_edit_main_et"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"

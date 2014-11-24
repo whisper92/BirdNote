@@ -172,6 +172,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		
 		mainHandler = ((EditNoteActivity)getActivity()).editHandler;
 		mBirdAlertDialog=new BirdAlertDialog(getActivity(),R.style.birdalertdialog);
+
 		return view;
 	}
 	
@@ -241,6 +242,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		
 		
 		mPopMenu=new PopMenuEditNote(getActivity(),popMenuListener);
+		
 
 	}
 	
@@ -254,6 +256,9 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 				mBirdAlertDialog.setAlertContent(getString(R.string.alert_delete_content));
 				mBirdAlertDialog.setOnConfirmListener(ConfirmDeleteNoteListener);
 				mBirdAlertDialog.show();
+				
+				mPopMenu.showAsDropDown(mWrapFrameLayout);
+				mPopMenu.dismiss();
 				
 			}
 			
@@ -283,12 +288,24 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	public OnClickListener ConfirmSaveAsPngListener = new OnClickListener() {	
 		@Override
 		public void onClick(View v) {
-              
-             Bitmap bitmap= BitmapUtil.mergeBitmap(BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(R.drawable.note_bg_style00)),mPenView.mDrawBitmap, getTextBitmap());
-              BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap),  "/"+mBirdInputTitleDialog.getContent()+""+mCurrentQuadrant);
-              mBirdInputTitleDialog.dismiss();
+			 mBirdInputTitleDialog.dismiss();
+			 mainHandler.sendEmptyMessage(BirdMessage.SAVE_RUNNABLE_START);
+            new SaveAsThread().start();                
 		}
 	};
+	
+	public class SaveAsThread extends Thread {
+		
+		@Override
+		public void run() {
+			Bitmap bitmap= getAllBitmap();
+            BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap),  "/"+mBirdInputTitleDialog.getContent()+""+mCurrentQuadrant);	
+            mainHandler.sendEmptyMessage(BirdMessage.SAVE_AS_OVER);
+		}
+	};
+	public Bitmap getAllBitmap(){
+        return  BitmapUtil.mergeBitmap(BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(R.drawable.note_bg_style00)),mPenView.mDrawBitmap, getTextBitmap());
+	}
 	
 	/**
 	 * 设置当前的编辑模式
@@ -478,6 +495,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	
 	public void saveNewNote(){
 		mBirdInputTitleDialog=new BirdInputTitleDialog(getActivity(), R.style.birdalertdialog);
+		mBirdInputTitleDialog.setTitleString(getString(R.string.input_title_dialog_title));
 		mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveNewNoteClickListener);
 		mBirdInputTitleDialog.show();		
 	}

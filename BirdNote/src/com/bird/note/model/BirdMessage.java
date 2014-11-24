@@ -50,14 +50,14 @@ public class BirdMessage {
 	
     public static final int SAVE_RUNNABLE_START=201;
     public static final int DELETE_RUNNABLE_START=202;
-    public static final int DELETE_SINGLE_NOTE_RUNNABLE_START=2020;
-    public static final int CHANGEMARKCOLOR_RUNNABLE_START=205;
+    public static final int DELETE_SINGLE_NOTE_RUNNABLE_START=203;
+    public static final int CHANGEMARKCOLOR_RUNNABLE_START=204;
 	/*
 	 * 新建笔记，保存完成之后，返回首页
 	 */
-    public static final int SAVE_OVER=203;
-    
-    public static final int DELETE_OVER=204;
+    public static final int SAVE_OVER=301;
+    public static final int SAVE_AS_OVER=302;
+    public static final int DELETE_OVER=303;
     
 
     

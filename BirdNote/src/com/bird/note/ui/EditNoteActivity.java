@@ -321,7 +321,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	 * @return
 	 */
 	public byte[] createThumbnailByQuadrant(){
-		Bitmap bitmap=mEditQuaFragmentsList.get(0).getQuadrantDrawAndTextBitmap();
+		Bitmap bitmap=mEditQuaFragmentsList.get(0).getAllBitmap();
 		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap), "thumbnail");
 		return BitmapUtil.generateThumbnailBytes(this, bitmap);
 	}
@@ -330,6 +330,11 @@ public class EditNoteActivity extends FragmentActivity implements
 		public void handleMessage(android.os.Message msg) {
 			Intent intent=new Intent();
 			switch (msg.what) {
+			case BirdMessage.SAVE_AS_OVER:			
+				if (mWaitDialog!=null&&mWaitDialog.isShowing()) {
+					mWaitDialog.dismiss();
+				}
+				break;
 			case BirdMessage.SAVE_OVER:			
 				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
 				startActivity(intent);
