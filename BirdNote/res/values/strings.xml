@@ -2,8 +2,9 @@
 <resources>
 
     <string name="app_name">BirdNote</string>
+    <string name="show_note_counts">BirdNote(%1$s)</string>
     <string name="edit_menu_delete">Delete</string>
-    <string name="edit_menu_favor">Like</string>
+    <string name="edit_menu_favor">Favor</string>
     <string name="edit_menu_change_bg">Background</string>
     <string name="edit_menu_change_page">Pages</string>
     <string name="edit_menu_mark_colr">Mark Color</string>
@@ -20,6 +21,8 @@
     <string name="show_menu_confirm">OK</string>
     <string name="show_menu_cancel">Cancel</string>
     <string name="show_menu_rename">Rename</string>
+    <string name="show_menu_sort">Sort</string>
+    <string name="show_menu_all_star">Favor</string>
     <string name="alert_input_newname">Input New title!</string>
     <string name="show_menu_delete_selectall">All</string>
 

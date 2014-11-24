@@ -1,5 +1,6 @@
 package com.bird.note.model;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,8 @@ public class BirdNote implements Parcelable {
 	/*
 	 * public String createTime; public String lastEditTime;
 	 */
-	
+	public String createTime;
+	public String updateTime;
 	
 
 	public BirdNote(){
@@ -87,7 +89,8 @@ public class BirdNote implements Parcelable {
 		dest.writeByteArray(thumbnail);
 		dest.writeInt(background);
 		dest.writeInt(star);
-		
+		dest.writeString(createTime);
+		dest.writeString(updateTime);
 	}
 
 	public static final Parcelable.Creator<BirdNote> CREATOR = new Parcelable.Creator<BirdNote>() {
@@ -106,12 +109,13 @@ public class BirdNote implements Parcelable {
 			birdNote.thumbnail = source.createByteArray();
 			birdNote.background = source.readInt();
 			birdNote.star = source.readInt();
+			birdNote.createTime = source.readString();
+			birdNote.updateTime = source.readString();
 			return birdNote;
 		}
 
 		@Override
 		public BirdNote[] newArray(int size) {
-
 			return new BirdNote[size];
 		}
 	};

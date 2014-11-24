@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.R.integer;
 import android.content.Context;
 
 import com.bird.note.model.BirdNote;
@@ -43,7 +44,7 @@ public class DbHelper {
 	 * @param qua3 : 3象限绘制内容
 	 * @param thumbnail : 缩略图
 	 */
-	public void insertNewNote(int level,String title,String text_content,byte[] qua0,byte[] qua1,byte[]qua2,byte[] qua3,byte[] thumbnail,int bg_id,int star){
+	public void insertNewNote(int level,String title,String text_content,byte[] qua0,byte[] qua1,byte[]qua2,byte[] qua3,byte[] thumbnail,int bg_id,int star,String creatTime,String updateTime){
 		ContentValues values=new ContentValues();
 		values.put(NotesTable.LEVEL, level);
 		values.put(NotesTable.TITLE, title);
@@ -55,6 +56,8 @@ public class DbHelper {
 		values.put(NotesTable.THUMBNAIL, thumbnail);
 		values.put(NotesTable.BG_ID, bg_id);
 		values.put(NotesTable.STAR, star);
+		values.put(NotesTable.CREATE_TIME, creatTime);
+		values.put(NotesTable.CREATE_TIME, updateTime);
 		dbWrite.insert(NotesTable.TABLE_NAME, null, values);
 		dbWrite.close();
 	}
@@ -64,7 +67,7 @@ public class DbHelper {
 	}
 	
 	public void insertNewNote(BirdNote birdNote){
-		insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background,birdNote.star);
+		insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background,birdNote.star,birdNote.createTime,birdNote.updateTime);
 	}
 	
 	/**
@@ -74,6 +77,66 @@ public class DbHelper {
 	public List<BirdNote> queryShowNotes(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
 		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, "_id desc");
+		while (cursor.moveToNext()) {
+			BirdNote birdNote=new BirdNote();
+			birdNote._id=cursor.getInt(cursor.getColumnIndex(NotesTable._ID));
+			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
+			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
+			birdNote.thumbnail=cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
+			birdNote.background=cursor.getInt(cursor.getColumnIndex(NotesTable.BG_ID));
+			birdNotesList.add(birdNote);	
+		}
+		cursor.close();
+		return birdNotesList;
+	}
+	
+	/**
+	 * 按创建时间排序。
+	 * @return
+	 */
+	public List<BirdNote> sortShowNotesByCreateTime(){
+		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, NotesTable.CREATE_TIME+" asc");
+		while (cursor.moveToNext()) {
+			BirdNote birdNote=new BirdNote();
+			birdNote._id=cursor.getInt(cursor.getColumnIndex(NotesTable._ID));
+			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
+			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
+			birdNote.thumbnail=cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
+			birdNote.background=cursor.getInt(cursor.getColumnIndex(NotesTable.BG_ID));
+			birdNotesList.add(birdNote);	
+		}
+		cursor.close();
+		return birdNotesList;
+	}
+	
+	/**
+	 * 按最后更新时间排序。
+	 * @return
+	 */
+	public List<BirdNote> sortShowNotesByUpdateTime(){
+		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, NotesTable.UPDATE_TIME+" desc");
+		while (cursor.moveToNext()) {
+			BirdNote birdNote=new BirdNote();
+			birdNote._id=cursor.getInt(cursor.getColumnIndex(NotesTable._ID));
+			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
+			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
+			birdNote.thumbnail=cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
+			birdNote.background=cursor.getInt(cursor.getColumnIndex(NotesTable.BG_ID));
+			birdNotesList.add(birdNote);	
+		}
+		cursor.close();
+		return birdNotesList;
+	}
+	
+	/**
+	 * 按等级排序。
+	 * @return
+	 */
+	public List<BirdNote> sortShowNotesByLevel(){
+		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, NotesTable.LEVEL+" desc");
 		while (cursor.moveToNext()) {
 			BirdNote birdNote=new BirdNote();
 			birdNote._id=cursor.getInt(cursor.getColumnIndex(NotesTable._ID));
@@ -189,8 +252,9 @@ public class DbHelper {
 		values.put(NotesTable.QUA2, birdNote.qua2);
 		values.put(NotesTable.QUA3, birdNote.qua3);
 		values.put(NotesTable.THUMBNAIL, birdNote.thumbnail);
+		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
-		DBUG.e("update note success...");
+		DBUG.e("update note success..."+CommonUtils.getCurrentTime());
 		dbWrite.close();
 	}
 	
@@ -219,8 +283,9 @@ public class DbHelper {
 	public void starNoteById(String note_id){
 		ContentValues values=new ContentValues();
 		values.put(NotesTable.STAR, 1);
+		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
-		DBUG.e("star note success...");
+		DBUG.e("star note success..."+CommonUtils.getCurrentTime());
 	}
 	
 	/**
@@ -230,8 +295,9 @@ public class DbHelper {
 	public void updateLevelById(String note_id,int level){
 		ContentValues values=new ContentValues();
 		values.put(NotesTable.LEVEL, level);
+		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
-		DBUG.e("updateLevelById success...");
+		DBUG.e("updateLevelById success..."+CommonUtils.getCurrentTime());
 	}
 	
 	/**
@@ -241,8 +307,19 @@ public class DbHelper {
 	public void updateTitleById(String note_id,String title){
 		ContentValues values=new ContentValues();
 		values.put(NotesTable.TITLE, title);
+		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
-		DBUG.e("updateTitleById success...");
+		DBUG.e("updateTitleById success..."+CommonUtils.getCurrentTime());
+	}
+	
+	public int getNoteCount(){
+		int count = 0;
+		Cursor cursor =dbRead.rawQuery("select count(*) from "+NotesTable.TABLE_NAME, null);
+		while (cursor.moveToNext()) {
+			count++;			
+		}
+		cursor.close();
+		return count;
 	}
 
 }

@@ -25,13 +25,13 @@
             android:textColor="@color/color_show_item" />
 
         <Button
-            android:id="@+id/id_popmenu_rename"
+            android:id="@+id/id_popmenu_sort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:background="@drawable/pop_menu_item"
             android:padding="10dp"
-            android:text="@string/show_menu_rename"
+            android:text="@string/show_menu_sort"
             android:textColor="@color/color_show_item" />
 
         <Button
@@ -45,13 +45,13 @@
             android:textColor="@color/color_show_item" />
 
         <Button
-            android:id="@+id/id_popmenu_mark_color"
+            android:id="@+id/id_popmenu_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@drawable/pop_menu_item"
             android:padding="10dp"
-            android:text="@string/edit_menu_mark_colr"
+            android:text="@string/show_menu_search"
             android:textColor="@color/color_show_item" />
 
         <Button

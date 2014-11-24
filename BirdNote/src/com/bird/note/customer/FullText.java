@@ -261,8 +261,5 @@ public class FullText extends EditText {
 
 
 
-	public int dpToPx(int dp) {
-		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-				getResources().getDisplayMetrics());
-	}
+
 }

@@ -504,7 +504,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		mBirdInputTitleDialog.setTitleString(getString(R.string.input_title_dialog_title));
 		mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveNewNoteClickListener);		
 		mBirdInputTitleDialog.show();		
-		mBirdInputTitleDialog.setInputContent(CommonUtils.getCurrentTime());
+		mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle());
 	}
 
 	public void saveUpdateNote(){	 

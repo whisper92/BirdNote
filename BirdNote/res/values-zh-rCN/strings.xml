@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">笔记本</string>
-
+    <string name="show_note_counts">笔记本(%1$s)</string>
     <string name="edit_menu_delete">删除</string>
     <string name="edit_menu_favor">添加至收藏</string>
     <string name="edit_menu_change_bg">更改背景</string>
@@ -16,6 +16,8 @@
     <string name="show_menu_confirm">确认</string>
     <string name="show_menu_cancel">取消</string>
     <string name="show_menu_rename">重命名</string>
+    <string name="show_menu_sort">排序</string>
+    <string name="show_menu_all_star">收藏</string>
     <string name="alert_input_newname">输入新标题</string>
     <string name="show_menu_delete_selectall">全选</string>
     
@@ -24,8 +26,9 @@
     
     <string name="deleteing_note">正在删除笔记...</string>
     <string name="saveing_note">正在保存笔记...</string>
-    <string name="alert_clear_all">清除内容之后将无法恢复！</string>
+    <string name="alert_clear_all">清除内容之后将无法恢复!</string>
     <string name="save_as_title">另存为.png图片</string>
     <string name="save_as_toast_start">另存为:</string>
     <string name="fulltext_max">达到最大限制!</string>
+    
 </resources>

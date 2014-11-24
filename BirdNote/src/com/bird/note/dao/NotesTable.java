@@ -18,6 +18,8 @@ public class NotesTable {
 	public static final String THUMBNAIL="thumbnail";
 	public static final String BG_ID="background";
 	public static final String STAR="star";
+	public static final String CREATE_TIME="create_time";
+	public static final String UPDATE_TIME="update_time";
 	
     public static final String SQL_CREATE="create table "+TABLE_NAME
     		+"("
@@ -31,7 +33,9 @@ public class NotesTable {
     		+QUA3+" blob,"
     		+THUMBNAIL+" blob,"
     		+BG_ID+" integer,"
-    		+STAR+" integer)";	
+    		+STAR+" integer,"
+    		+CREATE_TIME+" text,"
+    		+UPDATE_TIME+" text)";	
     
     public static final String TEXTCONTENT_HEADER="textcontents";
     public static final String TEXTCONTENT_OBJECT_QUA="qua";

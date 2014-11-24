@@ -33,6 +33,7 @@ import com.bird.note.model.BirdNote;
 import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.utils.BitmapUtil;
+import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.JsonUtil;
 import com.bird.note.utils.NoteApplication;
 
@@ -215,7 +216,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		DBUG.e("activity中的onkeydown");
+
 		if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
 			mEditQuaFragment.togglePopMenu();
 			return true;
@@ -223,25 +224,6 @@ public class EditNoteActivity extends FragmentActivity implements
 		return super.onKeyDown(keyCode, event);
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.id_edit_menu_star:
-			if (mBirdNote!=null) {
-               dbHelper.starNoteById(mBirdNote._id+"");
-			}
-			break;
-		case R.id.id_edit_menu_saveas:
-
-			break;
-		case R.id.id_edit_menu_delete:
-
-			break;
-		default:
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 	
 	public void deleteNote(){
 		if (mBirdNote!=null) {
@@ -263,7 +245,6 @@ public class EditNoteActivity extends FragmentActivity implements
 		} else {
 			birdNote.title = mTitleString;
 		}
-		
 		
 		String[] text_array=new String[4];
 		byte[] qua=null;
@@ -314,6 +295,8 @@ public class EditNoteActivity extends FragmentActivity implements
 		birdNote.textcontents=text_content;
 		birdNote.thumbnail=createThumbnailByQuadrant();
 		birdNote.background=R.drawable.note_bg_style00;
+		birdNote.createTime = CommonUtils.getCurrentTime();
+		birdNote.updateTime = CommonUtils.getCurrentTime();
 	    return birdNote;
 	}
 

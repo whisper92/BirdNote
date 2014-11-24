@@ -61,10 +61,21 @@ public class CommonUtils {
 		return filePath;
 	}
 	
+	
 	public static String getCurrentTime(){
+		SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("yyMMddhhmmss");     
+		String   date   =   sDateFormat.format(new   java.util.Date()); 
+		DBUG.e("date---->"+date);
+		return date;
+	}
+	
+	public static String getCurrentDate(){
 		SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("yyMMddhhmm");     
 		String   date   =   sDateFormat.format(new   java.util.Date()); 
-		return "BIRD"+date;
+		return date;
+	}
+	public static String getDefaultTitle(){
+		return "BIRD"+getCurrentDate();
 	}
 	
 	/**
@@ -80,10 +91,21 @@ public class CommonUtils {
 		int count = origContent.length();
 		int i = 0;
 		int j = 0;
-		DBUG.e("length---->"+count);
+
 		for ( i = 0; i <count; i++) {
 			
 		}
 		return textLines;
+	}
+	
+	public static int dpToPx(Context context,int dp) {
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+				context.getResources().getDisplayMetrics());
+	}
+	
+	public static int pxToDp(Context context,int px){
+		int dp=0;
+		dp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, px, context.getResources().getDisplayMetrics());
+		return dp;
 	}
 }

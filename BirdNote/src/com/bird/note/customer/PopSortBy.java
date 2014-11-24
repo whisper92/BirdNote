@@ -22,20 +22,20 @@ import android.view.MotionEvent;
  * @author wangxianpeng
  *
  */
-public class PopMenuShowNote extends PopupWindow {
+public class PopSortBy extends PopupWindow {
 
 	private LayoutInflater inflater;
 	private View rootView;
-	private Button mCancleBtn;
-	private Button mDeleteBtn;
-	private Button mStarBtn;
-	private Button mSearchBtn;
-	private Button mSortBtn;
+	private Button mBlue;
+	private Button mGreen;
+	private Button mYellow;
+	private Button mRed;
 
-	public PopMenuShowNote(Context context,OnClickListener listener) {
+
+	public PopSortBy(Context context,OnClickListener listener) {
 
                  inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                 rootView=inflater.inflate(R.layout.show_note_popmenu, null);
+                 rootView=inflater.inflate(R.layout.show_note_pop_mark_color, null);
                  this.setContentView(rootView);
                  this.setWidth(LayoutParams.MATCH_PARENT);
                  this.setHeight(LayoutParams.MATCH_PARENT);
@@ -49,20 +49,17 @@ public class PopMenuShowNote extends PopupWindow {
         		
         		rootView.setFocusableInTouchMode(true);
         		
-                 mCancleBtn=(Button) rootView.findViewById(R.id.id_popmenu_cancle);
-                 mDeleteBtn =(Button) rootView.findViewById(R.id.id_popmenu_delete);
-                 mStarBtn =(Button) rootView.findViewById(R.id.id_popmenu_star);
-                 mSearchBtn =(Button) rootView.findViewById(R.id.id_popmenu_search);
-                 mSortBtn = (Button) rootView.findViewById(R.id.id_popmenu_sort);
-                 mCancleBtn.setOnClickListener(DismissListener);
-                 
-                mDeleteBtn.setOnClickListener(listener);
-                mStarBtn.setOnClickListener(listener);
-                mSearchBtn.setOnClickListener(listener);
-                mSortBtn.setOnClickListener(listener);
+        		mBlue=(Button) rootView.findViewById(R.id.id_pop_mark_bg_blue);
+        		mGreen =(Button) rootView.findViewById(R.id.id_pop_mark_bg_green);
+        		mYellow =(Button) rootView.findViewById(R.id.id_pop_mark_bg_yellow);
+        		mRed =(Button) rootView.findViewById(R.id.id_pop_mark_bg_red);
+               
+                 mBlue.setOnClickListener(listener);               
+                 mGreen.setOnClickListener(listener);
+                 mYellow.setOnClickListener(listener);
+                 mRed.setOnClickListener(listener);
 
 	}
-	
 	public OnClickListener DismissListener=new OnClickListener() {
 		
 		@Override
