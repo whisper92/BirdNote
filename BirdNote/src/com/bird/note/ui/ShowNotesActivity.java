@@ -323,15 +323,20 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		public void onClick(View v) {
 			    closeMenu(birdPopMenu);		
 			    mCurrentSort = v.getId();
-			    mBirdNotes = queryByCurrentSort(mCurrentSort);    		
-			     DBUG.e("mCurrentSort..."+mCurrentSort);
-				mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes ,mGridView); 				    
-				mNoteAdapter.notifyDataSetChanged();
-			    if (mGridView!=null) {
-			    	mGridView.setAdapter(mNoteAdapter);
-				}  
+			    showHandler.sendEmptyMessage(BirdMessage.SORT_START);
+			    showHandler.post(sortRunnable);
+				
 		}
 	};
+	
+	public Runnable sortRunnable = new Runnable() {	
+		@Override
+		public void run() {
+			 mBirdNotes = queryByCurrentSort(mCurrentSort);   
+			 showHandler.sendEmptyMessage(BirdMessage.SORT_OVER);
+		}
+	};
+	
 	int mChoosePosition = 0;
 	public Runnable deleteSingleNoteRunnable = new Runnable() {	
 		@Override
@@ -412,6 +417,20 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			if (msg.what==BirdMessage.UPDATETITLE_RUNNABLE_OVER) { 
 				mWaitDialog.dismiss();
 			}	
+			if (msg.what==BirdMessage.SORT_START) { 
+				mWaitDialog.setWaitContent(getString(R.string.alert_sort));
+				mWaitDialog.show();
+			}	
+			
+			if (msg.what==BirdMessage.SORT_OVER) { 
+				mWaitDialog.dismiss();
+				mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes ,mGridView); 				    
+				mNoteAdapter.notifyDataSetChanged();
+			    if (mGridView!=null) {
+			    	mGridView.setAdapter(mNoteAdapter);
+				}  
+			}	
+
 			
 		};
 	};

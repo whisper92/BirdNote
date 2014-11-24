@@ -308,6 +308,7 @@ public final class R {
         public static final int alert_clear_all=0x7f080019;
         public static final int alert_delete_content=0x7f080015;
         public static final int alert_input_newname=0x7f080013;
+        public static final int alert_sort=0x7f08001d;
         public static final int app_name=0x7f080000;
         public static final int deleteing_note=0x7f080017;
         public static final int edit_menu_change_bg=0x7f080004;

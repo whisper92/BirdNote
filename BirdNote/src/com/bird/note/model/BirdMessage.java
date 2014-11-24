@@ -54,6 +54,7 @@ public class BirdMessage {
     public static final int CHANGEMARKCOLOR_RUNNABLE_START=204;
     public static final int UPDATETITLE_RUNNABLE_START=205;
     public static final int SAVEAS_RUNNABLE_START=206;
+    public static final int SORT_START=207;
 	/*
 	 * 新建笔记，保存完成之后，返回首页
 	 */
@@ -61,7 +62,7 @@ public class BirdMessage {
     public static final int DELETE_OVER=302;
     public static final int UPDATETITLE_RUNNABLE_OVER=305;
     public static final int SAVE_AS_OVER=306;
-    
+    public static final int SORT_OVER=307;
     
 
     
