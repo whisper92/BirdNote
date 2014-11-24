@@ -268,7 +268,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
        		   mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveAsPngListener);
        		   mBirdInputTitleDialog.setTitleString(getString(R.string.save_as_title));
        		   mBirdInputTitleDialog.show();		
-				
+       		   mBirdInputTitleDialog.setInputContent(((EditNoteActivity)getActivity()).mBirdNote.title+"_qua"+mCurrentQuadrant);			
 			}
 			
 		}
@@ -294,15 +294,21 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		}
 	};
 	
+	public String mSavePath="";
 	public class SaveAsThread extends Thread {
 		
 		@Override
 		public void run() {
 			Bitmap bitmap= getAllBitmap();
-            BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap),  "/"+mBirdInputTitleDialog.getContent()+""+mCurrentQuadrant);	
-            mainHandler.sendEmptyMessage(BirdMessage.SAVE_AS_OVER);
+			mSavePath = CommonUtils.getSavePath()+"/"+mBirdInputTitleDialog.getContent()+".png";
+            BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap),  "/"+mBirdInputTitleDialog.getContent());	
+            mainHandler.obtainMessage(BirdMessage.SAVE_AS_OVER, mSavePath).sendToTarget();
 		}
 	};
+	
+	public String getSavePath(){
+		return mSavePath;
+	}
 	public Bitmap getAllBitmap(){
         return  BitmapUtil.mergeBitmap(BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(R.drawable.note_bg_style00)),mPenView.mDrawBitmap, getTextBitmap());
 	}
@@ -496,8 +502,9 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	public void saveNewNote(){
 		mBirdInputTitleDialog=new BirdInputTitleDialog(getActivity(), R.style.birdalertdialog);
 		mBirdInputTitleDialog.setTitleString(getString(R.string.input_title_dialog_title));
-		mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveNewNoteClickListener);
+		mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveNewNoteClickListener);		
 		mBirdInputTitleDialog.show();		
+		mBirdInputTitleDialog.setInputContent(CommonUtils.getCurrentTime());
 	}
 
 	public void saveUpdateNote(){	 

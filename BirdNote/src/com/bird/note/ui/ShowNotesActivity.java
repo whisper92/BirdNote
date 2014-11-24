@@ -63,7 +63,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 
 		mGridView = (GridView) findViewById(R.id.id_show_gv);
 		mBirdNotes=mDbHelper.queryShowNotes();
-	    mNoteAdapter = new ShowNoteAdapter(this,mDbHelper.queryShowNotes() ,mGridView);
+	    mNoteAdapter = new ShowNoteAdapter(this,mBirdNotes,mGridView);
 	    mGridView.setAdapter(mNoteAdapter);
 		mNoteAdapter.notifyDataSetChanged();
 
@@ -246,15 +246,18 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	}
 	
 
+	int mChoosePosition = 0;
 	public Runnable deleteSingleNoteRunnable = new Runnable() {	
 		@Override
 		public void run() {
 			mDbHelper.deleteNoteById(mNoteAdapter.getSingleNoteId()+"");
-			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
+     /*	 mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
 		    mNoteAdapter.notifyDataSetChanged();
 		    if (mGridView!=null) {
 		    	mGridView.setAdapter(mNoteAdapter);
-			}  
+			}  */
+		    mBirdNotes.remove(mChoosePosition);
+		    mNoteAdapter.notifyDataSetChanged();
 			showHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);	
 		}
 	};
@@ -263,14 +266,32 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		@Override
 		public void run() {
 			mDbHelper.updateLevelById(mNoteAdapter.getSingleNoteId()+"",mNoteAdapter.chooseLevel);
-			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
+			mBirdNotes.get(mChoosePosition).level = mNoteAdapter.chooseLevel;
+			mNoteAdapter.notifyDataSetChanged();
+/*			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
 		    mNoteAdapter.notifyDataSetChanged();
 		    if (mGridView!=null) {
 		    	mGridView.setAdapter(mNoteAdapter);
-			}  
+			}  	*/	
 			showHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);	
 		}
 	};
+	
+	public Runnable updateTitleRunnable = new Runnable() {	
+		@Override
+		public void run() {
+			mDbHelper.updateTitleById(mNoteAdapter.getSingleNoteId()+"",mNoteAdapter.mNewTitleString);
+			mBirdNotes.get(mChoosePosition).title = mNoteAdapter.mNewTitleString;
+			mNoteAdapter.notifyDataSetChanged();
+/*			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
+		    mNoteAdapter.notifyDataSetChanged();
+		    if (mGridView!=null) {
+		    	mGridView.setAdapter(mNoteAdapter);
+			}  */
+			showHandler.sendEmptyMessage(BirdMessage.UPDATETITLE_RUNNABLE_OVER);	
+		}
+	};
+	
 	
 	public Handler showHandler=new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -282,16 +303,28 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 				mWaitDialog.show();
 			}
 			if (msg.what==BirdMessage.DELETE_SINGLE_NOTE_RUNNABLE_START) {
+				mChoosePosition = (Integer)msg.obj;
 				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
 				mWaitDialog.show();
 				post(deleteSingleNoteRunnable);
 			}
 			
 			if (msg.what==BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START) {
+				mChoosePosition = (Integer)msg.obj;
 				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
 				mWaitDialog.show();
 				post(changeMarkColorRunnable);
 			}
+			
+			if (msg.what==BirdMessage.UPDATETITLE_RUNNABLE_START) { 
+				mChoosePosition = (Integer)msg.obj;
+		    	mWaitDialog.setWaitContent(getString(R.string.saveing_note));
+			    mWaitDialog.show();
+			    post(updateTitleRunnable);
+			}
+			if (msg.what==BirdMessage.UPDATETITLE_RUNNABLE_OVER) { 
+				mWaitDialog.dismiss();
+			}	
 			
 		};
 	};

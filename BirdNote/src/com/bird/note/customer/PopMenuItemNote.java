@@ -22,7 +22,7 @@ import android.view.MotionEvent;
  * @author wangxianpeng
  *
  */
-public class PopMenuShowNote extends PopupWindow {
+public class PopMenuItemNote extends PopupWindow {
 
 	private LayoutInflater inflater;
 	private View rootView;
@@ -32,7 +32,7 @@ public class PopMenuShowNote extends PopupWindow {
 	private Button mChangeMarkBtn;
 	private Button mRenameBtn;
 
-	public PopMenuShowNote(Context context,OnClickListener listener) {
+	public PopMenuItemNote(Context context,OnClickListener listener) {
 
                  inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                  rootView=inflater.inflate(R.layout.item_note_popmenu, null);

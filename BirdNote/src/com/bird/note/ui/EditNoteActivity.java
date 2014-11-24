@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bird.note.R;
 import com.bird.note.customer.BirdWaitDialog;
@@ -58,7 +59,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	 */
 	private int mCurrentQuadrant = 0;
 	
-	private BirdNote mBirdNote=null;
+	public BirdNote mBirdNote=null;
 
 	private DbHelper dbHelper;
 	private List<EditQuadrantFragment> mEditQuaFragmentsList = new ArrayList<EditQuadrantFragment>();
@@ -333,6 +334,7 @@ public class EditNoteActivity extends FragmentActivity implements
 			case BirdMessage.SAVE_AS_OVER:			
 				if (mWaitDialog!=null&&mWaitDialog.isShowing()) {
 					mWaitDialog.dismiss();
+					Toast.makeText(EditNoteActivity.this, getString(R.string.save_as_toast_start)+msg.obj, Toast.LENGTH_LONG).show();
 				}
 				break;
 			case BirdMessage.SAVE_OVER:			
@@ -353,7 +355,7 @@ public class EditNoteActivity extends FragmentActivity implements
 				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
 				mWaitDialog.show();
 				break;
-				
+
 			default:
 				break;
 			}

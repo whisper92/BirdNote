@@ -234,6 +234,15 @@ public class DbHelper {
 		DBUG.e("updateLevelById success...");
 	}
 	
-	
+	/**
+	 * 更改标题
+	 * @param note_id
+	 */
+	public void updateTitleById(String note_id,String title){
+		ContentValues values=new ContentValues();
+		values.put(NotesTable.TITLE, title);
+		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
+		DBUG.e("updateTitleById success...");
+	}
 
 }

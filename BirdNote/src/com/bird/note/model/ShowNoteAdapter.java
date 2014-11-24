@@ -34,10 +34,11 @@ import android.widget.Toast;
 
 import com.bird.note.R;
 import com.bird.note.customer.BirdAlertDialog;
+import com.bird.note.customer.BirdInputTitleDialog;
 import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.customer.PopChangeMarkColor;
 import com.bird.note.customer.PopMenuEditNote;
-import com.bird.note.customer.PopMenuShowNote;
+import com.bird.note.customer.PopMenuItemNote;
 import com.bird.note.customer.PopPenBox;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.ui.EditNoteActivity;
@@ -52,7 +53,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	private Context mContext;
 	private LayoutInflater mInflater;
 	private Scroller scroller;
-	
+	private BirdInputTitleDialog mBirdInputTitleDialog;
 	private boolean mDeleteState=false;
 	private DbHelper mDbHelper;
 	/*
@@ -161,14 +162,17 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	
 
 	
-	PopMenuShowNote popMenu= null;
+	PopMenuItemNote popMenu= null;
 	BirdAlertDialog birdAlertDialog = null;
 	PopChangeMarkColor popChangeMarkColor = null;
+	int mChoosePosition = 0;
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position,long arg3) {
+		mChoosePosition = position;
 		setSingleNoteId(getItem(position)._id);
+		final int p = position;
 		final View rootView = view;
-		popMenu =new PopMenuShowNote(mContext,new OnClickListener() {
+		popMenu =new PopMenuItemNote(mContext,new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -186,6 +190,16 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 					popChangeMarkColor.showAtLocation(rootView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 				}
 				
+				if (v.getId() == R.id.id_popmenu_rename) {				
+					popMenu.dismiss();		
+					mBirdInputTitleDialog = new BirdInputTitleDialog(mContext, R.style.birdalertdialog);
+					mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmUpdateTitleListener);
+		       		mBirdInputTitleDialog.setTitleString(mContext.getString(R.string.alert_input_newname));
+		       		mBirdInputTitleDialog.show();		
+		       		mBirdInputTitleDialog.setInputContent(getItem(p).title);
+				}
+				
+				
 			}
 		});
 		popMenu.showAtLocation(view, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -193,6 +207,16 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		return true;
 	}
 
+	public String mNewTitleString = "";
+	public OnClickListener ConfirmUpdateTitleListener = new OnClickListener() {	
+		@Override
+		public void onClick(View v) {
+			mNewTitleString = mBirdInputTitleDialog.getContent();
+			((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.UPDATETITLE_RUNNABLE_START, mChoosePosition).sendToTarget();
+			mBirdInputTitleDialog.dismiss();
+		}
+	};
+	
 	public int chooseLevel=-1;
 	public OnClickListener changeMarkColorListener =new OnClickListener() {					
 		@Override
@@ -214,7 +238,8 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 				break;
 			}
 			popChangeMarkColor.dismiss();
-		   ((ShowNotesActivity)mContext).showHandler.sendEmptyMessage(BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START);															
+		    ((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START, mChoosePosition).sendToTarget();
+		   //((ShowNotesActivity)mContext).showHandler.sendEmptyMessage(BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START);															
 		}
 	};
 	
@@ -222,7 +247,8 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		@Override
 		public void onClick(View v) {	
 			    birdAlertDialog.dismiss();
-				((ShowNotesActivity)mContext).showHandler.sendEmptyMessage(BirdMessage.DELETE_SINGLE_NOTE_RUNNABLE_START);															
+			    ((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.DELETE_SINGLE_NOTE_RUNNABLE_START, mChoosePosition).sendToTarget();
+				//((ShowNotesActivity)mContext).showHandler.sendEmptyMessage(BirdMessage.DELETE_SINGLE_NOTE_RUNNABLE_START);															
 		}
 	};
 	

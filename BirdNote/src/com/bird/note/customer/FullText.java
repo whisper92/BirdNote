@@ -3,6 +3,7 @@ package com.bird.note.customer;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bird.note.R;
 import com.bird.note.model.DBUG;
 
 import android.content.Context;
@@ -25,9 +26,6 @@ public class FullText extends EditText {
 	boolean mFirstDown = true;
 	float mClickPosX = 0;
 	float mClickPosY = 0;
-	/*
-	 * 在点击位置之前插入空格
-	 */
 	int mSpaceCount = 0;
 	float mSpaceWidth = 0;
 
@@ -35,9 +33,7 @@ public class FullText extends EditText {
 	 * 点击的是第几行
 	 */
 	int mClickLine = 0;
-	/*
-	 * 保存上一次点击的位置，防止重复初始话
-	 */
+
 	int mFullTextWidth = 0;
 	int mFullTextHeight = 0;
 
@@ -79,9 +75,9 @@ public class FullText extends EditText {
 			if (msg.what == 0) {
 				DBUG.e("msg.what == 0...");
 				 if (mToast == null) {
-					    mToast = Toast.makeText(mContext, "到达最大限制.", Toast.LENGTH_SHORT);
+					    mToast = Toast.makeText(mContext,mContext.getString(R.string.fulltext_max), Toast.LENGTH_SHORT);
 				   }else {
-					    mToast.setText("到达最大限制.");
+					    mToast.setText(mContext.getString(R.string.fulltext_max));
 				   }
 		           mToast.show();
 			}

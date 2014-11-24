@@ -19,6 +19,8 @@
     <string name="show_menu_search">Search</string>
     <string name="show_menu_confirm">OK</string>
     <string name="show_menu_cancel">Cancel</string>
+    <string name="show_menu_rename">Rename</string>
+    <string name="alert_input_newname">Input New title!</string>
     <string name="show_menu_delete_selectall">All</string>
 
     <string name="alert_delete_content">The note willd be deleted!</string>
@@ -28,4 +30,6 @@
     <string name="saveing_note">saveing note...</string>
     <string name="alert_clear_all">Can not restore after clear all！</string>
     <string name="save_as_title">Save As Png！</string>
+    <string name="save_as_toast_start">Save As:</string>
+    <string name="fulltext_max">Reach Max Lines!</string>
 </resources>
