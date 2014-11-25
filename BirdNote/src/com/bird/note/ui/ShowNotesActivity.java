@@ -28,8 +28,8 @@ import android.widget.TextView;
 import com.bird.note.R;
 import com.bird.note.customer.BirdPopMenu;
 import com.bird.note.customer.BirdWaitDialog;
-import com.bird.note.customer.PopMenuShowNote;
 import com.bird.note.dao.DbHelper;
+import com.bird.note.model.BirdPopMenuItem;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.DBUG;
@@ -57,17 +57,19 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	private GridView mGridView=null;
 	private List<BirdNote> mBirdNotes=null;
 	private BirdWaitDialog mWaitDialog = null;
-	private PopMenuShowNote mPopMenuShowNote = null;
+
 	private LinearLayout mLinearLayout = null;
 	private TextView mTitleNoteCount;
-	private String[] mSortItemsStrings;
-	
 	private int mCurrentSort= 1;
+	
+	private List<BirdPopMenuItem> mBirdMenuItems;
+	private BirdPopMenu mShowPopMenu;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.show_notes);
-		mSortItemsStrings = this.getResources().getStringArray(R.array.sortby_array);
+		
 		mWaitDialog  =new BirdWaitDialog(this, R.style.birdalertdialog);
 		mDbHelper=new DbHelper(this);
 		mLinearLayout = (LinearLayout) findViewById(R.id.id_show_note_root);
@@ -93,9 +95,11 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		mConfirmDelete.setOnClickListener(this);
 		mCancelDelete.setOnClickListener(this);
 		mSelectAll.setOnClickListener(this);
-		mPopMenuShowNote = new PopMenuShowNote(this, showMenuListener);
+		
+		mShowPopMenu = PopMenuManager.createShowMenu(this, showMenuListener);
 	}
 
+	
    /**
     * 根据当前的排序方式查询数据
  * @return 
@@ -128,10 +132,10 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	}
 	
 	private void togglePopMenu() {
-		if  (!mPopMenuShowNote.isShowing()) {
-			mPopMenuShowNote.showAtLocation(mLinearLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+		if  (!mShowPopMenu.isShowing()) {
+			mShowPopMenu.showAtLocation(mLinearLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 		} else {
-			mPopMenuShowNote.dismiss();
+			mShowPopMenu.dismiss();
 		}
 		
 	}
@@ -285,21 +289,33 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		});
 	}
 	
-	BirdPopMenu birdPopMenu ;
+	public OnClickListener sortByListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			    closeMenu(mPopMenuSort);		
+			    mCurrentSort = v.getId();
+			    showHandler.sendEmptyMessage(BirdMessage.SORT_START);
+			    showHandler.post(sortRunnable);
+				
+		}
+	};
+	
+	BirdPopMenu mPopMenuSort;
+
 	public OnClickListener showMenuListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-			case R.id.id_popmenu_delete:
+			case 0:
 	             if ((mNoteAdapter.getDeleteState()==false)&&mNoteAdapter!=null && mBirdNotes!=null && mBirdNotes.size()>0) {
 					mNoteAdapter.setDeleteState(true);
 					startShowMenuTitle();		
 				}
 				break;
-			case R.id.id_popmenu_sort:
-				birdPopMenu=new BirdPopMenu(ShowNotesActivity.this);
-				birdPopMenu.setItemAdapter(mSortItemsStrings,sortByListener);
-				birdPopMenu.showAtLocation(mLinearLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+			case 1:
+				mPopMenuSort=PopMenuManager.createSortMenu(ShowNotesActivity.this, sortByListener);
+				mPopMenuSort.showAtLocation(mLinearLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+				
 				break;
 			case R.id.id_popmenu_star:
 				break;
@@ -309,26 +325,18 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 				break;
 			}
 			
-			closeMenu(mPopMenuShowNote);
+			closeMenu(mShowPopMenu);
 		}
 	};
+	
+
 	
 	public void closeMenu(PopupWindow popupWindow){
 		if (popupWindow!=null&&popupWindow.isShowing()) {
 			popupWindow.dismiss();
 		}
 	}
-	public OnClickListener sortByListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			    closeMenu(birdPopMenu);		
-			    mCurrentSort = v.getId();
-			    showHandler.sendEmptyMessage(BirdMessage.SORT_START);
-			    showHandler.post(sortRunnable);
-				
-		}
-	};
-	
+
 	public Runnable sortRunnable = new Runnable() {	
 		@Override
 		public void run() {

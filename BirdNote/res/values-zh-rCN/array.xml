@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="sortby_array">
-        <item >"创建时间"</item>
-        <item >"更新时间"</item>
-        <item >"优先级"</item>
+
+    <string-array name="showmenu_array">
+        <item>@string/show_menu_delete</item>
+        <item>@string/show_menu_sort</item>
+        <item>@string/show_menu_all_star</item>
+        <item>@string/show_menu_search</item>
     </string-array>
+    <string-array name="sortby_array">
+        <item>"创建时间"</item>
+        <item>"更新时间"</item>
+        <item>"优先级"</item>
+    </string-array>
+
 </resources>

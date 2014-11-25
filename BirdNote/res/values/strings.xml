@@ -17,12 +17,16 @@
     <string name="pop_pen_title">Pen Setting</string>
     <string name="pop_eraser_title">Eraser Setting</string>
     <string name="pop_eraser_clear_all">Clear All</string>
+    
+    <string name="show_menu_delete">Delete</string>
     <string name="show_menu_search">Search</string>
-    <string name="show_menu_confirm">OK</string>
-    <string name="show_menu_cancel">Cancel</string>
-    <string name="show_menu_rename">Rename</string>
     <string name="show_menu_sort">Sort</string>
     <string name="show_menu_all_star">Favor</string>
+    
+    <string name="show_menu_confirm">OK</string>
+    <string name="show_menu_cancel">Cancel</string>
+    <string name="item_menu_rename">Rename</string>
+
     <string name="alert_input_newname">Input New title!</string>
     <string name="show_menu_delete_selectall">All</string>
 

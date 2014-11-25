@@ -12,12 +12,17 @@
     <string name="pop_pen_title">笔设置</string>
     <string name="pop_eraser_title">橡皮擦</string>
     <string name="pop_eraser_clear_all">清除全部</string>
-    <string name="show_menu_search">搜索</string>
-    <string name="show_menu_confirm">确认</string>
-    <string name="show_menu_cancel">取消</string>
-    <string name="show_menu_rename">重命名</string>
+    
+    <string name="show_menu_delete">删除</string>  
     <string name="show_menu_sort">排序</string>
     <string name="show_menu_all_star">收藏</string>
+    <string name="show_menu_search">搜索</string>
+    
+    <string name="show_menu_confirm">确认</string>
+    <string name="show_menu_cancel">取消</string>
+    <string name="item_menu_rename">重命名</string>
+
+    
     <string name="alert_input_newname">输入新标题</string>
     <string name="show_menu_delete_selectall">全选</string>
     

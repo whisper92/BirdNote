@@ -1,6 +1,10 @@
 package com.bird.note.customer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.bird.note.R;
+import com.bird.note.model.BirdPopMenuItem;
 import com.bird.note.model.DBUG;
 import com.bird.note.utils.CommonUtils;
 
@@ -26,15 +30,12 @@ import android.view.MotionEvent;
  */
 public class BirdPopMenu extends PopupWindow {
 
-	private LayoutInflater inflater;
-	private View rootView;
-	private Button mBlue;
-	private Button mGreen;
-	private Button mYellow;
-	private Button mRed;
-    private Context mContext;
-	private LinearLayout mItemsLayout;
-
+	LayoutInflater inflater;
+	View rootView;
+    Context mContext;
+	LinearLayout mItemsLayout;
+    List<BirdPopMenuItem> menuItems;
+    
 	public BirdPopMenu(Context context) {
 		         mContext = context;
                  inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -56,7 +57,7 @@ public class BirdPopMenu extends PopupWindow {
 
 	}
 	
-	public void setItemAdapter(String[] items,OnClickListener listener){
+	public void addCancelItem(){
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,    
 				LinearLayout.LayoutParams.WRAP_CONTENT    
@@ -64,18 +65,40 @@ public class BirdPopMenu extends PopupWindow {
 		layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
         layoutParams.bottomMargin = CommonUtils.dpToPx(mContext,5);
         int padding = CommonUtils.dpToPx(mContext,10);
-		for (int i = 0; i < items.length; i++) {
+		Button button = new Button(mContext);
+		button.setTextColor(Color.WHITE);
+		button.setText(mContext.getString(R.string.show_menu_cancel));
+		button.setBackgroundResource(R.drawable.menu_cancle_bg);
+		button.setLayoutParams(layoutParams);
+		button.setPadding(padding, padding, padding, padding);
+		button.setOnClickListener(DismissListener);
+		mItemsLayout.addView(button);
+	}
+	
+	public void setItemAdapter(List<BirdPopMenuItem> menuItems,OnClickListener listener){
+		this.menuItems = menuItems;
+
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,    
+				LinearLayout.LayoutParams.WRAP_CONTENT    
+				);
+		layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+        layoutParams.bottomMargin = CommonUtils.dpToPx(mContext,5);
+        int padding = CommonUtils.dpToPx(mContext,10);
+		for (int i = 0; i < menuItems.size(); i++) {
 			Button button = new Button(mContext);
-			button.setText(items[i]);
+			button.setText(menuItems.get(i).menuText);
+			button.setBackgroundResource(menuItems.get(i).menuBackground);
 			button.setId(i);
 			button.setTextColor(Color.WHITE);
-			button.setBackgroundResource(R.drawable.pop_menu_item);
 			button.setLayoutParams(layoutParams);
 			button.setPadding(padding, padding, padding, padding);
 			button.setOnClickListener(listener);
 			mItemsLayout.addView(button);
 		}
 	}
+
+
 	
 	public OnClickListener DismissListener=new OnClickListener() {
 		

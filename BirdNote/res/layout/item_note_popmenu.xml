@@ -31,7 +31,7 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/pop_menu_item"
             android:padding="10dp"
-            android:text="@string/show_menu_rename"
+            android:text="@string/item_menu_rename"
             android:textColor="@color/color_show_item" />
 
         <Button
