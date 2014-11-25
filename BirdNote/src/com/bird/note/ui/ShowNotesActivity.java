@@ -317,9 +317,9 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 				mPopMenuSort.showAtLocation(mLinearLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 				
 				break;
-			case R.id.id_popmenu_star:
+			case 2:
 				break;
-			case R.id.id_popmenu_search:
+			case 3:
 				break;
 			default:
 				break;

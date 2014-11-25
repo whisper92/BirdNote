@@ -1,18 +1,13 @@
 package com.bird.note.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.R.integer;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,8 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AbsListView.MultiChoiceModeListener;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
@@ -30,21 +25,16 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Scroller;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bird.note.R;
 import com.bird.note.customer.BirdAlertDialog;
 import com.bird.note.customer.BirdInputTitleDialog;
-import com.bird.note.customer.BirdWaitDialog;
-import com.bird.note.customer.PopChangeMarkColor;
-import com.bird.note.customer.PopMenuEditNote;
-import com.bird.note.customer.PopMenuItemNote;
-import com.bird.note.customer.PopPenBox;
+import com.bird.note.customer.BirdPopMenu;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.ui.EditNoteActivity;
+import com.bird.note.ui.PopMenuManager;
 import com.bird.note.ui.ShowNotesActivity;
 import com.bird.note.utils.BitmapUtil;
-import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
 
 public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener,MultiChoiceModeListener{
@@ -162,51 +152,55 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	
 
 	
-	PopMenuItemNote popMenu= null;
+	BirdPopMenu popMenu= null;
 	BirdAlertDialog birdAlertDialog = null;
-	PopChangeMarkColor popChangeMarkColor = null;
+	BirdPopMenu popChangeMarkColor = null;
 	int mChoosePosition = 0;
+	View rootView;
+	int operatePosition= 0 ;
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position,long arg3) {
 		mChoosePosition = position;
 		setSingleNoteId(getItem(position)._id);
-		final int p = position;
-		final View rootView = view;
-		popMenu =new PopMenuItemNote(mContext,new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				if (v.getId() == R.id.id_popmenu_delete) {
-					birdAlertDialog = new BirdAlertDialog(mContext, R.style.birdalertdialog);
-					birdAlertDialog.setAlertContent(mContext.getString(R.string.alert_delete_content));
-					popMenu.dismiss();					
-					birdAlertDialog.setOnConfirmListener(deleteListener);
-					birdAlertDialog.show();
-				}
-				
-				if (v.getId() == R.id.id_popmenu_mark_color) {				
-					popMenu.dismiss();		
-					popChangeMarkColor = new PopChangeMarkColor(mContext, changeMarkColorListener);
-					popChangeMarkColor.showAtLocation(rootView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-				}
-				
-				if (v.getId() == R.id.id_popmenu_rename) {				
-					popMenu.dismiss();		
-					mBirdInputTitleDialog = new BirdInputTitleDialog(mContext, R.style.birdalertdialog);
-					mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmUpdateTitleListener);
-		       		mBirdInputTitleDialog.setTitleString(mContext.getString(R.string.alert_input_newname));
-		       		mBirdInputTitleDialog.show();		
-		       		mBirdInputTitleDialog.setInputContent(getItem(p).title);
-				}
-				
-				
-			}
-		});
+		operatePosition= position;
+		rootView = view;
+		popMenu =PopMenuManager.createItemOperateMenu(mContext,itemOperateListener);
 		popMenu.showAtLocation(view, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 		
 		return true;
 	}
 
+	
+	public OnClickListener itemOperateListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			if (v.getId() ==0) {
+				birdAlertDialog = new BirdAlertDialog(mContext, R.style.birdalertdialog);
+				birdAlertDialog.setAlertContent(mContext.getString(R.string.alert_delete_content));
+				popMenu.dismiss();					
+				birdAlertDialog.setOnConfirmListener(deleteListener);
+				birdAlertDialog.show();
+			}
+
+			if (v.getId() == 1) {				
+				popMenu.dismiss();		
+				mBirdInputTitleDialog = new BirdInputTitleDialog(mContext, R.style.birdalertdialog);
+				mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmUpdateTitleListener);
+	       		mBirdInputTitleDialog.setTitleString(mContext.getString(R.string.alert_input_newname));
+	       		mBirdInputTitleDialog.show();		
+	       		mBirdInputTitleDialog.setInputContent(getItem(operatePosition).title);
+			}
+			
+			if (v.getId() == 3) {				
+				popMenu.dismiss();		
+				popChangeMarkColor = PopMenuManager.createChooseMarkColorMenu(mContext, changeMarkColorListener);
+				popChangeMarkColor.showAtLocation(rootView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+			}
+			
+			
+		}
+	};
 	public String mNewTitleString = "";
 	public OnClickListener ConfirmUpdateTitleListener = new OnClickListener() {	
 		@Override
@@ -221,25 +215,9 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	public OnClickListener changeMarkColorListener =new OnClickListener() {					
 		@Override
 		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.id_pop_mark_bg_blue:
-				chooseLevel=0;
-				break;
-            case R.id.id_pop_mark_bg_green:
-            	chooseLevel=1;
-				break;
-            case R.id.id_pop_mark_bg_yellow:
-            	chooseLevel=2;
-				break;
-            case R.id.id_pop_mark_bg_red:
-            	chooseLevel=3;
-				break;
-			default:
-				break;
-			}
+		    chooseLevel=v.getId();
 			popChangeMarkColor.dismiss();
-		    ((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START, mChoosePosition).sendToTarget();
-		   //((ShowNotesActivity)mContext).showHandler.sendEmptyMessage(BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START);															
+		    ((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START, mChoosePosition).sendToTarget();													
 		}
 	};
 	
@@ -247,8 +225,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		@Override
 		public void onClick(View v) {	
 			    birdAlertDialog.dismiss();
-			    ((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.DELETE_SINGLE_NOTE_RUNNABLE_START, mChoosePosition).sendToTarget();
-				//((ShowNotesActivity)mContext).showHandler.sendEmptyMessage(BirdMessage.DELETE_SINGLE_NOTE_RUNNABLE_START);															
+			    ((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.DELETE_SINGLE_NOTE_RUNNABLE_START, mChoosePosition).sendToTarget();													
 		}
 	};
 	
