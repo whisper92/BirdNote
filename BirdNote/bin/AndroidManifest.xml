@@ -19,22 +19,15 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.bird.note.test.Eraser_Use_drawCircle"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="com.bird.note.test.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="com.bird.note.test.TestParcelActivity"
-            android:label="@string/app_name" >
+            android:name="com.bird.note.ui.ReadStaredNotesActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.bird.note.ui.ShowNotesActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" 
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

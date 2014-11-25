@@ -98,13 +98,27 @@ public class PopMenuManager {
 		return mShowPopMenu;
 	}
 	
+	public static BirdPopMenu createEditUpdateNoteRmStarMenu(Context context,android.view.View.OnClickListener showMenuListener){
+		BirdPopMenu mShowPopMenu =  createMenu(context,R.array.editupdatenote_rmstar_array,-1,showMenuListener);
+		mShowPopMenu.addCancelItem();
+		return mShowPopMenu;
+	}
 	
 	/**
 	 * 创建标签颜色菜单
 	 */
 	public static BirdPopMenu createChooseMarkColorMenu(Context context,android.view.View.OnClickListener showMenuListener){
-			BirdPopMenu mMkColorPopMenu =  createMenu(context,R.array.editupdatenote_array,R.array.pop_menu_markcolor,showMenuListener);
-			
+
+		    int[]  itembgs= new int[]{R.drawable.mark_bg_blue,R.drawable.mark_bg_green,R.drawable.mark_bg_yellow,R.drawable.mark_bg_red};
+			List<BirdPopMenuItem> mSortMenuItems = new ArrayList<BirdPopMenuItem>();
+			BirdPopMenu mMkColorPopMenu = new BirdPopMenu(context);
+			for (int i = 0; i < itembgs.length; i++) {
+				BirdPopMenuItem birdMenuItem = new BirdPopMenuItem();
+				birdMenuItem.menuBackground = itembgs[i];
+				mSortMenuItems.add(birdMenuItem);
+			}
+			mMkColorPopMenu.setItemAdapter(mSortMenuItems, showMenuListener);
+	
 		 return mMkColorPopMenu;
 	}
 	

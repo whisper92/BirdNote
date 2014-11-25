@@ -11,7 +11,7 @@
         android:layout_height="@dimen/dimen_show_titile_height"
         android:layout_marginLeft="@dimen/dimen_show_titile_text_margin_left"
         android:gravity="center"
-        android:text="@string/show_note_counts"
+        android:text="@string/show_note_count"
         android:textColor="@color/color_show_title_text"
         android:textSize="@dimen/dimen_show_titile_text_size" />
 

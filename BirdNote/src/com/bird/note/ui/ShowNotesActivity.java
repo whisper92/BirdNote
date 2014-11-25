@@ -82,7 +82,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		mGridView = (GridView) findViewById(R.id.id_show_gv);
 		mBirdNotes=queryByCurrentSort(mCurrentSort);
 		
-		mTitleNoteCount.setText(String.format(getString(R.string.show_note_counts), mBirdNotes.size()));
+		mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
 	    mNoteAdapter = new ShowNoteAdapter(this,mBirdNotes,mGridView);
 	    mGridView.setAdapter(mNoteAdapter);
 		mNoteAdapter.notifyDataSetChanged();
@@ -191,7 +191,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes ,mGridView); 
 		    mNoteAdapter.notifyDataSetChanged();
 		    if (mGridView!=null) {
-		    	mTitleNoteCount.setText(String.format(getString(R.string.show_note_counts), mBirdNotes.size()));
+		    	mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
 		    	mGridView.setAdapter(mNoteAdapter);
 			}  
 			showHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);		
@@ -200,11 +200,12 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	
 	@Override
 	protected void onRestart() {
+		DBUG.e("restart...");
 		mBirdNotes=queryByCurrentSort(mCurrentSort);
 		mNoteAdapter= new ShowNoteAdapter(this,mBirdNotes,mGridView); 
 	    mNoteAdapter.notifyDataSetChanged();
 	    if (mGridView!=null) {
-	    	mTitleNoteCount.setText(String.format(getString(R.string.show_note_counts), mBirdNotes.size()));
+	    	mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
 	    	mGridView.setAdapter(mNoteAdapter);
 		}    
 		super.onRestart();
@@ -314,10 +315,16 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 				break;
 			case 1:
 				mPopMenuSort=PopMenuManager.createSortMenu(ShowNotesActivity.this, sortByListener);
-				mPopMenuSort.showAtLocation(mLinearLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-				
+				mPopMenuSort.showAtLocation(mLinearLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);	
 				break;
 			case 2:
+				Intent intent = new Intent();
+				intent.setClass(ShowNotesActivity.this, ReadStaredNotesActivity.class);
+				startActivity(intent);
+				
+/*				mBirdNotes = mDbHelper.queryStaredShowNotes();
+				DBUG.e("点击了"+v.getId()+"mBirdNotes.size"+mBirdNotes.size());
+				mNoteAdapter.notifyDataSetInvalidated();*/
 				break;
 			case 3:
 				break;
@@ -357,7 +364,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			}  */
 		    mBirdNotes.remove(mChoosePosition);
 		    mNoteAdapter.notifyDataSetChanged();
-		    mTitleNoteCount.setText(String.format(getString(R.string.show_note_counts), mBirdNotes.size()));
+		    mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
 			showHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);	
 		}
 	};

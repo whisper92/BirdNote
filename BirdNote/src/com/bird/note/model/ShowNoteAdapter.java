@@ -192,7 +192,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	       		mBirdInputTitleDialog.setInputContent(getItem(operatePosition).title);
 			}
 			
-			if (v.getId() == 3) {				
+			if (v.getId() == 2) {				
 				popMenu.dismiss();		
 				popChangeMarkColor = PopMenuManager.createChooseMarkColorMenu(mContext, changeMarkColorListener);
 				popChangeMarkColor.showAtLocation(rootView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);

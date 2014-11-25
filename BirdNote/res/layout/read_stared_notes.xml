@@ -11,11 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/action_bar" >
 
-        <include layout="@layout/show_notes_header" />
-
-        <include
-            layout="@layout/show_notes_delete_header"
-            android:visibility="gone" />
+        <include layout="@layout/read_stared_notes_header" />
     </LinearLayout>
 
     <include layout="@layout/show_notes_gridview" />

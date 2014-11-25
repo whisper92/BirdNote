@@ -12,10 +12,16 @@
         <item>@string/edit_menu_delete</item>
     </string-array>
     
+    <string-array name="editupdatenote_rmstar_array">
+        <item>@string/edit_menu_change_bg</item>
+        <item>@string/edit_menu_saveas</item>
+        <item>@string/edit_menu_removefavor</item>
+        <item>@string/edit_menu_delete</item>
+    </string-array>
+    
     <string-array name="itemmenu_array">
         <item>@string/edit_menu_delete</item>
         <item>@string/item_menu_rename</item>
-        <item>@string/edit_menu_favor</item>
         <item>@string/edit_menu_mark_colr</item>
     </string-array>
     
@@ -31,10 +37,5 @@
         <item>"Update Time"</item>
         <item>"Level"</item>
     </string-array>
-    <integer-array name="pop_menu_markcolor">
-        <item>@drawable/mark_bg_blue</item>
-        <item>@drawable/mark_bg_green</item>
-        <item>@drawable/mark_bg_yellow</item>
-        <item>@drawable/mark_bg_red</item>
-    </integer-array>
+    
 </resources>

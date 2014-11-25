@@ -99,6 +99,9 @@ public class BirdPopMenu extends PopupWindow {
 	}
 
 
+	public void setItem(int pos,String itemString){
+		
+	}
 	
 	public OnClickListener DismissListener=new OnClickListener() {
 		

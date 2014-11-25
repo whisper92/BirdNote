@@ -100,6 +100,19 @@ public class DbHelper {
 	}
 	
 	/**
+	 * 查询所有笔记的id，level,title,以及thumbnail，用于首页展示。
+	 * @return
+	 */
+	public List<BirdNote> queryStaredShowNotes(){
+		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, NotesTable.STAR+"=?", new String[]{"1"}, null, null, "_id desc");
+		birdNotesList = getBirdNoteListFromCursor(cursor);
+		cursor.close();
+		return birdNotesList;
+	}
+	
+	
+	/**
 	 * 按创建时间排序。
 	 * @return
 	 */
@@ -265,12 +278,27 @@ public class DbHelper {
 	 * 添加至收藏
 	 * @param note_id
 	 */
+	public int queryStarById(String note_id){
+		Cursor cursor = dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.STAR}, "_id=?",  new String[]{note_id}, null, null, null);
+		int star = 0;
+		while (cursor.moveToNext()) {
+				star = cursor.getInt(cursor.getColumnIndex(NotesTable.STAR));
+		}
+		cursor.close();
+        return star;
+	}
+	
+	/**
+	 * 添加至收藏
+	 * @param note_id
+	 */
 	public void toggleStarNoteById(String note_id){
 		Cursor cursor = dbWrite.query(NotesTable.TABLE_NAME, new String[]{NotesTable.STAR}, "_id=?",  new String[]{note_id}, null, null, null);
 		int star = 0;
 		while (cursor.moveToNext()) {
 				star = cursor.getInt(cursor.getColumnIndex(NotesTable.STAR));
 		}
+		cursor.close();
 		if (star==1) {
 			star = 0;
 		} else if (star== 0){
