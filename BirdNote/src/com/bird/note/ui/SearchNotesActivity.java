@@ -17,7 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,7 +44,7 @@ import com.bird.note.utils.NoteApplication;
  * @author wangxianpeng
  * 
  */
-public class ReadStaredNotesActivity extends Activity{
+public class SearchNotesActivity extends Activity{
 
 
  
@@ -50,29 +52,42 @@ public class ReadStaredNotesActivity extends Activity{
 	private DbHelper mDbHelper=null;
 	private GridView mGridView=null;
 	private List<BirdNote> mBirdNotes=null;
-	private TextView mTitleNoteCount;
+    private EditText mSearchEditText;
 	private ImageView mBackImageView;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.read_stared_notes);
+		setContentView(R.layout.search_notes);
 		mBackImageView = (ImageView)findViewById(R.id.id_starnotes_title_back);
-
+		mSearchEditText = (EditText) findViewById(R.id.search_edt);
 		mDbHelper=new DbHelper(this);
-
-        mTitleNoteCount =(TextView) findViewById(R.id.id_show_title_count);
 		mGridView = (GridView) findViewById(R.id.id_show_gv);
-
-		mBirdNotes = mDbHelper.queryStaredShowNotes();
-		mTitleNoteCount.setText(String.format(getString(R.string.stared_note_count), mBirdNotes.size()));
-	    mNoteAdapter = new ReadStaredNoteAdapter(this,mBirdNotes,mGridView);
-	    mGridView.setAdapter(mNoteAdapter);
-		mNoteAdapter.notifyDataSetChanged();
-
 		mBackImageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();	
+			}
+		});
+		
+		mSearchEditText.setOnKeyListener(new View.OnKeyListener() {
+			
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if(keyCode==KeyEvent.KEYCODE_ENTER){//修改回车键功能
+					// 先隐藏键盘
+					((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+					.hideSoftInputFromWindow(
+					SearchNotesActivity.this
+					.getCurrentFocus()
+					.getWindowToken(),
+					InputMethodManager.HIDE_NOT_ALWAYS);
+					mBirdNotes = mDbHelper.searchNotesByTag(mSearchEditText.getText().toString());
+				    mNoteAdapter = new ReadStaredNoteAdapter(SearchNotesActivity.this,mBirdNotes,mGridView);
+				    mGridView.setAdapter(mNoteAdapter);
+					mNoteAdapter.notifyDataSetChanged();
+				}
+
+				return false;
 			}
 		});
 	}
@@ -82,11 +97,13 @@ public class ReadStaredNotesActivity extends Activity{
 	@Override
 	protected void onRestart() {
 		DBUG.e("restart...");
-		mBirdNotes=mDbHelper.queryStaredShowNotes();
-		mNoteAdapter= new ReadStaredNoteAdapter(this,mBirdNotes,mGridView);
-	    mNoteAdapter.notifyDataSetChanged();
+		if (mSearchEditText!=null&&(!mSearchEditText.getText().toString().equals(""))&&(mSearchEditText.getText().toString()!=null)) {
+			mBirdNotes = mDbHelper.searchNotesByTag(mSearchEditText.getText().toString());
+		    mNoteAdapter = new ReadStaredNoteAdapter(SearchNotesActivity.this,mBirdNotes,mGridView);
+			mNoteAdapter.notifyDataSetChanged();
+		}
+		
 	    if (mGridView!=null) {
-	    	mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
 	    	mGridView.setAdapter(mNoteAdapter);
 		}    
 		super.onRestart();

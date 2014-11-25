@@ -100,12 +100,24 @@ public class DbHelper {
 	}
 	
 	/**
-	 * 查询所有笔记的id，level,title,以及thumbnail，用于首页展示。
+	 * 查询所有收藏的笔记的id，level,title,以及thumbnai
 	 * @return
 	 */
 	public List<BirdNote> queryStaredShowNotes(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
 		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, NotesTable.STAR+"=?", new String[]{"1"}, null, null, "_id desc");
+		birdNotesList = getBirdNoteListFromCursor(cursor);
+		cursor.close();
+		return birdNotesList;
+	}
+	
+	/**
+	 * 通过关键字查询笔记
+	 * @return
+	 */
+	public List<BirdNote> searchNotesByTag(String tag){
+		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
+		Cursor cursor=dbRead.rawQuery("select * from show_notes where title like '%"+tag+"%' or textcontents like '%"+tag+"%';", null);
 		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;

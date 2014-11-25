@@ -318,15 +318,16 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 				mPopMenuSort.showAtLocation(mLinearLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);	
 				break;
 			case 2:
-				Intent intent = new Intent();
-				intent.setClass(ShowNotesActivity.this, ReadStaredNotesActivity.class);
-				startActivity(intent);
-				
-/*				mBirdNotes = mDbHelper.queryStaredShowNotes();
-				DBUG.e("点击了"+v.getId()+"mBirdNotes.size"+mBirdNotes.size());
-				mNoteAdapter.notifyDataSetInvalidated();*/
+				Intent startintent = new Intent();
+				startintent.setClass(ShowNotesActivity.this, ReadStaredNotesActivity.class);
+				startintent.putExtra("flag", "star");
+				startActivity(startintent);
 				break;
 			case 3:
+				Intent searchintent = new Intent();
+				searchintent.setClass(ShowNotesActivity.this, SearchNotesActivity.class);
+				searchintent.putExtra("flag", "search");
+				startActivity(searchintent);
 				break;
 			default:
 				break;

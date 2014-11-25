@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_show_title_rl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="left"
+    android:background="@drawable/action_bar"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/id_starnotes_title_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/back" />
+
+    <EditText
+        android:id="@+id/search_edt"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        android:background="@drawable/search_bg"
+        android:layout_marginRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!--
+         <TextView
+        android:id="@+id/id_show_title_count"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_show_titile_height"
+        android:gravity="center"
+        android:text="@string/show_menu_search"
+        android:textColor="@color/color_show_title_text"
+        android:textSize="@dimen/dimen_show_titile_text_size" />
+    -->
+
+</LinearLayout>
