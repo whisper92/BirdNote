@@ -21,18 +21,38 @@ public class PopMenuManager {
 	 * @param sortByListener
 	 * @return
 	 */
-	public static BirdPopMenu createSortMenu (Context context,android.view.View.OnClickListener sortByListener){
+	public static BirdPopMenu createMenu (Context context,int itemStringsResource,int bgsResource,android.view.View.OnClickListener sortByListener){
+		String[]  itemStrings= context.getResources().getStringArray(itemStringsResource);
 		List<BirdPopMenuItem> mSortMenuItems = new ArrayList<BirdPopMenuItem>();
+		int[] bgs=null;
+		if (bgsResource == -1) {
+			bgs = new int[itemStrings.length];
+			for (int i = 0; i < itemStrings.length; i++) {
+				bgs[i]= R.drawable.pop_menu_item;
+			}
+		} else {
+			bgs = context.getResources().getIntArray(bgsResource);
+		}
 		BirdPopMenu mPopMenuSort = new BirdPopMenu(context);
-		String[] mSortItemsStrings = context.getResources().getStringArray(R.array.sortby_array);
-		
-		for (int i = 0; i < mSortItemsStrings.length; i++) {
+		for (int i = 0; i < itemStrings.length; i++) {
 			BirdPopMenuItem birdMenuItem = new BirdPopMenuItem();
-			birdMenuItem.menuText = mSortItemsStrings[i];
-			birdMenuItem.menuBackground = R.drawable.pop_menu_item;
+			birdMenuItem.menuText = itemStrings[i];
+			birdMenuItem.menuBackground = bgs[i];
 			mSortMenuItems.add(birdMenuItem);
 		}
 		mPopMenuSort.setItemAdapter(mSortMenuItems, sortByListener);
+		return mPopMenuSort;
+	}
+	
+	
+	/**
+	 *  创建排序类型菜单
+	 * @param context
+	 * @param sortByListener
+	 * @return
+	 */
+	public static BirdPopMenu createSortMenu (Context context,android.view.View.OnClickListener sortByListener){
+		BirdPopMenu mPopMenuSort =  createMenu(context,R.array.sortby_array,-1,sortByListener);
 		return mPopMenuSort;
 	}
 	
@@ -43,18 +63,7 @@ public class PopMenuManager {
 	 * @return
 	 */
 	public static BirdPopMenu createShowMenu(Context context,android.view.View.OnClickListener showMenuListener){
-		List<BirdPopMenuItem> mBirdMenuItems;
-		BirdPopMenu mShowPopMenu;
-		mBirdMenuItems = new ArrayList<BirdPopMenuItem>();
-		mShowPopMenu = new BirdPopMenu(context);
-		String[] mShowMenuItemsStrings = context.getResources().getStringArray(R.array.showmenu_array);
-		for (int i = 0; i < mShowMenuItemsStrings.length; i++) {
-			BirdPopMenuItem birdMenuItem = new BirdPopMenuItem();
-			birdMenuItem.menuText = mShowMenuItemsStrings[i];
-			birdMenuItem.menuBackground = R.drawable.pop_menu_item;
-			mBirdMenuItems.add(birdMenuItem);
-		}
-		mShowPopMenu.setItemAdapter(mBirdMenuItems, showMenuListener);
+		BirdPopMenu mShowPopMenu =  createMenu(context,R.array.showmenu_array,-1,showMenuListener);
 		mShowPopMenu.addCancelItem();
 		return mShowPopMenu;
 	}
@@ -66,38 +75,36 @@ public class PopMenuManager {
 	 * @return
 	 */
 	public static BirdPopMenu createItemOperateMenu(Context context,android.view.View.OnClickListener showMenuListener){
-		List<BirdPopMenuItem> mBirdMenuItems;
-		BirdPopMenu mShowPopMenu;
-		mBirdMenuItems = new ArrayList<BirdPopMenuItem>();
-		mShowPopMenu = new BirdPopMenu(context);
-		String[] mShowMenuItemsStrings = context.getResources().getStringArray(R.array.itemmenu_array);
-		for (int i = 0; i < mShowMenuItemsStrings.length; i++) {
-			BirdPopMenuItem birdMenuItem = new BirdPopMenuItem();
-			birdMenuItem.menuText = mShowMenuItemsStrings[i];
-			birdMenuItem.menuBackground = R.drawable.pop_menu_item;
-			mBirdMenuItems.add(birdMenuItem);
-		}
-		mShowPopMenu.setItemAdapter(mBirdMenuItems, showMenuListener);
+		BirdPopMenu mShowPopMenu =  createMenu(context,R.array.itemmenu_array,-1,showMenuListener);
 		mShowPopMenu.addCancelItem();
 		return mShowPopMenu;
 	}
 	
 	/**
+	 * 创建编辑界面菜单
+	 * @param context
+	 * @param showMenuListener
+	 * @return
+	 */
+	public static BirdPopMenu createEditNewNoteMenu(Context context,android.view.View.OnClickListener showMenuListener){
+		BirdPopMenu mShowPopMenu =  createMenu(context,R.array.editnewnote_array,-1,showMenuListener);
+		mShowPopMenu.addCancelItem();
+		return mShowPopMenu;
+	}
+
+	public static BirdPopMenu createEditUpdateNoteMenu(Context context,android.view.View.OnClickListener showMenuListener){
+		BirdPopMenu mShowPopMenu =  createMenu(context,R.array.editupdatenote_array,-1,showMenuListener);
+		mShowPopMenu.addCancelItem();
+		return mShowPopMenu;
+	}
+	
+	
+	/**
 	 * 创建标签颜色菜单
 	 */
 	public static BirdPopMenu createChooseMarkColorMenu(Context context,android.view.View.OnClickListener showMenuListener){
-
-		    List<BirdPopMenuItem> mBirdMenuItems;
-			BirdPopMenu mMkColorPopMenu;
-			int[] markColors = new int[]{R.drawable.mark_bg_blue,R.drawable.mark_bg_green,R.drawable.mark_bg_yellow,R.drawable.mark_bg_red};
-			mBirdMenuItems = new ArrayList<BirdPopMenuItem>();
-			mMkColorPopMenu = new BirdPopMenu(context);
-			for (int i = 0; i < markColors.length; i++) {
-				BirdPopMenuItem birdMenuItem = new BirdPopMenuItem();
-				birdMenuItem.menuBackground = markColors[i];
-				mBirdMenuItems.add(birdMenuItem);
-			}
-			mMkColorPopMenu.setItemAdapter(mBirdMenuItems, showMenuListener);	
+			BirdPopMenu mMkColorPopMenu =  createMenu(context,R.array.editupdatenote_array,R.array.pop_menu_markcolor,showMenuListener);
+			
 		 return mMkColorPopMenu;
 	}
 	

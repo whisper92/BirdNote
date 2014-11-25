@@ -34,7 +34,7 @@ public class BirdPopMenu extends PopupWindow {
 	View rootView;
     Context mContext;
 	LinearLayout mItemsLayout;
-    List<BirdPopMenuItem> menuItems;
+    public List<BirdPopMenuItem> menuItems;
     
 	public BirdPopMenu(Context context) {
 		         mContext = context;

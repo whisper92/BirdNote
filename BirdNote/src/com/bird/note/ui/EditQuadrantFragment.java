@@ -29,16 +29,17 @@ import android.widget.RelativeLayout;
 import com.bird.note.R;
 import com.bird.note.customer.BirdAlertDialog;
 import com.bird.note.customer.BirdInputTitleDialog;
+import com.bird.note.customer.BirdPopMenu;
 import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.customer.PenView;
 import com.bird.note.customer.PenView.OnPathListChangeListener;
 import com.bird.note.customer.PopEraserBox;
 import com.bird.note.customer.PopEraserBox.OnEraserChangedListener;
-import com.bird.note.customer.PopMenuEditNote;
 import com.bird.note.customer.PopPenBox;
 import com.bird.note.customer.PopPenBox.OnPaintChangedListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
+import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.model.SavedPaint;
 import com.bird.note.utils.BitmapUtil;
@@ -81,7 +82,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
     private RelativeLayout mHeaderLayout;
     private PopPenBox mPopPenBox;
     private PopEraserBox mPopEraserBox;
-    public PopMenuEditNote mPopMenu;
+    public BirdPopMenu mPopMenu;
     private boolean mPenBoxOpened=false;
     private boolean mEraserBoxOpened=false;
     private boolean mPopMenuOpened=false;
@@ -196,7 +197,9 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 	
 	public void initCreateView(int type){
+		DBUG.e("创建笔记");
 		mPenView = new PenView(getActivity());
+		mPopMenu=PopMenuManager.createEditNewNoteMenu(getActivity(),popMenuListener);
 	}
 	
 	/**
@@ -205,11 +208,12 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 * @param mBirdNote
 	 */
 	public void initUpdateView(int type,QuadrantContent quadrantContent){
+		DBUG.e("更新笔记");
 		mPenView = new PenView(getActivity());
 		mPenView.setExistBitmap(BitmapUtil.decodeBytesToBitmap(quadrantContent.quadrantdraw));
-		mPenView.invalidateExistBitmap();
-		
+		mPenView.invalidateExistBitmap();	
 		mEditText.setText(quadrantContent.textcontent);
+		mPopMenu=PopMenuManager.createEditUpdateNoteMenu(getActivity(),popMenuListener);
 	}
 
 	public void initEditFragmentView(View view) {
@@ -241,7 +245,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		mSavedPaint = new SavedPaint(getActivity());
 		
 		
-		mPopMenu=new PopMenuEditNote(getActivity(),popMenuListener);
+		
 		
 
 	}
@@ -251,25 +255,36 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		@Override
 		public void onClick(View v) {
 			closePopMenu();
-			if (v.getId() == R.id.id_popmenu_delete) {           
-				
-				mBirdAlertDialog.setAlertContent(getString(R.string.alert_delete_content));
-				mBirdAlertDialog.setOnConfirmListener(ConfirmDeleteNoteListener);
-				mBirdAlertDialog.show();
-				
-				mPopMenu.showAsDropDown(mWrapFrameLayout);
-				mPopMenu.dismiss();
-				
+			if (v.getId() == 0) {   
+				//更改背景
+
 			}
-			
-           if (v.getId() == R.id.id_popmenu_saveas) {           
-				
+           if (v.getId() == 1) {  
+        	   //另存为
         	   mBirdInputTitleDialog=new BirdInputTitleDialog(getActivity(), R.style.birdalertdialog);
        		   mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveAsPngListener);
        		   mBirdInputTitleDialog.setTitleString(getString(R.string.save_as_title));
-       		   mBirdInputTitleDialog.show();		
-       		   mBirdInputTitleDialog.setInputContent(((EditNoteActivity)getActivity()).mBirdNote.title+"_qua"+mCurrentQuadrant);			
+       		   mBirdInputTitleDialog.show();
+       		   if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
+       			   mBirdInputTitleDialog.setInputContent(((EditNoteActivity)getActivity()).mBirdNote.title+"_qua"+mCurrentQuadrant);	
+			   }else {
+				   mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle()+"_qua"+mCurrentQuadrant);	
+			   }
+       		   		
 			}
+			if (v.getId() == 2) {    
+				//添加至收藏
+				//toggleStarNoteById
+			}
+			if (v.getId() == 3) {           			
+				mBirdAlertDialog.setAlertContent(getString(R.string.alert_delete_content));
+				mBirdAlertDialog.setOnConfirmListener(ConfirmDeleteNoteListener);
+				mBirdAlertDialog.show();				
+				mPopMenu.showAsDropDown(mWrapFrameLayout);
+				mPopMenu.dismiss();		
+			}
+
+
 			
 		}
 	};

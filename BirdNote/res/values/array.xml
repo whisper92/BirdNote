@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string-array name="editnewnote_array">
+        <item>@string/edit_menu_change_bg</item>
+        <item>@string/edit_menu_saveas</item>
+    </string-array>
+        
+   <string-array name="editupdatenote_array">
+        <item>@string/edit_menu_change_bg</item>
+        <item>@string/edit_menu_saveas</item>
+        <item>@string/edit_menu_favor</item>
+        <item>@string/edit_menu_delete</item>
+    </string-array>
+    
     <string-array name="itemmenu_array">
         <item>@string/edit_menu_delete</item>
         <item>@string/item_menu_rename</item>
@@ -14,10 +25,16 @@
         <item>@string/show_menu_all_star</item>
         <item>@string/show_menu_search</item>
     </string-array>
+    
     <string-array name="sortby_array">
         <item>"Create Time"</item>
         <item>"Update Time"</item>
         <item>"Level"</item>
     </string-array>
-
+    <integer-array name="pop_menu_markcolor">
+        <item>@drawable/mark_bg_blue</item>
+        <item>@drawable/mark_bg_green</item>
+        <item>@drawable/mark_bg_yellow</item>
+        <item>@drawable/mark_bg_red</item>
+    </integer-array>
 </resources>

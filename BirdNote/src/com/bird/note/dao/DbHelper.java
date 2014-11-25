@@ -72,13 +72,9 @@ public class DbHelper {
 		insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background,birdNote.star,birdNote.createTime,birdNote.updateTime);
 	}
 	
-	/**
-	 * 查询所有笔记的id，level,title,以及thumbnail，用于首页展示。
-	 * @return
-	 */
-	public List<BirdNote> queryShowNotes(){
+	
+	public List<BirdNote> getBirdNoteListFromCursor(Cursor cursor){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, "_id desc");
 		while (cursor.moveToNext()) {
 			BirdNote birdNote=new BirdNote();
 			birdNote._id=cursor.getInt(cursor.getColumnIndex(NotesTable._ID));
@@ -86,8 +82,19 @@ public class DbHelper {
 			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
 			birdNote.thumbnail=cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
 			birdNote.background=cursor.getInt(cursor.getColumnIndex(NotesTable.BG_ID));
+			birdNote.star=cursor.getInt(cursor.getColumnIndex(NotesTable.STAR));
 			birdNotesList.add(birdNote);	
 		}
+		return birdNotesList;
+	}
+	/**
+	 * 查询所有笔记的id，level,title,以及thumbnail，用于首页展示。
+	 * @return
+	 */
+	public List<BirdNote> queryShowNotes(){
+		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, "_id desc");
+		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;
 	}
@@ -98,16 +105,8 @@ public class DbHelper {
 	 */
 	public List<BirdNote> sortShowNotesByCreateTime(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, NotesTable.CREATE_TIME+" asc");
-		while (cursor.moveToNext()) {
-			BirdNote birdNote=new BirdNote();
-			birdNote._id=cursor.getInt(cursor.getColumnIndex(NotesTable._ID));
-			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
-			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
-			birdNote.thumbnail=cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
-			birdNote.background=cursor.getInt(cursor.getColumnIndex(NotesTable.BG_ID));
-			birdNotesList.add(birdNote);	
-		}
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, NotesTable.CREATE_TIME+" asc");
+		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;
 	}
@@ -118,16 +117,8 @@ public class DbHelper {
 	 */
 	public List<BirdNote> sortShowNotesByUpdateTime(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, NotesTable.UPDATE_TIME+" desc");
-		while (cursor.moveToNext()) {
-			BirdNote birdNote=new BirdNote();
-			birdNote._id=cursor.getInt(cursor.getColumnIndex(NotesTable._ID));
-			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
-			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
-			birdNote.thumbnail=cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
-			birdNote.background=cursor.getInt(cursor.getColumnIndex(NotesTable.BG_ID));
-			birdNotesList.add(birdNote);	
-		}
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, NotesTable.UPDATE_TIME+" desc");
+		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;
 	}
@@ -138,22 +129,14 @@ public class DbHelper {
 	 */
 	public List<BirdNote> sortShowNotesByLevel(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, NotesTable.LEVEL+" desc");
-		while (cursor.moveToNext()) {
-			BirdNote birdNote=new BirdNote();
-			birdNote._id=cursor.getInt(cursor.getColumnIndex(NotesTable._ID));
-			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
-			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
-			birdNote.thumbnail=cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
-			birdNote.background=cursor.getInt(cursor.getColumnIndex(NotesTable.BG_ID));
-			birdNotesList.add(birdNote);	
-		}
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, NotesTable.LEVEL+" desc");
+		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;
 	}
 	
 	public Cursor queryShowNoteCursor(){
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID}, null, null, null, null, null);
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, null);
         return cursor;
 	}
 	
@@ -282,13 +265,24 @@ public class DbHelper {
 	 * 添加至收藏
 	 * @param note_id
 	 */
-	public void starNoteById(String note_id){
+	public void toggleStarNoteById(String note_id){
+		Cursor cursor = dbWrite.query(NotesTable.TABLE_NAME, new String[]{NotesTable.STAR}, "_id=?",  new String[]{note_id}, null, null, null);
+		int star = 0;
+		while (cursor.moveToNext()) {
+				star = cursor.getInt(cursor.getColumnIndex(NotesTable.STAR));
+		}
+		if (star==1) {
+			star = 0;
+		} else if (star== 0){
+			star =1;
+		}
 		ContentValues values=new ContentValues();
-		values.put(NotesTable.STAR, 1);
+		values.put(NotesTable.STAR, star);
 		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
 		DBUG.e("star note success..."+CommonUtils.getCurrentTime());
 	}
+	
 	
 	/**
 	 * 更改等级
