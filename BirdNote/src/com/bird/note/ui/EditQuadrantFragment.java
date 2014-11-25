@@ -26,6 +26,7 @@ import com.bird.note.R;
 import com.bird.note.customer.BirdAlertDialog;
 import com.bird.note.customer.BirdInputTitleDialog;
 import com.bird.note.customer.BirdPopMenu;
+import com.bird.note.customer.ChooseEditBgPopMenu;
 import com.bird.note.customer.PenView;
 import com.bird.note.customer.PenView.OnPathListChangeListener;
 import com.bird.note.customer.PopEraserBox;
@@ -285,6 +286,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			closePopMenu();
 			if (v.getId() == 0) {   
 				//更改背景
+				ChooseEditBgPopMenu chooseEditBgPopMenu = PopMenuManager.createChooseEditBgMenu(getActivity(),popMenuListener);
+				chooseEditBgPopMenu.showAtLocation(mWrapFrameLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 
 			}
            if (v.getId() == 1) {  
@@ -354,7 +357,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		return mSavePath;
 	}
 	public Bitmap getAllBitmap(){
-        return  BitmapUtil.mergeBitmap(BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(R.drawable.note_bg_style00)),mPenView.mDrawBitmap, getTextBitmap());
+        return  BitmapUtil.mergeBitmap(getActivity(),BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(R.drawable.note_bg_style00)),mPenView.mDrawBitmap, getTextBitmap());
 	}
 	
 	/**
@@ -605,53 +608,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 	public Bitmap getQuadrantDrawContentBitmap(){
 		return mPenView.mDrawBitmap;
-	}
-	
-	/**
-	 * 通过获取屏幕截图的方式产生内容
-	 * @return
-	 */
-	public Bitmap getQuadrantDrawAndTextBitmap(){
-		// 获取windows中最顶层的view
-        View view = getActivity().getWindow().getDecorView();
-        view.buildDrawingCache();
-        // 获取状态栏高度
-        Rect rect = new Rect();
-        view.getWindowVisibleDisplayFrame(rect);
-        int statusBarHeights = rect.top;
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        // 获取屏幕宽和高
-        int widths = display.getWidth();
-        int heights = display.getHeight();
-        // 允许当前窗口保存缓存信息
-        view.setDrawingCacheEnabled(true);
-        // 去掉状态栏
-        Bitmap bmp = Bitmap.createBitmap(view.getDrawingCache(), 0,
-        		heights-mPenView.mCanvasHeight+50, mPenView.mCanvasWidth, mPenView.mCanvasHeight-150);
-        // 销毁缓存信息
-        view.destroyDrawingCache();
-       
-		return bmp;
-	}
-
-	/**
-	 * 自绘内容,未完成。。。
-	 * @return
-	 */
-	public Bitmap getDrawAndText(){
-		Bitmap drawAndTextBitmap=Bitmap.createBitmap(mPenView.mCanvasWidth, mPenView.mCanvasHeight, Bitmap.Config.ARGB_8888);
-		Canvas drawAndTextCanvas =new Canvas(drawAndTextBitmap);
-		drawAndTextCanvas.setBitmap(drawAndTextBitmap);
-
-		mEditText.setDrawingCacheEnabled(true);
-       Bitmap textBmp = Bitmap.createBitmap(mEditText.getDrawingCache(), 0,
-               0, mEditText.getMeasuredWidth(), mEditText.getMeasuredWidth());
-       mEditText.destroyDrawingCache();
-       
-       drawAndTextCanvas.drawBitmap(mPenView.mDrawBitmap,new Matrix(),null);
-       drawAndTextCanvas.drawBitmap(textBmp, new Matrix(),null);
-       
-		return drawAndTextBitmap;
 	}
 	
 	public QuadrantContent generateEditQuadrantContent(){

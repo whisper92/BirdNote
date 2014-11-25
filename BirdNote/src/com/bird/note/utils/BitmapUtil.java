@@ -101,13 +101,18 @@ public class BitmapUtil {
 	/**
 	 * 合并图层
 	 */
-	public static Bitmap mergeBitmap(Bitmap bmpBg,Bitmap drawBmp,Bitmap textBmp){
-		Bitmap bitmap = Bitmap.createBitmap(bmpBg.getWidth(), bmpBg.getHeight(), Bitmap.Config.ARGB_8888);
+	public static Bitmap mergeBitmap(Context context,Bitmap bmpBg,Bitmap drawBmp,Bitmap textBmp){
+		Bitmap bitmap = Bitmap.createBitmap(context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_width), context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_height), Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas();
 		canvas.setBitmap(bitmap);
 		canvas.drawBitmap(bmpBg,0, 0, null);
 		canvas.drawBitmap(drawBmp,0, 0, null);	
-		canvas.drawBitmap(textBmp,8, 4, null);
+		canvas.drawBitmap(textBmp,0, 0, null);
 		return bitmap;
 	}
+	
+	/**
+	 * 内置背景图片
+	 */
+	public static int[] EDIT_BGS= new int[]{R.drawable.note_bg_style00_thumbnail,R.drawable.note_bg_style00_thumbnail,R.drawable.note_bg_style00_thumbnail};
 }

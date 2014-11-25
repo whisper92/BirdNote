@@ -220,6 +220,12 @@ public class EditNoteActivity extends FragmentActivity implements
 		if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
 			mEditQuaFragment.togglePopMenu();
 			return true;
+		}else if (keyCode == KeyEvent.KEYCODE_BACK){
+			if (mEditQuaFragment.mPopMenu.isShowing()) {
+				mEditQuaFragment.closePopMenu();
+				return true;
+			}
+			
 		}
 		return super.onKeyDown(keyCode, event);
 	}

@@ -127,6 +127,12 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
 			togglePopMenu();
 			return true;
+		}else if (keyCode == KeyEvent.KEYCODE_BACK){
+			if (mShowPopMenu.isShowing()) {
+				mShowPopMenu.dismiss();
+				return true;
+			}
+			
 		}
 		return super.onKeyDown(keyCode, event);
 	}

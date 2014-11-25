@@ -5,7 +5,10 @@ import java.util.List;
 
 import com.bird.note.R;
 import com.bird.note.customer.BirdPopMenu;
+import com.bird.note.customer.ChooseEditBgPopMenu;
 import com.bird.note.model.BirdPopMenuItem;
+import com.bird.note.utils.BitmapUtil;
+import com.bird.note.utils.CommonUtils;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -122,6 +125,13 @@ public class PopMenuManager {
 		 return mMkColorPopMenu;
 	}
 	
+	/**
+	 * 创建标签颜色菜单
+	 */
+	public static ChooseEditBgPopMenu createChooseEditBgMenu(Context context,android.view.View.OnClickListener showMenuListener){
+			ChooseEditBgPopMenu mMkColorPopMenu = new ChooseEditBgPopMenu(context);
+		 return mMkColorPopMenu;
+	}
 	
 	
 	
