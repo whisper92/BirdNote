@@ -295,8 +295,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		birdNote.textcontents=text_content;
 		birdNote.thumbnail=createThumbnailByQuadrant();
 		birdNote.background=R.drawable.note_bg_style00;
-		birdNote.createTime = CommonUtils.getCurrentTime();
-		birdNote.updateTime = CommonUtils.getCurrentTime();
+        birdNote.star =0;
 	    return birdNote;
 	}
 

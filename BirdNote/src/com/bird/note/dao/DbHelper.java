@@ -57,7 +57,7 @@ public class DbHelper {
 		values.put(NotesTable.BG_ID, bg_id);
 		values.put(NotesTable.STAR, star);
 		values.put(NotesTable.CREATE_TIME, creatTime);
-		values.put(NotesTable.CREATE_TIME, updateTime);
+		values.put(NotesTable.UPDATE_TIME, updateTime);
 		dbWrite.insert(NotesTable.TABLE_NAME, null, values);
 		dbWrite.close();
 	}
@@ -67,6 +67,8 @@ public class DbHelper {
 	}
 	
 	public void insertNewNote(BirdNote birdNote){
+		birdNote.createTime = CommonUtils.getCurrentTime();
+		birdNote.updateTime = CommonUtils.getCurrentTime();
 		insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background,birdNote.star,birdNote.createTime,birdNote.updateTime);
 	}
 	

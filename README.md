@@ -15,7 +15,9 @@ qua1 blob,
 qua2 blob,
 qua3 blob,
 thumbnail blob,
-star integer default 0
+star integer default 0,
+create_time text,
+update_time text
 )
 ```
 
