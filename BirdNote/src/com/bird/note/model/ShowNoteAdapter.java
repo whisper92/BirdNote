@@ -112,7 +112,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	/*
 	 * 根据id获得缩略图的背景
 	 */
-	public int getThumbnailBgById(int bg_id){
+/*	public int getThumbnailBgById(int bg_id){
 		
 		int drawableID=R.drawable.note_bg_style00_thumbnail;
 		switch (bg_id) {
@@ -124,7 +124,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			break;
 		}
 		return drawableID;
-	}
+	}*/
 	
 	class NoteHolder{
              ImageView thumbnail;
@@ -282,6 +282,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			intent.putExtra(BirdMessage.INITENT_PARCEL_NOTE, mListData.get(position));
 			intent.putExtra(BirdMessage.START_TYPE_UPDATE_TITLE_KEY, mListData.get(position).title);
 			NoteApplication noteApplication=(NoteApplication)mContext.getApplicationContext();
+			noteApplication.setEditBackground(mListData.get(position).background);
 			noteApplication.setCurrentNoteEidtType(BirdMessage.NOTE_EDIT_TYPE_UPDATE);
 			noteApplication.setEditNoteId(mListData.get(position)._id);
 			noteApplication.setEditedQuadrants(new int[]{0,0,0,0});
@@ -324,7 +325,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 
 			holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
 			//后期缩略图的背景要切一个小一点的图片
-	        holder.thumbnail.setBackgroundResource(getThumbnailBgById(birdNote.background));
+	        holder.thumbnail.setBackgroundResource(birdNote.background);
 	        holder.title.setText(birdNote.title);
 	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
 	        

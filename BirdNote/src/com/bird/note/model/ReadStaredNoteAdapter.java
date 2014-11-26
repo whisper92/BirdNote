@@ -88,7 +88,7 @@ public class ReadStaredNoteAdapter extends BaseAdapter implements OnItemClickLis
 	/*
 	 * 根据id获得缩略图的背景
 	 */
-	public int getThumbnailBgById(int bg_id){
+/*	public int getThumbnailBgById(int bg_id){
 		
 		int drawableID=R.drawable.note_bg_style00_thumbnail;
 		switch (bg_id) {
@@ -100,7 +100,7 @@ public class ReadStaredNoteAdapter extends BaseAdapter implements OnItemClickLis
 			break;
 		}
 		return drawableID;
-	}
+	}*/
 	
 	class NoteHolder{
              ImageView thumbnail;
@@ -160,7 +160,7 @@ public class ReadStaredNoteAdapter extends BaseAdapter implements OnItemClickLis
 
 			holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
 			//后期缩略图的背景要切一个小一点的图片
-	        holder.thumbnail.setBackgroundResource(getThumbnailBgById(birdNote.background));
+	        holder.thumbnail.setBackgroundResource(birdNote.background);
 	        holder.title.setText(birdNote.title);
 	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
 

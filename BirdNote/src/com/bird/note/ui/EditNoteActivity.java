@@ -93,6 +93,7 @@ public class EditNoteActivity extends FragmentActivity implements
 			//查询获取完整的Note
 			mBirdNote=dbHelper.queryNoteById(mBirdNote, mBirdNote._id+"");
 			mNoteApplication.setEditBackground(mBirdNote.background);
+			DBUG.e("背景ID"+mBirdNote.background);
 		} else {
 			//若创建笔记
 		}
@@ -248,7 +249,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		String title=mEditQuaFragment.mTitleString;
 		birdNote.level=level;
 		if (mCurrentType == BirdMessage.START_TYPE_CREATE_VALUE) {
-			birdNote.title=title;
+			birdNote.title=title;		
 		} else {
 			birdNote.title = mTitleString;
 		}
@@ -257,7 +258,6 @@ public class EditNoteActivity extends FragmentActivity implements
 		byte[] qua=null;
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
 			if (mEditQuaFragmentsList.get(i)!=null) {
-				//如果某个象限已经被实例化，则获取他的内容,此处有坑，第一象限始终实例化，但是如果不输入文字，他的内容就全是空格，后期要判断一下。
 						    
                    if (edited[i]==1) {
                 	   //若编辑过，则保存新内容
@@ -301,8 +301,9 @@ public class EditNoteActivity extends FragmentActivity implements
 		}
 		birdNote.textcontents=text_content;
 		birdNote.thumbnail=createThumbnailByQuadrant();
+		DBUG.e("保存背景ID"+mNoteApplication.getEditBackground());
 		birdNote.background=mNoteApplication.getEditBackground();
-        birdNote.star =0;
+		birdNote.star = 0;
 	    return birdNote;
 	}
 

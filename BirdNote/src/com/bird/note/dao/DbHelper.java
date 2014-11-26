@@ -262,6 +262,7 @@ public class DbHelper {
 		values.put(NotesTable.QUA2, birdNote.qua2);
 		values.put(NotesTable.QUA3, birdNote.qua3);
 		values.put(NotesTable.THUMBNAIL, birdNote.thumbnail);
+		values.put(NotesTable.BG_ID, birdNote.background);
 		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
 		DBUG.e("update note success..."+CommonUtils.getCurrentTime());
@@ -346,6 +347,18 @@ public class DbHelper {
 		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
 		DBUG.e("updateTitleById success..."+CommonUtils.getCurrentTime());
+	}
+	
+	/**
+	 * 更改背景
+	 * @return
+	 */
+	public void updateBackgroundById(String note_id,int bgid){
+		ContentValues values=new ContentValues();
+		values.put(NotesTable.BG_ID, bgid);
+		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
+		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
+		DBUG.e("updateBackgroundById success..."+CommonUtils.getCurrentTime());
 	}
 	
 	public int getNoteCount(){

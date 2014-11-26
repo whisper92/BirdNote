@@ -226,6 +226,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		mEditMainLayout=(FrameLayout)view.findViewById(R.id.id_edit_main_fl);
 		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
 		mWrapFrameLayout.setBackgroundResource(mNoteApplication.getEditBackground());
+		DBUG.e("设置背景ID"+mNoteApplication.getEditBackground());
 		mEditText = (EditText) view.findViewById(R.id.id_edit_main_et);
 		edit_Pen = (ImageView) view.findViewById(R.id.id_edit_title_pen);
 		edit_Text = (ImageView) view.findViewById(R.id.id_edit_title_text);
@@ -375,7 +376,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		return mSavePath;
 	}
 	public Bitmap getAllBitmap(){
-        return  BitmapUtil.mergeBitmap(getActivity(),BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(R.drawable.note_bg_style00)),mPenView.mDrawBitmap, getTextBitmap());
+        return  BitmapUtil.mergeBitmap(getActivity(),BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(mNoteApplication.getEditBackground())),mPenView.mDrawBitmap, getTextBitmap());
 	}
 	
 	/**

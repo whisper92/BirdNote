@@ -64,7 +64,7 @@ public class NoteApplication extends Application{
 	/*
 	 * 背景资源
 	 */
-	public int editBackground = R.drawable.note_bg_style00_thumbnail;
+	public int editBackground = R.drawable.note_bg_style00;
 	public int getEditBackground() {
 		return editBackground;
 	}
