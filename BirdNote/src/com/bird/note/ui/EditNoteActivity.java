@@ -313,7 +313,6 @@ public class EditNoteActivity extends FragmentActivity implements
 	 */
 	public byte[] createThumbnailByQuadrant(){
 		Bitmap bitmap=mEditQuaFragmentsList.get(0).getAllBitmap();
-		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap), "thumbnail");
 		return BitmapUtil.generateThumbnailBytes(this, bitmap);
 	}
 

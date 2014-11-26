@@ -102,12 +102,14 @@ public class BitmapUtil {
 	 * 合并图层
 	 */
 	public static Bitmap mergeBitmap(Context context,Bitmap bmpBg,Bitmap drawBmp,Bitmap textBmp){
-		Bitmap bitmap = Bitmap.createBitmap(context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_width), context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_height), Bitmap.Config.ARGB_8888);
+		int w =context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_width);
+		int h = context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_height);
+		Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas();
 		canvas.setBitmap(bitmap);
-		canvas.drawBitmap(bmpBg,0, 0, null);
-		canvas.drawBitmap(drawBmp,0, 0, null);	
-		canvas.drawBitmap(textBmp,0, 0, null);
+		canvas.drawBitmap(Bitmap.createScaledBitmap(bmpBg, w, h, false),0, 0, null);
+		canvas.drawBitmap(Bitmap.createScaledBitmap(drawBmp, w, h, false),0, 0, null);	
+		canvas.drawBitmap(Bitmap.createScaledBitmap(textBmp, w, h, false),0, 0, null);
 		return bitmap;
 	}
 	

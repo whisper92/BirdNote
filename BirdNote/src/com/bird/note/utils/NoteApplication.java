@@ -72,6 +72,8 @@ public class NoteApplication extends Application{
 		this.editBackground = editBackground;
 	}
 	
+	public int screenWidth = 0;
+	public int screenHeight = 0;
 	
 	
 	

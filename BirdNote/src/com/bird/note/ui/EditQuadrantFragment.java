@@ -1,6 +1,7 @@
 package com.bird.note.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -376,6 +377,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		return mSavePath;
 	}
 	public Bitmap getAllBitmap(){
+		Resources resources = getActivity().getResources();;
         return  BitmapUtil.mergeBitmap(getActivity(),BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(mNoteApplication.getEditBackground())),mPenView.mDrawBitmap, getTextBitmap());
 	}
 	
