@@ -128,7 +128,7 @@ public class PopMenuManager {
 	/**
 	 * 创建标签颜色菜单
 	 */
-	public static ChooseEditBgPopMenu createChooseEditBgMenu(Context context,android.view.View.OnClickListener showMenuListener){
+	public static ChooseEditBgPopMenu createChooseEditBgMenu(Context context){
 			ChooseEditBgPopMenu mMkColorPopMenu = new ChooseEditBgPopMenu(context);
 		 return mMkColorPopMenu;
 	}

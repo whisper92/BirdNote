@@ -114,5 +114,5 @@ public class BitmapUtil {
 	/**
 	 * 内置背景图片
 	 */
-	public static int[] EDIT_BGS= new int[]{R.drawable.note_bg_style00_thumbnail,R.drawable.note_bg_style00_thumbnail,R.drawable.note_bg_style00_thumbnail};
+	public static int[] EDIT_BGS= new int[]{R.drawable.note_bg_style00_thumbnail,R.drawable.note_bg,R.drawable.note_bg_preview};
 }

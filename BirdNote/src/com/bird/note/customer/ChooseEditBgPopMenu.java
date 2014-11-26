@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -33,7 +35,7 @@ import android.view.MotionEvent;
  * @author wangxianpeng
  *
  */
-public class ChooseEditBgPopMenu extends PopupWindow {
+public class ChooseEditBgPopMenu extends PopupWindow implements OnItemClickListener{
 
 	LayoutInflater inflater;
 	View rootView;
@@ -69,11 +71,25 @@ public class ChooseEditBgPopMenu extends PopupWindow {
         	        lstImageItem.add(map);  
         	      }  
                  SimpleAdapter simpleAdapter = new SimpleAdapter(mContext, lstImageItem, R.layout.edit_bg_item, new String[]{"ItemImage"},new int[]{R.id.id_edit_bg_img});
-        		mBgGridView.setAdapter(simpleAdapter);
+        		 mBgGridView.setAdapter(simpleAdapter);
+        		 mBgGridView.setOnItemClickListener(this);
+        		
 
 	}
 	
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		DBUG.e("点击背景pos"+arg2);
+		mChangeBackgroundListener.changeBackground(BitmapUtil.EDIT_BGS[arg2]);
+	}
 	
+	OnChangeBackgroundListener mChangeBackgroundListener;
+	public interface OnChangeBackgroundListener{
+		public void changeBackground(int bgRsr);
+	}
+	public void setOnChangeBackgroundListener(OnChangeBackgroundListener listener){
+		this.mChangeBackgroundListener = listener;
+	}
 	public OnClickListener DismissListener=new OnClickListener() {
 		
 		@Override
@@ -81,4 +97,5 @@ public class ChooseEditBgPopMenu extends PopupWindow {
 		    dismiss();	
 		}
 	};
+
 }

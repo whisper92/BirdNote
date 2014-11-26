@@ -3,8 +3,10 @@ package com.bird.note.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.integer;
 import android.app.Application;
 
+import com.bird.note.R;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.QuadrantContent;
@@ -58,6 +60,19 @@ public class NoteApplication extends Application{
 	public void setEditedQuadrants(int[] editedQuadrants) {
 		EditedQuadrants = editedQuadrants;
 	}
+	
+	/*
+	 * 背景资源
+	 */
+	public int editBackground = R.drawable.note_bg_style00_thumbnail;
+	public int getEditBackground() {
+		return editBackground;
+	}
+	public void setEditBackground(int editBackground) {
+		this.editBackground = editBackground;
+	}
+	
+	
 	
 	
 }

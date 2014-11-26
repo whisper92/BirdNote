@@ -27,6 +27,7 @@ import com.bird.note.customer.BirdAlertDialog;
 import com.bird.note.customer.BirdInputTitleDialog;
 import com.bird.note.customer.BirdPopMenu;
 import com.bird.note.customer.ChooseEditBgPopMenu;
+import com.bird.note.customer.ChooseEditBgPopMenu.OnChangeBackgroundListener;
 import com.bird.note.customer.PenView;
 import com.bird.note.customer.PenView.OnPathListChangeListener;
 import com.bird.note.customer.PopEraserBox;
@@ -99,6 +100,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
     private int mStar = 0;
     private BirdNote mBirdNote;
     private DbHelper mDbHelper;
+	private ChooseEditBgPopMenu chooseEditBgPopMenu;
+	
 	/**
 	 * 创建笔记时实例化的方式
 	 */
@@ -222,6 +225,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	public void initEditFragmentView(View view) {
 		mEditMainLayout=(FrameLayout)view.findViewById(R.id.id_edit_main_fl);
 		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
+		mWrapFrameLayout.setBackgroundResource(mNoteApplication.getEditBackground());
 		mEditText = (EditText) view.findViewById(R.id.id_edit_main_et);
 		edit_Pen = (ImageView) view.findViewById(R.id.id_edit_title_pen);
 		edit_Text = (ImageView) view.findViewById(R.id.id_edit_title_text);
@@ -246,6 +250,20 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		mHeaderLayout=(RelativeLayout)view.findViewById(R.id.id_edit_title_header_rl);
 	
 		mSavedPaint = new SavedPaint(getActivity());
+		
+		chooseEditBgPopMenu= PopMenuManager.createChooseEditBgMenu(getActivity());
+		chooseEditBgPopMenu.setOnChangeBackgroundListener(new OnChangeBackgroundListener() {
+
+			@Override
+			public void changeBackground(int bgRsr) {
+				mWrapFrameLayout.setBackgroundResource(bgRsr);
+				mNoteApplication.setEditBackground(bgRsr);
+				if (chooseEditBgPopMenu!=null&&chooseEditBgPopMenu.isShowing()) {
+					chooseEditBgPopMenu.dismiss();
+				}
+				
+			}
+		});
 		
 	}
 	
@@ -278,7 +296,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		}
 	}
 	
-	
+
 	public OnClickListener popMenuListener=new OnClickListener() {
 		
 		@Override
@@ -286,7 +304,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			closePopMenu();
 			if (v.getId() == 0) {   
 				//更改背景
-				ChooseEditBgPopMenu chooseEditBgPopMenu = PopMenuManager.createChooseEditBgMenu(getActivity(),popMenuListener);
+
 				chooseEditBgPopMenu.showAtLocation(mWrapFrameLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 
 			}
