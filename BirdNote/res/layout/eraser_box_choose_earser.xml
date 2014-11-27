@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="12dp"
-                style="@style/seekBarHorizontal"
+                style="@style/seekBarEraserHorizontal"
                 android:max="100" />
 
             <com.bird.note.customer.CleanCircle

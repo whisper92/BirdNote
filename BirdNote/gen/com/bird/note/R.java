@@ -352,6 +352,7 @@ public final class R {
     public static final class style {
         public static final int birdalertdialog=0x7f090001;
         public static final int popmenuanim=0x7f090000;
+        public static final int seekBarEraserHorizontal=0x7f090003;
         public static final int seekBarHorizontal=0x7f090002;
     }
 }
