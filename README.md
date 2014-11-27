@@ -15,6 +15,7 @@ qua1 blob,
 qua2 blob,
 qua3 blob,
 thumbnail blob,
+background integer,
 star integer default 0,
 create_time text,
 update_time text
@@ -46,10 +47,15 @@ Textlines直接以json数组的方式存储,tqua表示所在的象限,tcontent�
 2|3
 ```
 
-每行插入的空格数以及行数都要从values下根据分辨率获取。
+ - 画布的大小要从values下根据分辨率获取。
 
-注意EditText自动换行时并未插入换行符，只是显示到下一行了。
+ - 注意EditText自动换行时并未插入换行符，只是显示到下一行了。
 
-撤销和重做的思路：
-每绘制一笔，都将其保存到 mSaveUndoPath 中。如果要撤销一笔，将 mSaveUndoPath 栈顶的一笔移出，并压入 mSaveRedoPath 中，同时请求重绘。
-如果要重做一笔，都将 mSaveRedoPath 栈顶的一笔移出，并压入 mSaveUndoPath 中，同时请求重绘。
+ - 撤销和重做的思路：
+        每绘制一笔，都将其保存到 mSaveUndoPath 中。如果要撤销一笔，将 mSaveUndoPath 栈顶的一笔移出，并压入 mSaveRedoPath 中，同时请求重绘。
+        如果要重做一笔，都将 mSaveRedoPath 栈顶的一笔移出，并压入 mSaveUndoPath 中，同时请求重绘。
+
+- - -
+更新历史：
+
+[version_1.1](/APK/BirdNote_1.1.apk)：基本功能全部实现
