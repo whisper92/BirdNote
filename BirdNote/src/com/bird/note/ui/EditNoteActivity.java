@@ -13,16 +13,19 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bird.note.R;
+import com.bird.note.customer.BirdExitPopMenu;
 import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.customer.LevelFlag;
 import com.bird.note.customer.QuadrantThumbnail;
@@ -72,11 +75,15 @@ public class EditNoteActivity extends FragmentActivity implements
 	
 	public String mTitleString="";
 	private BirdWaitDialog mWaitDialog = null;
+	private FrameLayout mRootView;
+	private BirdExitPopMenu mBirdExitPopMenu;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_note_main);
+		mRootView = (FrameLayout) findViewById(R.id.id_edit_ac_root);
+		mBirdExitPopMenu = new BirdExitPopMenu(EditNoteActivity.this,exitClickListener);
 		mWaitDialog  =new BirdWaitDialog(this, R.style.birdalertdialog);
 		mNoteApplication=(NoteApplication)getApplication();
 		mNoteEditType=mNoteApplication.getCurrentNoteEidtType();
@@ -107,6 +114,22 @@ public class EditNoteActivity extends FragmentActivity implements
 		}
 	}
 
+	public OnClickListener exitClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			if (v.getId() == R.id.id_exit_cancel) {
+				finish();
+			}
+			if (v.getId() == R.id.id_exit_confirm) {
+				mEditQuaFragment.saveNote();
+			}
+			if (mBirdExitPopMenu!=null && mBirdExitPopMenu.isShowing()) {
+				mBirdExitPopMenu.dismiss();
+			}
+			
+		}
+	};
 	public void initActivityView(int type) throws JSONException{
 
 		mLevelFlag=(LevelFlag)findViewById(R.id.id_edit_level_flag);
@@ -215,6 +238,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	
 	}
 	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -224,6 +248,10 @@ public class EditNoteActivity extends FragmentActivity implements
 		}else if (keyCode == KeyEvent.KEYCODE_BACK){
 			if (mEditQuaFragment.mPopMenu.isShowing()) {
 				mEditQuaFragment.closePopMenu();
+				return true;
+			} else {
+				
+				mBirdExitPopMenu.showAtLocation(mRootView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 				return true;
 			}
 			

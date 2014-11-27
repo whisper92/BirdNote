@@ -38,4 +38,7 @@
     <string name="save_as_toast_start">另存为:</string>
     <string name="fulltext_max">达到最大限制!</string>
     <string name="alert_sort">正在更新数据...</string>
+    
+    <string name="exit_ensure">退出并保存？</string>
+    
 </resources>

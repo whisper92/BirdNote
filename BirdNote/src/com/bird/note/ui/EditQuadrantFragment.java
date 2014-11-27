@@ -436,11 +436,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		case R.id.id_edit_title_save:
 			//mPenView.savePicture(mCurrentQuadrant);
 			closePopMenu();
-			if ((((EditNoteActivity)getActivity()).mNoteEditType)==BirdMessage.NOTE_EDIT_TYPE_UPDATE) {
-				saveUpdateNote();
-			} else {
-				saveNewNote();
-			}
+			saveNote();
 			
 			break;
 		case R.id.id_edit_title_pen:			
@@ -461,6 +457,13 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 	
 
+	public void saveNote(){
+		if ((((EditNoteActivity)getActivity()).mNoteEditType)==BirdMessage.NOTE_EDIT_TYPE_UPDATE) {
+			saveUpdateNote();
+		} else {
+			saveNewNote();
+		}
+	}
 	public void createPenBox(){
 		mPopPenBox=new PopPenBox(getActivity());
 		mPopPenBox.setOnPaintChangedListener(new OnPaintChangedListener() {
