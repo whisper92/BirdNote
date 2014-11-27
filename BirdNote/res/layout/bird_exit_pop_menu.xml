@@ -7,42 +7,50 @@
     android:gravity="bottom"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_bg"
-        android:padding="10dp"
-        android:text="@string/exit_ensure"
-        android:textColor="@color/color_alert_dialog_text"
-        android:textSize="25dp" />
-
     <LinearLayout
-        android:id="@+id/id_popmenu_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/menu_bg"
-        android:orientation="horizontal"
-        android:padding="10dp" >
+        android:gravity="bottom"
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/id_exit_cancel"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/pop_menu_item"
+            android:layout_margin="0dp"
             android:padding="10dp"
-            android:text="@string/show_menu_cancel" />
+            android:text="@string/exit_ensure"
+            android:textColor="@color/color_alert_dialog_text"
+            android:textSize="25dp" />
 
-        <Button
-            android:id="@+id/id_exit_confirm"
+        <LinearLayout
+            android:id="@+id/id_popmenu_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/pop_menu_item"
-            android:padding="10dp"
-            android:text="@string/show_menu_confirm" />
+            android:background="@drawable/menu_bg"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <Button
+                android:id="@+id/id_exit_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/pop_menu_item"
+                android:padding="10dp"
+                android:text="@string/show_menu_cancel" />
+
+            <Button
+                android:id="@+id/id_exit_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/pop_menu_item"
+                android:padding="10dp"
+                android:text="@string/show_menu_confirm" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

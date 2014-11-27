@@ -59,3 +59,8 @@ Textlines直接以json数组的方式存储,tqua表示所在的象限,tcontent�
 更新历史：
 
 [version_1.1](/APK/BirdNote_1.1.apk)：基本功能全部实现
+
+- - -
+
+演示效果：
+![birdnote.gif](/Media/birdnote.gif)
