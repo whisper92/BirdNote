@@ -79,7 +79,6 @@ public class ChooseEditBgPopMenu extends PopupWindow implements OnItemClickListe
 	
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		DBUG.e("点击背景pos"+arg2);
 		mChangeBackgroundListener.changeBackground(BitmapUtil.EDIT_BGS[arg2]);
 	}
 	

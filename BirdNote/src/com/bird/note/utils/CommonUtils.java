@@ -65,7 +65,6 @@ public class CommonUtils {
 	public static String getCurrentTime(){
 		SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("yyMMddhhmmss");     
 		String   date   =   sDateFormat.format(new   java.util.Date()); 
-		DBUG.e("date---->"+date);
 		return date;
 	}
 	

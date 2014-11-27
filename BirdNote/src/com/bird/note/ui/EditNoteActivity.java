@@ -93,7 +93,6 @@ public class EditNoteActivity extends FragmentActivity implements
 			//查询获取完整的Note
 			mBirdNote=dbHelper.queryNoteById(mBirdNote, mBirdNote._id+"");
 			mNoteApplication.setEditBackground(mBirdNote.background);
-			DBUG.e("背景ID"+mBirdNote.background);
 		} else {
 			//若创建笔记
 		}
@@ -301,7 +300,6 @@ public class EditNoteActivity extends FragmentActivity implements
 		}
 		birdNote.textcontents=text_content;
 		birdNote.thumbnail=createThumbnailByQuadrant();
-		DBUG.e("保存背景ID"+mNoteApplication.getEditBackground());
 		birdNote.background=mNoteApplication.getEditBackground();
 		birdNote.star = 0;
 	    return birdNote;

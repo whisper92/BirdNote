@@ -71,9 +71,7 @@ public class FullText extends EditText {
 
 	private Handler myHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			DBUG.e("msg.what...");
 			if (msg.what == 0) {
-				DBUG.e("msg.what == 0...");
 				 if (mToast == null) {
 					    mToast = Toast.makeText(mContext,mContext.getString(R.string.fulltext_max), Toast.LENGTH_SHORT);
 				   }else {
@@ -85,13 +83,11 @@ public class FullText extends EditText {
 	};
 	
 	public void init(Context context) {
-		DBUG.e("textsize" + getTextSize());
 		mContext = context;
 		mPaint = new Paint();
 		mPaint.setAntiAlias(true);
 		mPaint.setDither(true);
 		mPaint.setTextSize(getTextSize());
-		DBUG.e("mPainttextsize" + mPaint.getTextSize());
 		mSpaceWidth = mPaint.measureText(" ");
 		mLineHeight = getLineHeight();
 
@@ -118,7 +114,6 @@ public class FullText extends EditText {
 					    public void afterTextChanged(Editable s) {
 					        // TODO Auto-generated method stub
 					        int lines =getLineCount();
-					        DBUG.e(".lines..."+lines);
 					        // 限制最大输入行数
 					        if (lines > mMaxLines) {
 					        	myHandler.sendEmptyMessage(0);
@@ -133,7 +128,7 @@ public class FullText extends EditText {
 					            // setText会触发afterTextChanged的递归
 					            setText(str);  
 					            // setSelection用的索引不能使用str.length()否则会越界
-					           setSelection(getText().length());
+					           setSelection(cursorStart-1);
 					           
 					          
 					        } 
@@ -161,7 +156,6 @@ public class FullText extends EditText {
 
 		mFullTextHeight = heightSize;
 		mMaxLines = (int) (mFullTextHeight / mLineHeight);
-		DBUG.e(".mMaxLines..."+mMaxLines);
 		setMeasuredDimension(mFullTextWidth, mFullTextHeight);
 	}
 
@@ -224,12 +218,13 @@ public class FullText extends EditText {
 		case MotionEvent.ACTION_UP:
 			mSelectSatrt = getSelectionStart();
 			if ((mClickLine + 1) == lineCount) {
+				
+				
 				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
 				lineStart = getOffsetForPosition(0, mClickPosY);
-				if (mSelectSatrt <= woqu) {
-					DBUG.e("in th content...");
-				} else {
-					dstart = mSelectSatrt - lineStart;
+                if (mClickLine == 0) {
+                	DBUG.e("mClickLine =0...");
+                	dstart = mSelectSatrt - lineStart;
 					setSelection(woqu, woqu);
 					temp = 0;
 					myHandler.post(new Runnable() {
@@ -242,8 +237,29 @@ public class FullText extends EditText {
 							}
 						}
 					});
-					return super.onTouchEvent(event);
+
+				} else {
+					if (mSelectSatrt <= woqu) {
+						DBUG.e("in th content...");
+					} else {
+						dstart = mSelectSatrt - lineStart;
+						setSelection(woqu, woqu);
+						temp = 0;
+						myHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								while (mPaint.measureText(editable.toString(),
+										lineStart, lineStart + dstart + temp) < mClickPosX) {
+									editable.append(" ");
+									temp++;
+								}
+							}
+						});
+						return super.onTouchEvent(event);
+					}
 				}
+
+		
 
 			}
 

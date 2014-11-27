@@ -200,7 +200,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 	
 	public void initCreateView(int type){
-		DBUG.e("创建笔记");
 		mPenView = new PenView(getActivity());
 		mPopMenu=PopMenuManager.createEditNewNoteMenu(getActivity(),popMenuListener);
 	}
@@ -211,7 +210,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 * @param mBirdNote
 	 */
 	public void initUpdateView(int type,QuadrantContent quadrantContent){
-		DBUG.e("更新笔记");
 		mPenView = new PenView(getActivity());
 		mPenView.setExistBitmap(BitmapUtil.decodeBytesToBitmap(quadrantContent.quadrantdraw));
 		mPenView.invalidateExistBitmap();	
@@ -227,7 +225,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		mEditMainLayout=(FrameLayout)view.findViewById(R.id.id_edit_main_fl);
 		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
 		mWrapFrameLayout.setBackgroundResource(mNoteApplication.getEditBackground());
-		DBUG.e("设置背景ID"+mNoteApplication.getEditBackground());
 		mEditText = (EditText) view.findViewById(R.id.id_edit_main_et);
 		edit_Pen = (ImageView) view.findViewById(R.id.id_edit_title_pen);
 		edit_Text = (ImageView) view.findViewById(R.id.id_edit_title_text);

@@ -331,7 +331,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	        
 	        if (mDeleteState) {
 			   if (!mDeleteIds[position].equals(String.valueOf(-1))) {
-				    DBUG.e("删除"+mDeleteIds[position]);
 				    holder.title.setBackgroundColor(Color.BLACK);			
 		    	}
 		    } else if ((mDeleteIds!=null)){
