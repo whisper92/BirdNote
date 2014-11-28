@@ -102,6 +102,23 @@ public class FullText extends EditText {
 					@Override
 					public void onTextChanged(CharSequence s, int start, int before,
 							int count) {
+						 int lines =getLineCount();
+					        /* 限制最大输入行数*/
+					       
+					        if (lines > mMaxLines) {
+					        	myHandler.sendEmptyMessage(0);
+					            String str = s.toString();
+					            int cursorStart = getSelectionStart();
+					            int cursorEnd = getSelectionEnd();
+					            if (cursorStart == cursorEnd && cursorStart < str.length() && cursorStart >= 1) {					            	
+					            	getEditableText().delete(start, start+count);
+					            } else {
+					                str = str.substring(0, s.length()-1);
+					                setText(str);  
+						            setSelection(getText().length());
+					            }
+					            
+					        } 
 					}
 
 					@Override
@@ -111,28 +128,7 @@ public class FullText extends EditText {
 
 					 @Override
 					    public void afterTextChanged(Editable s) {
-					        int lines =getLineCount();
-					        /* 限制最大输入行数*/
-					        DBUG.e("lines"+lines+"max"+mMaxLines);
-					        if (lines > mMaxLines) {
-					        	myHandler.sendEmptyMessage(0);
-					            String str = s.toString();
-					            int cursorStart = getSelectionStart();
-					            int cursorEnd = getSelectionEnd();
-					            DBUG.e("cursorStart"+cursorStart+"cursorEnd"+cursorEnd);
-					            if (cursorStart == cursorEnd && cursorStart < str.length() && cursorStart >= 1) {
-					                str = str.substring(0, cursorStart-1) + str.substring(cursorStart);
-					                DBUG.e("cursorStart"+cursorStart);
-						            DBUG.e("str"+str);
-						            setText(str);  
-						            setSelection(cursorStart-1);
-					            } else {
-					                str = str.substring(0, s.length()-1);
-					                setText(str);  
-						            setSelection(getText().length());
-					            }
-					            
-					        } 
+					        
 					    }
 				});			
 				
