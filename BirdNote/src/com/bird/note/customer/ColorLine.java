@@ -21,9 +21,10 @@ import android.view.View;
  */
 public class ColorLine extends View {
 
-	Paint mPaint;
-    float mPaintWidth=5f;
-    int mPaintColor=0xff000000;
+	private Paint mPaint;
+	private float mPaintWidth = 5f;
+	private int mPaintColor = 0xff000000;
+
 	public ColorLine(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
@@ -44,29 +45,33 @@ public class ColorLine extends View {
 		mPaint.setStyle(Paint.Style.STROKE);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		SharedPreferences sp= context.getSharedPreferences(SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
-		mPaintColor = sp.getInt(SavedPaint.SP_PAINT_COLOR, SavedPaint.DEFAULT_PAINT_COLOR);
-		mPaintWidth =  sp.getFloat(SavedPaint.SP_PAINT_WIDTH, SavedPaint.DEFAULT_PAINT_WIDTH);
+		SharedPreferences sp = context.getSharedPreferences(
+				SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
+		mPaintColor = sp.getInt(SavedPaint.SP_PAINT_COLOR,
+				SavedPaint.DEFAULT_PAINT_COLOR);
+		mPaintWidth = sp.getFloat(SavedPaint.SP_PAINT_WIDTH,
+				SavedPaint.DEFAULT_PAINT_WIDTH);
 		mPaint.setColor(mPaintColor);
 		mPaint.setStrokeWidth(mPaintWidth);
 	}
 
-	public void setPaint(Paint savedPaint){
+	public void setPaint(Paint savedPaint) {
 		mPaint.setColor(savedPaint.getColor());
 		mPaint.setStrokeWidth(savedPaint.getStrokeWidth());
 	}
-	
-	public void setPaintWidth(float width){
-		this.mPaintWidth=width;
+
+	public void setPaintWidth(float width) {
+		this.mPaintWidth = width;
 		mPaint.setStrokeWidth(width);
 		invalidate();
 	}
-	
-	public void setPaintColor(int color){
-		this.mPaintColor=color;
+
+	public void setPaintColor(int color) {
+		this.mPaintColor = color;
 		mPaint.setColor(color);
 		invalidate();
 	}
+
 	@Override
 	protected void onDraw(Canvas canvas) {
 

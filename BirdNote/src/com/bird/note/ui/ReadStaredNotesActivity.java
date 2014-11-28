@@ -43,9 +43,7 @@ import com.bird.note.utils.NoteApplication;
  * 
  */
 public class ReadStaredNotesActivity extends Activity{
-
-
- 
+	
 	private ReadStaredNoteAdapter mNoteAdapter=null;
 	private DbHelper mDbHelper=null;
 	private GridView mGridView=null;

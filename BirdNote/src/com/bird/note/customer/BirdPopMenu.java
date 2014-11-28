@@ -23,48 +23,52 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.view.MotionEvent;
+
 /**
  * 编辑笔记界面的菜单
+ * 
  * @author wangxianpeng
- *
+ * 
  */
 public class BirdPopMenu extends PopupWindow {
 
-	LayoutInflater inflater;
-	View rootView;
-    Context mContext;
-	LinearLayout mItemsLayout;
-    public List<BirdPopMenuItem> menuItems;
-    
+	private LayoutInflater inflater;
+	private View rootView;
+	private Context mContext;
+	private LinearLayout mItemsLayout;
+	public List<BirdPopMenuItem> menuItems;
+
 	public BirdPopMenu(Context context) {
-		         mContext = context;
-                 inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                 rootView=inflater.inflate(R.layout.bird_pop_menu, null);
-                 mItemsLayout = (LinearLayout) rootView.findViewById(R.id.id_popmenu_items);
-                 
-                 this.setContentView(rootView);
-                 this.setWidth(LayoutParams.MATCH_PARENT);
-                 this.setHeight(LayoutParams.MATCH_PARENT);
-                 this.setAnimationStyle(R.style.popmenuanim);
+		mContext = context;
+		inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		rootView = inflater.inflate(R.layout.bird_pop_menu, null);
+		mItemsLayout = (LinearLayout) rootView
+				.findViewById(R.id.id_popmenu_items);
 
-                 this.setOutsideTouchable(false);
-                 this.setBackgroundDrawable(new BitmapDrawable());
+		this.setContentView(rootView);
+		this.setWidth(LayoutParams.MATCH_PARENT);
+		this.setHeight(LayoutParams.MATCH_PARENT);
+		this.setAnimationStyle(R.style.popmenuanim);
 
-                 LinearLayout linearLayout =(LinearLayout) rootView.findViewById(R.id.id_popmenu_root);
-                 linearLayout.setOnClickListener(DismissListener );
-        		
-        		rootView.setFocusableInTouchMode(true);
+		this.setOutsideTouchable(false);
+		this.setBackgroundDrawable(new BitmapDrawable());
+
+		LinearLayout linearLayout = (LinearLayout) rootView
+				.findViewById(R.id.id_popmenu_root);
+		linearLayout.setOnClickListener(DismissListener);
+
+		rootView.setFocusableInTouchMode(true);
 
 	}
-	
-	public void addCancelItem(){
+
+	public void addCancelItem() {
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,    
-				LinearLayout.LayoutParams.WRAP_CONTENT    
-				);
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
 		layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
-        layoutParams.bottomMargin = CommonUtils.dpToPx(mContext,5);
-        int padding = CommonUtils.dpToPx(mContext,10);
+		layoutParams.bottomMargin = CommonUtils.dpToPx(mContext, 5);
+		int padding = CommonUtils.dpToPx(mContext, 10);
 		Button button = new Button(mContext);
 		button.setTextColor(Color.WHITE);
 		button.setText(mContext.getString(R.string.show_menu_cancel));
@@ -74,17 +78,17 @@ public class BirdPopMenu extends PopupWindow {
 		button.setOnClickListener(DismissListener);
 		mItemsLayout.addView(button);
 	}
-	
-	public void setItemAdapter(List<BirdPopMenuItem> menuItems,OnClickListener listener){
+
+	public void setItemAdapter(List<BirdPopMenuItem> menuItems,
+			OnClickListener listener) {
 		this.menuItems = menuItems;
 
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,    
-				LinearLayout.LayoutParams.WRAP_CONTENT    
-				);
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
 		layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
-        layoutParams.bottomMargin = CommonUtils.dpToPx(mContext,5);
-        int padding = CommonUtils.dpToPx(mContext,10);
+		layoutParams.bottomMargin = CommonUtils.dpToPx(mContext, 5);
+		int padding = CommonUtils.dpToPx(mContext, 10);
 		for (int i = 0; i < menuItems.size(); i++) {
 			Button button = new Button(mContext);
 			button.setText(menuItems.get(i).menuText);
@@ -98,16 +102,15 @@ public class BirdPopMenu extends PopupWindow {
 		}
 	}
 
+	public void setItem(int pos, String itemString) {
 
-	public void setItem(int pos,String itemString){
-		
 	}
-	
-	public OnClickListener DismissListener=new OnClickListener() {
-		
+
+	public OnClickListener DismissListener = new OnClickListener() {
+
 		@Override
 		public void onClick(View v) {
-		    dismiss();	
+			dismiss();
 		}
 	};
 }

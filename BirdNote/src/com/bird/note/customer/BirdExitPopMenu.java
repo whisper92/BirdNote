@@ -23,52 +23,58 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.view.MotionEvent;
+
 /**
  * 编辑笔记界面的菜单
+ * 
  * @author wangxianpeng
- *
+ * 
  */
 public class BirdExitPopMenu extends PopupWindow {
 
-	LayoutInflater inflater;
-	View rootView;
-    Context mContext;
-	LinearLayout mItemsLayout;
-    public List<BirdPopMenuItem> menuItems;
-    Button mCancelButton;
-    Button mConfirmButton;
-	public BirdExitPopMenu(Context context,OnClickListener listener) {
-		         mContext = context;
-                 inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                 rootView=inflater.inflate(R.layout.bird_exit_pop_menu, null);
-                 mItemsLayout = (LinearLayout) rootView.findViewById(R.id.id_popmenu_items);
-                 
-                 this.setContentView(rootView);
-                 this.setWidth(LayoutParams.MATCH_PARENT);
-                 this.setHeight(LayoutParams.MATCH_PARENT);
-                 this.setAnimationStyle(R.style.popmenuanim);
+	private LayoutInflater inflater;
+	private View rootView;
+	private Context mContext;
+	private LinearLayout mItemsLayout;
+	public List<BirdPopMenuItem> menuItems;
+	private Button mCancelButton;
+	private Button mConfirmButton;
 
-                 this.setOutsideTouchable(false);
-                 this.setBackgroundDrawable(new BitmapDrawable());
+	public BirdExitPopMenu(Context context, OnClickListener listener) {
+		mContext = context;
+		inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		rootView = inflater.inflate(R.layout.bird_exit_pop_menu, null);
+		mItemsLayout = (LinearLayout) rootView
+				.findViewById(R.id.id_popmenu_items);
 
-                 LinearLayout linearLayout =(LinearLayout) rootView.findViewById(R.id.id_popmenu_root);
-                 linearLayout.setOnClickListener(DismissListener );
-        		
-        		rootView.setFocusableInTouchMode(true);
-        		
-        		mCancelButton = (Button)rootView.findViewById(R.id.id_exit_cancel);
-        		mConfirmButton = (Button) rootView.findViewById(R.id.id_exit_confirm);
-        		
-        		mCancelButton.setOnClickListener(listener);
-        		mConfirmButton.setOnClickListener(listener);
+		this.setContentView(rootView);
+		this.setWidth(LayoutParams.MATCH_PARENT);
+		this.setHeight(LayoutParams.MATCH_PARENT);
+		this.setAnimationStyle(R.style.popmenuanim);
+
+		this.setOutsideTouchable(false);
+		this.setBackgroundDrawable(new BitmapDrawable());
+
+		LinearLayout linearLayout = (LinearLayout) rootView
+				.findViewById(R.id.id_popmenu_root);
+		linearLayout.setOnClickListener(DismissListener);
+
+		rootView.setFocusableInTouchMode(true);
+
+		mCancelButton = (Button) rootView.findViewById(R.id.id_exit_cancel);
+		mConfirmButton = (Button) rootView.findViewById(R.id.id_exit_confirm);
+
+		mCancelButton.setOnClickListener(listener);
+		mConfirmButton.setOnClickListener(listener);
 
 	}
 
-	public OnClickListener DismissListener=new OnClickListener() {
-		
+	public OnClickListener DismissListener = new OnClickListener() {
+
 		@Override
 		public void onClick(View v) {
-		    dismiss();	
+			dismiss();
 		}
 	};
 }

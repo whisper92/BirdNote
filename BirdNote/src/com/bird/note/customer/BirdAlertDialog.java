@@ -13,10 +13,11 @@ import com.bird.note.R;
  * 自定义提醒对话框
  */
 public class BirdAlertDialog extends Dialog {
-	Context mContext;
-	android.view.View.OnClickListener listener;
-	String mAlertContent="ALERT!";
-	TextView mAlertTextView;
+	private Context mContext;
+	private android.view.View.OnClickListener listener;
+	private String mAlertContent = "ALERT!";
+	private TextView mAlertTextView;
+
 	public BirdAlertDialog(Context context) {
 		super(context);
 		init(context);
@@ -31,32 +32,34 @@ public class BirdAlertDialog extends Dialog {
 		this.mContext = context;
 	}
 
-	public void setOnConfirmListener(android.view.View.OnClickListener listener){
+	public void setOnConfirmListener(android.view.View.OnClickListener listener) {
 		this.listener = listener;
 	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+
 		setContentView(R.layout.birdalertdialog);
 		TextView mCancleTextView = (TextView) findViewById(R.id.id_alertdiaolg_cancel);
 		TextView mConfirmTextView = (TextView) findViewById(R.id.id_alertdiaolg_confirm);
-		mAlertTextView = (TextView)findViewById(R.id.id_alertdiaolg_content);
+		mAlertTextView = (TextView) findViewById(R.id.id_alertdiaolg_content);
 		mAlertTextView.setText(mAlertContent);
-		
+
 		mConfirmTextView.setOnClickListener(listener);
-		mCancleTextView.setOnClickListener(new android.view.View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				dismiss();
-			}
-		});
+		mCancleTextView
+				.setOnClickListener(new android.view.View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						dismiss();
+					}
+				});
 	}
 
-	public void setAlertContent(String alertContent){
-		this.mAlertContent= alertContent;
+	public void setAlertContent(String alertContent) {
+		this.mAlertContent = alertContent;
 	}
-	
+
 }

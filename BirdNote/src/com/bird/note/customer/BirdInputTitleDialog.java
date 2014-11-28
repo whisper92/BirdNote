@@ -15,18 +15,19 @@ import com.bird.note.utils.CommonUtils;
  * 自定义输入标题对话框
  */
 public class BirdInputTitleDialog extends Dialog {
-	Context mContext;
-	android.view.View.OnClickListener listener;
+	private Context mContext;
+	private android.view.View.OnClickListener listener;
 	public EditText mEditText;
-	String mTitleString="";
-	String mContentString="";
-	TextView mTitleTextView;
+	private String mTitleString = "";
+	private String mContentString = "";
+	private TextView mTitleTextView;
+
 	public String getTitleString() {
 		return mTitleString;
 	}
 
 	public void setTitleString(String mTitle) {
-		this.mTitleString = mTitle;	
+		this.mTitleString = mTitle;
 	}
 
 	public BirdInputTitleDialog(Context context,
@@ -44,40 +45,44 @@ public class BirdInputTitleDialog extends Dialog {
 		this.mContext = context;
 	}
 
-	public void setInputContent(String content){
-		this.mContentString =content;
-		if (mEditText!=null) {
+	public void setInputContent(String content) {
+		this.mContentString = content;
+		if (mEditText != null) {
 			mEditText.append(mContentString);
 		}
 
 	}
-	public String getContent(){
+
+	public String getContent() {
 		return mEditText.getText().toString();
 	}
-	
-	public void setOnConfirmClickListener(android.view.View.OnClickListener listener){
+
+	public void setOnConfirmClickListener(
+			android.view.View.OnClickListener listener) {
 		this.listener = listener;
 	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+
 		setContentView(R.layout.birdinputtitledialog);
 		mTitleTextView = (TextView) findViewById(R.id.id_alertdiaolg_content);
 		mTitleTextView.setText(mTitleString);
-		
+
 		TextView mCancleTextView = (TextView) findViewById(R.id.id_alertdiaolg_cancel);
 		TextView mConfirmTextView = (TextView) findViewById(R.id.id_alertdiaolg_confirm);
 		mEditText = (EditText) findViewById(R.id.id_alertdiaolg_input_title);
 
 		mConfirmTextView.setOnClickListener(listener);
-		mCancleTextView.setOnClickListener(new android.view.View.OnClickListener() {	
-			@Override
-			public void onClick(View v) {
-				dismiss();
-			}
-		});
+		mCancleTextView
+				.setOnClickListener(new android.view.View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dismiss();
+					}
+				});
 	}
 
 }

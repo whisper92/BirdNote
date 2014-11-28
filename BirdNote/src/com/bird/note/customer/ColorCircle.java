@@ -12,14 +12,15 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class ColorCircle extends View{
+public class ColorCircle extends View {
 
-	Paint mPaint;
-	float width=SavedPaint.DEFAULT_PAINT_WIDTH;
-	int color=SavedPaint.DEFAULT_PAINT_COLOR;
+	private Paint mPaint;
+	private float width = SavedPaint.DEFAULT_PAINT_WIDTH;
+	private int color = SavedPaint.DEFAULT_PAINT_COLOR;
+
 	public ColorCircle(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-        init(context);
+		init(context);
 	}
 
 	public ColorCircle(Context context, AttributeSet attrs) {
@@ -31,36 +32,39 @@ public class ColorCircle extends View{
 		this(context, null);
 
 	}
-	public void init(Context context){
+
+	public void init(Context context) {
 		mPaint = new Paint();
 		mPaint.setAntiAlias(true);
 		mPaint.setDither(true);
-		mPaint.setStyle(Paint.Style.FILL);	
+		mPaint.setStyle(Paint.Style.FILL);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		SharedPreferences sp= context.getSharedPreferences(SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
-		color = sp.getInt(SavedPaint.SP_PAINT_COLOR, SavedPaint.DEFAULT_PAINT_COLOR);
-		width =  sp.getFloat(SavedPaint.SP_PAINT_WIDTH, SavedPaint.DEFAULT_PAINT_WIDTH);
-		
+		SharedPreferences sp = context.getSharedPreferences(
+				SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
+		color = sp.getInt(SavedPaint.SP_PAINT_COLOR,
+				SavedPaint.DEFAULT_PAINT_COLOR);
+		width = sp.getFloat(SavedPaint.SP_PAINT_WIDTH,
+				SavedPaint.DEFAULT_PAINT_WIDTH);
+
 		mPaint.setColor(color);
 		mPaint.setStrokeWidth(width);
 	}
-	
-	public void setPaintWidth(float width){
-		this.width=width;
+
+	public void setPaintWidth(float width) {
+		this.width = width;
 		invalidate();
 	}
-	
-	public void setPaintColor(int color){
-		this.color=color;
+
+	public void setPaintColor(int color) {
+		this.color = color;
 		mPaint.setColor(color);
 		invalidate();
 	}
-	
+
 	@Override
 	protected void onDraw(Canvas canvas) {
-       canvas.drawCircle(61, 37, width/2, mPaint);
+		canvas.drawCircle(61, 37, width / 2, mPaint);
 	}
-	
 
 }

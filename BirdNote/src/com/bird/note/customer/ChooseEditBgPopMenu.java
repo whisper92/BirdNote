@@ -30,70 +30,81 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.view.MotionEvent;
+
 /**
  * 编辑笔记界面的菜单
+ * 
  * @author wangxianpeng
- *
+ * 
  */
-public class ChooseEditBgPopMenu extends PopupWindow implements OnItemClickListener{
+public class ChooseEditBgPopMenu extends PopupWindow implements
+		OnItemClickListener {
 
-	LayoutInflater inflater;
-	View rootView;
-    Context mContext;
-	LinearLayout mItemsLayout;
-    public List<BirdPopMenuItem> menuItems;
-    GridView mBgGridView;
+	private LayoutInflater inflater;
+	private View rootView;
+	private Context mContext;
+	private LinearLayout mItemsLayout;
+	public List<BirdPopMenuItem> menuItems;
+	private GridView mBgGridView;
+
 	public ChooseEditBgPopMenu(Context context) {
-		         mContext = context;
-                 inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                 rootView=inflater.inflate(R.layout.choos_editbg_pop_menu, null);
-                 mItemsLayout = (LinearLayout) rootView.findViewById(R.id.id_popmenu_items);
-                 mBgGridView = (GridView) rootView.findViewById(R.id.id_edit_choos_bg);
-                 
-                 this.setContentView(rootView);
-                 this.setWidth(LayoutParams.MATCH_PARENT);
-                 this.setHeight(LayoutParams.MATCH_PARENT);
-                 this.setAnimationStyle(R.style.popmenuanim);
+		mContext = context;
+		inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		rootView = inflater.inflate(R.layout.choos_editbg_pop_menu, null);
+		mItemsLayout = (LinearLayout) rootView
+				.findViewById(R.id.id_popmenu_items);
+		mBgGridView = (GridView) rootView.findViewById(R.id.id_edit_choos_bg);
 
-                 this.setOutsideTouchable(false);
-                 this.setBackgroundDrawable(new BitmapDrawable());
+		this.setContentView(rootView);
+		this.setWidth(LayoutParams.MATCH_PARENT);
+		this.setHeight(LayoutParams.MATCH_PARENT);
+		this.setAnimationStyle(R.style.popmenuanim);
 
-                 LinearLayout linearLayout =(LinearLayout) rootView.findViewById(R.id.id_popmenu_root);
-                 linearLayout.setOnClickListener(DismissListener );
-        		
-        		rootView.setFocusableInTouchMode(true);
-        		 ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();  
-        	      for(int i=0;i<BitmapUtil.EDIT_BGS.length;i++)  
-        	      {  
-        	        HashMap<String, Object> map = new HashMap<String, Object>();  
-        	        map.put("ItemImage", BitmapUtil.EDIT_BGS[i]);
-        	        map.put("ItemText", "NO."+String.valueOf(i)); 
-        	        lstImageItem.add(map);  
-        	      }  
-                 SimpleAdapter simpleAdapter = new SimpleAdapter(mContext, lstImageItem, R.layout.edit_bg_item, new String[]{"ItemImage"},new int[]{R.id.id_edit_bg_img});
-        		 mBgGridView.setAdapter(simpleAdapter);
-        		 mBgGridView.setOnItemClickListener(this);
-        		
+		this.setOutsideTouchable(false);
+		this.setBackgroundDrawable(new BitmapDrawable());
+
+		LinearLayout linearLayout = (LinearLayout) rootView
+				.findViewById(R.id.id_popmenu_root);
+		linearLayout.setOnClickListener(DismissListener);
+
+		rootView.setFocusableInTouchMode(true);
+		ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
+		for (int i = 0; i < BitmapUtil.EDIT_BGS.length; i++) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("ItemImage", BitmapUtil.EDIT_BGS[i]);
+			map.put("ItemText", "NO." + String.valueOf(i));
+			lstImageItem.add(map);
+		}
+		SimpleAdapter simpleAdapter = new SimpleAdapter(mContext, lstImageItem,
+				R.layout.edit_bg_item, new String[] { "ItemImage" },
+				new int[] { R.id.id_edit_bg_img });
+		mBgGridView.setAdapter(simpleAdapter);
+		mBgGridView.setOnItemClickListener(this);
 
 	}
-	
+
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		mChangeBackgroundListener.changeBackground(BitmapUtil.EDIT_BGS[arg2]);
 	}
-	
+
 	OnChangeBackgroundListener mChangeBackgroundListener;
-	public interface OnChangeBackgroundListener{
+
+	public interface OnChangeBackgroundListener {
 		public void changeBackground(int bgRsr);
 	}
-	public void setOnChangeBackgroundListener(OnChangeBackgroundListener listener){
+
+	public void setOnChangeBackgroundListener(
+			OnChangeBackgroundListener listener) {
 		this.mChangeBackgroundListener = listener;
 	}
-	public OnClickListener DismissListener=new OnClickListener() {
-		
+
+	public OnClickListener DismissListener = new OnClickListener() {
+
 		@Override
 		public void onClick(View v) {
-		    dismiss();	
+			dismiss();
 		}
 	};
 

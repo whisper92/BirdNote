@@ -13,9 +13,9 @@ import com.bird.note.R;
  * 自定义等待对话框
  */
 public class BirdWaitDialog extends Dialog {
-	Context mContext;
-	TextView mTextView;
-	String mWaitContent="wait...";
+	private Context mContext;
+	private TextView mTextView;
+	private String mWaitContent="...";
 	public BirdWaitDialog(Context context) {
 		super(context);
 		init(context);

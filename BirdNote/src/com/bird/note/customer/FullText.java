@@ -22,36 +22,37 @@ import android.widget.Toast;
 
 public class FullText extends EditText {
 
-	Paint mPaint;
-	boolean mFirstDown = true;
-	float mClickPosX = 0;
-	float mClickPosY = 0;
-	int mSpaceCount = 0;
-	float mSpaceWidth = 0;
+	private Paint mPaint;
+	private boolean mFirstDown = true;
+	private float mClickPosX = 0;
+	private float mClickPosY = 0;
+	private int mSpaceCount = 0;
+	private float mSpaceWidth = 0;
 
 	/*
 	 * 点击的是第几行
 	 */
-	int mClickLine = 0;
+	private int mClickLine = 0;
 
-	int mFullTextWidth = 0;
-	int mFullTextHeight = 0;
+	private int mFullTextWidth = 0;
+	private int mFullTextHeight = 0;
 
-	float mLineHeight = 0;
+	private float mLineHeight = 0;
 
-	int selection = 0;
-	Editable editable;
-	int mSelectSatrt = 0;
+	private int selection = 0;
+	private Editable editable;
+	private int mSelectSatrt = 0;
 
-	int mMaxLines = 0;
-	int tempStart = 0;
-	int lineStart = 0;
-	int lineCount = 0;
-	int temp = 0;
-	int dstart = 0;
+	private int mMaxLines = 0;
+	private int tempStart = 0;
+	private int lineStart = 0;
+	private int lineCount = 0;
+	private int temp = 0;
+	private int dstart = 0;
 
 	Toast mToast = null;
 	Context mContext;
+
 	public FullText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
@@ -69,20 +70,22 @@ public class FullText extends EditText {
 
 	}
 
-	private Handler myHandler = new Handler(){
+	private Handler myHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == 0) {
-				DBUG.e("受到消息");
-				 if (mToast == null) {
-					    mToast = Toast.makeText(mContext,mContext.getString(R.string.fulltext_max), Toast.LENGTH_SHORT);
-				   }else {
-					    mToast.setText(mContext.getString(R.string.fulltext_max));
-				   }
-		           mToast.show();
+				DBUG.e("get messgae");
+				if (mToast == null) {
+					mToast = Toast.makeText(mContext,
+							mContext.getString(R.string.fulltext_max),
+							Toast.LENGTH_SHORT);
+				} else {
+					mToast.setText(mContext.getString(R.string.fulltext_max));
+				}
+				mToast.show();
 			}
 		};
 	};
-	
+
 	public void init(Context context) {
 		mContext = context;
 		mPaint = new Paint();
@@ -94,47 +97,48 @@ public class FullText extends EditText {
 
 		FontMetrics fontMetrics = mPaint.getFontMetrics();
 		myHandler.post(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				addTextChangedListener(new TextWatcher() {
 
 					@Override
-					public void onTextChanged(CharSequence s, int start, int before,
-							int count) {
-						 int lines =getLineCount();
-					        /* 限制最大输入行数*/
-					       
-					        if (lines > mMaxLines) {
-					        	myHandler.sendEmptyMessage(0);
-					            String str = s.toString();
-					            int cursorStart = getSelectionStart();
-					            int cursorEnd = getSelectionEnd();
-					            if (cursorStart == cursorEnd && cursorStart < str.length() && cursorStart >= 1) {					            	
-					            	getEditableText().delete(start, start+count);
-					            } else {
-					                str = str.substring(0, s.length()-1);
-					                setText(str);  
-						            setSelection(getText().length());
-					            }
-					            
-					        } 
+					public void onTextChanged(CharSequence s, int start,
+							int before, int count) {
+						int lines = getLineCount();
+						/* 限制最大输入行数 */
+
+						if (lines > mMaxLines) {
+							myHandler.sendEmptyMessage(0);
+							String str = s.toString();
+							int cursorStart = getSelectionStart();
+							int cursorEnd = getSelectionEnd();
+							if (cursorStart == cursorEnd
+									&& cursorStart < str.length()
+									&& cursorStart >= 1) {
+								getEditableText().delete(start, start + count);
+							} else {
+								str = str.substring(0, s.length() - 1);
+								setText(str);
+								setSelection(getText().length());
+							}
+
+						}
 					}
 
 					@Override
-					public void beforeTextChanged(CharSequence s, int start, int count,
-							int after) {
+					public void beforeTextChanged(CharSequence s, int start,
+							int count, int after) {
 					}
 
-					 @Override
-					    public void afterTextChanged(Editable s) {
-					        
-					    }
-				});			
-				
+					@Override
+					public void afterTextChanged(Editable s) {
+
+					}
+				});
+
 			}
 		});
-		
 
 	}
 
@@ -176,7 +180,7 @@ public class FullText extends EditText {
 				mClickPosY = event.getY();
 				mSpaceCount = (int) (mClickPosX / mSpaceWidth);
 				mClickLine = (int) (mClickPosY / mLineHeight);
-				if (mClickLine>mMaxLines) {
+				if (mClickLine > mMaxLines) {
 					mClickLine = mMaxLines;
 				}
 				mFirstDown = false;
@@ -215,12 +219,11 @@ public class FullText extends EditText {
 		case MotionEvent.ACTION_UP:
 			mSelectSatrt = getSelectionStart();
 			if ((mClickLine + 1) == lineCount) {
-				
-				
+
 				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
 				lineStart = getOffsetForPosition(0, mClickPosY);
-                if (mClickLine == 0) {
-                	dstart = mSelectSatrt - lineStart;
+				if (mClickLine == 0) {
+					dstart = mSelectSatrt - lineStart;
 					setSelection(woqu, woqu);
 					temp = 0;
 					myHandler.post(new Runnable() {
@@ -255,8 +258,6 @@ public class FullText extends EditText {
 					}
 				}
 
-		
-
 			}
 
 			mFirstDown = true;
@@ -270,8 +271,5 @@ public class FullText extends EditText {
 
 		return super.onTouchEvent(event);
 	}
-
-
-
 
 }
