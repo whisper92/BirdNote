@@ -37,7 +37,7 @@ import com.bird.note.ui.ShowNotesActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.NoteApplication;
 
-public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener,MultiChoiceModeListener{
+public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener{
 	private List<BirdNote> mListData;
 	private GridView mGridView;
 	private Context mContext;
@@ -59,7 +59,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	public void setDeleteState(boolean mDeleteState) {
 		this.mDeleteState = mDeleteState;
 		mDeleteIds = new String[mListData.size()];
-		//初始化设置所有位置为-1
+		/*初始化设置所有位置为-1*/
 		for (int i = 0; i < mListData.size(); i++) {
 			mDeleteIds[i]=String.valueOf(-1);
 		}
@@ -79,7 +79,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		this.mGridView = gridView;
 		mGridView.setOnItemClickListener(this);
 		mGridView.setOnItemLongClickListener(this);
-		//mGridView.setMultiChoiceModeListener(this);
 		this.mInflater=context.getLayoutInflater();
 		scroller=new Scroller(context);
 
@@ -109,37 +108,10 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		return drawableID;
 	}
 	
-	/*
-	 * 根据id获得缩略图的背景
-	 */
-/*	public int getThumbnailBgById(int bg_id){
-		
-		int drawableID=R.drawable.note_bg_style00_thumbnail;
-		switch (bg_id) {
-		case 0:
-			drawableID=R.drawable.note_bg_style00_thumbnail;
-			break;
-
-		default:
-			break;
-		}
-		return drawableID;
-	}*/
-	
 	class NoteHolder{
              ImageView thumbnail;
              TextView title;
 	}
-
-	public Runnable scrollRunnable = new Runnable() {
-		
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-
 	
 	int singleNoteId=-1;
 	public int getSingleNoteId() {
@@ -324,7 +296,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		}
 
 			holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
-			//后期缩略图的背景要切一个小一点的图片
+			/*后期缩略图的背景要切一个小一点的图片*/
 	        holder.thumbnail.setBackgroundResource(birdNote.background);
 	        holder.title.setText(birdNote.title);
 	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
@@ -349,35 +321,5 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		return getItem(position).level;
 	}
 
-	@Override
-	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onDestroyActionMode(ActionMode mode) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onItemCheckedStateChanged(ActionMode mode, int position,
-			long id, boolean checked) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }

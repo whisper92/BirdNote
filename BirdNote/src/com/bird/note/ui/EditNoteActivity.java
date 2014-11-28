@@ -94,14 +94,14 @@ public class EditNoteActivity extends FragmentActivity implements
 		mCurrentType=intent.getIntExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_CREATE_VALUE);
 		
 		if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
-			//若更新笔记，获得传过来Note(不完整)
+			/*若更新笔记，获得传过来Note(不完整)*/
 			mBirdNote=intent.getParcelableExtra(BirdMessage.INITENT_PARCEL_NOTE);
 			mTitleString = mBirdNote.title;
-			//查询获取完整的Note
+			/*查询获取完整的Note*/
 			mBirdNote=dbHelper.queryNoteById(mBirdNote, mBirdNote._id+"");
 			mNoteApplication.setEditBackground(mBirdNote.background);
 		} else {
-			//若创建笔记
+			
 		}
 		
 		mCurrentMode = intent.getIntExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_pen);
@@ -109,7 +109,6 @@ public class EditNoteActivity extends FragmentActivity implements
 		try {
 			initActivityView(mCurrentType);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -287,16 +286,16 @@ public class EditNoteActivity extends FragmentActivity implements
 			if (mEditQuaFragmentsList.get(i)!=null) {
 						    
                    if (edited[i]==1) {
-                	   //若编辑过，则保存新内容
+                	   /*若编辑过，则保存新内容*/
                     	  		text_array[i]=mEditQuaFragmentsList.get(i).getTextContent();
         		                qua=mEditQuaFragmentsList.get(i).getQuadrantDrawContentBytes();			
 					} else {
-						//若未编辑过，则保存原始内容
+						/*若未编辑过，则保存原始内容*/
 								text_array[i]=mQuaList.get(i).textcontent;
 								qua=mQuaList.get(i).quadrantdraw;	
 					}
 			} else {
-				//如果某个象限未被实例化，则将他的内容设置为null
+				/*如果某个象限未被实例化，则将他的内容设置为null*/
 				text_array[i]=null;
 				qua=null;
 			}
@@ -323,7 +322,6 @@ public class EditNoteActivity extends FragmentActivity implements
 		try {
 			text_content = JsonUtil.createJsonFromStrings(text_array);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		birdNote.textcontents=text_content;

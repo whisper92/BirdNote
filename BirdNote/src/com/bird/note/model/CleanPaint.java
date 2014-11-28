@@ -21,7 +21,6 @@ public class CleanPaint {
 		cleanPaint.setColor(Color.BLUE);
 		cleanPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
 		cleanPaint.setAlpha(0);
-		// 设置画笔的痕迹是透明的，从而可以看到背景图片
 		return cleanPaint;
 	}
 

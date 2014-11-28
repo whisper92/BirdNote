@@ -73,8 +73,7 @@ public class SearchNotesActivity extends Activity{
 			
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if(keyCode==KeyEvent.KEYCODE_ENTER){//修改回车键功能
-					// 先隐藏键盘
+				if(keyCode==KeyEvent.KEYCODE_ENTER){
 					((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
 					.hideSoftInputFromWindow(
 					SearchNotesActivity.this

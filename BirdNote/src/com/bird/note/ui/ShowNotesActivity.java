@@ -167,13 +167,9 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		case R.id.id_show_title_delete_confirm:
 			showHandler.sendEmptyMessage(BirdMessage.DELETE_RUNNABLE_START);
 			showHandler.postDelayed(DeleteNotesRunnable,300);
-/*			mShowTitle.setVisibility(View.VISIBLE);
-			mShowDeleteTitle.setVisibility(View.GONE);*/
 			startShowNoamralTitle();
 			break;
 		case R.id.id_show_title_delete_cancle:
-/*			mShowTitle.setVisibility(View.VISIBLE);
-			mShowDeleteTitle.setVisibility(View.GONE);	*/
 			mNoteAdapter.cancelDelete();
 			mNoteAdapter.setDeleteState(false);
 			startShowNoamralTitle();
@@ -185,7 +181,6 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			break;
 		}	
 		
-		//finish();
 	}
 	
 	public Runnable DeleteNotesRunnable = new Runnable() {	

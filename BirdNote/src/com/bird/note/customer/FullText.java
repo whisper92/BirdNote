@@ -72,6 +72,7 @@ public class FullText extends EditText {
 	private Handler myHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == 0) {
+				DBUG.e("受到消息");
 				 if (mToast == null) {
 					    mToast = Toast.makeText(mContext,mContext.getString(R.string.fulltext_max), Toast.LENGTH_SHORT);
 				   }else {
@@ -101,36 +102,36 @@ public class FullText extends EditText {
 					@Override
 					public void onTextChanged(CharSequence s, int start, int before,
 							int count) {
-
 					}
 
 					@Override
 					public void beforeTextChanged(CharSequence s, int start, int count,
 							int after) {
-
 					}
 
 					 @Override
 					    public void afterTextChanged(Editable s) {
-					        // TODO Auto-generated method stub
 					        int lines =getLineCount();
-					        // 限制最大输入行数
+					        /* 限制最大输入行数*/
+					        DBUG.e("lines"+lines+"max"+mMaxLines);
 					        if (lines > mMaxLines) {
 					        	myHandler.sendEmptyMessage(0);
 					            String str = s.toString();
 					            int cursorStart = getSelectionStart();
 					            int cursorEnd = getSelectionEnd();
+					            DBUG.e("cursorStart"+cursorStart+"cursorEnd"+cursorEnd);
 					            if (cursorStart == cursorEnd && cursorStart < str.length() && cursorStart >= 1) {
 					                str = str.substring(0, cursorStart-1) + str.substring(cursorStart);
+					                DBUG.e("cursorStart"+cursorStart);
+						            DBUG.e("str"+str);
+						            setText(str);  
+						            setSelection(cursorStart-1);
 					            } else {
 					                str = str.substring(0, s.length()-1);
+					                setText(str);  
+						            setSelection(getText().length());
 					            }
-					            // setText会触发afterTextChanged的递归
-					            setText(str);  
-					            // setSelection用的索引不能使用str.length()否则会越界
-					           setSelection(cursorStart-1);
-					           
-					          
+					            
 					        } 
 					    }
 				});			
@@ -223,7 +224,6 @@ public class FullText extends EditText {
 				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
 				lineStart = getOffsetForPosition(0, mClickPosY);
                 if (mClickLine == 0) {
-                	DBUG.e("mClickLine =0...");
                 	dstart = mSelectSatrt - lineStart;
 					setSelection(woqu, woqu);
 					temp = 0;

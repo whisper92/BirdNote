@@ -159,7 +159,7 @@ public class ReadStaredNoteAdapter extends BaseAdapter implements OnItemClickLis
 		}
 
 			holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
-			//后期缩略图的背景要切一个小一点的图片
+			/*后期缩略图的背景要切一个小一点的图片*/
 	        holder.thumbnail.setBackgroundResource(birdNote.background);
 	        holder.title.setText(birdNote.title);
 	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));

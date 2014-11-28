@@ -281,10 +281,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
 				int star = mDbHelper.queryStarById(mBirdNote._id+"");
 				if (star == 0) {
-					//如果未收藏，则显示收藏
 					mPopMenu=PopMenuManager.createEditUpdateNoteMenu(getActivity(),popMenuListener);
 				}else {
-					//若已收藏，则显示取消收藏
 					mPopMenu=PopMenuManager.createEditUpdateNoteRmStarMenu(getActivity(),popMenuListener);
 				}
 			}
@@ -302,13 +300,12 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		public void onClick(View v) {
 			closePopMenu();
 			if (v.getId() == 0) {   
-				//更改背景
-
+				/*更改背景*/
 				chooseEditBgPopMenu.showAtLocation(mWrapFrameLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
 
 			}
            if (v.getId() == 1) {  
-        	   //另存为
+        	   /*另存为*/
         	   mBirdInputTitleDialog=new BirdInputTitleDialog(getActivity(), R.style.birdalertdialog);
        		   mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveAsPngListener);
        		   mBirdInputTitleDialog.setTitleString(getString(R.string.save_as_title));
@@ -321,16 +318,13 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
        		   		
 			}
 			if (v.getId() == 2) {    
-				//添加至收藏
-				//toggleStarNoteById
-				//((EditNoteActivity)getActivity()).mBirdNote.
+				/*添加至收藏*/
 				mDbHelper.toggleStarNoteById(mBirdNote._id+"");
 			}
 			if (v.getId() == 3) {           			
 				mBirdAlertDialog.setAlertContent(getString(R.string.alert_delete_content));
 				mBirdAlertDialog.setOnConfirmListener(ConfirmDeleteNoteListener);
-				mBirdAlertDialog.show();				
-/*				mPopMenu.showAsDropDown(mWrapFrameLayout);*/				
+				mBirdAlertDialog.show();					
 			}
 			mPopMenu.dismiss();	
 
@@ -340,10 +334,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	
 	public Bitmap getTextBitmap(){
 		mEditText.setDrawingCacheEnabled(true);
-        // 去掉状态栏
         Bitmap bmp = Bitmap.createBitmap(mEditText.getDrawingCache(), 0,
         		0, mEditText.getWidth(), mEditText.getHeight());
-        // 销毁缓存信息
         mEditText.destroyDrawingCache();
         return bmp;
 	}
@@ -434,7 +426,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			togglePopMenu();
 			break;
 		case R.id.id_edit_title_save:
-			//mPenView.savePicture(mCurrentQuadrant);
 			closePopMenu();
 			saveNote();
 			

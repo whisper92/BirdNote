@@ -66,8 +66,8 @@ public class ChooseEditBgPopMenu extends PopupWindow implements OnItemClickListe
         	      for(int i=0;i<BitmapUtil.EDIT_BGS.length;i++)  
         	      {  
         	        HashMap<String, Object> map = new HashMap<String, Object>();  
-        	        map.put("ItemImage", BitmapUtil.EDIT_BGS[i]);//添加图像资源的ID  
-        	        map.put("ItemText", "NO."+String.valueOf(i));//按序号做ItemText  
+        	        map.put("ItemImage", BitmapUtil.EDIT_BGS[i]);
+        	        map.put("ItemText", "NO."+String.valueOf(i)); 
         	        lstImageItem.add(map);  
         	      }  
                  SimpleAdapter simpleAdapter = new SimpleAdapter(mContext, lstImageItem, R.layout.edit_bg_item, new String[]{"ItemImage"},new int[]{R.id.id_edit_bg_img});
