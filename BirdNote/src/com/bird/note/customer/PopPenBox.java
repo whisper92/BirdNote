@@ -143,6 +143,6 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 				((ImageView)rootView.findViewById(SavedPaint.mColorImages[i])).setBackgroundDrawable(null);
 			}
 		}
-		dismiss();
+		//dismiss();
 	}
 }

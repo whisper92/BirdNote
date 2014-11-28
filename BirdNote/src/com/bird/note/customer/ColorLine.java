@@ -1,6 +1,7 @@
 package com.bird.note.customer;
 
 import com.bird.note.model.SavedPaint;
+import com.bird.note.utils.BitmapUtil;
 
 import android.R.integer;
 import android.content.Context;
@@ -9,9 +10,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.View.MeasureSpec;
 
 /**
  * 用于展示画笔粗细和颜色的线条
@@ -25,6 +29,14 @@ public class ColorLine extends View {
 	private float mPaintWidth = 5f;
 	private int mPaintColor = 0xff000000;
 
+	private int mWidth = 0;
+	private int mHeight = 0;
+	
+	double mSqrt =0;
+	double mRadius = 0;
+	
+	RECT r1;
+	RECT r2;
 	public ColorLine(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
@@ -39,6 +51,9 @@ public class ColorLine extends View {
 	}
 
 	public void init(Context context) {
+		mSqrt = Math.sqrt((double)2);
+		r1 = new RECT();
+		r2 = new RECT();
 		mPaint = new Paint();
 		mPaint.setAntiAlias(true);
 		mPaint.setDither(true);
@@ -73,12 +88,64 @@ public class ColorLine extends View {
 	}
 
 	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+		
+		int widthSize  = MeasureSpec.getSize(widthMeasureSpec);
+		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+/*		Drawable gb = getBackground();
+		int bgW = BitmapUtil.decodeDrawableToBitmap(gb).getWidth();
+		int bgH = BitmapUtil.decodeDrawableToBitmap(gb).getHeight();
+		*/
+		int width,height;
+		width = widthSize;
+		height = heightSize;
+/*		if (widthMode == MeasureSpec.EXACTLY) {
+			
+		} else {
+			width = bgW;
+		}
+		
+		if (heightMode == MeasureSpec.EXACTLY) {
+			
+		} else {
+			height = bgH;
+		}*/
+		
+		mWidth = width;
+		mHeight = height;
+		mRadius = height/mSqrt;
+
+		r1.left = (float)(mHeight-mRadius);
+		r1.top = (float)r1.left;
+		r1.right = (float)(mHeight+mRadius);
+		r1.bottom = (float)r1.right;
+		
+		r2.left = (float)(2*mHeight-mRadius);
+		r2.top = (float)(-mRadius);
+		r2.right =(float) (2*mHeight+mRadius);
+		r2.bottom = (float)mRadius;
+		setMeasuredDimension(width, height);
+	}
+	
+	@Override
 	protected void onDraw(Canvas canvas) {
 
-		RectF oval1 = new RectF(70, 20, 170, 120);
+		RectF oval1 = new RectF(r1.left, r1.top , r1.right, r1.bottom);
+		//canvas.drawRect(oval1, mPaint);
 		canvas.drawArc(oval1, 225, 90, false, mPaint);
-		oval1.set(141, -50, 241, 50);
+		oval1.set(r2.left, r2.top, r2.right , r2.bottom);
+		//canvas.drawRect(oval1, mPaint);
 		canvas.drawArc(oval1, 45, 90, false, mPaint);
+	}
+	
+	public class RECT{
+		float left;
+		float top;
+		float right;
+		float bottom;
 	}
 
 }

@@ -23,20 +23,25 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@drawable/tool_line" >
+            android:background="@drawable/tool_line"
+             >
 
             <com.bird.note.customer.ColorLine
                 android:id="@+id/id_choose_pen_line"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                 />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="@dimen/dimen_pop_pen_item_margin_top"
-            android:background="@drawable/tool_choose"
-            android:orientation="horizontal" >
+            android:background="@drawable/tool_color"
+            android:orientation="horizontal"
+            android:gravity="center_vertical" >
 
             <SeekBar
                 android:id="@+id/id_choose_pen_seekbar"
@@ -49,7 +54,10 @@
 
             <com.bird.note.customer.ColorCircle
                 android:id="@+id/id_choose_pen_circle"
-                android:layout_width="match_parent"
+                android:background="@drawable/tool_circle"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
