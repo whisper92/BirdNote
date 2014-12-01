@@ -15,7 +15,6 @@ import com.bird.note.utils.CommonUtils;
  * 自定义输入标题对话框
  */
 public class BirdInputTitleDialog extends Dialog {
-	private Context mContext;
 	private android.view.View.OnClickListener listener;
 	public EditText mEditText;
 	private String mTitleString = "";
@@ -33,17 +32,12 @@ public class BirdInputTitleDialog extends Dialog {
 	public BirdInputTitleDialog(Context context,
 			android.view.View.OnClickListener listener) {
 		super(context);
-		init(context);
 	}
 
 	public BirdInputTitleDialog(Context context, int theme) {
 		super(context, theme);
-		init(context);
 	}
 
-	public void init(Context context) {
-		this.mContext = context;
-	}
 
 	public void setInputContent(String content) {
 		this.mContentString = content;

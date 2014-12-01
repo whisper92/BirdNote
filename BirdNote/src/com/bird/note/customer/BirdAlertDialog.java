@@ -13,23 +13,17 @@ import com.bird.note.R;
  * 自定义提醒对话框
  */
 public class BirdAlertDialog extends Dialog {
-	private Context mContext;
+
 	private android.view.View.OnClickListener listener;
 	private String mAlertContent = "ALERT!";
 	private TextView mAlertTextView;
 
 	public BirdAlertDialog(Context context) {
 		super(context);
-		init(context);
 	}
 
 	public BirdAlertDialog(Context context, int theme) {
 		super(context, theme);
-		init(context);
-	}
-
-	public void init(Context context) {
-		this.mContext = context;
 	}
 
 	public void setOnConfirmListener(android.view.View.OnClickListener listener) {

@@ -1,14 +1,7 @@
 package com.bird.note.customer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import com.bird.note.R;
-import com.bird.note.model.DBUG;
-import com.bird.note.model.DrawPaint;
-import com.bird.note.model.SavedPaint;
 
 import android.content.Context;
 import android.graphics.Paint;
@@ -20,8 +13,11 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
-import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+
+import com.bird.note.R;
+import com.bird.note.model.DrawPaint;
+import com.bird.note.model.SavedPaint;
 
 /**
  * 选择画笔颜色和粗细的弹出框

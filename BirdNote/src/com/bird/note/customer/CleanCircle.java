@@ -1,10 +1,5 @@
 package com.bird.note.customer;
 
-import com.bird.note.model.DBUG;
-import com.bird.note.model.SavedPaint;
-import com.bird.note.utils.BitmapUtil;
-
-import android.R.integer;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
@@ -13,6 +8,9 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.bird.note.model.SavedPaint;
+import com.bird.note.utils.BitmapUtil;
 
 public class CleanCircle extends View {
 

@@ -8,29 +8,23 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.bird.note.R;
 import com.bird.note.customer.BirdAlertDialog;
 import com.bird.note.customer.BirdInputTitleDialog;
 import com.bird.note.customer.BirdPopMenu;
-import com.bird.note.dao.DbHelper;
 import com.bird.note.ui.EditNoteActivity;
 import com.bird.note.ui.PopMenuManager;
 import com.bird.note.ui.ShowNotesActivity;
@@ -42,10 +36,8 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	private GridView mGridView;
 	private Context mContext;
 	private LayoutInflater mInflater;
-	private Scroller scroller;
 	private BirdInputTitleDialog mBirdInputTitleDialog;
 	private boolean mDeleteState=false;
-	private DbHelper mDbHelper;
 	/*
 	 * 用于保存要删除的笔记的id：如果要删除，则该位置的id为笔记id，否则为-1
 	 */
@@ -63,7 +55,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		for (int i = 0; i < mListData.size(); i++) {
 			mDeleteIds[i]=String.valueOf(-1);
 		}
-		mDbHelper = new DbHelper(mContext);
 	}
 	
 	public boolean getDeleteState(){
@@ -80,7 +71,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		mGridView.setOnItemClickListener(this);
 		mGridView.setOnItemLongClickListener(this);
 		this.mInflater=context.getLayoutInflater();
-		scroller=new Scroller(context);
 
 	}
 
@@ -236,7 +226,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	}
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
-		BirdNote birdNote=getItem(position);
 		if (mDeleteState) {
 			if (mDeleteIds[position].equals(String.valueOf(-1))) {
 				mDeleteIds[position] = mListData.get(position)._id+"";

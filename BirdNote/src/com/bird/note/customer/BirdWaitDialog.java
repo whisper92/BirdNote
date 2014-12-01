@@ -3,7 +3,6 @@ package com.bird.note.customer;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
@@ -13,21 +12,14 @@ import com.bird.note.R;
  * 自定义等待对话框
  */
 public class BirdWaitDialog extends Dialog {
-	private Context mContext;
 	private TextView mTextView;
 	private String mWaitContent="...";
 	public BirdWaitDialog(Context context) {
 		super(context);
-		init(context);
 	}
 
 	public BirdWaitDialog(Context context, int theme) {
 		super(context, theme);
-		init(context);
-	}
-
-	public void init(Context context) {
-		this.mContext = context;
 	}
 
 	@Override

@@ -5,7 +5,6 @@ import com.bird.note.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
 import android.graphics.Paint;
 
 /**

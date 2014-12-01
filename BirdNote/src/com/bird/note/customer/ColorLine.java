@@ -1,21 +1,14 @@
 package com.bird.note.customer;
 
-import com.bird.note.model.SavedPaint;
-import com.bird.note.utils.BitmapUtil;
-
-import android.R.integer;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.View.MeasureSpec;
+
+import com.bird.note.model.SavedPaint;
 
 /**
  * 用于展示画笔粗细和颜色的线条
@@ -95,25 +88,10 @@ public class ColorLine extends View {
 		int widthSize  = MeasureSpec.getSize(widthMeasureSpec);
 		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-/*		Drawable gb = getBackground();
-		int bgW = BitmapUtil.decodeDrawableToBitmap(gb).getWidth();
-		int bgH = BitmapUtil.decodeDrawableToBitmap(gb).getHeight();
-		*/
 		int width,height;
 		width = widthSize;
 		height = heightSize;
-/*		if (widthMode == MeasureSpec.EXACTLY) {
-			
-		} else {
-			width = bgW;
-		}
-		
-		if (heightMode == MeasureSpec.EXACTLY) {
-			
-		} else {
-			height = bgH;
-		}*/
-		
+
 		mWidth = width;
 		mHeight = height;
 		mRadius = height/mSqrt;

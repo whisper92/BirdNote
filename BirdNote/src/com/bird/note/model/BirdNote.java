@@ -1,12 +1,5 @@
 package com.bird.note.model;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.bird.note.R;
-
-import android.R.integer;
 import android.os.Parcel;
 import android.os.Parcelable;
 

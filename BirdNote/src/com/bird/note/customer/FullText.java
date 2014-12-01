@@ -1,11 +1,5 @@
 package com.bird.note.customer;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.bird.note.R;
-import com.bird.note.model.DBUG;
-
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Paint.FontMetrics;
@@ -13,12 +7,12 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bird.note.R;
+import com.bird.note.model.DBUG;
 
 public class FullText extends EditText {
 

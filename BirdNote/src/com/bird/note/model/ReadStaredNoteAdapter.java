@@ -1,39 +1,22 @@
 package com.bird.note.model;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.view.ActionMode;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.bird.note.R;
-import com.bird.note.customer.BirdAlertDialog;
-import com.bird.note.customer.BirdInputTitleDialog;
-import com.bird.note.customer.BirdPopMenu;
-import com.bird.note.dao.DbHelper;
 import com.bird.note.ui.EditNoteActivity;
-import com.bird.note.ui.PopMenuManager;
-import com.bird.note.ui.ShowNotesActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.NoteApplication;
 
@@ -42,11 +25,6 @@ public class ReadStaredNoteAdapter extends BaseAdapter implements OnItemClickLis
 	private GridView mGridView;
 	private Context mContext;
 	private LayoutInflater mInflater;
-	private Scroller scroller;
-	private BirdInputTitleDialog mBirdInputTitleDialog;
-	private boolean mDeleteState=false;
-	private DbHelper mDbHelper;
-
 
 	public ReadStaredNoteAdapter(Activity context, List<BirdNote> listData,
 			GridView gridView) {
@@ -57,7 +35,6 @@ public class ReadStaredNoteAdapter extends BaseAdapter implements OnItemClickLis
 		this.mGridView = gridView;
 		mGridView.setOnItemClickListener(this);
 		this.mInflater=context.getLayoutInflater();
-		scroller=new Scroller(context);
 
 	}
 
@@ -84,23 +61,6 @@ public class ReadStaredNoteAdapter extends BaseAdapter implements OnItemClickLis
 		}
 		return drawableID;
 	}
-	
-	/*
-	 * 根据id获得缩略图的背景
-	 */
-/*	public int getThumbnailBgById(int bg_id){
-		
-		int drawableID=R.drawable.note_bg_style00_thumbnail;
-		switch (bg_id) {
-		case 0:
-			drawableID=R.drawable.note_bg_style00_thumbnail;
-			break;
-
-		default:
-			break;
-		}
-		return drawableID;
-	}*/
 	
 	class NoteHolder{
              ImageView thumbnail;

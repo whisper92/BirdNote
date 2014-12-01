@@ -4,28 +4,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import android.R.integer;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.bird.note.R;
 import com.bird.note.model.CleanPaint;
-import com.bird.note.model.DBUG;
 import com.bird.note.model.DrawPaint;
 import com.bird.note.model.PenDrawPath;
 import com.bird.note.model.SavedPaint;
 import com.bird.note.utils.BitmapUtil;
-import com.bird.note.utils.CommonUtils;
 
 /**
  * 用于涂鸦的View
@@ -126,7 +120,6 @@ public class PenView extends View {
 	}
 
 	private void init(Context context) {
-		DBUG.e(" init  ");
 		mContext = context;
 		mCanvasWidth = (int) getResources().getDimension(
 				R.dimen.dimen_edit_canvas_width);
@@ -152,22 +145,8 @@ public class PenView extends View {
 		mDeletePath = new ArrayList<PenDrawPath>();
 	}
 
-	/*
-	 * Must manully measure the width and height ,then presave in
-	 * /values/dimens.xml
-	 * 
-	 * @Override protected void onMeasure(int widthMeasureSpec, int
-	 * heightMeasureSpec) { DBUG.e("onMeasure   "); int width =
-	 * MeasureSpec.getSize(widthMeasureSpec); int height =
-	 * MeasureSpec.getSize(heightMeasureSpec);
-	 * 
-	 * DBUG.e("width"+width+" |  height"+height); mCanvasWidth =width;
-	 * mCanvasHeight =height; }
-	 */
-
 	@Override
 	public void onDraw(Canvas canvas) {
-		DBUG.e(" onDraw  ");
 		canvas.drawBitmap(mDrawBitmap, 0, 0, null);
 		if (mPath != null) {
 			mDrawCanvas.drawPath(mPath, mCurPaint);
@@ -315,7 +294,6 @@ public class PenView extends View {
 	 * 刷新已经存在的内容
 	 */
 	public void invalidateExistBitmap() {
-		DBUG.e(" invalidateExistBitmap  ");
 		if (mExistBitmap != null) {
 			mDrawBitmap = Bitmap.createBitmap(getWholeBitmap(), 0, 0,
 					mCanvasWidth, mCanvasHeight);

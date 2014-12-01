@@ -1,14 +1,10 @@
 package com.bird.note.dao;
 
-import com.bird.note.dao.BirdDatabaseConstant;
-import com.bird.note.model.DBUG;
-
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
+import com.bird.note.model.DBUG;
 
 public class Db extends SQLiteOpenHelper{
 

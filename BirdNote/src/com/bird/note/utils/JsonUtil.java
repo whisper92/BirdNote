@@ -1,15 +1,10 @@
 package com.bird.note.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.bird.note.dao.NotesTable;
-
-import android.util.Log;
 
 /**
  * json工具类

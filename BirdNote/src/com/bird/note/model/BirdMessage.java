@@ -1,8 +1,5 @@
 package com.bird.note.model;
 
-import android.R.integer;
-import android.util.Log;
-
 import com.bird.note.R;
 
 public class BirdMessage {

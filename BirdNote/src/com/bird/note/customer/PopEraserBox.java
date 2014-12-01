@@ -1,7 +1,6 @@
 package com.bird.note.customer;
 
 import com.bird.note.R;
-import com.bird.note.customer.PopPenBox.OnPaintChangedListener;
 import com.bird.note.model.CleanPaint;
 import com.bird.note.model.SavedPaint;
 

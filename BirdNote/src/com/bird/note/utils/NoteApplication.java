@@ -1,15 +1,10 @@
 package com.bird.note.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.R.integer;
 import android.app.Application;
 
 import com.bird.note.R;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
-import com.bird.note.model.QuadrantContent;
 
 /**
  * 保存一些全局变量

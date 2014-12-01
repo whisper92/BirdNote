@@ -15,13 +15,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bird.note.R;
@@ -33,10 +29,8 @@ import com.bird.note.customer.QuadrantThumbnail.OnQuadrantChangeListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
-import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.utils.BitmapUtil;
-import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.JsonUtil;
 import com.bird.note.utils.NoteApplication;
 

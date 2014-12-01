@@ -1,41 +1,20 @@
 package com.bird.note.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bird.note.R;
-import com.bird.note.customer.BirdPopMenu;
-import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.dao.DbHelper;
-import com.bird.note.model.BirdPopMenuItem;
-import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.DBUG;
 import com.bird.note.model.ReadStaredNoteAdapter;
-import com.bird.note.model.ShowNoteAdapter;
-import com.bird.note.utils.NoteApplication;
 
 /**
  * 首页

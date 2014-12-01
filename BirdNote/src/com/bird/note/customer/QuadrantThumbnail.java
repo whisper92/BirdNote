@@ -1,19 +1,15 @@
 package com.bird.note.customer;
 
-import com.bird.note.R;
-import com.bird.note.utils.BitmapUtil;
-
-import android.R.integer;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+
+import com.bird.note.R;
+import com.bird.note.utils.BitmapUtil;
 
 /**
  * 编辑笔记时用于切换象限的View

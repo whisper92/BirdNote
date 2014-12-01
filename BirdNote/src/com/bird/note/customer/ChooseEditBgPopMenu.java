@@ -4,32 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.bird.note.R;
-import com.bird.note.model.BirdPopMenuItem;
-import com.bird.note.model.DBUG;
-import com.bird.note.utils.BitmapUtil;
-import com.bird.note.utils.CommonUtils;
-
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
-import android.view.MotionEvent;
+
+import com.bird.note.R;
+import com.bird.note.model.BirdPopMenuItem;
+import com.bird.note.utils.BitmapUtil;
 
 /**
  * 编辑笔记界面的菜单
@@ -43,7 +33,6 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 	private LayoutInflater inflater;
 	private View rootView;
 	private Context mContext;
-	private LinearLayout mItemsLayout;
 	public List<BirdPopMenuItem> menuItems;
 	private GridView mBgGridView;
 
@@ -52,8 +41,6 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		rootView = inflater.inflate(R.layout.choos_editbg_pop_menu, null);
-		mItemsLayout = (LinearLayout) rootView
-				.findViewById(R.id.id_popmenu_items);
 		mBgGridView = (GridView) rootView.findViewById(R.id.id_edit_choos_bg);
 
 		this.setContentView(rootView);

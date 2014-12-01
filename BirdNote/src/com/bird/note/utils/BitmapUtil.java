@@ -2,18 +2,19 @@ package com.bird.note.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import com.bird.note.R;
-import com.bird.note.dao.Db;
-
-import android.graphics.Bitmap;
-import android.util.Log;
 import android.content.Context;
-import android.graphics.drawable.*;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
+import android.util.Log;
+
+import com.bird.note.R;
 
 /**
  * 关于Bitmap的工具类

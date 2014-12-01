@@ -5,9 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bird.note.model.DBUG;
-
-import android.R.integer;
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Environment;

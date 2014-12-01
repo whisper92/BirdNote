@@ -5,20 +5,16 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
-import android.R.integer;
-import android.content.Context;
 
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
-import com.bird.note.utils.*;
-
-import android.content.*;
+import com.bird.note.utils.CommonUtils;
+import com.bird.note.utils.JsonUtil;
 
 public class DbHelper {
 	private Context mContext;
