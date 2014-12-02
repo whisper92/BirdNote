@@ -123,10 +123,6 @@ public class ReadStaredNoteAdapter extends BaseAdapter implements OnItemClickLis
 	        holder.thumbnail.setBackgroundResource(birdNote.background);
 	        holder.title.setText(birdNote.title);
 	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
-
-
-        
-
 		return convertView;
 	}
 	

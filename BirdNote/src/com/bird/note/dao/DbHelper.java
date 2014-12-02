@@ -126,7 +126,7 @@ public class DbHelper {
 	 */
 	public List<BirdNote> sortShowNotesByCreateTime(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, NotesTable.CREATE_TIME+" asc");
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, NotesTable.CREATE_TIME+" desc");
 		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;
