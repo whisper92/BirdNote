@@ -285,8 +285,9 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		}
 
 			holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
+			BitmapUtil.writeBytesToFile(birdNote.thumbnail, "thumb"+position);
 			/*后期缩略图的背景要切一个小一点的图片*/
-	        holder.thumbnail.setBackgroundResource(birdNote.background);
+	        //holder.thumbnail.setBackgroundResource(birdNote.background);
 	        holder.title.setText(birdNote.title);
 	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
 	        

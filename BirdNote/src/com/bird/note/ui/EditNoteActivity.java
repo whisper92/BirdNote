@@ -44,7 +44,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	/*
 	 * 当前所处模式：绘图或文字
 	 */
-	public int mCurrentMode = 0;
+	public int mCurrMode = 0;
 	
 	/*
 	 * 当前的类型：创建或更新
@@ -98,7 +98,7 @@ public class EditNoteActivity extends FragmentActivity implements
 			
 		}
 		
-		mCurrentMode = intent.getIntExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_pen);
+		mCurrMode = intent.getIntExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_pen);
 			
 		try {
 			initActivityView(mCurrentType);
@@ -187,7 +187,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		while (iterator.hasNext()) {
 			quadrantContent = (QuadrantContent) iterator.next();
 			if (quadrantContent != null) {
-				EditQuadrantFragment editQuadrantFragment=EditQuadrantFragment.newInstance(mCurrentMode,quadrantContent);
+				EditQuadrantFragment editQuadrantFragment=EditQuadrantFragment.newInstance(mCurrMode,quadrantContent);
 				mEditQuaFragmentsList.remove(quadrantContent.quadrant);
 				mEditQuaFragmentsList.add(quadrantContent.quadrant, editQuadrantFragment);
 				
@@ -211,7 +211,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	}
 	
 	public void initCreateView(int type) {
-		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrentMode);
+		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrMode);
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
 		mEditQuaFragmentsList.add(1, null);
 		mEditQuaFragmentsList.add(2, null);
@@ -331,7 +331,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	 */
 	public byte[] createThumbnailByQuadrant(){
 		Bitmap bitmap=mEditQuaFragmentsList.get(0).getAllBitmap();
-		return BitmapUtil.generateThumbnailBytes(this, bitmap);
+		return BitmapUtil.decodeBitmapToBytes(bitmap);
 	}
 
 	public Handler editHandler=new Handler(){
@@ -343,6 +343,9 @@ public class EditNoteActivity extends FragmentActivity implements
 					mWaitDialog.dismiss();
 					Toast.makeText(EditNoteActivity.this, getString(R.string.save_as_toast_start)+msg.obj, Toast.LENGTH_LONG).show();
 				}
+				 if (mEditQuaFragment.mEditText!=null) {
+					 mEditQuaFragment.mEditText.setCursorVisible(true);
+					}
 				break;
 			case BirdMessage.SAVE_OVER:			
 				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);

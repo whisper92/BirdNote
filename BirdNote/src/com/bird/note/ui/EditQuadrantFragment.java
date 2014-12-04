@@ -47,7 +47,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 * 包含编辑区域以及象限切换菜单的布局
 	 */
 	private FrameLayout mWrapFrameLayout;
-	private EditText mEditText;
+	public EditText mEditText;
 	private PenView mPenView;
 	/*
 	 * 撤销和重做图标的状态
@@ -341,6 +341,9 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		public void onClick(View v) {
 			 mBirdInputTitleDialog.dismiss();
 			 mainHandler.sendEmptyMessage(BirdMessage.SAVE_RUNNABLE_START);
+			 if (mEditText!=null) {
+				mEditText.setCursorVisible(false);
+			}
             new SaveAsThread().start();                
 		}
 	};
@@ -350,6 +353,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		
 		@Override
 		public void run() {
+
 			Bitmap bitmap= getAllBitmap();
 			mSavePath = CommonUtils.getSavePath()+"/"+mBirdInputTitleDialog.getContent()+".png";
             BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap),  "/"+mBirdInputTitleDialog.getContent());	

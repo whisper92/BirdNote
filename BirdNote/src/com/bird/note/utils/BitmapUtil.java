@@ -89,7 +89,7 @@ public class BitmapUtil {
 	 * @return byte[]
 	 */
 	public static byte[] generateThumbnailBytes(Context context,Bitmap origBitmap){
-		Bitmap thumbBitmap=ThumbnailUtils.extractThumbnail(origBitmap, (int) context.getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)context.getResources().getDimension(R.dimen.dimen_create_thumbnail_height));
+		Bitmap thumbBitmap=Bitmap.createScaledBitmap(origBitmap, (int) context.getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)context.getResources().getDimension(R.dimen.dimen_create_thumbnail_height), false);
 		return BitmapUtil.decodeBitmapToBytes(thumbBitmap);
 	}
 	
