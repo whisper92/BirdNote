@@ -25,6 +25,7 @@ import com.bird.note.R;
 import com.bird.note.customer.BirdPopMenu;
 import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.dao.DbHelper;
+import com.bird.note.dao.NotesTable;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.BirdPopMenuItem;
@@ -161,8 +162,21 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			startActivity(intent);
 			break;
 		case R.id.id_show_title_delete_confirm:
-			showHandler.sendEmptyMessage(BirdMessage.DELETE_RUNNABLE_START);
-			showHandler.postDelayed(DeleteNotesRunnable,300);
+			int flag =0;
+			for (int i = 0; i < mNoteAdapter.getSelectedNote().length; i++) {
+				if (!mNoteAdapter.getSelectedNote()[i].equals(String.valueOf(-1))) {
+					flag++;
+				}		
+			}
+			
+			if (mNoteAdapter!=null && flag > 0) {
+				DBUG.e("删除笔记个数"+ flag);
+				showHandler.sendEmptyMessage(BirdMessage.DELETE_RUNNABLE_START);
+				showHandler.postDelayed(DeleteNotesRunnable,300);
+			} else {
+				mNoteAdapter.setDeleteState(false);
+			}
+			
 			startShowNoamralTitle();
 			break;
 		case R.id.id_show_title_delete_cancle:
@@ -416,7 +430,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			
 			if (msg.what==BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START) {
 				mChoosePosition = (Integer)msg.obj;
-				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
+				mWaitDialog.setWaitContent(getString(R.string.alert_sort));
 				mWaitDialog.show();
 				post(changeMarkColorRunnable);
 			}
