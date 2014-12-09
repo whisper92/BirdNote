@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bird.note.R;
-import com.bird.note.model.DBUG;
 
 public class FullText extends EditText {
 
@@ -67,7 +66,6 @@ public class FullText extends EditText {
 	private Handler myHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == 0) {
-				DBUG.e("get messgae");
 				if (mToast == null) {
 					mToast = Toast.makeText(mContext,
 							mContext.getString(R.string.fulltext_max),
@@ -179,6 +177,7 @@ public class FullText extends EditText {
 				}
 				mFirstDown = false;
 			}
+
 			if ((mClickLine + 1) > lineCount) {
 				setSelection(getText().length(), getText().length());
 				for (int i = 0; i < (mClickLine + 1 - lineCount); i++) {
@@ -192,28 +191,31 @@ public class FullText extends EditText {
 					mSelectSatrt++;
 				}
 				return super.onTouchEvent(event);
-			} else if ((mClickLine + 1) == lineCount) {
-				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
-				setSelection(woqu, woqu);
 			} else {
 				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
 				setSelection(woqu, woqu);
-				lineStart = getOffsetForPosition(0, mClickPosY);
-				mSelectSatrt = getSelectionStart();
-
-				while (mPaint.measureText(editable.toString(), lineStart,
-						mSelectSatrt) < mClickPosX) {
-					editable.insert(mSelectSatrt, " ");
-					mSelectSatrt++;
+				if ((mClickLine + 1) == lineCount) {
+					dstart = mSelectSatrt - lineStart;
+					setSelection(woqu, woqu);
+					temp = 0;
+					myHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							while (mPaint.measureText(editable.toString(),
+									lineStart, lineStart + dstart + temp) < mClickPosX) {
+								editable.append(" ");
+								temp++;
+							}
+						}
+					});
+					return super.onTouchEvent(event);
 				}
-				return super.onTouchEvent(event);
 			}
 			break;
 
 		case MotionEvent.ACTION_UP:
 			mSelectSatrt = getSelectionStart();
 			if ((mClickLine + 1) == lineCount) {
-
 				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
 				lineStart = getOffsetForPosition(0, mClickPosY);
 				if (mClickLine == 0) {
@@ -233,23 +235,27 @@ public class FullText extends EditText {
 
 				} else {
 					if (mSelectSatrt <= woqu) {
-						DBUG.e("in th content...");
-					} else {
-						dstart = mSelectSatrt - lineStart;
-						setSelection(woqu, woqu);
-						temp = 0;
-						myHandler.post(new Runnable() {
-							@Override
-							public void run() {
-								while (mPaint.measureText(editable.toString(),
-										lineStart, lineStart + dstart + temp) < mClickPosX) {
-									editable.append(" ");
-									temp++;
-								}
-							}
-						});
-						return super.onTouchEvent(event);
 					}
+				}
+
+			} else if ((mClickLine + 1) < lineCount) {
+				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
+				lineStart = getOffsetForPosition(0, mClickPosY);
+				char b = getText().charAt(woqu - 1);
+				char c = getText().charAt(woqu);
+				String a = "\n";
+				if (String.valueOf(b).equals(a) || String.valueOf(c).equals(a)) {
+					setSelection(woqu, woqu);
+
+					lineStart = getOffsetForPosition(0, mClickPosY);
+					mSelectSatrt = getSelectionStart();
+
+					while (mPaint.measureText(editable.toString(), lineStart,
+							mSelectSatrt) < mClickPosX) {
+						editable.insert(mSelectSatrt, " ");
+						mSelectSatrt++;
+					}
+				} else {
 				}
 
 			}

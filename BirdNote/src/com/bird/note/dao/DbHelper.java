@@ -9,14 +9,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.bird.note.model.BirdNote;
-import com.bird.note.model.DBUG;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.JsonUtil;
 
 public class DbHelper {
+	private String TAG = "DbHelper";
 	private Context mContext;
 	private Db mDb;
 	private SQLiteDatabase dbWrite;
@@ -261,7 +262,7 @@ public class DbHelper {
 		values.put(NotesTable.BG_ID, birdNote.background);
 		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
-		DBUG.e("update note success..."+CommonUtils.getCurrentTime());
+		Log.e(TAG,"update note success..."+CommonUtils.getCurrentTime());
 		dbWrite.close();
 	}
 	
@@ -271,7 +272,7 @@ public class DbHelper {
 	 */
 	public void deleteNoteById(String note_id){
 		dbWrite.delete(NotesTable.TABLE_NAME, "_id=?", new String[]{note_id});
-		DBUG.e("delete note success...");
+		Log.e(TAG,"delete note success...");
 	}
 	
 	public void deleteNoteByIds(String[] note_ids){
@@ -280,7 +281,7 @@ public class DbHelper {
 				dbWrite.delete(NotesTable.TABLE_NAME, "_id=?", new String[]{note_ids[i]});
 			}		
 		}
-		DBUG.e("delete notes success...");
+		Log.e(TAG,"delete notes success...");
 	}
 	
 	/**
@@ -317,7 +318,7 @@ public class DbHelper {
 		values.put(NotesTable.STAR, star);
 		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
-		DBUG.e("star note success..."+CommonUtils.getCurrentTime());
+		Log.e(TAG,"star note success..."+CommonUtils.getCurrentTime());
 	}
 	
 	
@@ -330,7 +331,7 @@ public class DbHelper {
 		values.put(NotesTable.LEVEL, level);
 		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
-		DBUG.e("updateLevelById success..."+CommonUtils.getCurrentTime());
+		Log.e(TAG,"updateLevelById success..."+CommonUtils.getCurrentTime());
 	}
 	
 	/**
@@ -342,7 +343,7 @@ public class DbHelper {
 		values.put(NotesTable.TITLE, title);
 		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
-		DBUG.e("updateTitleById success..."+CommonUtils.getCurrentTime());
+		Log.e(TAG,"updateTitleById success..."+CommonUtils.getCurrentTime());
 	}
 	
 	/**
@@ -354,7 +355,7 @@ public class DbHelper {
 		values.put(NotesTable.BG_ID, bgid);
 		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
-		DBUG.e("updateBackgroundById success..."+CommonUtils.getCurrentTime());
+		Log.e(TAG,"updateBackgroundById success..."+CommonUtils.getCurrentTime());
 	}
 	
 	public int getNoteCount(){

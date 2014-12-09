@@ -70,6 +70,13 @@ public class NoteApplication extends Application{
 	public int screenWidth = 0;
 	public int screenHeight = 0;
 	
+	public int currentEditMode = R.id.id_edit_title_pen;
+	public int getCurrentEditMode() {
+		return currentEditMode;
+	}
+	public void setCurrentEditMode(int currentEditMode) {
+		this.currentEditMode = currentEditMode;
+	}
 	
 	
 }

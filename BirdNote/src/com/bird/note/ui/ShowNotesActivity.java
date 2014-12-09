@@ -29,7 +29,6 @@ import com.bird.note.dao.NotesTable;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.BirdPopMenuItem;
-import com.bird.note.model.DBUG;
 import com.bird.note.model.ShowNoteAdapter;
 import com.bird.note.utils.NoteApplication;
 
@@ -170,7 +169,6 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			}
 			
 			if (mNoteAdapter!=null && flag > 0) {
-				DBUG.e("删除笔记个数"+ flag);
 				showHandler.sendEmptyMessage(BirdMessage.DELETE_RUNNABLE_START);
 				showHandler.postDelayed(DeleteNotesRunnable,300);
 			} else {
@@ -211,7 +209,6 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	
 	@Override
 	protected void onRestart() {
-		DBUG.e("restart...");
 		mBirdNotes=queryByCurrentSort(mCurrentSort);
 		mNoteAdapter= new ShowNoteAdapter(this,mBirdNotes,mGridView); 
 	    mNoteAdapter.notifyDataSetChanged();

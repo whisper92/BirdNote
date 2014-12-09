@@ -99,7 +99,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		}
 		
 		mCurrMode = intent.getIntExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_pen);
-			
+		mNoteApplication.setCurrentEditMode(mCurrMode);
 		try {
 			initActivityView(mCurrentType);
 		} catch (JSONException e) {
@@ -150,7 +150,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	public void changeToQuadrantAt(int qua) {
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		if (mEditQuaFragmentsList.get(qua) == null) {
-			mEditQuaFragment = EditQuadrantFragment.newInstance(qua, R.id.id_edit_title_pen);			
+			mEditQuaFragment = EditQuadrantFragment.newInstance(qua, mNoteApplication.getCurrentEditMode());			
 			mEditQuaFragmentsList.remove(qua);
 			mEditQuaFragmentsList.add(qua, mEditQuaFragment);
 			transaction.add(R.id.id_edit_main_editfragment, mEditQuaFragment);
@@ -158,13 +158,16 @@ public class EditNoteActivity extends FragmentActivity implements
 			mEditQuaFragment = mEditQuaFragmentsList.get(qua);
 			if (!mEditQuaFragment.isAdded()) {
 				transaction.add(R.id.id_edit_main_editfragment, mEditQuaFragment);
+				
 			}					
 		}
 		
 		
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
 			if (i == qua) {
+				
 				transaction.show(mEditQuaFragment);
+				
 			} else {
 				if (mEditQuaFragmentsList.get(i)!=null) {
 					transaction.hide(mEditQuaFragmentsList.get(i));
@@ -172,6 +175,13 @@ public class EditNoteActivity extends FragmentActivity implements
 			}
 		}
 		transaction.commit();
+		editHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				mEditQuaFragment.changeCurrentMode(mNoteApplication.getCurrentEditMode());
+			}
+		});
+		
 	}
 
 	public void initUpdateView(int type) throws JSONException{

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.bird.note.R;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdNote;
-import com.bird.note.model.DBUG;
 import com.bird.note.model.ReadStaredNoteAdapter;
 
 /**
@@ -58,7 +57,6 @@ public class ReadStaredNotesActivity extends Activity{
 
 	@Override
 	protected void onRestart() {
-		DBUG.e("restart...");
 		mBirdNotes=mDbHelper.queryStaredShowNotes();
 		mNoteAdapter= new ReadStaredNoteAdapter(this,mBirdNotes,mGridView);
 	    mNoteAdapter.notifyDataSetChanged();

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.bird.note.model.DBUG;
 
 public class Db extends SQLiteOpenHelper{
 
@@ -16,7 +15,6 @@ public class Db extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(NotesTable.SQL_CREATE);
-		DBUG.e("create table success...");
 	}
 
 	@Override
