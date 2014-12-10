@@ -2,9 +2,15 @@
 
     <item
         android:id="@+id/id_show_menu_mutil_delete"
-        android:title="@string/edit_menu_delete"/>
-     <item 
+        android:title="@string/show_menu_delete"/>
+    <item
+        android:id="@+id/id_show_menu_sort"
+        android:title="@string/show_menu_sort"/>
+    <item
+        android:id="@+id/id_show_menu_all_star"
+        android:title="@string/show_menu_all_star"/>
+    <item
         android:id="@+id/id_show_menu_search"
         android:title="@string/show_menu_search"/>
-        
+
 </menu>

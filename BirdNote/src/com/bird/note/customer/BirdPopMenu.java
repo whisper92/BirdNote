@@ -61,14 +61,15 @@ public class BirdPopMenu extends PopupWindow {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT);
 		layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
-		layoutParams.bottomMargin = CommonUtils.dpToPx(mContext, 5);
+		layoutParams.bottomMargin = CommonUtils.dpToPx(mContext, 0);
 		int padding = CommonUtils.dpToPx(mContext, 10);
 		Button button = new Button(mContext);
-		button.setTextColor(Color.WHITE);
+		button.setTextColor(Color.BLACK);
 		button.setText(mContext.getString(R.string.show_menu_cancel));
-		button.setBackgroundResource(R.drawable.menu_cancle_bg);
+		button.setBackgroundResource(R.drawable.pop_menu_item);
 		button.setLayoutParams(layoutParams);
 		button.setPadding(padding, padding, padding, padding);
+		button.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
 		button.setOnClickListener(DismissListener);
 		mItemsLayout.addView(button);
 	}
@@ -81,16 +82,17 @@ public class BirdPopMenu extends PopupWindow {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT);
 		layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
-		layoutParams.bottomMargin = CommonUtils.dpToPx(mContext, 5);
+		layoutParams.bottomMargin = CommonUtils.dpToPx(mContext, 0);
 		int padding = CommonUtils.dpToPx(mContext, 10);
 		for (int i = 0; i < menuItems.size(); i++) {
 			Button button = new Button(mContext);
 			button.setText(menuItems.get(i).menuText);
 			button.setBackgroundResource(menuItems.get(i).menuBackground);
 			button.setId(i);
-			button.setTextColor(Color.WHITE);
+			button.setTextColor(Color.BLACK);
 			button.setLayoutParams(layoutParams);
 			button.setPadding(padding, padding, padding, padding);
+			button.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
 			button.setOnClickListener(listener);
 			mItemsLayout.addView(button);
 		}

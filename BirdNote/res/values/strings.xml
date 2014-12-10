@@ -43,5 +43,7 @@
     <string name="fulltext_max">Reach Max Lines!</string>
     <string name="alert_sort">Updateing Data...</string>
     
-    <string name="exit_ensure">Exit with save？</string>
+        <string name="exit_ensure">Exit？</string>
+    <string name="exit_without_save">Without Save</string>
+    <string name="exit_with_save">With Save</string>
 </resources>

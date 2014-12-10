@@ -30,6 +30,7 @@ public final class R {
         public static final int color_alert_dialog_bg=0x7f060004;
         public static final int color_alert_dialog_full_bg=0x7f060003;
         public static final int color_alert_dialog_text=0x7f060002;
+        public static final int color_pop_menu_item_bg=0x7f060006;
         public static final int color_show_item=0x7f060001;
         public static final int color_show_title_text=0x7f060000;
         public static final int color_wait_dialog_bg=0x7f060005;
@@ -261,16 +262,18 @@ public final class R {
         public static final int id_edit_title_save=0x7f0b0017;
         public static final int id_edit_title_text=0x7f0b0013;
         public static final int id_exit_cancel=0x7f0b0002;
-        public static final int id_exit_confirm=0x7f0b0003;
+        public static final int id_exit_confirm=0x7f0b0001;
         public static final int id_note_item_ll=0x7f0b000b;
         public static final int id_note_item_thumb_iv=0x7f0b0020;
         public static final int id_note_item_title_tv=0x7f0b0021;
         public static final int id_penbox_choosecolor_ll=0x7f0b0022;
-        public static final int id_popmenu_items=0x7f0b0001;
+        public static final int id_popmenu_items=0x7f0b0003;
         public static final int id_popmenu_root=0x7f0b0000;
         public static final int id_show_gv=0x7f0b003f;
+        public static final int id_show_menu_all_star=0x7f0b004a;
         public static final int id_show_menu_mutil_delete=0x7f0b0048;
-        public static final int id_show_menu_search=0x7f0b0049;
+        public static final int id_show_menu_search=0x7f0b004b;
+        public static final int id_show_menu_sort=0x7f0b0049;
         public static final int id_show_note_root=0x7f0b0036;
         public static final int id_show_title_count=0x7f0b0039;
         public static final int id_show_title_delete_cancle=0x7f0b003e;
@@ -330,6 +333,8 @@ public final class R {
         public static final int edit_menu_removefavor=0x7f080005;
         public static final int edit_menu_saveas=0x7f080009;
         public static final int exit_ensure=0x7f080021;
+        public static final int exit_with_save=0x7f080023;
+        public static final int exit_without_save=0x7f080022;
         /**  插入的行数 
          */
         public static final int fullscreen_edit_line=0x7f08000a;

@@ -459,4 +459,8 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		};
 	};
 	
+/*	public boolean onCreateOptionsMenu(android.view.Menu menu) {
+		getMenuInflater().inflate(R.menu.show_menu, menu);
+		return true;
+	};*/
 }

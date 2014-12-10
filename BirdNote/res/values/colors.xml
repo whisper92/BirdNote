@@ -7,6 +7,8 @@
     <color name="color_alert_dialog_full_bg" >#00ffffff</color>
     <color name="color_alert_dialog_bg" >#ff727272</color>
     <color name="color_wait_dialog_bg" >#00ffffff</color>
+    <color name="color_pop_menu_item_bg" >#edeaea</color>
+    
 <!-- 
 		0xff16cc79,0xff01932e,0xff04672e,0xffff82c9,0xffff365b,0xffff0000,0xffff6000,0xffa5a5a5,
 		0xff727272,0xff363636,0xff38a8fe,0xff3467fe,0xff005aff,0xfffcff0c,0xffffffff,0xff000000
