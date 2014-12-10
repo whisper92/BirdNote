@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -40,65 +41,69 @@ public class EditNoteActivity extends FragmentActivity implements
 	public LevelFlag mLevelFlag;
 	private QuadrantThumbnail quadrantThumbnail;
 
-
 	/*
 	 * 当前所处模式：绘图或文字
 	 */
 	public int mCurrMode = 0;
-	
+
 	/*
 	 * 当前的类型：创建或更新
 	 */
-	public int mCurrentType=BirdMessage.START_TYPE_CREATE_VALUE;
-	
+	public int mCurrentType = BirdMessage.START_TYPE_CREATE_VALUE;
+
 	private EditQuadrantFragment mEditQuaFragment;
 	/*
 	 * 当前所处象限
 	 */
 	private int mCurrentQuadrant = 0;
-	
-	public BirdNote mBirdNote=null;
+
+	public BirdNote mBirdNote = null;
 
 	private DbHelper dbHelper;
 	private List<EditQuadrantFragment> mEditQuaFragmentsList = new ArrayList<EditQuadrantFragment>();
 	private List<QuadrantContent> mQuaList;
 	private FragmentManager fragmentManager;
-	public int mNoteEditType=BirdMessage.NOTE_EDIT_TYPE_CREATE;
-	private NoteApplication mNoteApplication=null;
+	public int mNoteEditType = BirdMessage.NOTE_EDIT_TYPE_CREATE;
+	private NoteApplication mNoteApplication = null;
 	private int[] mEditedQuadrant;
-	
-	public String mTitleString="";
+
+	public String mTitleString = "";
 	private BirdWaitDialog mWaitDialog = null;
 	private FrameLayout mRootView;
 	private BirdExitPopMenu mBirdExitPopMenu;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_note_main);
 		mRootView = (FrameLayout) findViewById(R.id.id_edit_ac_root);
-		mBirdExitPopMenu = new BirdExitPopMenu(EditNoteActivity.this,exitClickListener);
-		mWaitDialog  =new BirdWaitDialog(this, R.style.birdalertdialog);
-		mNoteApplication=(NoteApplication)getApplication();
-		mNoteEditType=mNoteApplication.getCurrentNoteEidtType();
-		mEditedQuadrant=mNoteApplication.getEditedQuadrants();
-		
-		dbHelper=new DbHelper(this);
-		Intent intent=getIntent();
-		mCurrentType=intent.getIntExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_CREATE_VALUE);
-		
-		if (mCurrentType==BirdMessage.START_TYPE_UPDATE_VALUE) {
-			/*若更新笔记，获得传过来Note(不完整)*/
-			mBirdNote=intent.getParcelableExtra(BirdMessage.INITENT_PARCEL_NOTE);
+		mBirdExitPopMenu = new BirdExitPopMenu(EditNoteActivity.this,
+				exitClickListener);
+		mWaitDialog = new BirdWaitDialog(this, R.style.birdalertdialog);
+		mNoteApplication = (NoteApplication) getApplication();
+		mNoteEditType = mNoteApplication.getCurrentNoteEidtType();
+		mEditedQuadrant = mNoteApplication.getEditedQuadrants();
+
+		dbHelper = new DbHelper(this);
+		Intent intent = getIntent();
+		mCurrentType = intent.getIntExtra(BirdMessage.START_TYPE_KEY,
+				BirdMessage.START_TYPE_CREATE_VALUE);
+
+		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
+			/* 若更新笔记，获得传过来Note(不完整) */
+			mBirdNote = intent
+					.getParcelableExtra(BirdMessage.INITENT_PARCEL_NOTE);
 			mTitleString = mBirdNote.title;
-			/*查询获取完整的Note*/
-			mBirdNote=dbHelper.queryNoteById(mBirdNote, mBirdNote._id+"");
+			/* 查询获取完整的Note */
+			mBirdNote = dbHelper.queryNoteById(mBirdNote, mBirdNote._id + "");
 			mNoteApplication.setEditBackground(mBirdNote.background);
 		} else {
-			
+
 		}
-		
-		mCurrMode = intent.getIntExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_pen);
+
+		mCurrMode = intent.getIntExtra(BirdMessage.START_MODE_KEY,
+				R.id.id_edit_title_pen);
 		mNoteApplication.setCurrentEditMode(mCurrMode);
 		try {
 			initActivityView(mCurrentType);
@@ -108,7 +113,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	}
 
 	public OnClickListener exitClickListener = new OnClickListener() {
-		
+
 		@Override
 		public void onClick(View v) {
 			if (v.getId() == R.id.id_exit_cancel) {
@@ -117,116 +122,123 @@ public class EditNoteActivity extends FragmentActivity implements
 			if (v.getId() == R.id.id_exit_confirm) {
 				mEditQuaFragment.saveNote();
 			}
-			if (mBirdExitPopMenu!=null && mBirdExitPopMenu.isShowing()) {
+			if (mBirdExitPopMenu != null && mBirdExitPopMenu.isShowing()) {
 				mBirdExitPopMenu.dismiss();
 			}
-			
+
 		}
 	};
-	public void initActivityView(int type) throws JSONException{
 
-		mLevelFlag=(LevelFlag)findViewById(R.id.id_edit_level_flag);
+	public void initActivityView(int type) throws JSONException {
+
+		mLevelFlag = (LevelFlag) findViewById(R.id.id_edit_level_flag);
 		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
-		quadrantThumbnail.setQuadrantChangeListener(new OnQuadrantChangeListener() {
+		quadrantThumbnail
+				.setQuadrantChangeListener(new OnQuadrantChangeListener() {
 					@Override
 					public void changeQua(int qua) {
-						mCurrentQuadrant=qua;
-						changeToQuadrantAt(qua);					
+						mCurrentQuadrant = qua;
+						changeToQuadrantAt(qua);
 					}
 				});
-		
-		if (type==BirdMessage.START_TYPE_CREATE_VALUE) {
+
+		if (type == BirdMessage.START_TYPE_CREATE_VALUE) {
 			initCreateView(type);
-			
+
 		}
-        if (type==BirdMessage.START_TYPE_UPDATE_VALUE) {
-        	initUpdateView(type);
+		if (type == BirdMessage.START_TYPE_UPDATE_VALUE) {
+			initUpdateView(type);
 		}
 	}
-	
+
 	/**
 	 * 切换到某个象限:最初知会实例化第一个象限，只有使用到其他象限时才会实例化该象限的fagment
 	 */
 	public void changeToQuadrantAt(int qua) {
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		if (mEditQuaFragmentsList.get(qua) == null) {
-			mEditQuaFragment = EditQuadrantFragment.newInstance(qua, mNoteApplication.getCurrentEditMode());			
+			mEditQuaFragment = EditQuadrantFragment.newInstance(qua,
+					mNoteApplication.getCurrentEditMode());
 			mEditQuaFragmentsList.remove(qua);
 			mEditQuaFragmentsList.add(qua, mEditQuaFragment);
 			transaction.add(R.id.id_edit_main_editfragment, mEditQuaFragment);
 		} else {
 			mEditQuaFragment = mEditQuaFragmentsList.get(qua);
 			if (!mEditQuaFragment.isAdded()) {
-				transaction.add(R.id.id_edit_main_editfragment, mEditQuaFragment);
-				
-			}					
+				transaction.add(R.id.id_edit_main_editfragment,
+						mEditQuaFragment);
+
+			}
 		}
-		
-		
+
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
 			if (i == qua) {
-				
+
 				transaction.show(mEditQuaFragment);
-				
+
 			} else {
-				if (mEditQuaFragmentsList.get(i)!=null) {
+				if (mEditQuaFragmentsList.get(i) != null) {
 					transaction.hide(mEditQuaFragmentsList.get(i));
-				}		
+				}
 			}
 		}
 		transaction.commit();
 		editHandler.post(new Runnable() {
 			@Override
 			public void run() {
-				mEditQuaFragment.changeCurrentMode(mNoteApplication.getCurrentEditMode());
+				mEditQuaFragment.changeCurrentMode(mNoteApplication
+						.getCurrentEditMode());
 			}
 		});
-		
+
 	}
 
-	public void initUpdateView(int type) throws JSONException{
+	public void initUpdateView(int type) throws JSONException {
 		mLevelFlag.setCurrentLeve(mBirdNote.level);
 		mEditQuaFragmentsList.add(0, null);
 		mEditQuaFragmentsList.add(1, null);
 		mEditQuaFragmentsList.add(2, null);
 		mEditQuaFragmentsList.add(3, null);
-		
-		mQuaList=dbHelper.generateQuadrantFromNote(mBirdNote);
-		Iterator< QuadrantContent> iterator=mQuaList.iterator();
+
+		mQuaList = dbHelper.generateQuadrantFromNote(mBirdNote);
+		Iterator<QuadrantContent> iterator = mQuaList.iterator();
 		QuadrantContent quadrantContent;
 		while (iterator.hasNext()) {
 			quadrantContent = (QuadrantContent) iterator.next();
 			if (quadrantContent != null) {
-				EditQuadrantFragment editQuadrantFragment=EditQuadrantFragment.newInstance(mCurrMode,quadrantContent);
+				EditQuadrantFragment editQuadrantFragment = EditQuadrantFragment
+						.newInstance(mCurrMode, quadrantContent);
 				mEditQuaFragmentsList.remove(quadrantContent.quadrant);
-				mEditQuaFragmentsList.add(quadrantContent.quadrant, editQuadrantFragment);
-				
+				mEditQuaFragmentsList.add(quadrantContent.quadrant,
+						editQuadrantFragment);
+
 			}
-			
+
 		}
-		
+
 		/*
 		 * 先默认0，后期要改成可以进入任意象限
 		 */
 		mEditQuaFragment = mEditQuaFragmentsList.get(0);
 		mEditQuaFragmentsList.remove(0);
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
-		mEditedQuadrant[0]=1;
+		mEditedQuadrant[0] = 1;
 		mNoteApplication.setEditedQuadrants(mEditedQuadrant);
-		
+
 		fragmentManager = getSupportFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
 		transaction.commit();
 	}
-	
+
 	public void initCreateView(int type) {
-		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrMode);
+		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant,
+				mCurrMode);
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
 		mEditQuaFragmentsList.add(1, null);
 		mEditQuaFragmentsList.add(2, null);
 		mEditQuaFragmentsList.add(3, null);
-		
+
 		fragmentManager = getSupportFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
@@ -234,13 +246,10 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	}
 
-
-
 	@Override
-	public void onClick(View v) {	
-	
+	public void onClick(View v) {
+
 	}
-	
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -248,125 +257,139 @@ public class EditNoteActivity extends FragmentActivity implements
 		if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
 			mEditQuaFragment.togglePopMenu();
 			return true;
-		}else if (keyCode == KeyEvent.KEYCODE_BACK){
+		} else if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (mEditQuaFragment.mPopMenu.isShowing()) {
 				mEditQuaFragment.closePopMenu();
 				return true;
 			} else {
-				
-				mBirdExitPopMenu.showAtLocation(mRootView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+
+				mBirdExitPopMenu.showAtLocation(mRootView, Gravity.BOTTOM
+						| Gravity.CENTER_HORIZONTAL, 0, 0);
 				return true;
 			}
-			
+
 		}
+
 		return super.onKeyDown(keyCode, event);
 	}
 
-	
-	public void deleteNote(){
-		if (mBirdNote!=null) {
-			dbHelper.deleteNoteById(mBirdNote._id+"");
+	@Override
+	protected void onPause() {
+		Log.e("wxp", "关闭输入法");
+		mEditQuaFragment.hideInputMethod();
+		super.onPause();
+	}
+
+	public void deleteNote() {
+		if (mBirdNote != null) {
+			dbHelper.deleteNoteById(mBirdNote._id + "");
 		}
 		editHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);
 	}
+
 	/**
 	 * 生成新的笔记对象
 	 */
-	public BirdNote generateNewNote(){
-		BirdNote birdNote=new BirdNote();
-		int[] edited=mNoteApplication.getEditedQuadrants();
-		int level=mLevelFlag.mCurrentLevel;
-		String title=mEditQuaFragment.mTitleString;
-		birdNote.level=level;
+	public BirdNote generateNewNote() {
+		BirdNote birdNote = new BirdNote();
+		int[] edited = mNoteApplication.getEditedQuadrants();
+		int level = mLevelFlag.mCurrentLevel;
+		String title = mEditQuaFragment.mTitleString;
+		birdNote.level = level;
 		if (mCurrentType == BirdMessage.START_TYPE_CREATE_VALUE) {
-			birdNote.title=title;		
+			birdNote.title = title;
 		} else {
 			birdNote.title = mTitleString;
 		}
-		
-		String[] text_array=new String[4];
-		byte[] qua=null;
+
+		String[] text_array = new String[4];
+		byte[] qua = null;
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
-			if (mEditQuaFragmentsList.get(i)!=null) {
-						    
-                   if (edited[i]==1) {
-                	   /*若编辑过，则保存新内容*/
-                    	  		text_array[i]=mEditQuaFragmentsList.get(i).getTextContent();
-        		                qua=mEditQuaFragmentsList.get(i).getQuadrantDrawContentBytes();			
-					} else {
-						/*若未编辑过，则保存原始内容*/
-								text_array[i]=mQuaList.get(i).textcontent;
-								qua=mQuaList.get(i).quadrantdraw;	
-					}
-			} else {
-				/*如果某个象限未被实例化，则将他的内容设置为null*/
-				text_array[i]=null;
-				qua=null;
-			}
-			
-			  switch (i) {
-				case 0:
-					birdNote.qua0=qua;
-					break;
-				case 1:
-					birdNote.qua1=qua;
-					break;
-				case 2:
-					birdNote.qua2=qua;
-					break;
-				case 3:
-					birdNote.qua3=qua;
-					break;
-				default:
-					break;
+			if (mEditQuaFragmentsList.get(i) != null) {
+
+				if (edited[i] == 1) {
+					/* 若编辑过，则保存新内容 */
+					text_array[i] = mEditQuaFragmentsList.get(i)
+							.getTextContent();
+					qua = mEditQuaFragmentsList.get(i)
+							.getQuadrantDrawContentBytes();
+				} else {
+					/* 若未编辑过，则保存原始内容 */
+					text_array[i] = mQuaList.get(i).textcontent;
+					qua = mQuaList.get(i).quadrantdraw;
 				}
-			
+			} else {
+				/* 如果某个象限未被实例化，则将他的内容设置为null */
+				text_array[i] = null;
+				qua = null;
+			}
+
+			switch (i) {
+			case 0:
+				birdNote.qua0 = qua;
+				break;
+			case 1:
+				birdNote.qua1 = qua;
+				break;
+			case 2:
+				birdNote.qua2 = qua;
+				break;
+			case 3:
+				birdNote.qua3 = qua;
+				break;
+			default:
+				break;
+			}
+
 		}
-		String text_content="";
+		String text_content = "";
 		try {
 			text_content = JsonUtil.createJsonFromStrings(text_array);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		birdNote.textcontents=text_content;
-		birdNote.thumbnail=createThumbnailByQuadrant();
-		birdNote.background=mNoteApplication.getEditBackground();
+		birdNote.textcontents = text_content;
+		birdNote.thumbnail = createThumbnailByQuadrant();
+		birdNote.background = mNoteApplication.getEditBackground();
 		birdNote.star = 0;
-	    return birdNote;
+		return birdNote;
 	}
 
 	/**
 	 * 根据第一象限的内容生成预览图
+	 * 
 	 * @return
 	 */
-	public byte[] createThumbnailByQuadrant(){
-		Bitmap bitmap=mEditQuaFragmentsList.get(0).getAllBitmap();
+	public byte[] createThumbnailByQuadrant() {
+		Bitmap bitmap = mEditQuaFragmentsList.get(0).getAllBitmap();
 		return BitmapUtil.decodeBitmapToBytes(bitmap);
 	}
 
-	public Handler editHandler=new Handler(){
+	public Handler editHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			Intent intent=new Intent();
+			Intent intent = new Intent();
 			switch (msg.what) {
-			case BirdMessage.SAVE_AS_OVER:			
-				if (mWaitDialog!=null&&mWaitDialog.isShowing()) {
+			case BirdMessage.SAVE_AS_OVER:
+				if (mWaitDialog != null && mWaitDialog.isShowing()) {
 					mWaitDialog.dismiss();
-					Toast.makeText(EditNoteActivity.this, getString(R.string.save_as_toast_start)+msg.obj, Toast.LENGTH_LONG).show();
+					Toast.makeText(EditNoteActivity.this,
+							getString(R.string.save_as_toast_start) + msg.obj,
+							Toast.LENGTH_LONG).show();
 				}
-				 if (mEditQuaFragment.mEditText!=null) {
-					 mEditQuaFragment.mEditText.setCursorVisible(true);
-					}
+				if (mEditQuaFragment.mEditText != null) {
+					mEditQuaFragment.mEditText.setCursorVisible(true);
+				}
 				break;
-			case BirdMessage.SAVE_OVER:			
+			case BirdMessage.SAVE_OVER:
 				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
 				startActivity(intent);
 				finish();
 				break;
-			case BirdMessage.DELETE_OVER:		
+			case BirdMessage.DELETE_OVER:
 				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
 				startActivity(intent);
 				finish();
-				break;				
+				break;
 			case BirdMessage.SAVE_RUNNABLE_START:
 				mWaitDialog.setWaitContent(getString(R.string.saveing_note));
 				mWaitDialog.show();

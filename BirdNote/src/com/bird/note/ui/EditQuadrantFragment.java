@@ -438,8 +438,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mEditText.setFocusable(true);
 			mEditText.setFocusableInTouchMode(true);
 			mEditText.requestFocus();
-
-		
 			showInputMethod();
 			mPenHasSelected = 0;
 			mEraserHasSelected = 0;

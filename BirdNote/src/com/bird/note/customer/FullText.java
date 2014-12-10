@@ -7,12 +7,11 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.bird.note.R;
-import com.wxp.fulledittext.DBUG;
 
 public class FullText extends EditText {
 
@@ -217,81 +216,77 @@ public class FullText extends EditText {
 		case MotionEvent.ACTION_UP:
 			mSelectSatrt = getSelectionStart();
 			if ((mClickLine + 1) == lineCount) {
-				DBUG.e("in th lineCount...");
 				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
 				lineStart = getOffsetForPosition(0, mClickPosY);
 				if (mClickLine == 0) {
 					dstart = mSelectSatrt - lineStart;
 					setSelection(woqu, woqu);
 					temp = 0;
-					myHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							while (mPaint.measureText(editable.toString(),
-									lineStart, lineStart + dstart + temp) < mClickPosX) {
-								editable.append(" ");
-								temp++;
-							}
-						}
-					});
+
+					while (mPaint.measureText(editable.toString(), lineStart,
+							lineStart + dstart + temp) < mClickPosX) {
+						editable.append(" ");
+						temp++;
+					}
 
 				} else {
 					if (mSelectSatrt <= woqu) {
-						DBUG.e("in th content...mSelectSatrt:"+mSelectSatrt+"  woqu :"+woqu);
-					} 
+					}
 				}
 
 			} else if ((mClickLine + 1) < lineCount) {
 				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
 				lineStart = getOffsetForPosition(0, mClickPosY);
-				
+
 				String a = "\n";
-				if (mClickLine == 0) {
+
+				Log.e("wxp", "你告诉我是点的第几行：" + (mClickLine + 1));
+				if (woqu == 0) {
 					char c = getText().charAt(woqu);
 					if (String.valueOf(c).equals(a)) {
-						//如果前一个是换行符或者后一个是换行符就在之前的位置插入空格
+						// 如果前一个是换行符或者后一个是换行符就在之前的位置插入空格
 						setSelection(woqu, woqu);
 
 						lineStart = getOffsetForPosition(0, mClickPosY);
 						mSelectSatrt = getSelectionStart();
 
-						while (mPaint.measureText(editable.toString(), lineStart,
-								mSelectSatrt) < mClickPosX) {
+						while (mPaint.measureText(editable.toString(),
+								lineStart, mSelectSatrt) < mClickPosX) {
 							editable.insert(mSelectSatrt, " ");
 							mSelectSatrt++;
 						}
 
 					} else {
-						//否则不做操作
-						DBUG.e("kai");
+
 					}
 				} else {
 					char b = getText().charAt(woqu - 1);
 					char c = getText().charAt(woqu);
-					if (String.valueOf(b).equals(a) || String.valueOf(c).equals(a)) {
-						//如果前一个是换行符或者后一个是换行符就在之前的位置插入空格
+					if (String.valueOf(b).equals(a)
+							|| String.valueOf(c).equals(a)) {
+						// 如果前一个是换行符或者后一个是换行符就在之前的位置插入空格
 						setSelection(woqu, woqu);
 
 						lineStart = getOffsetForPosition(0, mClickPosY);
 						mSelectSatrt = getSelectionStart();
 
-						while (mPaint.measureText(editable.toString(), lineStart,
-								mSelectSatrt) < mClickPosX) {
+						while (mPaint.measureText(editable.toString(),
+								lineStart, mSelectSatrt) < mClickPosX) {
 							editable.insert(mSelectSatrt, " ");
 							mSelectSatrt++;
 						}
 
 					} else {
-						//否则不做操作
-						DBUG.e("kai");
+
 					}
 				}
-				
 
 			}
 
 			mFirstDown = true;
 
+			break;
+		default:
 			break;
 
 		}
