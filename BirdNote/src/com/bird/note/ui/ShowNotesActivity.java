@@ -71,7 +71,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.show_notes);
 		
-		mWaitDialog  =new BirdWaitDialog(this, R.style.birdalertdialog);
+		mWaitDialog  =new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mDbHelper=new DbHelper(this);
 		mLinearLayout = (LinearLayout) findViewById(R.id.id_show_note_root);
 		mShowTitle=(RelativeLayout)findViewById(R.id.id_show_title_rl);

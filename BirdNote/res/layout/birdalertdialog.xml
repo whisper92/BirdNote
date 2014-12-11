@@ -2,22 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dimen_dialog_width"
     android:layout_height="wrap_content"
-    android:background="@color/color_alert_dialog_bg"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/id_alertdiaolg_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/menu_cancle_bg"
-        android:padding="10dp"
-        android:textSize="@dimen/dimen_show_titile_text_size"
-        android:textColor="@color/color_alert_dialog_text" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/menu_bg"
         android:orientation="horizontal" >
 
         <TextView
@@ -25,8 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#fff6f6f6"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="15dp"
             android:text="@string/show_menu_cancel" />
 
         <TextView
@@ -34,8 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#fff6f6f6"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="15dp"
             android:text="@string/show_menu_confirm" />
     </LinearLayout>
 

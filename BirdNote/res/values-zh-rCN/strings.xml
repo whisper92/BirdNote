@@ -42,5 +42,5 @@
     <string name="exit_ensure">确认退出？</string>
     <string name="exit_without_save">不保存</string>
     <string name="exit_with_save">且保存</string>
-    
+    <string name="item_operation">操作</string>
 </resources>

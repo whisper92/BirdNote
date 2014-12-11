@@ -1,10 +1,14 @@
 package com.bird.note.ui;
 
+import android.R.anim;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -43,7 +47,8 @@ import com.bird.note.utils.NoteApplication;
 import android.util.Log;
 
 public class EditQuadrantFragment extends Fragment implements OnClickListener {
-	private boolean flag = false;
+	private EditText mInputTitleEditText;
+
 	private NoteApplication mNoteApplication;
 	private FrameLayout mEditMainLayout;
 	/*
@@ -144,10 +149,13 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 
 	}
 
+	AlertDialog.Builder saveNewNoteBuilder = null;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mainHandler = ((EditNoteActivity) getActivity()).editHandler;
+
+		saveNewNoteBuilder = PopMenuManager.createSaveNewNoteAlertDialog(getActivity(), R.string.input_title_dialog_title, mInputTitleEditText, null);
 		View view = inflater.inflate(R.layout.edit_note_fragment, container,
 				false);
 		mDbHelper = new DbHelper(getActivity());
@@ -204,8 +212,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 
 	public void initCreateView(int type) {
 		mPenView = new PenView(getActivity());
-		mPopMenu = PopMenuManager.createEditNewNoteMenu(getActivity(),
-				popMenuListener);
+
 	}
 
 	/**
@@ -220,8 +227,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 				.decodeBytesToBitmap(quadrantContent.quadrantdraw));
 		mPenView.invalidateExistBitmap();
 		mEditText.setText(quadrantContent.textcontent);
-		mPopMenu = PopMenuManager.createEditUpdateNoteMenu(getActivity(),
-				popMenuListener);
+		
 		if (((EditNoteActivity) getActivity()).mBirdNote != null) {
 			mBirdNote = ((EditNoteActivity) getActivity()).mBirdNote;
 		}
@@ -288,72 +294,31 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 
 	}
 
-	public void togglePopMenu() {
-
-		if (!mPopMenu.isShowing()) {
-			if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
-				int star = mDbHelper.queryStarById(mBirdNote._id + "");
-				if (star == 0) {
-					mPopMenu = PopMenuManager.createEditUpdateNoteMenu(
-							getActivity(), popMenuListener);
-				} else {
-					mPopMenu = PopMenuManager.createEditUpdateNoteRmStarMenu(
-							getActivity(), popMenuListener);
-				}
-			}
-
-			mPopMenu.showAtLocation(mWrapFrameLayout, Gravity.BOTTOM
-					| Gravity.CENTER_HORIZONTAL, 0, 0);
+	public void showChangeBg(){
+		/* 更改背景 */
+		chooseEditBgPopMenu.showAtLocation(mWrapFrameLayout,
+				Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+	}
+	
+	public void showSaveAs(){
+		/* 另存为 */
+		mBirdInputTitleDialog = new BirdInputTitleDialog(getActivity(),
+				R.style.birdalertdialog);
+		mBirdInputTitleDialog
+				.setOnConfirmClickListener(ConfirmSaveAsPngListener);
+		mBirdInputTitleDialog.show();
+		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
+			mBirdInputTitleDialog
+					.setInputContent(((EditNoteActivity) getActivity()).mBirdNote.title
+							+ "_qua" + mCurrentQuadrant);
 		} else {
-			mPopMenu.dismiss();
+			mBirdInputTitleDialog.setInputContent(CommonUtils
+					.getDefaultTitle() + "_qua" + mCurrentQuadrant);
 		}
 	}
+	
+	
 
-	public OnClickListener popMenuListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			closePopMenu();
-			if (v.getId() == 0) {
-				/* 更改背景 */
-				chooseEditBgPopMenu.showAtLocation(mWrapFrameLayout,
-						Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-
-			}
-			if (v.getId() == 1) {
-				/* 另存为 */
-				mBirdInputTitleDialog = new BirdInputTitleDialog(getActivity(),
-						R.style.birdalertdialog);
-				mBirdInputTitleDialog
-						.setOnConfirmClickListener(ConfirmSaveAsPngListener);
-				mBirdInputTitleDialog
-						.setTitleString(getString(R.string.save_as_title));
-				mBirdInputTitleDialog.show();
-				if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
-					mBirdInputTitleDialog
-							.setInputContent(((EditNoteActivity) getActivity()).mBirdNote.title
-									+ "_qua" + mCurrentQuadrant);
-				} else {
-					mBirdInputTitleDialog.setInputContent(CommonUtils
-							.getDefaultTitle() + "_qua" + mCurrentQuadrant);
-				}
-
-			}
-			if (v.getId() == 2) {
-				/* 添加至收藏 */
-				mDbHelper.toggleStarNoteById(mBirdNote._id + "");
-			}
-			if (v.getId() == 3) {
-				mBirdAlertDialog
-						.setAlertContent(getString(R.string.alert_delete_content));
-				mBirdAlertDialog
-						.setOnConfirmListener(ConfirmDeleteNoteListener);
-				mBirdAlertDialog.show();
-			}
-			mPopMenu.dismiss();
-
-		}
-	};
 
 	public Bitmap getTextBitmap() {
 		mEditText.setDrawingCacheEnabled(true);
@@ -470,7 +435,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mPenView.redo();
 			break;
 		case R.id.id_edit_title_more:
-			togglePopMenu();
 			hideInputMethod();
 			break;
 		case R.id.id_edit_title_save:
@@ -528,8 +492,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 				if (mPopEraserBox.isShowing()) {
 					mPopEraserBox.dismiss();
 				}
-				mBirdAlertDialog
-						.setAlertContent(getString(R.string.alert_clear_all));
 				mBirdAlertDialog.setOnConfirmListener(ConfirmClearAllListener);
 				mBirdAlertDialog.show();
 
@@ -603,14 +565,21 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 
 	public void saveNewNote() {
-		mBirdInputTitleDialog = new BirdInputTitleDialog(getActivity(),
-				R.style.birdalertdialog);
-		mBirdInputTitleDialog
-				.setTitleString(getString(R.string.input_title_dialog_title));
+	mBirdInputTitleDialog = new BirdInputTitleDialog(getActivity(),
+				android.R.style.Theme_Holo_Light_Dialog);
+	mBirdInputTitleDialog.setTitle(R.string.input_title_dialog_title);
 		mBirdInputTitleDialog
 				.setOnConfirmClickListener(ConfirmSaveNewNoteClickListener);
+		
 		mBirdInputTitleDialog.show();
 		mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle());
+		
+/*		LayoutInflater inflater = getActivity().getLayoutInflater();
+		View view = inflater.inflate(R.layout.edit_note_input_title_dialog, null);
+		mInputTitleEditText = new EditText(getActivity());
+		
+		saveNewNoteBuilder.setView(mInputTitleEditText);
+		saveNewNoteBuilder.show();*/
 	}
 
 	public void saveUpdateNote() {
@@ -735,26 +704,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		}
 	}
 
-	/**
-	 * 监听确认删除笔记
-	 */
-	public OnClickListener ConfirmDeleteNoteListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			if (v.getId() == R.id.id_alertdiaolg_confirm) {
-				mBirdAlertDialog.dismiss();
-				mainHandler.sendEmptyMessage(BirdMessage.DELETE_RUNNABLE_START);
-				mainHandler.postDelayed(DeleteNoteRunnable, 300);
-			}
-		}
-	};
-
-	public Runnable DeleteNoteRunnable = new Runnable() {
-		@Override
-		public void run() {
-			((EditNoteActivity) getActivity()).deleteNote();
-		}
-	};
 
 	public OnClickListener ConfirmClearAllListener = new OnClickListener() {
 

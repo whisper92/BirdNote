@@ -70,5 +70,6 @@ public class BirdMessage {
     public static final String SORT_BY="sortby";
     public static final int SORT_BY_DEFAULT=0;
     
+    public static final String STAR="note_star";
 
 }

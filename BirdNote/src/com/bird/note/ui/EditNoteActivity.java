@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import android.R.anim;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
@@ -72,6 +75,7 @@ public class EditNoteActivity extends FragmentActivity implements
 	private FrameLayout mRootView;
 	private BirdExitPopMenu mBirdExitPopMenu;
 
+	private int mStar = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -80,7 +84,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		mRootView = (FrameLayout) findViewById(R.id.id_edit_ac_root);
 		mBirdExitPopMenu = new BirdExitPopMenu(EditNoteActivity.this,
 				exitClickListener);
-		mWaitDialog = new BirdWaitDialog(this, R.style.birdalertdialog);
+		mWaitDialog = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mNoteApplication = (NoteApplication) getApplication();
 		mNoteEditType = mNoteApplication.getCurrentNoteEidtType();
 		mEditedQuadrant = mNoteApplication.getEditedQuadrants();
@@ -98,6 +102,7 @@ public class EditNoteActivity extends FragmentActivity implements
 			/* 查询获取完整的Note */
 			mBirdNote = dbHelper.queryNoteById(mBirdNote, mBirdNote._id + "");
 			mNoteApplication.setEditBackground(mBirdNote.background);
+			mStar = mBirdNote.star;
 		} else {
 
 		}
@@ -254,20 +259,6 @@ public class EditNoteActivity extends FragmentActivity implements
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-		if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
-			mEditQuaFragment.togglePopMenu();
-			return true;
-		} else if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (mEditQuaFragment.mPopMenu.isShowing()) {
-				mEditQuaFragment.closePopMenu();
-				return true;
-			} else {
-				mBirdExitPopMenu.showAtLocation(mRootView, Gravity.BOTTOM
-						| Gravity.CENTER_HORIZONTAL, 0, 0);
-				return true;
-			}
-
-		}
 
 		return super.onKeyDown(keyCode, event);
 	}
@@ -278,12 +269,17 @@ public class EditNoteActivity extends FragmentActivity implements
 		mEditQuaFragment.hideInputMethod();	
 	}
 
-	public void deleteNote() {
-		if (mBirdNote != null) {
-			dbHelper.deleteNoteById(mBirdNote._id + "");
+	private Runnable deleteRunnable = new Runnable() {
+		
+		@Override
+		public void run() {
+			if (mBirdNote != null) {
+				dbHelper.deleteNoteById(mBirdNote._id + "");
+			}
+			editHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);
+			
 		}
-		editHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);
-	}
+	};
 
 	/**
 	 * 生成新的笔记对象
@@ -401,5 +397,67 @@ public class EditNoteActivity extends FragmentActivity implements
 				break;
 			}
 		};
+	};
+	
+	public boolean onCreateOptionsMenu(android.view.Menu menu) {
+		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
+			int star = dbHelper.queryStarById(mBirdNote._id + "");
+			Log.e("wxp", star+"eeeeee");
+			if (star == 0) {
+				getMenuInflater().inflate(R.menu.edit_menu_tostar, menu);
+			} else {
+				getMenuInflater().inflate(R.menu.edit_menu_cancelstar, menu);
+			}
+		} else {
+			getMenuInflater().inflate(R.menu.create_newnote_menu, menu);
+		}
+
+		
+		return true;
+	};
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.id_edit_menu_change_bg:
+			mEditQuaFragment.showChangeBg();
+			break;
+		case R.id.id_edit_menu_saveas:
+			mEditQuaFragment.showSaveAs();
+			
+			break;
+		case R.id.id_edit_menu_star:
+			dbHelper.toggleStarNoteById(mBirdNote._id + "");
+			invalidateOptionsMenu();
+			break;
+		case R.id.id_edit_menu_delete:
+			PopMenuManager.createDeleteAlertDialog(EditNoteActivity.this, R.string.alert_delete_content, deleteListener);
+			break;
+		case R.id.id_edit_menu_removefavor:
+			dbHelper.toggleStarNoteById(mBirdNote._id + "");
+			invalidateOptionsMenu();
+			break;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	android.content.DialogInterface.OnClickListener deleteListener = new android.content.DialogInterface.OnClickListener() {
+		
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			switch (which) {
+			case -1:
+				editHandler.sendEmptyMessage(BirdMessage.DELETE_RUNNABLE_START);
+				editHandler.post(deleteRunnable);
+				break;
+			case -2:
+				
+				break;
+			default:
+				break;
+			}
+		}
 	};
 }
