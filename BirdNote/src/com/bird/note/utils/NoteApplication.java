@@ -1,6 +1,7 @@
 package com.bird.note.utils;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.bird.note.R;
 import com.bird.note.model.BirdMessage;
@@ -76,6 +77,18 @@ public class NoteApplication extends Application{
 	}
 	public void setCurrentEditMode(int currentEditMode) {
 		this.currentEditMode = currentEditMode;
+	}
+	
+    private static Context sContext;
+
+    public static Context getContext() {
+        return sContext;
+    }
+    
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		 sContext = getApplicationContext();
 	}
 	
 	

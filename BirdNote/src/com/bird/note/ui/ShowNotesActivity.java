@@ -6,13 +6,18 @@ import java.util.List;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -20,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.bird.note.R;
 import com.bird.note.customer.BirdPopMenu;
@@ -31,6 +37,7 @@ import com.bird.note.model.BirdNote;
 import com.bird.note.model.BirdPopMenuItem;
 import com.bird.note.model.ShowNoteAdapter;
 import com.bird.note.utils.NoteApplication;
+import com.bird.note.utils.PreferenceUtil;
 
 /**
  * 首页
@@ -56,10 +63,8 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 
 	private LinearLayout mLinearLayout = null;
 	private TextView mTitleNoteCount;
-	private int mCurrentSort= 1;
-	
-	private List<BirdPopMenuItem> mBirdMenuItems;
-	private BirdPopMenu mShowPopMenu;
+	private int mCurrentSort= 0;
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		mSelectAll = (Button) findViewById(R.id.id_show_title_delete_select_all);
         mTitleNoteCount =(TextView) findViewById(R.id.id_show_title_count);
 		mGridView = (GridView) findViewById(R.id.id_show_gv);
+		mCurrentSort = PreferenceUtil.getSortBy();
 		mBirdNotes=queryByCurrentSort(mCurrentSort);
 		
 		mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
@@ -92,7 +98,6 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		mCancelDelete.setOnClickListener(this);
 		mSelectAll.setOnClickListener(this);
 		
-		mShowPopMenu = PopMenuManager.createShowMenu(this, showMenuListener);
 	}
 
 	
@@ -120,7 +125,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
+/*		if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
 			togglePopMenu();
 			return true;
 		}else if (keyCode == KeyEvent.KEYCODE_BACK){
@@ -129,18 +134,81 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 				return true;
 			}
 			
-		}
+		}*/
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	private void togglePopMenu() {
-		if  (!mShowPopMenu.isShowing()) {
-			mShowPopMenu.showAtLocation(mLinearLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
-		} else {
-			mShowPopMenu.dismiss();
-		}
+  public boolean onCreateOptionsMenu(android.view.Menu menu) {
+	getMenuInflater().inflate(R.menu.show_menu, menu);
+	return true;
+   };
+   
+   
+
+	
+	android.content.DialogInterface.OnClickListener sortListener = new android.content.DialogInterface.OnClickListener() {
 		
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+		
+			switch (which) {
+			case 0:
+				mCurrentSort = 0;
+				break;
+			case 1:
+				mCurrentSort = 1;
+				break;
+			case 2:
+				mCurrentSort = 2;
+				break;
+			case -2:
+				/*Confirm*/
+				PreferenceUtil.setSortBy(mCurrentSort);
+				Log.e("wxp","mCurrentSort:"+mCurrentSort);
+				 showHandler.sendEmptyMessage(BirdMessage.SORT_START);
+				 showHandler.post(sortRunnable);
+				break;
+			default:
+				break;
+			}
+		}
+	};
+   @Override
+public boolean onOptionsItemSelected(MenuItem item) {
+	switch ( item.getItemId()) {
+	case R.id.id_show_menu_mutil_delete:
+		if ((mNoteAdapter.getDeleteState()==false)&&mNoteAdapter!=null && mBirdNotes!=null && mBirdNotes.size()>0) {
+			mNoteAdapter.setDeleteState(true);
+			startShowMenuTitle();		
+		}
+		break;
+
+	case R.id.id_show_menu_sort:
+		AlertDialog sortDialog = PopMenuManager.createSortChooseAlertDialog(ShowNotesActivity.this, R.string.show_menu_sort, sortListener);
+		sortDialog.show();
+		break;
+		
+	case R.id.id_show_menu_all_star:
+		Intent startintent = new Intent();
+		startintent.setClass(ShowNotesActivity.this, ReadStaredNotesActivity.class);
+		startintent.putExtra("flag", "star");
+		startActivity(startintent);
+		break;
+		
+	case R.id.id_show_menu_search:
+		Intent searchintent = new Intent();
+		searchintent.setClass(ShowNotesActivity.this, SearchNotesActivity.class);
+		searchintent.putExtra("flag", "search");
+		startActivity(searchintent);
+		break;
+	default:
+		break;
 	}
+	return super.onOptionsItemSelected(item);
+}
+	
+
 
 	@Override
 	public void onClick(View v) {
@@ -209,6 +277,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	
 	@Override
 	protected void onRestart() {
+		super.onRestart();
 		mBirdNotes=queryByCurrentSort(mCurrentSort);
 		mNoteAdapter= new ShowNoteAdapter(this,mBirdNotes,mGridView); 
 	    mNoteAdapter.notifyDataSetChanged();
@@ -216,7 +285,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	    	mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
 	    	mGridView.setAdapter(mNoteAdapter);
 		}    
-		super.onRestart();
+		
 	}
 	@Override
 	protected void onStart() {
@@ -298,52 +367,8 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		});
 	}
 	
-	public OnClickListener sortByListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			    closeMenu(mPopMenuSort);		
-			    mCurrentSort = v.getId();
-			    showHandler.sendEmptyMessage(BirdMessage.SORT_START);
-			    showHandler.post(sortRunnable);
-				
-		}
-	};
-	
-	BirdPopMenu mPopMenuSort;
 
-	public OnClickListener showMenuListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			switch (v.getId()) {
-			case 0:
-	             if ((mNoteAdapter.getDeleteState()==false)&&mNoteAdapter!=null && mBirdNotes!=null && mBirdNotes.size()>0) {
-					mNoteAdapter.setDeleteState(true);
-					startShowMenuTitle();		
-				}
-				break;
-			case 1:
-				mPopMenuSort=PopMenuManager.createSortMenu(ShowNotesActivity.this, sortByListener);
-				mPopMenuSort.showAtLocation(mLinearLayout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);	
-				break;
-			case 2:
-				Intent startintent = new Intent();
-				startintent.setClass(ShowNotesActivity.this, ReadStaredNotesActivity.class);
-				startintent.putExtra("flag", "star");
-				startActivity(startintent);
-				break;
-			case 3:
-				Intent searchintent = new Intent();
-				searchintent.setClass(ShowNotesActivity.this, SearchNotesActivity.class);
-				searchintent.putExtra("flag", "search");
-				startActivity(searchintent);
-				break;
-			default:
-				break;
-			}
-			
-			closeMenu(mShowPopMenu);
-		}
-	};
+	
 	
 
 	
@@ -459,8 +484,5 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		};
 	};
 	
-/*	public boolean onCreateOptionsMenu(android.view.Menu menu) {
-		getMenuInflater().inflate(R.menu.show_menu, menu);
-		return true;
-	};*/
+
 }

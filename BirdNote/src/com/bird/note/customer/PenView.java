@@ -81,6 +81,12 @@ public class PenView extends View {
 	public int mCanvasWidth = 0;
 	public int mCanvasHeight = 0;
 
+	/*
+	 * 清除模式的笔尖圆圈
+	 */
+	private Paint mCleanPoint = null;
+	boolean isMoving = false;
+	float mCleanCircleRadius = 0;
 	public PenView(Context context, AttributeSet attr, int defStyle) {
 		super(context, attr, defStyle);
 		init(context);
@@ -143,10 +149,23 @@ public class PenView extends View {
 
 		mSavePath = new ArrayList<PenDrawPath>();
 		mDeletePath = new ArrayList<PenDrawPath>();
+		
+		mCleanPoint = new Paint();
+		mCleanPoint.setColor(Color.GRAY);
+		mCleanPoint.setAntiAlias(true);
+		mCleanPoint.setDither(true);
+		mCleanPoint.setStyle(Paint.Style.STROKE);
+		mCleanPoint.setStrokeJoin(Paint.Join.ROUND);
+		mCleanPoint.setStrokeCap(Paint.Cap.ROUND);
+		mCleanPoint.setStrokeWidth(2.0f);
 	}
 
 	@Override
 	public void onDraw(Canvas canvas) {
+		if (isMoving == true && mIsCleanMode ==true) {
+			canvas.drawCircle(posX, posY, mCleanCircleRadius, mCleanPoint);
+		}
+		
 		canvas.drawBitmap(mDrawBitmap, 0, 0, null);
 		if (mPath != null) {
 			mDrawCanvas.drawPath(mPath, mCurPaint);
@@ -164,6 +183,7 @@ public class PenView extends View {
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
+			mCleanCircleRadius = mSavedPaint.getSavedCleanPaintWidth()/2;
 			downx = event.getRawX();
 			downy = event.getRawY();
 
@@ -179,6 +199,7 @@ public class PenView extends View {
 
 			break;
 		case MotionEvent.ACTION_MOVE:
+			isMoving = true;
 			float dx = Math.abs(x - posX);
 			float dy = Math.abs(y - posY);
 			if (dx >= TOUCH_TOLERANCE || dy > TOUCH_TOLERANCE) {
@@ -189,7 +210,7 @@ public class PenView extends View {
 			postInvalidate();
 			break;
 		case MotionEvent.ACTION_UP:
-
+			isMoving = false;
 			if ((Math.abs(downx - event.getX())) >= 4
 					|| (Math.abs(downy - event.getY())) > 4) {
 				mPath.lineTo(posX, posY);

@@ -1,5 +1,7 @@
 package com.bird.note.model;
 
+import android.R.integer;
+
 import com.bird.note.R;
 
 public class BirdMessage {
@@ -62,7 +64,11 @@ public class BirdMessage {
     public static final int SORT_OVER=307;
     
 
-    
+    /*
+     * SortBy
+     */
+    public static final String SORT_BY="sortby";
+    public static final int SORT_BY_DEFAULT=0;
     
 
 }

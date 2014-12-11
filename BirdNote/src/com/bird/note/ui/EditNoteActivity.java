@@ -262,7 +262,6 @@ public class EditNoteActivity extends FragmentActivity implements
 				mEditQuaFragment.closePopMenu();
 				return true;
 			} else {
-
 				mBirdExitPopMenu.showAtLocation(mRootView, Gravity.BOTTOM
 						| Gravity.CENTER_HORIZONTAL, 0, 0);
 				return true;
@@ -275,9 +274,8 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	@Override
 	protected void onPause() {
-		Log.e("wxp", "关闭输入法");
-		mEditQuaFragment.hideInputMethod();
 		super.onPause();
+		mEditQuaFragment.hideInputMethod();	
 	}
 
 	public void deleteNote() {
@@ -381,13 +379,13 @@ public class EditNoteActivity extends FragmentActivity implements
 				}
 				break;
 			case BirdMessage.SAVE_OVER:
-				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
-				startActivity(intent);
+/*				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
+				startActivity(intent);*/
 				finish();
 				break;
 			case BirdMessage.DELETE_OVER:
-				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
-				startActivity(intent);
+/*				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
+				startActivity(intent);*/
 				finish();
 				break;
 			case BirdMessage.SAVE_RUNNABLE_START:

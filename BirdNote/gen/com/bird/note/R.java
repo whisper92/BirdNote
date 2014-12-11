@@ -245,12 +245,12 @@ public final class R {
         public static final int id_edit_main_et=0x7f0b0010;
         public static final int id_edit_main_fl=0x7f0b000e;
         public static final int id_edit_main_fl_warpper=0x7f0b000f;
-        public static final int id_edit_menu_change_bg=0x7f0b0044;
-        public static final int id_edit_menu_change_page=0x7f0b0045;
-        public static final int id_edit_menu_delete=0x7f0b0042;
-        public static final int id_edit_menu_mark_colr=0x7f0b0046;
-        public static final int id_edit_menu_saveas=0x7f0b0047;
-        public static final int id_edit_menu_star=0x7f0b0043;
+        public static final int id_edit_menu_change_bg=0x7f0b0048;
+        public static final int id_edit_menu_change_page=0x7f0b0049;
+        public static final int id_edit_menu_delete=0x7f0b0046;
+        public static final int id_edit_menu_mark_colr=0x7f0b004a;
+        public static final int id_edit_menu_saveas=0x7f0b004b;
+        public static final int id_edit_menu_star=0x7f0b0047;
         public static final int id_edit_note_fragment_root=0x7f0b000d;
         public static final int id_edit_quathumb=0x7f0b001c;
         public static final int id_edit_title_clean=0x7f0b0014;
@@ -270,10 +270,10 @@ public final class R {
         public static final int id_popmenu_items=0x7f0b0003;
         public static final int id_popmenu_root=0x7f0b0000;
         public static final int id_show_gv=0x7f0b003f;
-        public static final int id_show_menu_all_star=0x7f0b004a;
-        public static final int id_show_menu_mutil_delete=0x7f0b0048;
-        public static final int id_show_menu_search=0x7f0b004b;
-        public static final int id_show_menu_sort=0x7f0b0049;
+        public static final int id_show_menu_all_star=0x7f0b004e;
+        public static final int id_show_menu_mutil_delete=0x7f0b004c;
+        public static final int id_show_menu_search=0x7f0b004f;
+        public static final int id_show_menu_sort=0x7f0b004d;
         public static final int id_show_note_root=0x7f0b0036;
         public static final int id_show_title_count=0x7f0b0039;
         public static final int id_show_title_delete_cancle=0x7f0b003e;
@@ -285,6 +285,10 @@ public final class R {
         public static final int id_show_title_rl=0x7f0b0037;
         public static final int id_starnotes_title_back=0x7f0b0038;
         public static final int id_wait_dialog_content=0x7f0b0009;
+        public static final int mark_bg_blue=0x7f0b0045;
+        public static final int mark_bg_green=0x7f0b0044;
+        public static final int mark_bg_red=0x7f0b0042;
+        public static final int mark_bg_yellow=0x7f0b0043;
         public static final int progressBar1=0x7f0b0008;
         public static final int search_edt=0x7f0b003a;
     }
@@ -313,6 +317,7 @@ public final class R {
         public static final int show_notes_delete_header=0x7f030015;
         public static final int show_notes_gridview=0x7f030016;
         public static final int show_notes_header=0x7f030017;
+        public static final int show_notes_menu_sort=0x7f030018;
     }
     public static final class menu {
         public static final int edit_menu=0x7f0a0000;

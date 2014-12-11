@@ -3,12 +3,21 @@ package com.bird.note.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.integer;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface.OnCancelListener;
+import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.bird.note.R;
 import com.bird.note.customer.BirdPopMenu;
 import com.bird.note.customer.ChooseEditBgPopMenu;
 import com.bird.note.model.BirdPopMenuItem;
+import com.bird.note.utils.PreferenceUtil;
 
 public class PopMenuManager {
 
@@ -128,6 +137,26 @@ public class PopMenuManager {
 	}
 	
 	
+	public static AlertDialog createMarkChooseAlertDialog(Context context,int titleSrc,OnClickListener listener){
+		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		AlertDialog dialog = builder.create();
+		View view = inflater.inflate(R.layout.show_notes_menu_sort,null);
+		dialog.setView(view);
+		dialog.setTitle(context.getString(titleSrc));
+		view.setOnClickListener(listener);
+		return dialog;
+	}
+	
+	public static AlertDialog createSortChooseAlertDialog(Context context,int titleSrc,android.content.DialogInterface.OnClickListener listener){
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		AlertDialog dialog = builder.setTitle(context.getString(titleSrc)).setSingleChoiceItems(
+				context.getResources().getStringArray(R.array.sortby_array), PreferenceUtil.getSortBy(), listener).setNegativeButton(
+				"确定", listener).show();
+		return dialog;
+	}
 	
 	
 	

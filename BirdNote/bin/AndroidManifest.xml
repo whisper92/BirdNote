@@ -12,7 +12,7 @@
         android:name="com.bird.note.utils.NoteApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
         <activity
             android:name="com.bird.note.ui.EditNoteActivity"
             android:label="@string/app_name"
@@ -20,22 +20,23 @@
         </activity>
         <activity
             android:name="com.bird.note.ui.SearchNotesActivity"
+            android:launchMode="singleTop"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.bird.note.ui.ReadStaredNotesActivity"
-            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:label="@string/stared_note_count"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.bird.note.ui.ShowNotesActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

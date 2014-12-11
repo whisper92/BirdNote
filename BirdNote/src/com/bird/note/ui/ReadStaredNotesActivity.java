@@ -61,7 +61,7 @@ public class ReadStaredNotesActivity extends Activity{
 		mNoteAdapter= new ReadStaredNoteAdapter(this,mBirdNotes,mGridView);
 	    mNoteAdapter.notifyDataSetChanged();
 	    if (mGridView!=null) {
-	    	mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
+	    	mTitleNoteCount.setText(String.format(getString(R.string.stared_note_count), mBirdNotes.size()));
 	    	mGridView.setAdapter(mNoteAdapter);
 		}    
 		super.onRestart();
