@@ -179,4 +179,11 @@ public class PopMenuManager {
 		return dialog;
 	}
 	
+	public static AlertDialog createExitAlertDialog(Context context,int titleSrc,android.content.DialogInterface.OnClickListener listener){
+		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		AlertDialog dialog = builder.setTitle(context.getString(titleSrc)).setPositiveButton(context.getString(R.string.exit_with_save), listener).setNegativeButton(
+				context.getString(R.string.exit_without_save), listener).show();
+		return dialog;
+	}
+	
 }

@@ -20,6 +20,7 @@ import com.bird.note.model.DrawPaint;
 import com.bird.note.model.PenDrawPath;
 import com.bird.note.model.SavedPaint;
 import com.bird.note.utils.BitmapUtil;
+import com.bird.note.utils.NoteApplication;
 
 /**
  * 用于涂鸦的View
@@ -87,6 +88,8 @@ public class PenView extends View {
 	private Paint mCleanPoint = null;
 	boolean isMoving = false;
 	float mCleanCircleRadius = 0;
+	
+	private NoteApplication mNoteApplication = null;
 	public PenView(Context context, AttributeSet attr, int defStyle) {
 		super(context, attr, defStyle);
 		init(context);
@@ -127,6 +130,7 @@ public class PenView extends View {
 
 	private void init(Context context) {
 		mContext = context;
+		mNoteApplication = (NoteApplication)mContext.getApplicationContext();
 		mCanvasWidth = (int) getResources().getDimension(
 				R.dimen.dimen_edit_canvas_width);
 		mCanvasHeight = (int) getResources().getDimension(
@@ -195,6 +199,10 @@ public class PenView extends View {
 			mDrawPath.path = mPath;
 			posX = x;
 			posY = y;
+			
+			if (mNoteApplication!=null) {
+				mNoteApplication.setEdited(true);
+			}
 			postInvalidate();
 
 			break;

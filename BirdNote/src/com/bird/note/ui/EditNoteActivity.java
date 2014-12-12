@@ -88,6 +88,7 @@ public class EditNoteActivity extends FragmentActivity implements
 		mWaitDialog = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mNoteApplication = (NoteApplication) getApplication();
 		mNoteApplication.setEditBackground(R.drawable.note_bg_style00);
+		mNoteApplication.setEdited(false);
 		mNoteEditType = mNoteApplication.getCurrentNoteEidtType();
 		mEditedQuadrant = mNoteApplication.getEditedQuadrants();
 
@@ -265,11 +266,30 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-
+       if (keyCode ==KeyEvent.KEYCODE_BACK) {
+    	   if (mNoteApplication!=null) {
+				if (mNoteApplication.isEdited()) {
+					PopMenuManager.createExitAlertDialog(this, R.string.exit_ensure, exitListener);
+				}
+			}			
+	  }
 
 		return super.onKeyDown(keyCode, event);
 	}
 
+	android.content.DialogInterface.OnClickListener exitListener = new android.content.DialogInterface.OnClickListener() {
+		
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+					if (which == -1) {
+						mEditQuaFragment.saveNote();
+					}
+					if (which == -2) {
+						finish();
+					}
+		}
+	};
+	
 	@Override
 	protected void onPause() {
 		super.onPause();

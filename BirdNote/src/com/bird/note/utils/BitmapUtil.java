@@ -123,6 +123,8 @@ public class BitmapUtil {
 	/**
 	 * 内置背景图片
 	 */
-	public static int[] EDIT_BGS_PRE= new int[]{R.drawable.preview_style00,R.drawable.preview_style01,R.drawable.preview_style02};
-	public static int[] EDIT_BGS= new int[]{R.drawable.note_bg_style00,R.drawable.note_bg_style01,R.drawable.note_bg_style02};
+	public static int[] EDIT_BGS_PRE= new int[]{R.drawable.preview_style00,
+		R.drawable.preview_style01, R.drawable.preview_style02,
+		R.drawable.preview_style03, R.drawable.preview_style04 };
+	public static int[] EDIT_BGS= new int[]{R.drawable.note_bg_style00,R.drawable.note_bg_style01,R.drawable.note_bg_style02,R.drawable.note_bg_style03,R.drawable.note_bg_style04};
 }

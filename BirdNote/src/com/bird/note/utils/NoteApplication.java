@@ -91,5 +91,13 @@ public class NoteApplication extends Application{
 		 sContext = getApplicationContext();
 	}
 	
+	public boolean edited = false;
+	public boolean isEdited() {
+		return edited;
+	}
+	public void setEdited(boolean edited) {
+		this.edited = edited;
+	}
+	
 	
 }

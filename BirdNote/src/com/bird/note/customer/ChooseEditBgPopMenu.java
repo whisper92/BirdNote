@@ -8,18 +8,26 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.Gallery;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bird.note.R;
 import com.bird.note.model.BirdPopMenuItem;
 import com.bird.note.utils.BitmapUtil;
+import com.bird.note.utils.NoteApplication;
 
 /**
  * 编辑笔记界面的菜单
@@ -34,14 +42,15 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 	private View rootView;
 	private Context mContext;
 	public List<BirdPopMenuItem> menuItems;
-	private GridView mBgGridView;
 
+	private Gallery gallery;
+	private NoteApplication mNoteApplication = null;
 	public ChooseEditBgPopMenu(Context context) {
 		mContext = context;
+		mNoteApplication = (NoteApplication) mContext.getApplicationContext();
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		rootView = inflater.inflate(R.layout.choos_editbg_pop_menu, null);
-		mBgGridView = (GridView) rootView.findViewById(R.id.id_edit_choos_bg);
 
 		this.setContentView(rootView);
 		this.setWidth(LayoutParams.MATCH_PARENT);
@@ -63,11 +72,28 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 			map.put("ItemRealBg", BitmapUtil.EDIT_BGS.length);
 			lstImageItem.add(map);
 		}
+		
 		SimpleAdapter simpleAdapter = new SimpleAdapter(mContext, lstImageItem,
 				R.layout.edit_bg_item, new String[] { "ItemImage" },
 				new int[] { R.id.id_edit_bg_img });
-		mBgGridView.setAdapter(simpleAdapter);
-		mBgGridView.setOnItemClickListener(this);
+	
+		gallery = (Gallery) rootView.findViewById(R.id.gallery1);
+		gallery.setAdapter(new ImageAdapter(mContext));// 设置图片适配器
+		// 设置监听器
+
+		gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				mChangeBackgroundListener.changeBackground(BitmapUtil.EDIT_BGS[position]);
+				if (mNoteApplication!=null) {
+					mNoteApplication.setEdited(true);
+				}
+			}
+		});
+		gallery.setSelection(1);
+		
 
 	}
 
@@ -95,4 +121,61 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 		}
 	};
 
+	
+	class ImageAdapter extends BaseAdapter {
+		private Context context;
+		// 图片源数组
+		private Integer[] imageInteger = { R.drawable.preview_style00,
+				R.drawable.preview_style01, R.drawable.preview_style02,
+				R.drawable.preview_style03, R.drawable.preview_style04 };
+		
+		private String[] imageText = { "","","","",""};
+		public ImageAdapter(Context c) {
+			context = c;
+		}
+
+		@Override
+		public int getCount() {
+			return imageInteger.length;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {		
+			ViewHolder holder;  
+            if(convertView == null){  
+                //View的findViewById()方法也是比较耗时的，因此需要考虑中调用一次，之后用  
+                //View的getTag()来获取这个ViewHolder对象  
+                holder = new ViewHolder();  
+                convertView = View.inflate(context, R.layout.gallery_item, null);  
+                holder.imageView = (ImageView) convertView.findViewById(R.id.id_img);  
+                holder.textView = (TextView) convertView.findViewById(R.id.id_text);  
+                convertView.setTag(holder);  
+            }else {  
+                holder = (ViewHolder) convertView.getTag();  
+            }  
+            holder.imageView.setImageResource(imageInteger[position]);  
+            holder.textView.setText(imageText[position]);  
+            holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(150,248));
+			return convertView;
+		}
+	}
+
+	final class ViewHolder {
+		public ImageView imageView;
+		public TextView textView;
+	}
+	
 }

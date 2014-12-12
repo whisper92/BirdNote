@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.bird.note.R;
+import com.bird.note.utils.NoteApplication;
 
 public class FullText extends EditText {
 
@@ -45,7 +46,7 @@ public class FullText extends EditText {
 
 	Toast mToast = null;
 	Context mContext;
-
+	private NoteApplication mNoteApplication = null;
 	public FullText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
@@ -80,6 +81,7 @@ public class FullText extends EditText {
 
 	public void init(Context context) {
 		mContext = context;
+		mNoteApplication = (NoteApplication)mContext.getApplicationContext();
 		mPaint = new Paint();
 		mPaint.setAntiAlias(true);
 		mPaint.setDither(true);
@@ -155,6 +157,7 @@ public class FullText extends EditText {
 	@Override
 	protected void onTextChanged(CharSequence text, int start,
 			int lengthBefore, int lengthAfter) {
+
 		super.onTextChanged(text, start, lengthBefore, lengthAfter);
 	}
 
@@ -164,6 +167,9 @@ public class FullText extends EditText {
 		tempStart = 0;
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
+			if (mNoteApplication!=null) {
+				mNoteApplication.setEdited(true);
+			}
 			mSelectSatrt = getSelectionStart();
 			lineStart = getOffsetForPosition(0, mClickPosY);
 			lineCount = getLineCount();

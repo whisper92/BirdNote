@@ -12,22 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"
-        android:orientation="vertical"
-        android:padding="10dp" >
+        android:background="@drawable/select_bg"
+        android:orientation="vertical">
 
-        <GridView
-            android:id="@+id/id_edit_choos_bg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/dimen_show_gridview_margin"
-            android:animateLayoutChanges="true"
-            android:background="@drawable/show_note_bg"
-            android:columnWidth="90dp"
-            android:horizontalSpacing="@dimen/dimen_show_note_item_space"
-            android:numColumns="3"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="@dimen/dimen_show_note_item_space" >
-        </GridView>
+    <Gallery
+        android:id="@+id/gallery1"
+        android:spacing="10dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="15dp"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
     </LinearLayout>
 
 </LinearLayout>
