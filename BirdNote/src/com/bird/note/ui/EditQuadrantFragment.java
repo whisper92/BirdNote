@@ -1,17 +1,14 @@
 package com.bird.note.ui;
 
-import android.R.anim;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +24,6 @@ import android.widget.RelativeLayout;
 import com.bird.note.R;
 import com.bird.note.customer.BirdAlertDialog;
 import com.bird.note.customer.BirdInputTitleDialog;
-import com.bird.note.customer.BirdPopMenu;
 import com.bird.note.customer.ChooseEditBgPopMenu;
 import com.bird.note.customer.ChooseEditBgPopMenu.OnChangeBackgroundListener;
 import com.bird.note.customer.PenView;
@@ -44,7 +40,6 @@ import com.bird.note.model.SavedPaint;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
-import android.util.Log;
 
 public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	private EditText mInputTitleEditText;
@@ -84,7 +79,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	private RelativeLayout mHeaderLayout;
 	private PopPenBox mPopPenBox;
 	private PopEraserBox mPopEraserBox;
-	public BirdPopMenu mPopMenu;
 	private boolean mPenBoxOpened = false;
 	private boolean mEraserBoxOpened = false;
 	private boolean mPopMenuOpened = false;
@@ -185,7 +179,9 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		}
 
 		mBirdAlertDialog = new BirdAlertDialog(getActivity(),
-				R.style.birdalertdialog);
+				android.R.style.Theme_Holo_Light_Dialog);
+		mBirdAlertDialog.setTitle(R.string.alert_clear_all);
+		
 
 		return view;
 	}
@@ -284,15 +280,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 
 	}
 
-	public boolean closePopMenu() {
-		if (mPopMenu != null && mPopMenu.isShowing()) {
-			mPopMenu.dismiss();
-			return true;
-		} else {
-			return false;
-		}
-
-	}
 
 	public void showChangeBg(){
 		/* 更改背景 */
@@ -303,7 +290,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	public void showSaveAs(){
 		/* 另存为 */
 		mBirdInputTitleDialog = new BirdInputTitleDialog(getActivity(),
-				R.style.birdalertdialog);
+				android.R.style.Theme_Holo_Light_Dialog);
+		mBirdInputTitleDialog.setTitle(R.string.save_as_title);
 		mBirdInputTitleDialog
 				.setOnConfirmClickListener(ConfirmSaveAsPngListener);
 		mBirdInputTitleDialog.show();
@@ -361,14 +349,16 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		return mSavePath;
 	}
 
+	public Bitmap getAllBitmapWithouBg() {
+		Resources resources = getActivity().getResources();
+		return BitmapUtil.mergeBitmap(getActivity(), mPenView.mDrawBitmap, getTextBitmap());
+	}
+	
 	public Bitmap getAllBitmap() {
 		Resources resources = getActivity().getResources();
-		;
-		return BitmapUtil.mergeBitmap(getActivity(), BitmapUtil
-				.decodeDrawableToBitmap(getActivity().getResources()
-						.getDrawable(mNoteApplication.getEditBackground())),
-				mPenView.mDrawBitmap, getTextBitmap());
+		return BitmapUtil.mergeBitmap(getActivity(), BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(mNoteApplication.getEditBackground())),mPenView.mDrawBitmap, getTextBitmap());
 	}
+	
 
 	/**
 	 * 设置当前的编辑模式
@@ -435,10 +425,11 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mPenView.redo();
 			break;
 		case R.id.id_edit_title_more:
+			getActivity().openOptionsMenu();
 			hideInputMethod();
 			break;
 		case R.id.id_edit_title_save:
-			closePopMenu();
+
 			saveNote();
 
 			break;
@@ -573,13 +564,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		
 		mBirdInputTitleDialog.show();
 		mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle());
-		
-/*		LayoutInflater inflater = getActivity().getLayoutInflater();
-		View view = inflater.inflate(R.layout.edit_note_input_title_dialog, null);
-		mInputTitleEditText = new EditText(getActivity());
-		
-		saveNewNoteBuilder.setView(mInputTitleEditText);
-		saveNewNoteBuilder.show();*/
 	}
 
 	public void saveUpdateNote() {

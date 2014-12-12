@@ -20,7 +20,6 @@ public class NotesTable {
 	public static final String STAR="star";
 	public static final String CREATE_TIME="create_time";
 	public static final String UPDATE_TIME="update_time";
-	
     public static final String SQL_CREATE="create table "+TABLE_NAME
     		+"("
     		+_ID+" integer primary key autoincrement,"

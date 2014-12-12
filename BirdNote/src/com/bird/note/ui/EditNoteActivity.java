@@ -80,12 +80,14 @@ public class EditNoteActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.edit_note_main);
 		mRootView = (FrameLayout) findViewById(R.id.id_edit_ac_root);
 		mBirdExitPopMenu = new BirdExitPopMenu(EditNoteActivity.this,
 				exitClickListener);
 		mWaitDialog = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mNoteApplication = (NoteApplication) getApplication();
+		mNoteApplication.setEditBackground(R.drawable.note_bg_style00);
 		mNoteEditType = mNoteApplication.getCurrentNoteEidtType();
 		mEditedQuadrant = mNoteApplication.getEditedQuadrants();
 
@@ -117,6 +119,11 @@ public class EditNoteActivity extends FragmentActivity implements
 		}
 	}
 
+	@Override
+	public void openOptionsMenu() {
+		// TODO Auto-generated method stub
+		super.openOptionsMenu();
+	}
 	public OnClickListener exitClickListener = new OnClickListener() {
 
 		@Override
@@ -355,8 +362,10 @@ public class EditNoteActivity extends FragmentActivity implements
 	 * @return
 	 */
 	public byte[] createThumbnailByQuadrant() {
-		Bitmap bitmap = mEditQuaFragmentsList.get(0).getAllBitmap();
-		return BitmapUtil.decodeBitmapToBytes(bitmap);
+		/*
+		 * ATTENTION:这里只有绘制内容，要加上文字内容
+		 */
+		return BitmapUtil.decodeBitmapToBytes(mEditQuaFragmentsList.get(0).getAllBitmapWithouBg());
 	}
 
 	public Handler editHandler = new Handler() {

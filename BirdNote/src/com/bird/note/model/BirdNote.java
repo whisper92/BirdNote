@@ -50,8 +50,8 @@ public class BirdNote implements Parcelable {
 	/*
 	 * public String createTime; public String lastEditTime;
 	 */
-	public String createTime;
-	public String updateTime;
+	public String create_time;
+	public String update_time;
 	
 
 	public BirdNote(){
@@ -82,8 +82,8 @@ public class BirdNote implements Parcelable {
 		dest.writeByteArray(thumbnail);
 		dest.writeInt(background);
 		dest.writeInt(star);
-		dest.writeString(createTime);
-		dest.writeString(updateTime);
+		dest.writeString(create_time);
+		dest.writeString(update_time);
 	}
 
 	public static final Parcelable.Creator<BirdNote> CREATOR = new Parcelable.Creator<BirdNote>() {
@@ -102,8 +102,8 @@ public class BirdNote implements Parcelable {
 			birdNote.thumbnail = source.createByteArray();
 			birdNote.background = source.readInt();
 			birdNote.star = source.readInt();
-			birdNote.createTime = source.readString();
-			birdNote.updateTime = source.readString();
+			birdNote.create_time = source.readString();
+			birdNote.update_time = source.readString();
 			return birdNote;
 		}
 

@@ -64,9 +64,9 @@ public class DbHelper {
 	}
 	
 	public void insertNewNote(BirdNote birdNote){
-		birdNote.createTime = CommonUtils.getCurrentTime();
-		birdNote.updateTime = CommonUtils.getCurrentTime();
-		insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background,birdNote.star,birdNote.createTime,birdNote.updateTime);
+		birdNote.create_time = CommonUtils.getCurrentTime();
+		birdNote.update_time = CommonUtils.getCurrentTime();
+		insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background,birdNote.star,birdNote.create_time,birdNote.update_time);
 	}
 	
 	
@@ -368,4 +368,9 @@ public class DbHelper {
 		return count;
 	}
 
+	/*复制记录*/
+	/*insert into show_notes(level,title,textcontents,qua0,qua1,qua2,qua3,thumbnail,background,star,create_time,update_time) select level,title,textcontents,qua0,qua1,qua2,qua3,thumbnail,background,star,create_time,update_time from show_notes where _id=*/
+	
+	
+	
 }

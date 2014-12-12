@@ -57,10 +57,10 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 
 		rootView.setFocusableInTouchMode(true);
 		ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
-		for (int i = 0; i < BitmapUtil.EDIT_BGS.length; i++) {
+		for (int i = 0; i < BitmapUtil.EDIT_BGS_PRE.length; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("ItemImage", BitmapUtil.EDIT_BGS[i]);
-			map.put("ItemText", "NO." + String.valueOf(i));
+			map.put("ItemImage", BitmapUtil.EDIT_BGS_PRE[i]);
+			map.put("ItemRealBg", BitmapUtil.EDIT_BGS.length);
 			lstImageItem.add(map);
 		}
 		SimpleAdapter simpleAdapter = new SimpleAdapter(mContext, lstImageItem,

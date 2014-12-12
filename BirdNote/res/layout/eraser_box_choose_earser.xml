@@ -11,6 +11,7 @@
         android:layout_marginLeft="@dimen/dimen_pop_pen_title_marginleft"
         android:gravity="center_vertical"
         android:text="@string/pop_eraser_title"
+        android:textColor="#ffffff"
         android:textSize="@dimen/dimen_pop_pen_title_size" />
 
     <LinearLayout

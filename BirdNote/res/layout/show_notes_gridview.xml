@@ -9,11 +9,11 @@
 
         <GridView
             android:id="@+id/id_show_gv"
-            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/dimen_show_gridview_margin"
-            android:background="@drawable/show_note_bg"
+            android:background="@drawable/note_bg_preview"
+            android:padding="5dp"
             android:columnWidth="90dp"
             android:horizontalSpacing="@dimen/dimen_show_note_item_space"
             android:numColumns="3"

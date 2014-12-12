@@ -264,7 +264,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 		public void run() {
 			mDbHelper.deleteNoteByIds(mNoteAdapter.getSelectedNote());
 			mBirdNotes.clear();
-			mBirdNotes = mDbHelper.queryShowNotes();
+			mBirdNotes = queryByCurrentSort(mCurrentSort);
 			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes ,mGridView); 
 		    mNoteAdapter.notifyDataSetChanged();
 		    if (mGridView!=null) {
@@ -278,14 +278,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		mBirdNotes=queryByCurrentSort(mCurrentSort);
-		mNoteAdapter= new ShowNoteAdapter(this,mBirdNotes,mGridView); 
-	    mNoteAdapter.notifyDataSetChanged();
-	    if (mGridView!=null) {
-	    	mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
-	    	mGridView.setAdapter(mNoteAdapter);
-		}    
-		
+	    showHandler.post(queryRunnable);
 	}
 	@Override
 	protected void onStart() {
@@ -300,32 +293,18 @@ public boolean onOptionsItemSelected(MenuItem item) {
 		animatorSetOut.start();
 		animatorSetIn.start();
 		
-		animatorSetOut.addListener(new Animator.AnimatorListener() {
-			
+		animatorSetOut.addListener(new Animator.AnimatorListener() {		
 			@Override
-			public void onAnimationStart(Animator animation) {
-				
-				
-			}
-			
+			public void onAnimationStart(Animator animation) {}	
 			@Override
-			public void onAnimationRepeat(Animator animation) {
-				
-				
-			}
-			
+			public void onAnimationRepeat(Animator animation) {}	
 			@Override
 			public void onAnimationEnd(Animator animation) {
 				mShowTitle.setVisibility(View.GONE);				
-				mShowDeleteTitle.setVisibility(View.VISIBLE);
-				
-			}
-			
+				mShowDeleteTitle.setVisibility(View.VISIBLE);		
+			}	
 			@Override
-			public void onAnimationCancel(Animator animation) {
-				
-				
-			}
+			public void onAnimationCancel(Animator animation) {}
 		});
 
 	}
@@ -338,39 +317,20 @@ public boolean onOptionsItemSelected(MenuItem item) {
 		animatorSetOut.start();
 		animatorSetIn.start();
 		
-		animatorSetOut.addListener(new Animator.AnimatorListener() {
-			
+		animatorSetOut.addListener(new Animator.AnimatorListener() {	
 			@Override
-			public void onAnimationStart(Animator animation) {
-				
-				
-			}
-			
+			public void onAnimationStart(Animator animation) {}
 			@Override
-			public void onAnimationRepeat(Animator animation) {
-				
-				
-			}
-			
+			public void onAnimationRepeat(Animator animation) {}	
 			@Override
 			public void onAnimationEnd(Animator animation) {
 				mShowTitle.setVisibility(View.VISIBLE);				
-				mShowDeleteTitle.setVisibility(View.GONE);
-				
-			}
-			
+				mShowDeleteTitle.setVisibility(View.GONE);	
+			}	
 			@Override
-			public void onAnimationCancel(Animator animation) {
-				
-				
-			}
+			public void onAnimationCancel(Animator animation) {}
 		});
 	}
-	
-
-	
-	
-
 	
 	public void closeMenu(PopupWindow popupWindow){
 		if (popupWindow!=null&&popupWindow.isShowing()) {
@@ -378,6 +338,18 @@ public boolean onOptionsItemSelected(MenuItem item) {
 		}
 	}
 
+	public Runnable queryRunnable = new Runnable() {
+		
+		@Override
+		public void run() {
+			mBirdNotes=queryByCurrentSort(mCurrentSort);
+			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes,mGridView); 
+			showHandler.sendEmptyMessage(BirdMessage.QUERY_RUNNABLE_OVER);
+	 
+			
+		}
+	};
+	
 	public Runnable sortRunnable = new Runnable() {	
 		@Override
 		public void run() {
@@ -391,11 +363,6 @@ public boolean onOptionsItemSelected(MenuItem item) {
 		@Override
 		public void run() {
 			mDbHelper.deleteNoteById(mNoteAdapter.getSingleNoteId()+"");
-     /*	 mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
-		    mNoteAdapter.notifyDataSetChanged();
-		    if (mGridView!=null) {
-		    	mGridView.setAdapter(mNoteAdapter);
-			}  */
 		    mBirdNotes.remove(mChoosePosition);
 		    mNoteAdapter.notifyDataSetChanged();
 		    mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
@@ -409,12 +376,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 			mDbHelper.updateLevelById(mNoteAdapter.getSingleNoteId()+"",mNoteAdapter.chooseLevel);
 			mBirdNotes.get(mChoosePosition).level = mNoteAdapter.chooseLevel;
 			mNoteAdapter.notifyDataSetChanged();
-/*			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
-		    mNoteAdapter.notifyDataSetChanged();
-		    if (mGridView!=null) {
-		    	mGridView.setAdapter(mNoteAdapter);
-			}  	*/	
-			showHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);	
+			showHandler.sendEmptyMessage(BirdMessage.UPDATETITLE_RUNNABLE_OVER);	
 		}
 	};
 	
@@ -424,11 +386,6 @@ public boolean onOptionsItemSelected(MenuItem item) {
 			mDbHelper.updateTitleById(mNoteAdapter.getSingleNoteId()+"",mNoteAdapter.mNewTitleString);
 			mBirdNotes.get(mChoosePosition).title = mNoteAdapter.mNewTitleString;
 			mNoteAdapter.notifyDataSetChanged();
-/*			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mDbHelper.queryShowNotes() ,mGridView); 
-		    mNoteAdapter.notifyDataSetChanged();
-		    if (mGridView!=null) {
-		    	mGridView.setAdapter(mNoteAdapter);
-			}  */
 			showHandler.sendEmptyMessage(BirdMessage.UPDATETITLE_RUNNABLE_OVER);	
 		}
 	};
@@ -436,6 +393,13 @@ public boolean onOptionsItemSelected(MenuItem item) {
 	
 	public Handler showHandler=new Handler(){
 		public void handleMessage(android.os.Message msg) {
+			if (msg.what==BirdMessage.QUERY_RUNNABLE_OVER) {
+				 mNoteAdapter.notifyDataSetChanged();
+			    if (mGridView!=null) {
+			    	mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
+			    	mGridView.setAdapter(mNoteAdapter);
+				}   
+			}
 			if (msg.what==BirdMessage.DELETE_OVER) {
 				mWaitDialog.dismiss();
 			}

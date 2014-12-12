@@ -24,7 +24,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="15dp"
-            android:background="#fff6f6f6"
+            android:background="#00f6f6f6"
             android:text="@string/show_menu_cancel" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="15dp"
-             android:background="#fff6f6f6"
+             android:background="#00f6f6f6"
             android:text="@string/show_menu_confirm" />
     </LinearLayout>
 

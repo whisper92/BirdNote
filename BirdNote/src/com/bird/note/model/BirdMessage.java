@@ -46,7 +46,8 @@ public class BirdMessage {
 	public static final int NOTE_EDIT_TYPE_CREATE=103;
     public static final int NOTE_EDIT_TYPE_UPDATE=104;
 
-	
+    public static final int QUERY_RUNNABLE_START=200;
+    public static final int QUERY_RUNNABLE_OVER=300;
     public static final int SAVE_RUNNABLE_START=201;
     public static final int DELETE_RUNNABLE_START=202;
     public static final int DELETE_SINGLE_NOTE_RUNNABLE_START=203;
