@@ -30,22 +30,20 @@
 
             <SeekBar
                 android:id="@+id/id_choose_eraser_seekbar"
+                style="@style/seekBarEraserHorizontal"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="12dp"
-                android:progressDrawable = "@drawable/eraser_seekbar_drawable"
-                android:thumb="@drawable/tool_slide"
-                android:max="100" 
-                />
+                android:max="100" />
 
             <com.bird.note.customer.CleanCircle
                 android:id="@+id/id_choose_eraser_circle"
-                android:background="@drawable/tool_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
                 android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:background="@drawable/tool_circle" />
         </LinearLayout>
 
         <LinearLayout
@@ -57,9 +55,9 @@
                 android:id="@+id/id_choose_eraser_clean_all"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/eraser_clean_all"
                 android:gravity="center"
                 android:text="@string/pop_eraser_clear_all"
-                android:background="@drawable/eraser_clean_all"
                 android:textColor="#000000" />
         </LinearLayout>
     </LinearLayout>

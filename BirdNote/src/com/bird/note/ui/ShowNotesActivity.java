@@ -59,8 +59,8 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	private DbHelper mDbHelper=null;
 	private GridView mGridView=null;
 	private List<BirdNote> mBirdNotes=null;
-	private BirdWaitDialog mWaitDialog = null;
-
+	private BirdWaitDialog mWaitDialogUpdate = null;
+	private BirdWaitDialog mWaitDialogDelete = null;
 	private LinearLayout mLinearLayout = null;
 	private TextView mTitleNoteCount;
 	private int mCurrentSort= 0;
@@ -71,7 +71,8 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.show_notes);
 		
-		mWaitDialog  =new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
+		mWaitDialogUpdate  = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
+		mWaitDialogDelete = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mDbHelper=new DbHelper(this);
 		mLinearLayout = (LinearLayout) findViewById(R.id.id_show_note_root);
 		mShowTitle=(RelativeLayout)findViewById(R.id.id_show_title_rl);
@@ -384,42 +385,42 @@ public boolean onOptionsItemSelected(MenuItem item) {
 				}   
 			}
 			if (msg.what==BirdMessage.DELETE_OVER) {
-				mWaitDialog.dismiss();
+				mWaitDialogDelete.dismiss();
 			}
 			if (msg.what==BirdMessage.DELETE_RUNNABLE_START) {
-				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
-				mWaitDialog.show();
+				mWaitDialogDelete.setWaitContent(getString(R.string.deleteing_note));
+				mWaitDialogDelete.show();
 			}
 			if (msg.what==BirdMessage.DELETE_SINGLE_NOTE_RUNNABLE_START) {
 				mChoosePosition = (Integer)msg.obj;
-				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
-				mWaitDialog.show();
+				mWaitDialogDelete.setWaitContent(getString(R.string.deleteing_note));
+				mWaitDialogDelete.show();
 				post(deleteSingleNoteRunnable);
 			}
 			
 			if (msg.what==BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START) {
 				mChoosePosition = (Integer)msg.obj;
-				mWaitDialog.setWaitContent(getString(R.string.alert_sort));
-				mWaitDialog.show();
+				mWaitDialogUpdate.setWaitContent(getString(R.string.alert_sort));
+				mWaitDialogUpdate.show();
 				post(changeMarkColorRunnable);
 			}
 			
 			if (msg.what==BirdMessage.UPDATETITLE_RUNNABLE_START) { 
 				mChoosePosition = (Integer)msg.obj;
-		    	mWaitDialog.setWaitContent(getString(R.string.saveing_note));
-			    mWaitDialog.show();
+				mWaitDialogUpdate.setWaitContent(getString(R.string.saveing_note));
+				mWaitDialogUpdate.show();
 			    post(updateTitleRunnable);
 			}
 			if (msg.what==BirdMessage.UPDATETITLE_RUNNABLE_OVER) { 
-				mWaitDialog.dismiss();
+				mWaitDialogUpdate.dismiss();
 			}	
 			if (msg.what==BirdMessage.SORT_START) { 
-				mWaitDialog.setWaitContent(getString(R.string.alert_sort));
-				mWaitDialog.show();
+				mWaitDialogUpdate.setWaitContent(getString(R.string.alert_sort));
+				mWaitDialogUpdate.show();
 			}	
 			
 			if (msg.what==BirdMessage.SORT_OVER) { 
-				mWaitDialog.dismiss();
+				mWaitDialogUpdate.dismiss();
 				mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes ,mGridView); 				    
 				mNoteAdapter.notifyDataSetChanged();
 			    if (mGridView!=null) {

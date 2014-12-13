@@ -66,12 +66,12 @@ public class CommonUtils {
 	}
 	
 	public static String getCurrentDate(){
-		SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("yyMMddhhmm");     
+		SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("ddhhmm");     
 		String   date   =   sDateFormat.format(new   java.util.Date()); 
 		return date;
 	}
 	public static String getDefaultTitle(){
-		return "BIRD"+getCurrentDate();
+		return "N"+getCurrentDate();
 	}
 	
 	/**
