@@ -47,4 +47,5 @@
     <string name="exit_without_save">Without Save</string>
     <string name="exit_with_save">With Save</string>
     <string name="item_operation">Operation</string>
+    <string name="choose_mark_color">Choos Color</string>
 </resources>

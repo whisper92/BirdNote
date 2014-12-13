@@ -45,6 +45,9 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 
 	private Gallery gallery;
 	private NoteApplication mNoteApplication = null;
+	private String[] mBgArray = null;
+	private ArrayList<HashMap<String, Object>> lstImageItem;
+	ImageAdapter  imageAdapter;
 	public ChooseEditBgPopMenu(Context context) {
 		mContext = context;
 		mNoteApplication = (NoteApplication) mContext.getApplicationContext();
@@ -54,7 +57,7 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 
 		this.setContentView(rootView);
 		this.setWidth(LayoutParams.MATCH_PARENT);
-		this.setHeight(LayoutParams.MATCH_PARENT);
+		this.setHeight(LayoutParams.MATCH_PARENT); 
 		this.setAnimationStyle(R.style.popmenuanim);
 
 		this.setOutsideTouchable(false);
@@ -65,20 +68,19 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 		linearLayout.setOnClickListener(DismissListener);
 
 		rootView.setFocusableInTouchMode(true);
-		ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
+		mBgArray = mContext.getResources().getStringArray(R.array.bg_array);
+		 lstImageItem = new ArrayList<HashMap<String, Object>>();
 		for (int i = 0; i < BitmapUtil.EDIT_BGS_PRE.length; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ItemImage", BitmapUtil.EDIT_BGS_PRE[i]);
-			map.put("ItemRealBg", BitmapUtil.EDIT_BGS.length);
+			map.put("ItemRealBg", BitmapUtil.EDIT_BGS[i]);
+			map.put("ItemText", mBgArray[i]);
 			lstImageItem.add(map);
 		}
 		
-		SimpleAdapter simpleAdapter = new SimpleAdapter(mContext, lstImageItem,
-				R.layout.edit_bg_item, new String[] { "ItemImage" },
-				new int[] { R.id.id_edit_bg_img });
-	
 		gallery = (Gallery) rootView.findViewById(R.id.gallery1);
-		gallery.setAdapter(new ImageAdapter(mContext));// 设置图片适配器
+		imageAdapter = new ImageAdapter(mContext);
+		gallery.setAdapter(imageAdapter);// 设置图片适配器
 		// 设置监听器
 
 		gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,6 +91,10 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 				mChangeBackgroundListener.changeBackground(BitmapUtil.EDIT_BGS[position]);
 				if (mNoteApplication!=null) {
 					mNoteApplication.setEdited(true);
+					for (int i = 0; i < BitmapUtil.EDIT_BGS.length; i++) {
+						mNoteApplication.setEditBackground(BitmapUtil.EDIT_BGS[position]);
+					}
+					imageAdapter.notifyDataSetChanged();
 				}
 			}
 		});
@@ -124,19 +130,14 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 	
 	class ImageAdapter extends BaseAdapter {
 		private Context context;
-		// 图片源数组
-		private Integer[] imageInteger = { R.drawable.preview_style00,
-				R.drawable.preview_style01, R.drawable.preview_style02,
-				R.drawable.preview_style03, R.drawable.preview_style04 };
-		
-		private String[] imageText = { "","","","",""};
+
 		public ImageAdapter(Context c) {
 			context = c;
 		}
 
 		@Override
 		public int getCount() {
-			return imageInteger.length;
+			return BitmapUtil.EDIT_BGS.length;
 		}
 
 		@Override
@@ -155,20 +156,23 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 		public View getView(int position, View convertView, ViewGroup parent) {		
 			ViewHolder holder;  
             if(convertView == null){  
-                //View的findViewById()方法也是比较耗时的，因此需要考虑中调用一次，之后用  
-                //View的getTag()来获取这个ViewHolder对象  
                 holder = new ViewHolder();  
                 convertView = View.inflate(context, R.layout.gallery_item, null);  
                 holder.imageView = (ImageView) convertView.findViewById(R.id.id_img);  
                 holder.textView = (TextView) convertView.findViewById(R.id.id_text);  
+                holder.selectedImv = (ImageView) convertView.findViewById(R.id.id_img_select);
                 convertView.setTag(holder);  
             }else {  
                 holder = (ViewHolder) convertView.getTag();  
             }  
-            holder.imageView.setImageResource(imageInteger[position]);  
-            holder.textView.setText(imageText[position]);  
-            holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(150,248));
+            holder.imageView.setBackgroundResource( BitmapUtil.EDIT_BGS_PRE[position]);  
+            holder.textView.setText( mBgArray[position]);  
+            int bg = mNoteApplication.getEditBackground();
+            if (bg == BitmapUtil.EDIT_BGS[position]) {
+            	holder.selectedImv.setVisibility(View.VISIBLE);
+			}
+            //holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            //holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(150,248));
 			return convertView;
 		}
 	}
@@ -176,6 +180,7 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 	final class ViewHolder {
 		public ImageView imageView;
 		public TextView textView;
+		public ImageView selectedImv;
 	}
 	
 }

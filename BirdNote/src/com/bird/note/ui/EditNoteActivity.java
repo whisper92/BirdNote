@@ -271,7 +271,11 @@ public class EditNoteActivity extends FragmentActivity implements
 				if (mNoteApplication.isEdited()) {
 					PopMenuManager.createExitAlertDialog(this, R.string.exit_ensure, exitListener);
 				}
-			}			
+			}
+    	   if (mEditQuaFragment.chooseEditBgPopMenu!=null && mEditQuaFragment.chooseEditBgPopMenu.isShowing()) {
+			mEditQuaFragment.chooseEditBgPopMenu.dismiss();
+			return true;
+		   }
 	  }
 
 		return super.onKeyDown(keyCode, event);

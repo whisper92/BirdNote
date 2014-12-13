@@ -1,18 +1,35 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/id_img"
+    <RelativeLayout
+        android:padding="0dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/id_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/preview_style00" />
+
+        <ImageView
+            android:id="@+id/id_img_select"
+            android:visibility="gone"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/id_img"
+            android:background="@drawable/selected" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/id_text"
-        android:layout_below="@+id/id_img"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff" />
 
-</RelativeLayout>
+</LinearLayout>

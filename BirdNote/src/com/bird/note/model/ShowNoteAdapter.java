@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,8 +19,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bird.note.R;
@@ -130,7 +133,8 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		return true;
 	}
 
-	
+	AlertDialog.Builder builder = null;
+	AlertDialog alertDialog = null;
 	public android.content.DialogInterface.OnClickListener itemOperateListener = new android.content.DialogInterface.OnClickListener() {
 		
 		@Override
@@ -148,14 +152,36 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			}
 			
 			if (which == 2) {				
-				popChangeMarkColor = PopMenuManager.createChooseMarkColorMenu(mContext, changeMarkColorListener);
-				popChangeMarkColor.showAtLocation(rootView, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+				LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				View view = inflater.inflate(R.layout.show_note_choos_mark, null);
+				builder = PopMenuManager.createChooseMarkAlertDialog(mContext, R.string.choose_mark_color);
+				builder.setView(view);
+				LinearLayout markLayout = (LinearLayout) view.findViewById(R.id.id_choose_mark_ll);
+				for (int i = 0; i < markLayout.getChildCount(); i++) {
+					Button button = (Button)markLayout.getChildAt(i);
+					button.setId(i);
+					button.setOnClickListener(changeMarkColorListener);
+				}
+				alertDialog = builder.create();				
+				alertDialog.show();
 			}
-			
-			
+					
 		}
-
 	};
+	
+	public int chooseLevel=0;
+	public OnClickListener changeMarkColorListener =new OnClickListener() {					
+		@Override
+		public void onClick(View v) {
+		    chooseLevel=v.getId();
+		    ((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START, mChoosePosition).sendToTarget();													
+		    if (alertDialog!=null) {
+		    	alertDialog.cancel();
+			}
+		}
+	};
+	
+	
 	public String mNewTitleString = "";
 	public OnClickListener ConfirmUpdateTitleListener = new OnClickListener() {	
 		@Override
@@ -166,16 +192,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		}
 	};
 	
-	public int chooseLevel=-1;
-	public OnClickListener changeMarkColorListener =new OnClickListener() {					
-		@Override
-		public void onClick(View v) {
-		    chooseLevel=v.getId();
-			popChangeMarkColor.dismiss();
-		    ((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START, mChoosePosition).sendToTarget();													
-		}
-	};
-	
+
 	public android.content.DialogInterface.OnClickListener deleteListener =new android.content.DialogInterface.OnClickListener() {					
 		@Override
 		public void onClick(DialogInterface dialog, int which) {

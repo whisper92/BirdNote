@@ -98,7 +98,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	private int mStar = 0;
 	private BirdNote mBirdNote;
 	private DbHelper mDbHelper;
-	private ChooseEditBgPopMenu chooseEditBgPopMenu;
+	public ChooseEditBgPopMenu chooseEditBgPopMenu;
 
 	/**
 	 * 创建笔记时实例化的方式
@@ -694,6 +694,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		@Override
 		public void onClick(View v) {
 			mPenView.clearAll();
+		    mNoteApplication.setEdited(true);
 			mBirdAlertDialog.dismiss();
 		}
 	};

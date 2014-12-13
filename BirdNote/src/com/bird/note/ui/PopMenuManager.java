@@ -171,6 +171,10 @@ public class PopMenuManager {
 		return builder;
 	}
 	
+	public static AlertDialog.Builder createChooseMarkAlertDialog(Context context,int titleSrc){
+		AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(context.getString(titleSrc)).setIcon(android.R.drawable.ic_dialog_info);
+		return builder;
+	}
 	
 	public static AlertDialog createItemOperationDialog(Context context,int titleSrc,android.content.DialogInterface.OnClickListener listener){
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);

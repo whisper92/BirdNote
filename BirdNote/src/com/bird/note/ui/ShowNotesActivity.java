@@ -122,30 +122,13 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		}
 		return sortNotes;
 	}
-	
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-/*		if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0) {
-			togglePopMenu();
-			return true;
-		}else if (keyCode == KeyEvent.KEYCODE_BACK){
-			if (mShowPopMenu.isShowing()) {
-				mShowPopMenu.dismiss();
-				return true;
-			}
-			
-		}*/
-		return super.onKeyDown(keyCode, event);
-	}
-	
+		
   public boolean onCreateOptionsMenu(android.view.Menu menu) {
 	getMenuInflater().inflate(R.menu.show_menu, menu);
 	return true;
    };
    
    
-
-	
 	android.content.DialogInterface.OnClickListener sortListener = new android.content.DialogInterface.OnClickListener() {
 		
 		@Override
