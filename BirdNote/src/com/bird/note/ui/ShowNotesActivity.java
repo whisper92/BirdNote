@@ -254,6 +254,10 @@ public boolean onOptionsItemSelected(MenuItem item) {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
+		if (mNoteAdapter.getDeleteState() == true) {
+			mNoteAdapter.setDeleteState(false);
+			startShowNoamralTitle();
+		}
 	    showHandler.post(queryRunnable);
 	}
 	@Override
