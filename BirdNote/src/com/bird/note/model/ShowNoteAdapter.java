@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,9 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bird.note.R;
-import com.bird.note.customer.BirdAlertDialog;
 import com.bird.note.customer.BirdInputTitleDialog;
-import com.bird.note.customer.BirdPopMenu;
 import com.bird.note.ui.EditNoteActivity;
 import com.bird.note.ui.PopMenuManager;
 import com.bird.note.ui.ShowNotesActivity;
@@ -116,10 +113,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		this.singleNoteId = singleNoteId;
 	}
 	
-
-	
-	BirdAlertDialog birdAlertDialog = null;
-	BirdPopMenu popChangeMarkColor = null;
 	int mChoosePosition = 0;
 	View rootView;
 	int operatePosition= 0 ;

@@ -2,7 +2,7 @@ package com.bird.note.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.Resources;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -19,10 +19,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.bird.note.R;
-import com.bird.note.customer.BirdAlertDialog;
 import com.bird.note.customer.BirdInputTitleDialog;
 import com.bird.note.customer.ChooseEditBgPopMenu;
 import com.bird.note.customer.ChooseEditBgPopMenu.OnChangeBackgroundListener;
@@ -45,7 +43,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	private EditText mInputTitleEditText;
 
 	private NoteApplication mNoteApplication;
-	private FrameLayout mEditMainLayout;
 	/*
 	 * 包含编辑区域以及象限切换菜单的布局
 	 */
@@ -76,28 +73,21 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	public int mCurrentQuadrant;
 	private int[] mEditedQuadrants;
 
-	private RelativeLayout mHeaderLayout;
+
 	private PopPenBox mPopPenBox;
 	private PopEraserBox mPopEraserBox;
 	private boolean mPenBoxOpened = false;
 	private boolean mEraserBoxOpened = false;
-	private boolean mPopMenuOpened = false;
 	private int mPenHasSelected = 0;
 	private int mEraserHasSelected = 0;
 
-	private float mSelectPaintWidth;
-	private int mSelectPaintColor;
 
 	private SavedPaint mSavedPaint;
 	public String mTitleString = "";
-	private BirdAlertDialog mBirdAlertDialog;
 	private BirdInputTitleDialog mBirdInputTitleDialog;
 	private Handler mainHandler = null;
 
-	private int mNoteId = 0;
-	private int mStar = 0;
 	private BirdNote mBirdNote;
-	private DbHelper mDbHelper;
 	public ChooseEditBgPopMenu chooseEditBgPopMenu;
 
 	/**
@@ -148,13 +138,11 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		mainHandler = ((EditNoteActivity) getActivity()).editHandler;
-
+		chooseEditBgPopMenu = new ChooseEditBgPopMenu(getActivity());
 		saveNewNoteBuilder = PopMenuManager.createSaveNewNoteAlertDialog(getActivity(), R.string.input_title_dialog_title, mInputTitleEditText, null);
 		View view = inflater.inflate(R.layout.edit_note_fragment, container,
 				false);
-		mDbHelper = new DbHelper(getActivity());
 		mNoteApplication = (NoteApplication) getActivity().getApplication();
-		mNoteId = mNoteApplication.getEditNoteId();
 		mEditedQuadrants = mNoteApplication.getEditedQuadrants();
 
 		initEditFragmentView(view);
@@ -178,9 +166,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			changeOtherIconState(mCurrentMode);
 		}
 
-		mBirdAlertDialog = new BirdAlertDialog(getActivity(),
-				android.R.style.Theme_Holo_Light_Dialog);
-		mBirdAlertDialog.setTitle(R.string.alert_clear_all);
 		
 
 		return view;
@@ -231,7 +216,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 
 	public void initEditFragmentView(View view) {
-		mEditMainLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl);
+
 		mWrapFrameLayout = (FrameLayout) view
 				.findViewById(R.id.id_edit_main_fl_warpper);
 		mWrapFrameLayout.setBackgroundResource(mNoteApplication
@@ -256,13 +241,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		menu_Undo.setEnabled(false);
 		menu_Redo.setEnabled(false);
 
-		mHeaderLayout = (RelativeLayout) view
-				.findViewById(R.id.id_edit_title_header_rl);
-
 		mSavedPaint = new SavedPaint(getActivity());
 
-		chooseEditBgPopMenu = PopMenuManager
-				.createChooseEditBgMenu(getActivity());
 		chooseEditBgPopMenu
 				.setOnChangeBackgroundListener(new OnChangeBackgroundListener() {
 
@@ -350,12 +330,11 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 
 	public Bitmap getAllBitmapWithouBg() {
-		Resources resources = getActivity().getResources();
-		return BitmapUtil.mergeBitmap(getActivity(), mPenView.mDrawBitmap, getTextBitmap());
+       return BitmapUtil.mergeBitmap(getActivity(), mPenView.mDrawBitmap, getTextBitmap());
 	}
 	
 	public Bitmap getAllBitmap() {
-		Resources resources = getActivity().getResources();
+
 		return BitmapUtil.mergeBitmap(getActivity(), BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(mNoteApplication.getEditBackground())),mPenView.mDrawBitmap, getTextBitmap());
 	}
 	
@@ -483,9 +462,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 				if (mPopEraserBox.isShowing()) {
 					mPopEraserBox.dismiss();
 				}
-				mBirdAlertDialog.setOnConfirmListener(ConfirmClearAllListener);
-				mBirdAlertDialog.show();
-
+				PopMenuManager.createDeleteAlertDialog(getActivity(), R.string.alert_clear_all, ConfirmClearAllListener);
 			}
 		});
 		mPopEraserBox.setOnPaintChangedListener(new OnEraserChangedListener() {
@@ -689,13 +666,14 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 
 
-	public OnClickListener ConfirmClearAllListener = new OnClickListener() {
-
+	public android.content.DialogInterface.OnClickListener ConfirmClearAllListener = new android.content.DialogInterface.OnClickListener() {
 		@Override
-		public void onClick(View v) {
-			mPenView.clearAll();
-		    mNoteApplication.setEdited(true);
-			mBirdAlertDialog.dismiss();
+		public void onClick(DialogInterface dialog, int which) {
+			if (which == -1) {
+				mPenView.clearAll();
+			    mNoteApplication.setEdited(true);
+			}
+			
 		}
 	};
 

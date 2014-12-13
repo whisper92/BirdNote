@@ -2,7 +2,6 @@ package com.bird.note.customer;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.graphics.Paint.FontMetrics;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +10,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.bird.note.R;
 import com.bird.note.utils.NoteApplication;
 
@@ -20,8 +20,6 @@ public class FullText extends EditText {
 	private boolean mFirstDown = true;
 	private float mClickPosX = 0;
 	private float mClickPosY = 0;
-	private int mSpaceCount = 0;
-	private float mSpaceWidth = 0;
 
 	/*
 	 * 点击的是第几行
@@ -30,15 +28,10 @@ public class FullText extends EditText {
 
 	private int mFullTextWidth = 0;
 	private int mFullTextHeight = 0;
-
 	private float mLineHeight = 0;
-
-	private int selection = 0;
 	private Editable editable;
 	private int mSelectSatrt = 0;
-
 	private int mMaxLines = 0;
-	private int tempStart = 0;
 	private int lineStart = 0;
 	private int lineCount = 0;
 	private int temp = 0;
@@ -86,10 +79,7 @@ public class FullText extends EditText {
 		mPaint.setAntiAlias(true);
 		mPaint.setDither(true);
 		mPaint.setTextSize(getTextSize());
-		mSpaceWidth = mPaint.measureText(" ");
 		mLineHeight = getLineHeight();
-
-		FontMetrics fontMetrics = mPaint.getFontMetrics();
 		myHandler.post(new Runnable() {
 
 			@Override
@@ -164,7 +154,6 @@ public class FullText extends EditText {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		editable = getEditableText();
-		tempStart = 0;
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			if (mNoteApplication!=null) {
@@ -176,7 +165,6 @@ public class FullText extends EditText {
 			if (mFirstDown) {
 				mClickPosX = event.getX();
 				mClickPosY = event.getY();
-				mSpaceCount = (int) (mClickPosX / mSpaceWidth);
 				mClickLine = (int) (mClickPosY / mLineHeight);
 				if (mClickLine > mMaxLines) {
 					mClickLine = mMaxLines;

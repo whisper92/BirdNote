@@ -8,21 +8,17 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bird.note.R;
 import com.bird.note.model.BirdPopMenuItem;
@@ -35,6 +31,7 @@ import com.bird.note.utils.NoteApplication;
  * @author wangxianpeng
  * 
  */
+@SuppressWarnings("deprecation")
 public class ChooseEditBgPopMenu extends PopupWindow implements
 		OnItemClickListener {
 

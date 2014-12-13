@@ -12,29 +12,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.bird.note.R;
-import com.bird.note.customer.BirdPopMenu;
 import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.dao.DbHelper;
-import com.bird.note.dao.NotesTable;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
-import com.bird.note.model.BirdPopMenuItem;
 import com.bird.note.model.ShowNoteAdapter;
 import com.bird.note.utils.NoteApplication;
 import com.bird.note.utils.PreferenceUtil;
@@ -61,20 +53,18 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	private List<BirdNote> mBirdNotes=null;
 	private BirdWaitDialog mWaitDialogUpdate = null;
 	private BirdWaitDialog mWaitDialogDelete = null;
-	private LinearLayout mLinearLayout = null;
 	private TextView mTitleNoteCount;
 	private int mCurrentSort= 0;
-
+   private NoteApplication mNoteApplication = null;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.show_notes);
-		
+		mNoteApplication = (NoteApplication) getApplication();
 		mWaitDialogUpdate  = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mWaitDialogDelete = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mDbHelper=new DbHelper(this);
-		mLinearLayout = (LinearLayout) findViewById(R.id.id_show_note_root);
 		mShowTitle=(RelativeLayout)findViewById(R.id.id_show_title_rl);
 		mShowDeleteTitle = (RelativeLayout) findViewById(R.id.id_show_title_delete_menu_rl);
 		mConfirmDelete = (Button) findViewById(R.id.id_show_title_delete_confirm);
@@ -205,11 +195,13 @@ public boolean onOptionsItemSelected(MenuItem item) {
 		switch (v.getId()) {
 		case R.id.id_show_title_new_pen:
 			intent.putExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_pen);
+			mNoteApplication.setEditBackground(R.drawable.note_bg_style00);
 			startActivity(intent);
 			break;
 
 		case R.id.id_show_title_new_text:
 			intent.putExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_text);
+			mNoteApplication.setEditBackground(R.drawable.note_bg_style00);
 			startActivity(intent);
 			break;
 		case R.id.id_show_title_delete_confirm:

@@ -4,12 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bird.note.R;
-import com.bird.note.utils.CommonUtils;
 
 /**
  * 自定义输入标题对话框
@@ -49,8 +47,6 @@ public class BirdInputTitleDialog extends Dialog {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 		setContentView(R.layout.birdinputtitledialog);
 
 		TextView mCancleTextView = (TextView) findViewById(R.id.id_alertdiaolg_cancel);

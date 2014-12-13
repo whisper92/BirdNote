@@ -6,26 +6,21 @@ import java.util.List;
 
 import org.json.JSONException;
 
-import android.R.anim;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.bird.note.R;
-import com.bird.note.customer.BirdExitPopMenu;
 import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.customer.LevelFlag;
 import com.bird.note.customer.QuadrantThumbnail;
@@ -72,22 +67,15 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	public String mTitleString = "";
 	private BirdWaitDialog mWaitDialog = null;
-	private FrameLayout mRootView;
-	private BirdExitPopMenu mBirdExitPopMenu;
-
-	private int mStar = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.edit_note_main);
-		mRootView = (FrameLayout) findViewById(R.id.id_edit_ac_root);
-		mBirdExitPopMenu = new BirdExitPopMenu(EditNoteActivity.this,
-				exitClickListener);
 		mWaitDialog = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mNoteApplication = (NoteApplication) getApplication();
-		mNoteApplication.setEditBackground(R.drawable.note_bg_style00);
+
 		mNoteApplication.setEdited(false);
 		mNoteEditType = mNoteApplication.getCurrentNoteEidtType();
 		mEditedQuadrant = mNoteApplication.getEditedQuadrants();
@@ -104,8 +92,6 @@ public class EditNoteActivity extends FragmentActivity implements
 			mTitleString = mBirdNote.title;
 			/* 查询获取完整的Note */
 			mBirdNote = dbHelper.queryNoteById(mBirdNote, mBirdNote._id + "");
-			mNoteApplication.setEditBackground(mBirdNote.background);
-			mStar = mBirdNote.star;
 		} else {
 
 		}
@@ -134,9 +120,6 @@ public class EditNoteActivity extends FragmentActivity implements
 			}
 			if (v.getId() == R.id.id_exit_confirm) {
 				mEditQuaFragment.saveNote();
-			}
-			if (mBirdExitPopMenu != null && mBirdExitPopMenu.isShowing()) {
-				mBirdExitPopMenu.dismiss();
 			}
 
 		}
@@ -392,9 +375,8 @@ public class EditNoteActivity extends FragmentActivity implements
 		return BitmapUtil.decodeBitmapToBytes(mEditQuaFragmentsList.get(0).getAllBitmapWithouBg());
 	}
 
-	public Handler editHandler = new Handler() {
+	public final Handler editHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
-			Intent intent = new Intent();
 			switch (msg.what) {
 			case BirdMessage.SAVE_AS_OVER:
 				if (mWaitDialog != null && mWaitDialog.isShowing()) {
@@ -408,13 +390,9 @@ public class EditNoteActivity extends FragmentActivity implements
 				}
 				break;
 			case BirdMessage.SAVE_OVER:
-/*				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
-				startActivity(intent);*/
 				finish();
 				break;
 			case BirdMessage.DELETE_OVER:
-/*				intent.setClass(EditNoteActivity.this, ShowNotesActivity.class);
-				startActivity(intent);*/
 				finish();
 				break;
 			case BirdMessage.SAVE_RUNNABLE_START:

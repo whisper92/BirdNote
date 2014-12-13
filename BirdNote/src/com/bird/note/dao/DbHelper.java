@@ -18,13 +18,11 @@ import com.bird.note.utils.JsonUtil;
 
 public class DbHelper {
 	private String TAG = "DbHelper";
-	private Context mContext;
 	private Db mDb;
 	private SQLiteDatabase dbWrite;
 	private SQLiteDatabase dbRead;
 	
 	public DbHelper(Context context){
-		this.mContext=context;
 		mDb=new Db(context);
 		dbRead=mDb.getReadableDatabase();
 		dbWrite=mDb.getWritableDatabase();
