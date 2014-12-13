@@ -10,7 +10,7 @@
     <string name="edit_menu_change_bg">Background</string>
     <string name="edit_menu_change_page">Pages</string>
     <string name="edit_menu_mark_colr">Mark Color</string>
-    <string name="edit_menu_saveas">Save</string>
+    <string name="edit_menu_saveas">SaveAs</string>
 
     <!-- 插入的行数 -->
     <string name="fullscreen_edit_line">23</string>
