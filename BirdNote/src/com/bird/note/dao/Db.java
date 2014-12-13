@@ -11,7 +11,6 @@ public class Db extends SQLiteOpenHelper{
 		super(context, BirdDatabaseConstant.DATABASE_NAME, null, BirdDatabaseConstant.DATABASE_VERSION);
 	}
 
-
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(NotesTable.SQL_CREATE);

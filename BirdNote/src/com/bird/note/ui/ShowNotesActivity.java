@@ -121,11 +121,8 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
    
    
 	android.content.DialogInterface.OnClickListener sortListener = new android.content.DialogInterface.OnClickListener() {
-		
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			// TODO Auto-generated method stub
-		
 			switch (which) {
 			case 0:
 				mCurrentSort = 0;
@@ -136,7 +133,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			case 2:
 				mCurrentSort = 2;
 				break;
-			case -2:
+			case -1:
 				/*Confirm*/
 				PreferenceUtil.setSortBy(mCurrentSort);
 				Log.e("wxp","mCurrentSort:"+mCurrentSort);
@@ -148,6 +145,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			}
 		}
 	};
+	
    @Override
 public boolean onOptionsItemSelected(MenuItem item) {
 	switch ( item.getItemId()) {
@@ -198,7 +196,6 @@ public boolean onOptionsItemSelected(MenuItem item) {
 			mNoteApplication.setEditBackground(R.drawable.note_bg_style00);
 			startActivity(intent);
 			break;
-
 		case R.id.id_show_title_new_text:
 			intent.putExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_text);
 			mNoteApplication.setEditBackground(R.drawable.note_bg_style00);
@@ -325,8 +322,6 @@ public boolean onOptionsItemSelected(MenuItem item) {
 			mBirdNotes=queryByCurrentSort(mCurrentSort);
 			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes,mGridView); 
 			showHandler.sendEmptyMessage(BirdMessage.QUERY_RUNNABLE_OVER);
-	 
-			
 		}
 	};
 	

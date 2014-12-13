@@ -24,22 +24,19 @@ public class CommonUtils {
 	 */
 	public static int dpToPx(Context context, float dpValue) {
 		int px = 200;
-		px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-				dpValue, context.getResources().getDisplayMetrics());
+		px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dpValue, context.getResources().getDisplayMetrics());
 		return px;
 	}
 
 	public static int getScreenWidth(Context context) {
-		WindowManager wManager = (WindowManager) context
-				.getSystemService(Context.WINDOW_SERVICE);
+		WindowManager wManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		DisplayMetrics metrics = new DisplayMetrics();
 		wManager.getDefaultDisplay().getMetrics(metrics);
 		return metrics.widthPixels;
 	}
 
 	public static int getScreenHeight(Context context) {
-		WindowManager wManager = (WindowManager) context
-				.getSystemService(Context.WINDOW_SERVICE);
+		WindowManager wManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		DisplayMetrics metrics = new DisplayMetrics();
 		wManager.getDefaultDisplay().getMetrics(metrics);
 		return metrics.heightPixels;
@@ -47,8 +44,7 @@ public class CommonUtils {
 
 	public static String getSavePath() {
 		String filePath = "";
-		filePath = Environment.getExternalStorageDirectory()
-				+ "/BirdNotePicture";
+		filePath = Environment.getExternalStorageDirectory()+ "/BirdNotePicture";
 		File dirFile = new File(filePath);
 		if (dirFile.exists()) {
 
@@ -72,24 +68,6 @@ public class CommonUtils {
 	}
 	public static String getDefaultTitle(){
 		return "N"+getCurrentDate();
-	}
-	
-	/**
-	 * 将整个内容平分成每行宽度相等的字符串
-	 * @param origContent
-	 * @return
-	 */
-	public static List<String> measureTextAndSplit(Context context,String origContent,float textsize,int maxWidth){
-		List<String> textLines=new ArrayList<String>();
-		
-		Paint paint=new Paint();
-		paint.setTextSize(dpToPx(context, textsize));
-		int count = origContent.length();
-		int i = 0;
-		for ( i = 0; i <count; i++) {
-			
-		}
-		return textLines;
 	}
 	
 	public static int dpToPx(Context context,int dp) {

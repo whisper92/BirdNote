@@ -23,13 +23,14 @@ import com.bird.note.R;
  */
 public class BitmapUtil {
 
+	private static String TAG = "BitmapUtil";
 	public static byte[] decodeBitmapToBytes(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		if (bitmap != null) {
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
 			return baos.toByteArray();
 		} else {
-			Log.e("wxp", "TMD is null");
+			Log.e(TAG, "bitmap is null");
 			return null;
 		}
 	}
@@ -45,8 +46,7 @@ public class BitmapUtil {
 	public static Bitmap decodeDrawableToBitmap(Drawable drawable) {
 		int w = drawable.getIntrinsicWidth();
 		int h = drawable.getIntrinsicHeight();
-		Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-				: Bitmap.Config.RGB_565;
+		Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888: Bitmap.Config.RGB_565;
 		Bitmap bitmap = Bitmap.createBitmap(w, h, config);
 		Canvas canvas = new Canvas(bitmap);
 		drawable.setBounds(0, 0, w, h);
@@ -60,8 +60,7 @@ public class BitmapUtil {
 	}
 
 	public static byte[] decodeDrawableToBytes(Context context, int sourceID) {
-		return decodeBitmapToBytes(decodeDrawableToBitmap(context
-				.getResources().getDrawable(sourceID)));
+		return decodeBitmapToBytes(decodeDrawableToBitmap(context.getResources().getDrawable(sourceID)));
 	}
 
 	/**

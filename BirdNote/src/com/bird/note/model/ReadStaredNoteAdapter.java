@@ -26,16 +26,13 @@ public class ReadStaredNoteAdapter extends BaseAdapter implements OnItemClickLis
 	private Context mContext;
 	private LayoutInflater mInflater;
 
-	public ReadStaredNoteAdapter(Activity context, List<BirdNote> listData,
-			GridView gridView) {
+	public ReadStaredNoteAdapter(Activity context, List<BirdNote> listData,GridView gridView) {
 		super();
-
 		this.mContext = context;
 		this.mListData = listData;
 		this.mGridView = gridView;
 		mGridView.setOnItemClickListener(this);
 		this.mInflater=context.getLayoutInflater();
-
 	}
 
 	/*
@@ -119,7 +116,6 @@ public class ReadStaredNoteAdapter extends BaseAdapter implements OnItemClickLis
 		}
 
 			holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
-			/*后期缩略图的背景要切一个小一点的图片*/
 	        holder.thumbnail.setBackgroundResource(getPreBgByBg(birdNote.background));
 	        holder.title.setText(birdNote.title);
 	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));

@@ -31,7 +31,6 @@ public class ColorCircle extends View {
 
 	public ColorCircle(Context context) {
 		this(context, null);
-
 	}
 
 	public void init(Context context) {
@@ -41,12 +40,9 @@ public class ColorCircle extends View {
 		mPaint.setStyle(Paint.Style.FILL);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		SharedPreferences sp = context.getSharedPreferences(
-				SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
-		color = sp.getInt(SavedPaint.SP_PAINT_COLOR,
-				SavedPaint.DEFAULT_PAINT_COLOR);
-		width = sp.getFloat(SavedPaint.SP_PAINT_WIDTH,
-				SavedPaint.DEFAULT_PAINT_WIDTH);
+		SharedPreferences sp = context.getSharedPreferences(SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
+		color = sp.getInt(SavedPaint.SP_PAINT_COLOR,SavedPaint.DEFAULT_PAINT_COLOR);
+		width = sp.getFloat(SavedPaint.SP_PAINT_WIDTH,SavedPaint.DEFAULT_PAINT_WIDTH);
 
 		mPaint.setColor(color);
 		mPaint.setStrokeWidth(width);

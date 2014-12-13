@@ -26,12 +26,10 @@ public class CleanCircle extends View {
 
 	public CleanCircle(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
-
 	}
 
 	public CleanCircle(Context context) {
 		this(context, null);
-
 	}
 
 	public void init(Context context) {
@@ -41,10 +39,8 @@ public class CleanCircle extends View {
 		mPaint.setStyle(Paint.Style.FILL);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		SharedPreferences sp = context.getSharedPreferences(
-				SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
-		width = sp.getFloat(SavedPaint.SP_PAINT_CLEAN_WIDTH,
-				SavedPaint.DEFAULT_CLEAN_PAINT_WIDTH);
+		SharedPreferences sp = context.getSharedPreferences(SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
+		width = sp.getFloat(SavedPaint.SP_PAINT_CLEAN_WIDTH,SavedPaint.DEFAULT_CLEAN_PAINT_WIDTH);
 		mPaint.setStrokeWidth(width);
 		mPaint.setColor(Color.WHITE);
 	}

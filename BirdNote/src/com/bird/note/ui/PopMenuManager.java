@@ -11,33 +11,16 @@ import com.bird.note.R;
 import com.bird.note.utils.PreferenceUtil;
 
 public class PopMenuManager {
-
-	
-	public static AlertDialog createMarkChooseAlertDialog(Context context,int titleSrc,OnClickListener listener){
-		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		AlertDialog dialog = builder.create();
-		View view = inflater.inflate(R.layout.show_notes_menu_markcolor,null);
-		dialog.setView(view);
-		dialog.setTitle(context.getString(titleSrc));
-		view.setOnClickListener(listener);
-		return dialog;
-	}
 	
 	public static AlertDialog createSortChooseAlertDialog(Context context,int titleSrc,android.content.DialogInterface.OnClickListener listener){
-		
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		AlertDialog dialog = builder.setTitle(context.getString(titleSrc)).setSingleChoiceItems(
-				context.getResources().getStringArray(R.array.sortby_array), PreferenceUtil.getSortBy(), listener).setNegativeButton(
-						context.getString(R.string.show_menu_confirm), listener).show();
+		AlertDialog dialog = builder.setTitle(context.getString(titleSrc)).setSingleChoiceItems(context.getResources().getStringArray(R.array.sortby_array), PreferenceUtil.getSortBy(), listener).setPositiveButton(context.getString(R.string.show_menu_confirm), listener).show();
 		return dialog;
 	}
 	
 	public static AlertDialog createDeleteAlertDialog(Context context,int titleSrc,android.content.DialogInterface.OnClickListener listener){
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		AlertDialog dialog = builder.setTitle(context.getString(titleSrc)).setPositiveButton(context.getString(R.string.show_menu_confirm), listener).setNegativeButton(
-				context.getString(R.string.show_menu_cancel), listener).show();
+		AlertDialog dialog = builder.setTitle(context.getString(titleSrc)).setPositiveButton(context.getString(R.string.show_menu_confirm), listener).setNegativeButton(context.getString(R.string.show_menu_cancel), listener).show();
 		return dialog;
 	}
 	
@@ -53,15 +36,13 @@ public class PopMenuManager {
 	
 	public static AlertDialog createItemOperationDialog(Context context,int titleSrc,android.content.DialogInterface.OnClickListener listener){
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		AlertDialog dialog = builder.setTitle(context.getString(titleSrc)).setItems(
-				context.getResources().getStringArray(R.array.itemmenu_array),  listener).show();
+		AlertDialog dialog = builder.setTitle(context.getString(titleSrc)).setItems(context.getResources().getStringArray(R.array.itemmenu_array),  listener).show();
 		return dialog;
 	}
 	
 	public static AlertDialog createExitAlertDialog(Context context,int titleSrc,android.content.DialogInterface.OnClickListener listener){
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		AlertDialog dialog = builder.setTitle(context.getString(titleSrc)).setPositiveButton(context.getString(R.string.exit_with_save), listener).setNegativeButton(
-				context.getString(R.string.exit_without_save), listener).show();
+		AlertDialog dialog = builder.setTitle(context.getString(titleSrc)).setPositiveButton(context.getString(R.string.exit_with_save), listener).setNegativeButton(context.getString(R.string.exit_without_save), listener).show();
 		return dialog;
 	}
 	

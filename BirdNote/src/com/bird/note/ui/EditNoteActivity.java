@@ -33,30 +33,24 @@ import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.JsonUtil;
 import com.bird.note.utils.NoteApplication;
 
-public class EditNoteActivity extends FragmentActivity implements
-		OnClickListener {
+public class EditNoteActivity extends FragmentActivity implements OnClickListener {
 
 	public LevelFlag mLevelFlag;
 	private QuadrantThumbnail quadrantThumbnail;
-
 	/*
 	 * 当前所处模式：绘图或文字
 	 */
 	public int mCurrMode = 0;
-
 	/*
 	 * 当前的类型：创建或更新
 	 */
 	public int mCurrentType = BirdMessage.START_TYPE_CREATE_VALUE;
-
 	private EditQuadrantFragment mEditQuaFragment;
 	/*
 	 * 当前所处象限
 	 */
 	private int mCurrentQuadrant = 0;
-
 	public BirdNote mBirdNote = null;
-
 	private DbHelper dbHelper;
 	private List<EditQuadrantFragment> mEditQuaFragmentsList = new ArrayList<EditQuadrantFragment>();
 	private List<QuadrantContent> mQuaList;
@@ -64,9 +58,9 @@ public class EditNoteActivity extends FragmentActivity implements
 	public int mNoteEditType = BirdMessage.NOTE_EDIT_TYPE_CREATE;
 	private NoteApplication mNoteApplication = null;
 	private int[] mEditedQuadrant;
-
 	public String mTitleString = "";
 	private BirdWaitDialog mWaitDialog = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -75,20 +69,16 @@ public class EditNoteActivity extends FragmentActivity implements
 		setContentView(R.layout.edit_note_main);
 		mWaitDialog = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mNoteApplication = (NoteApplication) getApplication();
-
 		mNoteApplication.setEdited(false);
 		mNoteEditType = mNoteApplication.getCurrentNoteEidtType();
 		mEditedQuadrant = mNoteApplication.getEditedQuadrants();
-
 		dbHelper = new DbHelper(this);
 		Intent intent = getIntent();
-		mCurrentType = intent.getIntExtra(BirdMessage.START_TYPE_KEY,
-				BirdMessage.START_TYPE_CREATE_VALUE);
+		mCurrentType = intent.getIntExtra(BirdMessage.START_TYPE_KEY,BirdMessage.START_TYPE_CREATE_VALUE);
 
 		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
 			/* 若更新笔记，获得传过来Note(不完整) */
-			mBirdNote = intent
-					.getParcelableExtra(BirdMessage.INITENT_PARCEL_NOTE);
+			mBirdNote = intent.getParcelableExtra(BirdMessage.INITENT_PARCEL_NOTE);
 			mTitleString = mBirdNote.title;
 			/* 查询获取完整的Note */
 			mBirdNote = dbHelper.queryNoteById(mBirdNote, mBirdNote._id + "");
@@ -96,8 +86,7 @@ public class EditNoteActivity extends FragmentActivity implements
 
 		}
 
-		mCurrMode = intent.getIntExtra(BirdMessage.START_MODE_KEY,
-				R.id.id_edit_title_pen);
+		mCurrMode = intent.getIntExtra(BirdMessage.START_MODE_KEY,R.id.id_edit_title_pen);
 		mNoteApplication.setCurrentEditMode(mCurrMode);
 		try {
 			initActivityView(mCurrentType);
@@ -108,7 +97,6 @@ public class EditNoteActivity extends FragmentActivity implements
 
 	@Override
 	public void openOptionsMenu() {
-		// TODO Auto-generated method stub
 		super.openOptionsMenu();
 	}
 	public OnClickListener exitClickListener = new OnClickListener() {
@@ -129,8 +117,7 @@ public class EditNoteActivity extends FragmentActivity implements
 
 		mLevelFlag = (LevelFlag) findViewById(R.id.id_edit_level_flag);
 		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
-		quadrantThumbnail
-				.setQuadrantChangeListener(new OnQuadrantChangeListener() {
+		quadrantThumbnail.setQuadrantChangeListener(new OnQuadrantChangeListener() {
 					@Override
 					public void changeQua(int qua) {
 						mCurrentQuadrant = qua;
@@ -140,7 +127,6 @@ public class EditNoteActivity extends FragmentActivity implements
 
 		if (type == BirdMessage.START_TYPE_CREATE_VALUE) {
 			initCreateView(type);
-
 		}
 		if (type == BirdMessage.START_TYPE_UPDATE_VALUE) {
 			initUpdateView(type);
@@ -153,25 +139,21 @@ public class EditNoteActivity extends FragmentActivity implements
 	public void changeToQuadrantAt(int qua) {
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		if (mEditQuaFragmentsList.get(qua) == null) {
-			mEditQuaFragment = EditQuadrantFragment.newInstance(qua,
-					mNoteApplication.getCurrentEditMode());
+			mEditQuaFragment = EditQuadrantFragment.newInstance(qua,mNoteApplication.getCurrentEditMode());
 			mEditQuaFragmentsList.remove(qua);
 			mEditQuaFragmentsList.add(qua, mEditQuaFragment);
 			transaction.add(R.id.id_edit_main_editfragment, mEditQuaFragment);
 		} else {
 			mEditQuaFragment = mEditQuaFragmentsList.get(qua);
 			if (!mEditQuaFragment.isAdded()) {
-				transaction.add(R.id.id_edit_main_editfragment,
-						mEditQuaFragment);
+				transaction.add(R.id.id_edit_main_editfragment,mEditQuaFragment);
 
 			}
 		}
 
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
 			if (i == qua) {
-
 				transaction.show(mEditQuaFragment);
-
 			} else {
 				if (mEditQuaFragmentsList.get(i) != null) {
 					transaction.hide(mEditQuaFragmentsList.get(i));
@@ -202,19 +184,14 @@ public class EditNoteActivity extends FragmentActivity implements
 		while (iterator.hasNext()) {
 			quadrantContent = (QuadrantContent) iterator.next();
 			if (quadrantContent != null) {
-				EditQuadrantFragment editQuadrantFragment = EditQuadrantFragment
-						.newInstance(mCurrMode, quadrantContent);
+				EditQuadrantFragment editQuadrantFragment = EditQuadrantFragment.newInstance(mCurrMode, quadrantContent);
 				mEditQuaFragmentsList.remove(quadrantContent.quadrant);
 				mEditQuaFragmentsList.add(quadrantContent.quadrant,
 						editQuadrantFragment);
-
 			}
 
 		}
 
-		/*
-		 * 先默认0，后期要改成可以进入任意象限
-		 */
 		mEditQuaFragment = mEditQuaFragmentsList.get(0);
 		mEditQuaFragmentsList.remove(0);
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
@@ -228,13 +205,11 @@ public class EditNoteActivity extends FragmentActivity implements
 	}
 
 	public void initCreateView(int type) {
-		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant,
-				mCurrMode);
+		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant,mCurrMode);
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
 		mEditQuaFragmentsList.add(1, null);
 		mEditQuaFragmentsList.add(2, null);
 		mEditQuaFragmentsList.add(3, null);
-
 		fragmentManager = getSupportFragmentManager();
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		transaction.replace(R.id.id_edit_main_editfragment, mEditQuaFragment);
@@ -284,7 +259,6 @@ public class EditNoteActivity extends FragmentActivity implements
 	}
 
 	private Runnable deleteRunnable = new Runnable() {
-		
 		@Override
 		public void run() {
 			if (mBirdNote != null) {
@@ -314,7 +288,6 @@ public class EditNoteActivity extends FragmentActivity implements
 		byte[] qua = null;
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
 			if (mEditQuaFragmentsList.get(i) != null) {
-
 				if (edited[i] == 1) {
 					/* 若编辑过，则保存新内容 */
 					text_array[i] = mEditQuaFragmentsList.get(i)
@@ -369,9 +342,6 @@ public class EditNoteActivity extends FragmentActivity implements
 	 * @return
 	 */
 	public byte[] createThumbnailByQuadrant() {
-		/*
-		 * ATTENTION:这里只有绘制内容，要加上文字内容
-		 */
 		return BitmapUtil.decodeBitmapToBytes(mEditQuaFragmentsList.get(0).getAllBitmapWithouBg());
 	}
 
@@ -381,9 +351,7 @@ public class EditNoteActivity extends FragmentActivity implements
 			case BirdMessage.SAVE_AS_OVER:
 				if (mWaitDialog != null && mWaitDialog.isShowing()) {
 					mWaitDialog.dismiss();
-					Toast.makeText(EditNoteActivity.this,
-							getString(R.string.save_as_toast_start) + msg.obj,
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(EditNoteActivity.this,getString(R.string.save_as_toast_start) + msg.obj,Toast.LENGTH_LONG).show();
 				}
 				if (mEditQuaFragment.mEditText != null) {
 					mEditQuaFragment.mEditText.setCursorVisible(true);
@@ -413,7 +381,6 @@ public class EditNoteActivity extends FragmentActivity implements
 	public boolean onCreateOptionsMenu(android.view.Menu menu) {
 		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
 			int star = dbHelper.queryStarById(mBirdNote._id + "");
-			Log.e("wxp", star+"eeeeee");
 			if (star == 0) {
 				getMenuInflater().inflate(R.menu.edit_menu_tostar, menu);
 			} else {
@@ -435,7 +402,6 @@ public class EditNoteActivity extends FragmentActivity implements
 			break;
 		case R.id.id_edit_menu_saveas:
 			mEditQuaFragment.showSaveAs();
-			
 			break;
 		case R.id.id_edit_menu_star:
 			dbHelper.toggleStarNoteById(mBirdNote._id + "");

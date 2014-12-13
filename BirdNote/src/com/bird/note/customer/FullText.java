@@ -20,12 +20,10 @@ public class FullText extends EditText {
 	private boolean mFirstDown = true;
 	private float mClickPosX = 0;
 	private float mClickPosY = 0;
-
 	/*
 	 * 点击的是第几行
 	 */
 	private int mClickLine = 0;
-
 	private int mFullTextWidth = 0;
 	private int mFullTextHeight = 0;
 	private float mLineHeight = 0;
@@ -36,10 +34,10 @@ public class FullText extends EditText {
 	private int lineCount = 0;
 	private int temp = 0;
 	private int dstart = 0;
-
-	Toast mToast = null;
-	Context mContext;
+	private Toast mToast = null;
+	private Context mContext;
 	private NoteApplication mNoteApplication = null;
+	
 	public FullText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
@@ -48,13 +46,11 @@ public class FullText extends EditText {
 	public FullText(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
-
 	}
 
 	public FullText(Context context) {
 		super(context);
 		init(context);
-
 	}
 
 	private Handler myHandler = new Handler() {
@@ -81,7 +77,6 @@ public class FullText extends EditText {
 		mPaint.setTextSize(getTextSize());
 		mLineHeight = getLineHeight();
 		myHandler.post(new Runnable() {
-
 			@Override
 			public void run() {
 				addTextChangedListener(new TextWatcher() {
@@ -90,23 +85,18 @@ public class FullText extends EditText {
 					public void onTextChanged(CharSequence s, int start,
 							int before, int count) {
 						int lines = getLineCount();
-						/* 限制最大输入行数 */
-
 						if (lines > mMaxLines) {
 							myHandler.sendEmptyMessage(0);
 							String str = s.toString();
 							int cursorStart = getSelectionStart();
 							int cursorEnd = getSelectionEnd();
-							if (cursorStart == cursorEnd
-									&& cursorStart < str.length()
-									&& cursorStart >= 1) {
+							if (cursorStart == cursorEnd&& cursorStart < str.length()&& cursorStart >= 1) {
 								getEditableText().delete(start, start + count);
 							} else {
 								str = str.substring(0, s.length() - 1);
 								setText(str);
 								setSelection(getText().length());
 							}
-
 						}
 					}
 
@@ -136,18 +126,14 @@ public class FullText extends EditText {
 		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 		int widthSize = MeasureSpec.getSize(widthMeasureSpec);
 		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-
 		mFullTextWidth = widthSize;
-
 		mFullTextHeight = heightSize;
 		mMaxLines = (int) (mFullTextHeight / mLineHeight);
 		setMeasuredDimension(mFullTextWidth, mFullTextHeight);
 	}
 
 	@Override
-	protected void onTextChanged(CharSequence text, int start,
-			int lengthBefore, int lengthAfter) {
-
+	protected void onTextChanged(CharSequence text, int start,int lengthBefore, int lengthAfter) {
 		super.onTextChanged(text, start, lengthBefore, lengthAfter);
 	}
 
@@ -173,40 +159,29 @@ public class FullText extends EditText {
 			}
 
 			if ((mClickLine + 1) > lineCount) {
-				// 如果触摸区域所在行大于当前文本内容的行数
 				setSelection(getText().length(), getText().length());
 				for (int i = 0; i < (mClickLine + 1 - lineCount); i++) {
-					// 就初始化之前的行（通过添加换行符）
 					editable.append("\n");
 				}
-				// 接着还要初始化这一行之前的内容（通过添加空格）
 				lineStart = getOffsetForPosition(0, mClickPosY);
 				mSelectSatrt = getSelectionStart();
-				while (mPaint.measureText(editable.toString(), lineStart,
-						mSelectSatrt) < mClickPosX) {
+				while (mPaint.measureText(editable.toString(), lineStart,mSelectSatrt) < mClickPosX) {
 					editable.append(" ");
 					mSelectSatrt++;
-				}
-			
+				}	
 			} else {
-				// 如果触摸区域刚好处在当前内容内部
 				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
 				setSelection(woqu, woqu);
 				mSelectSatrt = getSelectionStart();
 				lineStart = getOffsetForPosition(0, mClickPosY);
-				// 接着在ACTION_UP中处理
 				if ((mClickLine + 1) == lineCount) {
 					dstart = mSelectSatrt - lineStart;
 					setSelection(woqu, woqu);
 					temp = 0;
-
-							while (mPaint.measureText(editable.toString(),
-									lineStart, lineStart + dstart + temp) < mClickPosX) {
+							while (mPaint.measureText(editable.toString(),lineStart, lineStart + dstart + temp) < mClickPosX) {
 								editable.append(" ");
 								temp++;
 							}
-						
-			
 				}
 			}
 			break;
@@ -214,50 +189,38 @@ public class FullText extends EditText {
 		case MotionEvent.ACTION_UP:
 			mSelectSatrt = getSelectionStart();
 			if ((mClickLine + 1) == lineCount) {
-
 				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
 				lineStart = getOffsetForPosition(0, mClickPosY);
 				if (mClickLine == 0) {
 					dstart = mSelectSatrt - lineStart;
 					setSelection(woqu, woqu);
 					temp = 0;
-
-							while (mPaint.measureText(editable.toString(),
-									lineStart, lineStart + dstart + temp) < mClickPosX) {
+							while (mPaint.measureText(editable.toString(),lineStart, lineStart + dstart + temp) < mClickPosX) {
 								editable.append(" ");
 								temp++;
 							}
 						
 				} else {
-					if (mSelectSatrt <= woqu) {
-						
+					if (mSelectSatrt <= woqu) {					
 					} 
 				}
 
 			} else if ((mClickLine + 1) < lineCount) {
 				int woqu = getOffsetForPosition(mClickPosX, mClickPosY);
-				lineStart = getOffsetForPosition(0, mClickPosY);
-				
+				lineStart = getOffsetForPosition(0, mClickPosY);				
 				String a = "\n";
-				
-					Log.e("wxp", "你告诉我是点的第几行："+(mClickLine+1));
 					if (woqu == 0) {
 						char c = getText().charAt(woqu);
 						if (String.valueOf(c).equals(a)) {
-							//如果前一个是换行符或者后一个是换行符就在之前的位置插入空格
 							setSelection(woqu, woqu);
-
 							lineStart = getOffsetForPosition(0, mClickPosY);
 							mSelectSatrt = getSelectionStart();
-
-							while (mPaint.measureText(editable.toString(), lineStart,
-									mSelectSatrt) < mClickPosX) {
+							while (mPaint.measureText(editable.toString(), lineStart,mSelectSatrt) < mClickPosX) {
 								editable.insert(mSelectSatrt, " ");
 								mSelectSatrt++;
 							}
 
 						} else {
-							//否则不做操作
 
 						}
 					} else {
@@ -265,28 +228,20 @@ public class FullText extends EditText {
 						if (woqu <getText().length()) {
 							char c = getText().charAt(woqu);
 							if (String.valueOf(b).equals(a) || String.valueOf(c).equals(a)) {
-								//如果前一个是换行符或者后一个是换行符就在之前的位置插入空格
 								setSelection(woqu, woqu);
-
 								lineStart = getOffsetForPosition(0, mClickPosY);
 								mSelectSatrt = getSelectionStart();
-
-								while (mPaint.measureText(editable.toString(), lineStart,
-										mSelectSatrt) < mClickPosX) {
+								while (mPaint.measureText(editable.toString(), lineStart,mSelectSatrt) < mClickPosX) {
 									editable.insert(mSelectSatrt, " ");
 									mSelectSatrt++;
 								}
 
 							} else {
-								//否则不做操作
 
 							}
 						}
 						
 					}
-					
-				
-				
 
 			}
 
@@ -295,9 +250,7 @@ public class FullText extends EditText {
 			break;
 		default:
 			break;
-
 		}
-
 		return super.onTouchEvent(event);
 	}
 

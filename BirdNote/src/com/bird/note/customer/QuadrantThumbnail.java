@@ -24,9 +24,7 @@ public class QuadrantThumbnail extends View {
 	 * 当前象限
 	 */
 	private int mCurQua = 0;
-
 	private LayoutInflater inflater;
-
 	/*
 	 * 是否展开
 	 */
@@ -45,7 +43,6 @@ public class QuadrantThumbnail extends View {
 	 */
 	private float posX;
 	private float posY;
-
 	/*
 	 * QuadrantThumbnail的左上角顶点坐标
 	 */
@@ -139,16 +136,13 @@ public class QuadrantThumbnail extends View {
 			if (posX > 0 && posX < halfWidth && posY > 0 && posY < halfHeight) {
 				mCurQua = 0;
 			}
-			if (posX > halfWidth && posX < mWidth && posY > 0
-					&& posY < halfHeight) {
+			if (posX > halfWidth && posX < mWidth && posY > 0&& posY < halfHeight) {
 				mCurQua = 1;
 			}
-			if (posX > 0 && posX < halfWidth && posY > halfHeight
-					&& posY < mHeight) {
+			if (posX > 0 && posX < halfWidth && posY > halfHeight&& posY < mHeight) {
 				mCurQua = 2;
 			}
-			if (posX > halfWidth && posX < mWidth && posY > halfHeight
-					&& posY < mHeight) {
+			if (posX > halfWidth && posX < mWidth && posY > halfHeight&& posY < mHeight) {
 				mCurQua = 3;
 			}
 			quadrantChangeListener.changeQua(mCurQua);
@@ -170,7 +164,6 @@ public class QuadrantThumbnail extends View {
 			x = 2;
 			y = 2;
 			break;
-
 		case 1:
 			x = mWidth / 2 + 1;
 			y = 2;

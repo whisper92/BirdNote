@@ -28,8 +28,8 @@ public class ColorLine extends View {
 	double mSqrt =0;
 	double mRadius = 0;
 	
-	RECT r1;
-	RECT r2;
+	private RECT r1;
+	private RECT r2;
 	public ColorLine(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
@@ -53,12 +53,9 @@ public class ColorLine extends View {
 		mPaint.setStyle(Paint.Style.STROKE);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		SharedPreferences sp = context.getSharedPreferences(
-				SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
-		mPaintColor = sp.getInt(SavedPaint.SP_PAINT_COLOR,
-				SavedPaint.DEFAULT_PAINT_COLOR);
-		mPaintWidth = sp.getFloat(SavedPaint.SP_PAINT_WIDTH,
-				SavedPaint.DEFAULT_PAINT_WIDTH);
+		SharedPreferences sp = context.getSharedPreferences(SavedPaint.SP_PAINT_KEY, Context.MODE_PRIVATE);
+		mPaintColor = sp.getInt(SavedPaint.SP_PAINT_COLOR,SavedPaint.DEFAULT_PAINT_COLOR);
+		mPaintWidth = sp.getFloat(SavedPaint.SP_PAINT_WIDTH,SavedPaint.DEFAULT_PAINT_WIDTH);
 		mPaint.setColor(mPaintColor);
 		mPaint.setStrokeWidth(mPaintWidth);
 	}
@@ -110,12 +107,9 @@ public class ColorLine extends View {
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-
 		RectF oval1 = new RectF(r1.left, r1.top , r1.right, r1.bottom);
-		//canvas.drawRect(oval1, mPaint);
 		canvas.drawArc(oval1, 225, 90, false, mPaint);
 		oval1.set(r2.left, r2.top, r2.right , r2.bottom);
-		//canvas.drawRect(oval1, mPaint);
 		canvas.drawArc(oval1, 45, 90, false, mPaint);
 	}
 	

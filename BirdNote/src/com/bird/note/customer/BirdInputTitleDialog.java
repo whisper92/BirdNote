@@ -26,7 +26,6 @@ public class BirdInputTitleDialog extends Dialog {
 		super(context, theme);
 	}
 
-
 	public void setInputContent(String content) {
 		this.mContentString = content;
 		if (mEditText != null) {
@@ -60,10 +59,8 @@ public class BirdInputTitleDialog extends Dialog {
 					public void onClick(View v) {
 						dismiss();
 					}
-				});
-		
+				});	
 		setOnCancelListener(null);
-		
 	}
 
 }

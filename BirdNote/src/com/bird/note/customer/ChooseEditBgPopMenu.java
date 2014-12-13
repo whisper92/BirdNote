@@ -2,8 +2,6 @@ package com.bird.note.customer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
@@ -19,9 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import com.bird.note.R;
-import com.bird.note.model.BirdPopMenuItem;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.NoteApplication;
 
@@ -38,8 +34,6 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 	private LayoutInflater inflater;
 	private View rootView;
 	private Context mContext;
-	public List<BirdPopMenuItem> menuItems;
-
 	private Gallery gallery;
 	private NoteApplication mNoteApplication = null;
 	private String[] mBgArray = null;
@@ -48,8 +42,7 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 	public ChooseEditBgPopMenu(Context context) {
 		mContext = context;
 		mNoteApplication = (NoteApplication) mContext.getApplicationContext();
-		inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		rootView = inflater.inflate(R.layout.choos_editbg_pop_menu, null);
 
 		this.setContentView(rootView);
@@ -60,8 +53,7 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 		this.setOutsideTouchable(false);
 		this.setBackgroundDrawable(new BitmapDrawable());
 
-		LinearLayout linearLayout = (LinearLayout) rootView
-				.findViewById(R.id.id_popmenu_root);
+		LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.id_popmenu_root);
 		linearLayout.setOnClickListener(DismissListener);
 
 		rootView.setFocusableInTouchMode(true);
@@ -77,8 +69,7 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 		
 		gallery = (Gallery) rootView.findViewById(R.id.gallery1);
 		imageAdapter = new ImageAdapter(mContext);
-		gallery.setAdapter(imageAdapter);// 设置图片适配器
-		// 设置监听器
+		gallery.setAdapter(imageAdapter);
 
 		gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -96,7 +87,6 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 			}
 		});
 		gallery.setSelection(1);
-		
 
 	}
 
@@ -139,13 +129,11 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
 			return position;
 		}
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
 			return position;
 		}
 
@@ -168,8 +156,6 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
             if (bg == BitmapUtil.EDIT_BGS[position]) {
             	holder.selectedImv.setVisibility(View.VISIBLE);
 			}
-            //holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            //holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(150,248));
 			return convertView;
 		}
 	}

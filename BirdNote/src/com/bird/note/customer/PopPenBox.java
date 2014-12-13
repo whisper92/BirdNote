@@ -98,8 +98,7 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 			public void onStartTrackingTouch(SeekBar seekBar) {
 			}
 			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress,
-					boolean fromUser) {
+			public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
 				mSelectPaintWidth = progress / MAX * SavedPaint.DEFAULT_PAINT_MAX_WIDTH+5f;
 				mColorCircle.setPaintWidth(mSelectPaintWidth);
 				mColorLine.setPaintWidth(mSelectPaintWidth);			
