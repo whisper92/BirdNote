@@ -66,7 +66,7 @@ Textlines直接以json数组的方式存储,tqua表示所在的象限,tcontent�
 
 演示效果：
 
-![birdnote.gif](http://whisperlog.qiniudn.com/birdnote.gif)
+![birdnote.gif](/Media/birdnote.gif)
 
 - - -
 
