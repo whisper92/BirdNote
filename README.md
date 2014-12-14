@@ -61,8 +61,13 @@ Textlines直接以json数组的方式存储,tqua表示所在的象限,tcontent�
 - version_1.1：基本功能全部实现
 - version_1.2：完善全屏输入文字；修复bug
 - [version_1.3](/APK/BirdNote_1.3.apk)：完善功能；修复bug
+
 - - -
 
 演示效果：
 
 ![birdnote.gif](http://whisperlog.qiniudn.com/birdnote.gif)
+
+- - -
+
+THE END
