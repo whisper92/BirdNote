@@ -58,13 +58,11 @@ Textlines直接以json数组的方式存储,tqua表示所在的象限,tcontent�
 - - -
 更新历史：
 
-[version_1.1](/APK/BirdNote_1.1.apk)：基本功能全部实现
-
-
-Idina Menze和Caleb Hyles激情对唱Let It Go：
-<iframe height=498 width=510 src="http://player.youku.com/embed/XNjcyMDU4Njg0" frameborder=0 allowfullscreen></iframe>
-
+- version_1.1：基本功能全部实现
+- version_1.2：完善全屏输入文字；修复bug
+- [version_1.3](/APK/BirdNote_1.3.apk)：完善功能；修复bug
 - - -
 
 演示效果：
-![birdnote.gif](/Media/birdnote.gif)
+
+![birdnote.gif](http://whisperlog.qiniudn.com/birdnote.gif)
