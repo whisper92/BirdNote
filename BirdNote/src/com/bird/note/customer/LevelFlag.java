@@ -61,8 +61,9 @@ public class LevelFlag extends View {
 		int width;
 		int height;
 		Drawable bg = getBackground();
-		int bgHeight = BitmapUtil.decodeDrawableToBitmap(bg).getHeight();
-		int bgWidth = BitmapUtil.decodeDrawableToBitmap(bg).getWidth();
+		int bgHeight = 76;//BitmapUtil.decodeDrawableToBitmap(bg).getHeight();
+		int bgWidth = 40;//BitmapUtil.decodeDrawableToBitmap(bg).getWidth();
+		
 		if (widthMode == MeasureSpec.EXACTLY) {
 			width = widthSize;
 		} else {

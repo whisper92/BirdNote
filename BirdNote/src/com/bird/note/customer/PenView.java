@@ -53,7 +53,7 @@ public class PenView extends View {
 	private Paint mDrawPaint;
 	private Canvas mDrawCanvas;
 	public Bitmap mDrawBitmap;
-	private Bitmap mExistBitmap = null;
+	public Bitmap mExistBitmap = null;
 	/*
 	 * 擦除模式对应的paint,canvas,bitmap
 	 */

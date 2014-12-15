@@ -48,7 +48,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 */
 	private FrameLayout mWrapFrameLayout;
 	public EditText mEditText;
-	private PenView mPenView;
+	public PenView mPenView;
 	/*
 	 * 撤销和重做图标的状态
 	 */
@@ -292,6 +292,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			Bitmap bitmap = getAllBitmap();
 			mSavePath = CommonUtils.getSavePath() + "/"+ mBirdInputTitleDialog.getContent() + ".png";
 			BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap),"/" + mBirdInputTitleDialog.getContent());
+			bitmap.recycle();
 			mainHandler.obtainMessage(BirdMessage.SAVE_AS_OVER, mSavePath).sendToTarget();
 		}
 	};

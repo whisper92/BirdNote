@@ -1,5 +1,6 @@
 package com.bird.note.customer;
 
+import android.R.integer;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
@@ -68,9 +69,10 @@ public class ColorCircle extends View {
 		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 		
 		Drawable gb = getBackground();
-		int bgW = BitmapUtil.decodeDrawableToBitmap(gb).getWidth();
-		int bgH = BitmapUtil.decodeDrawableToBitmap(gb).getHeight();
-		
+		//int bgW = BitmapUtil.decodeDrawableToBitmap(gb).getWidth();
+		//int bgH = BitmapUtil.decodeDrawableToBitmap(gb).getHeight();
+		int bgW = 312;
+		int bgH = 72;
 		int width,height;
 		if (widthMode == MeasureSpec.EXACTLY) {
 			width = widthSize;

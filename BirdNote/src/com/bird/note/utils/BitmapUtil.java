@@ -88,11 +88,11 @@ public class BitmapUtil {
 	 * @return byte[]
 	 */
 	public static Bitmap generateThumbnailBytes(Context context,Bitmap origBitmap){
-		int width = context.getResources().getDrawable(R.drawable.preview_style00).getIntrinsicWidth();
-		int height = context.getResources().getDrawable(R.drawable.preview_style00).getIntrinsicHeight();
-		Log.e("wxp","width : "+width+" ; height : "+height);
+		//int width = context.getResources().getDrawable(R.drawable.preview_style00).getIntrinsicWidth();
+		//int height = context.getResources().getDrawable(R.drawable.preview_style00).getIntrinsicHeight();
+		//Log.e("wxp","width : "+width+" ; height : "+height);
 		//Bitmap thumbBitmap=Bitmap.createScaledBitmap(origBitmap, (int) context.getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)context.getResources().getDimension(R.dimen.dimen_create_thumbnail_height), false);
-		Bitmap thumbBitmap=Bitmap.createScaledBitmap(origBitmap,width, height, false);
+		Bitmap thumbBitmap=Bitmap.createScaledBitmap(origBitmap,153, 253, false);
 		return thumbBitmap;
 	}
 	

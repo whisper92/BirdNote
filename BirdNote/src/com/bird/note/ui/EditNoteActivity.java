@@ -357,9 +357,11 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 				}
 				break;
 			case BirdMessage.SAVE_OVER:
+				recycleBitmap();
 				finish();
 				break;
 			case BirdMessage.DELETE_OVER:
+				recycleBitmap();
 				finish();
 				break;
 			case BirdMessage.SAVE_RUNNABLE_START:
@@ -377,6 +379,20 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		};
 	};
 	
+	public void recycleBitmap(){
+		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
+			if (mEditQuaFragmentsList.get(i)!=null) {
+				if (mEditQuaFragmentsList.get(i).mPenView!=null) {
+					if (mEditQuaFragmentsList.get(i).mPenView.mExistBitmap!=null) {
+						mEditQuaFragmentsList.get(i).mPenView.mExistBitmap.recycle();
+					}
+					if (mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap!=null) {
+						mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap.recycle();
+					}
+				}
+			}
+		}
+	}
 	public boolean onCreateOptionsMenu(android.view.Menu menu) {
 		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
 			int star = dbHelper.queryStarById(mBirdNote._id + "");

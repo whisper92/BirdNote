@@ -1,6 +1,7 @@
 package com.bird.note.customer;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -92,7 +93,7 @@ public class QuadrantThumbnail extends View {
 		int height;
 		Drawable bg = getBackground();
 		int bgHeight = BitmapUtil.decodeDrawableToBitmap(bg).getHeight();
-		int bgWidth = BitmapUtil.decodeDrawableToBitmap(bg).getWidth();
+		int bgWidth =  BitmapUtil.decodeDrawableToBitmap(bg).getWidth();
 		if (widthMode == MeasureSpec.EXACTLY) {
 			width = widthSize;
 		} else {
@@ -180,7 +181,9 @@ public class QuadrantThumbnail extends View {
 		default:
 			break;
 		}
-		canvas.drawBitmap(BitmapUtil.decodeDrawableToBitmap(getResources().getDrawable(mScaled ? R.drawable.switch_4: R.drawable.switch_4_small)), x, y, null);
+		Bitmap bitmap = BitmapUtil.decodeDrawableToBitmap(getResources().getDrawable(mScaled ? R.drawable.switch_4: R.drawable.switch_4_small));
+		canvas.drawBitmap(bitmap, x, y, null);
+		bitmap.recycle();
 	}
 
 	/**
