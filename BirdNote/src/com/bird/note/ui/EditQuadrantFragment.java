@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import com.bird.note.R;
 import com.bird.note.customer.BirdInputTitleDialog;
 import com.bird.note.customer.ChooseEditBgPopMenu;
+import com.bird.note.customer.ChooseEditBgPopMenu.OnBgChangeListener;
 import com.bird.note.customer.ChooseEditBgPopMenu.OnChangeBackgroundListener;
 import com.bird.note.customer.PenView;
 import com.bird.note.customer.PenView.OnPathListChangeListener;
@@ -82,6 +83,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	private Handler mainHandler = null;
 	private BirdNote mBirdNote;
 	public ChooseEditBgPopMenu chooseEditBgPopMenu;
+	private DbHelper mDbHelper ;
 
 	/**
 	 * 创建笔记时实例化的方式
@@ -127,6 +129,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		mainHandler = ((EditNoteActivity) getActivity()).editHandler;
+		mDbHelper = new DbHelper(getActivity());
 		chooseEditBgPopMenu = new ChooseEditBgPopMenu(getActivity());
 		saveNewNoteBuilder = PopMenuManager.createSaveNewNoteAlertDialog(getActivity(), R.string.input_title_dialog_title, mInputTitleEditText, null);
 		View view = inflater.inflate(R.layout.edit_note_fragment, container,false);
@@ -240,7 +243,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 
 					}
 				});
-
 	}
 
 
@@ -605,7 +607,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	private class SaveNewNoteThread extends Thread {
 		@Override
 		public void run() {
-			new DbHelper(getActivity()).insertNewNote(((EditNoteActivity) getActivity()).generateNewNote());
+			mDbHelper.insertNewNote(((EditNoteActivity) getActivity()).generateNewNote());
 			mainHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
 		}
 	}
@@ -614,7 +616,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		@Override
 		public void run() {
 			NoteApplication noteApplication = (NoteApplication) getActivity().getApplication();
-			new DbHelper(getActivity()).updateNoteById(((EditNoteActivity) getActivity()).generateNewNote(),noteApplication.getEditNoteId() + "");
+			mDbHelper.updateNoteById(((EditNoteActivity) getActivity()).generateNewNote(),noteApplication.getEditNoteId() + "");
 			mainHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
 		}
 	}

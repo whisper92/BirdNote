@@ -37,43 +37,43 @@ public final class R {
         public static final int color_wait_dialog_bg=0x7f060005;
     }
     public static final class dimen {
-        public static final int dimen_create_thumbnail_height=0x7f070012;
+        public static final int dimen_create_thumbnail_height=0x7f070003;
         /**  创建缩略图的宽高 
          */
-        public static final int dimen_create_thumbnail_width=0x7f070011;
+        public static final int dimen_create_thumbnail_width=0x7f070002;
         public static final int dimen_dialog_width=0x7f070019;
         public static final int dimen_edit_canvas_height=0x7f070001;
         /**  画板的宽高 
  画板的宽高 
          */
         public static final int dimen_edit_canvas_width=0x7f070000;
-        public static final int dimen_edit_level_flag_margin_right=0x7f07000f;
-        public static final int dimen_edit_level_flag_margin_top=0x7f070010;
-        public static final int dimen_edit_qudrant_margin_bottom=0x7f07000e;
-        public static final int dimen_edit_qudrant_margin_right=0x7f07000d;
+        public static final int dimen_edit_level_flag_margin_right=0x7f070011;
+        public static final int dimen_edit_level_flag_margin_top=0x7f070012;
+        public static final int dimen_edit_qudrant_margin_bottom=0x7f070010;
+        public static final int dimen_edit_qudrant_margin_right=0x7f07000f;
         /**  编辑界面 
          */
-        public static final int dimen_edit_title_menu_margin=0x7f07000c;
+        public static final int dimen_edit_title_menu_margin=0x7f07000e;
         public static final int dimen_pop_pen_color_item_size=0x7f070018;
         public static final int dimen_pop_pen_item_margin_top=0x7f070017;
         public static final int dimen_pop_pen_title_height=0x7f070015;
         public static final int dimen_pop_pen_title_marginleft=0x7f070014;
         public static final int dimen_pop_pen_title_margintop=0x7f070013;
         public static final int dimen_pop_pen_title_size=0x7f070016;
-        public static final int dimen_show_gridview_margin=0x7f07000b;
+        public static final int dimen_show_gridview_margin=0x7f07000d;
         /**  首页每一项 
          */
-        public static final int dimen_show_note_item_height=0x7f070006;
-        public static final int dimen_show_note_item_mark_height=0x7f070007;
-        public static final int dimen_show_note_item_menu_height=0x7f070008;
-        public static final int dimen_show_note_item_paddingtop=0x7f070009;
-        public static final int dimen_show_note_item_space=0x7f07000a;
-        public static final int dimen_show_titile_height=0x7f070003;
-        public static final int dimen_show_titile_text_margin_left=0x7f070004;
-        public static final int dimen_show_titile_text_margin_right=0x7f070005;
+        public static final int dimen_show_note_item_height=0x7f070008;
+        public static final int dimen_show_note_item_mark_height=0x7f070009;
+        public static final int dimen_show_note_item_menu_height=0x7f07000a;
+        public static final int dimen_show_note_item_paddingtop=0x7f07000b;
+        public static final int dimen_show_note_item_space=0x7f07000c;
+        public static final int dimen_show_titile_height=0x7f070005;
+        public static final int dimen_show_titile_text_margin_left=0x7f070006;
+        public static final int dimen_show_titile_text_margin_right=0x7f070007;
         /**  首页标题栏
          */
-        public static final int dimen_show_titile_text_size=0x7f070002;
+        public static final int dimen_show_titile_text_size=0x7f070004;
         public static final int dimen_waitdialog_width=0x7f07001a;
     }
     public static final class drawable {

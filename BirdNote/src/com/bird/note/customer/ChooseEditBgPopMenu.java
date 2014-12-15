@@ -2,6 +2,8 @@ package com.bird.note.customer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import android.R.integer;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
@@ -38,7 +40,8 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 	private NoteApplication mNoteApplication = null;
 	private String[] mBgArray = null;
 	private ArrayList<HashMap<String, Object>> lstImageItem;
-	ImageAdapter  imageAdapter;
+	private ImageAdapter  imageAdapter;
+	private OnBgChangeListener onBgChangeListener =null;
 	public ChooseEditBgPopMenu(Context context) {
 		mContext = context;
 		mNoteApplication = (NoteApplication) mContext.getApplicationContext();
@@ -93,6 +96,7 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		mChangeBackgroundListener.changeBackground(BitmapUtil.EDIT_BGS[arg2]);
+		onBgChangeListener.changeBg(BitmapUtil.EDIT_BGS[arg2]);
 	}
 
 	OnChangeBackgroundListener mChangeBackgroundListener;
@@ -166,4 +170,11 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 		public ImageView selectedImv;
 	}
 	
+	public interface OnBgChangeListener{
+		public void changeBg(int bg);
+	}
+	
+	public void setOnBgChangeListener(OnBgChangeListener listener){
+		this.onBgChangeListener = listener;
+	}
 }

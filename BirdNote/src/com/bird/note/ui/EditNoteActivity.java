@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.bird.note.R;
 import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.customer.LevelFlag;
+import com.bird.note.customer.LevelFlag.OnLevelChangeListener;
 import com.bird.note.customer.QuadrantThumbnail;
 import com.bird.note.customer.QuadrantThumbnail.OnQuadrantChangeListener;
 import com.bird.note.dao.DbHelper;
@@ -116,6 +117,16 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public void initActivityView(int type) throws JSONException {
 
 		mLevelFlag = (LevelFlag) findViewById(R.id.id_edit_level_flag);
+		mLevelFlag.setOnLevelChangeListener(new OnLevelChangeListener() {			
+			@Override
+			public void changeLevel(int level) {
+				if (mBirdNote != null) {
+					dbHelper.updateLevelById(mBirdNote._id+"", level);
+				}
+				
+			}
+		});
+		
 		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
 		quadrantThumbnail.setQuadrantChangeListener(new OnQuadrantChangeListener() {
 					@Override

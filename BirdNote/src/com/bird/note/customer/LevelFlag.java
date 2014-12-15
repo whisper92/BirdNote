@@ -18,7 +18,7 @@ import com.bird.note.utils.BitmapUtil;
 
 public class LevelFlag extends View {
 	public int mCurrentLevel = 0;
-
+	private OnLevelChangeListener onLevelChangeListener = null;
 	private int[] levelImages = { R.drawable.mark_blue, R.drawable.mark_green,
 			R.drawable.mark_yellow, R.drawable.mark_red };
 
@@ -85,6 +85,7 @@ public class LevelFlag extends View {
 			break;
 			
 		case MotionEvent.ACTION_UP:
+			onLevelChangeListener.changeLevel(mCurrentLevel);
 			invalidate();
 			break;
 		default:
@@ -97,14 +98,21 @@ public class LevelFlag extends View {
 	 * 循环切换level
 	 */
 	public int nextLevel() {
+		
 		if (mCurrentLevel == 3) {
 			mCurrentLevel = 0;
 			return mCurrentLevel;
 		} else {
 			mCurrentLevel= mCurrentLevel +1;
            return mCurrentLevel;
-		}
-		
-		
+		}	
+	}
+	
+	public interface OnLevelChangeListener{
+		public void changeLevel(int level);
+	}
+	
+	public void setOnLevelChangeListener(OnLevelChangeListener listener){
+		this.onLevelChangeListener = listener;
 	}
 }
