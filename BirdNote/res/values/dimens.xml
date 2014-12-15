@@ -3,6 +3,9 @@
     <!-- 画板的宽高 -->
     <dimen name="dimen_edit_canvas_width">524px</dimen>
     <dimen name="dimen_edit_canvas_height">864px</dimen>
+    <!-- 创建缩略图的宽高 -->
+    <dimen name="dimen_create_thumbnail_width">90dp</dimen> 
+    <dimen name="dimen_create_thumbnail_height">140dp</dimen> 
     
     <!-- 首页标题栏-->
     <dimen name="dimen_show_titile_text_size">20dp</dimen>
@@ -24,10 +27,6 @@
     <dimen name="dimen_edit_qudrant_margin_bottom">10dp</dimen>
     <dimen name="dimen_edit_level_flag_margin_right">5dp</dimen>
     <dimen name="dimen_edit_level_flag_margin_top">62dp</dimen>
-    
-    <!-- 创建缩略图的宽高 -->
-    <dimen name="dimen_create_thumbnail_width">90dp</dimen> 
-    <dimen name="dimen_create_thumbnail_height">140dp</dimen> 
     
     <dimen name="dimen_pop_pen_title_margintop">15dp</dimen> 
     <dimen name="dimen_pop_pen_title_marginleft">10dp</dimen> 

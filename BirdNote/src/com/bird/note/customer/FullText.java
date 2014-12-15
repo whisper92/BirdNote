@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bird.note.R;
+import com.bird.note.model.BirdMessage;
 import com.bird.note.utils.NoteApplication;
 
 public class FullText extends EditText {
@@ -69,6 +70,7 @@ public class FullText extends EditText {
 	};
 
 	public void init(Context context) {
+		
 		mContext = context;
 		mNoteApplication = (NoteApplication)mContext.getApplicationContext();
 		mPaint = new Paint();
@@ -76,14 +78,13 @@ public class FullText extends EditText {
 		mPaint.setDither(true);
 		mPaint.setTextSize(getTextSize());
 		mLineHeight = getLineHeight();
-		myHandler.post(new Runnable() {
+		myHandler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
 				addTextChangedListener(new TextWatcher() {
-
 					@Override
-					public void onTextChanged(CharSequence s, int start,
-							int before, int count) {
+					public void onTextChanged(CharSequence s, int start,int before, int count) {
+					    mNoteApplication.setEdited(true);
 						int lines = getLineCount();
 						if (lines > mMaxLines) {
 							myHandler.sendEmptyMessage(0);
@@ -112,7 +113,7 @@ public class FullText extends EditText {
 				});
 
 			}
-		});
+		},500);
 
 	}
 

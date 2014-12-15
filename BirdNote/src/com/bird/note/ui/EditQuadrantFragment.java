@@ -396,6 +396,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 
 	public void saveNote() {
 		hideInputMethod();
+		mNoteApplication.setEdited(false);
 		if ((((EditNoteActivity) getActivity()).mNoteEditType) == BirdMessage.NOTE_EDIT_TYPE_UPDATE) {
 			saveUpdateNote();
 		} else {

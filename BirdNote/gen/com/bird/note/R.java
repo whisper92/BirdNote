@@ -44,6 +44,7 @@ public final class R {
         public static final int dimen_dialog_width=0x7f070019;
         public static final int dimen_edit_canvas_height=0x7f070001;
         /**  画板的宽高 
+ 画板的宽高 
          */
         public static final int dimen_edit_canvas_width=0x7f070000;
         public static final int dimen_edit_level_flag_margin_right=0x7f07000f;

@@ -25,6 +25,7 @@
             android:gravity="center"
             android:padding="15dp"
             android:background="#00f6f6f6"
+            android:textColor="#00A0F5"
             android:text="@string/show_menu_cancel" />
 
         <TextView
@@ -35,6 +36,7 @@
             android:gravity="center"
             android:padding="15dp"
              android:background="#00f6f6f6"
+             android:textColor="#00A0F5"
             android:text="@string/show_menu_confirm" />
     </LinearLayout>
 
