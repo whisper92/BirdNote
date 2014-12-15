@@ -60,7 +60,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.show_notes);
+		setContentView(R.layout.show_notes_main);
 		mNoteApplication = (NoteApplication) getApplication();
 		mWaitDialogUpdate  = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mWaitDialogDelete = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
@@ -136,7 +136,6 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 			case -1:
 				/*Confirm*/
 				PreferenceUtil.setSortBy(mCurrentSort);
-				Log.e("wxp","mCurrentSort:"+mCurrentSort);
 				 showHandler.sendEmptyMessage(BirdMessage.SORT_START);
 				 showHandler.post(sortRunnable);
 				break;

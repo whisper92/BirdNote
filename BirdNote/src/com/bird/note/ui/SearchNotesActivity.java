@@ -35,7 +35,7 @@ public class SearchNotesActivity extends Activity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.search_notes);
+		setContentView(R.layout.search_notes_main);
 		mBackImageView = (ImageView)findViewById(R.id.id_starnotes_title_back);
 		mSearchEditText = (EditText) findViewById(R.id.search_edt);
 		mDbHelper=new DbHelper(this);

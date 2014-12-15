@@ -31,7 +31,7 @@ public class ReadStaredNotesActivity extends Activity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.read_stared_notes);
+		setContentView(R.layout.read_stared_notes_main);
 		mBackImageView = (ImageView)findViewById(R.id.id_starnotes_title_back);
 
 		mDbHelper=new DbHelper(this);

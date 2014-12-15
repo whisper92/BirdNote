@@ -146,7 +146,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			
 			if (which == 2) {				
 				LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				View view = inflater.inflate(R.layout.show_note_choos_mark, null);
+				View view = inflater.inflate(R.layout.show_notes_choos_markcolor, null);
 				builder = PopMenuManager.createChooseMarkAlertDialog(mContext, R.string.choose_mark_color);
 				builder.setView(view);
 				LinearLayout markLayout = (LinearLayout) view.findViewById(R.id.id_choose_mark_ll);
@@ -281,7 +281,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		
 		if(convertView == null){
 			holder =new NoteHolder();
-            convertView=mInflater.inflate(R.layout.note_item, parent,false);
+            convertView=mInflater.inflate(R.layout.show_notes_gridview_item, parent,false);
             holder.thumbnail=(ImageView)convertView.findViewById(R.id.id_note_item_thumb_iv);
             holder.title=(TextView)convertView.findViewById(R.id.id_note_item_title_tv);
             convertView.setTag(holder);

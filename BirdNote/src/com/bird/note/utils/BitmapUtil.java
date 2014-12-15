@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import android.R.integer;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -87,7 +88,11 @@ public class BitmapUtil {
 	 * @return byte[]
 	 */
 	public static Bitmap generateThumbnailBytes(Context context,Bitmap origBitmap){
-		Bitmap thumbBitmap=Bitmap.createScaledBitmap(origBitmap, (int) context.getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)context.getResources().getDimension(R.dimen.dimen_create_thumbnail_height), false);
+		int width = context.getResources().getDrawable(R.drawable.preview_style00).getIntrinsicWidth();
+		int height = context.getResources().getDrawable(R.drawable.preview_style00).getIntrinsicHeight();
+		Log.e("wxp","width : "+width+" ; height : "+height);
+		//Bitmap thumbBitmap=Bitmap.createScaledBitmap(origBitmap, (int) context.getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)context.getResources().getDimension(R.dimen.dimen_create_thumbnail_height), false);
+		Bitmap thumbBitmap=Bitmap.createScaledBitmap(origBitmap,width, height, false);
 		return thumbBitmap;
 	}
 	

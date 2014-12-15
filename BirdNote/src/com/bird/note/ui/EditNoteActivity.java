@@ -100,19 +100,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public void openOptionsMenu() {
 		super.openOptionsMenu();
 	}
-	public OnClickListener exitClickListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			if (v.getId() == R.id.id_exit_cancel) {
-				finish();
-			}
-			if (v.getId() == R.id.id_exit_confirm) {
-				mEditQuaFragment.saveNote();
-			}
-
-		}
-	};
 
 	public void initActivityView(int type) throws JSONException {
 
@@ -353,7 +340,8 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	 * @return
 	 */
 	public byte[] createThumbnailByQuadrant() {
-		return BitmapUtil.decodeBitmapToBytes(mEditQuaFragmentsList.get(0).getAllBitmapWithouBg());
+		return  BitmapUtil.decodeBitmapToBytes(BitmapUtil.generateThumbnailBytes(this, mEditQuaFragmentsList.get(0).getAllBitmapWithouBg()));
+		//return BitmapUtil.decodeBitmapToBytes(mEditQuaFragmentsList.get(0).getAllBitmapWithouBg());
 	}
 
 	public final Handler editHandler = new Handler() {

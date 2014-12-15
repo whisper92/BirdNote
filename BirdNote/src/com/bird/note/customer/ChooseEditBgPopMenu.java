@@ -45,7 +45,7 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 		mContext = context;
 		mNoteApplication = (NoteApplication) mContext.getApplicationContext();
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		rootView = inflater.inflate(R.layout.choos_editbg_pop_menu, null);
+		rootView = inflater.inflate(R.layout.edit_note_choos_editbg_pop_menu, null);
 
 		this.setContentView(rootView);
 		this.setWidth(LayoutParams.MATCH_PARENT);
@@ -144,7 +144,7 @@ public class ChooseEditBgPopMenu extends PopupWindow implements
 			ViewHolder holder;  
             if(convertView == null){  
                 holder = new ViewHolder();  
-                convertView = View.inflate(context, R.layout.gallery_item, null);  
+                convertView = View.inflate(context, R.layout.edit_note_choos_bg_gallery_item, null);  
                 holder.imageView = (ImageView) convertView.findViewById(R.id.id_img);  
                 holder.textView = (TextView) convertView.findViewById(R.id.id_text);  
                 holder.selectedImv = (ImageView) convertView.findViewById(R.id.id_img_select);

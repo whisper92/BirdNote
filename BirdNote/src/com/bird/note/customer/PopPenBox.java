@@ -61,7 +61,7 @@ public class PopPenBox extends PopupWindow implements OnClickListener{
 		mSelectPaintWidth = mSavedPaint.getSavedPaintWidth();
 		
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		rootView = inflater.inflate(R.layout.pen_box_choose_pen, null);
+		rootView = inflater.inflate(R.layout.box_choose_pen, null);
 		this.setContentView(rootView);
 		this.setWidth(LayoutParams.WRAP_CONTENT);
 		this.setHeight(LayoutParams.WRAP_CONTENT);

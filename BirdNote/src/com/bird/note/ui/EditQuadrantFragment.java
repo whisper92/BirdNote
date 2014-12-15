@@ -322,7 +322,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		}
 		
 		if (clickID == R.id.id_edit_title_pen) {
-			Log.e("wxpinput", "id_edit_title_pen");
 			hideInputMethod();
 			if (mFirstComeIn) {
 				mWrapFrameLayout.addView(mPenView);

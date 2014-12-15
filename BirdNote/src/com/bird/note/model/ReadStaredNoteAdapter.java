@@ -106,7 +106,7 @@ public class ReadStaredNoteAdapter extends BaseAdapter implements OnItemClickLis
 		
 		if(convertView == null){
 			holder =new NoteHolder();
-            convertView=mInflater.inflate(R.layout.note_item, parent,false);
+            convertView=mInflater.inflate(R.layout.show_notes_gridview_item, parent,false);
             holder.thumbnail=(ImageView)convertView.findViewById(R.id.id_note_item_thumb_iv);
             holder.title=(TextView)convertView.findViewById(R.id.id_note_item_title_tv);
             convertView.setTag(holder);

@@ -26,7 +26,7 @@ public class BirdWaitDialog extends Dialog {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);	
-		setContentView(R.layout.birdwaitdialog);
+		setContentView(R.layout.bird_wait_dialog);
 		mTextView = (TextView) findViewById(R.id.id_wait_dialog_content);
 		mTextView.setText(this.mWaitContent);
 	}

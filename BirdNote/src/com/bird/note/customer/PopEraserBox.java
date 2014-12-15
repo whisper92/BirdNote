@@ -40,7 +40,7 @@ public class PopEraserBox extends PopupWindow {
 		mSavedPaint = new SavedPaint(context);
 		mSelectPaintWidth = mSavedPaint.getSavedCleanPaintWidth();
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		rootView = inflater.inflate(R.layout.eraser_box_choose_earser, null);
+		rootView = inflater.inflate(R.layout.box_choose_earser, null);
 		mSeekBar = (SeekBar) rootView.findViewById(R.id.id_choose_eraser_seekbar);
 		mSeekBar.setProgress((int) (MAX * mSelectPaintWidth / SavedPaint.DEFAULT_PAINT_MAX_WIDTH));
 		mSeekBar.setProgressDrawable(context.getResources().getDrawable(R.drawable.seekbar_drawable14));
