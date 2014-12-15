@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">笔记本</string>
+    <string name="app_name">随笔</string>
     <string name="show_note_count">笔记本(%1$s)</string>
     <string name="stared_note_count">收藏(%1$s)</string>
     <string name="edit_menu_delete">删除</string>

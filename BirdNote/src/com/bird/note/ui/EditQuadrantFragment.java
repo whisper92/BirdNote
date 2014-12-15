@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import com.bird.note.R;
 import com.bird.note.customer.BirdInputTitleDialog;
 import com.bird.note.customer.ChooseEditBgPopMenu;
-import com.bird.note.customer.ChooseEditBgPopMenu.OnBgChangeListener;
 import com.bird.note.customer.ChooseEditBgPopMenu.OnChangeBackgroundListener;
 import com.bird.note.customer.PenView;
 import com.bird.note.customer.PenView.OnPathListChangeListener;

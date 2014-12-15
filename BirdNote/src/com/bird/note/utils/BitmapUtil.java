@@ -46,7 +46,7 @@ public class BitmapUtil {
 	public static Bitmap decodeDrawableToBitmap(Drawable drawable) {
 		int w = drawable.getIntrinsicWidth();
 		int h = drawable.getIntrinsicHeight();
-		Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888: Bitmap.Config.RGB_565;
+		Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_4444: Bitmap.Config.RGB_565;
 		Bitmap bitmap = Bitmap.createBitmap(w, h, config);
 		Canvas canvas = new Canvas(bitmap);
 		drawable.setBounds(0, 0, w, h);
@@ -97,7 +97,7 @@ public class BitmapUtil {
 	public static Bitmap mergeBitmap(Context context,Bitmap drawBmp,Bitmap textBmp){
 		int w =context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_width);
 		int h = context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_height);
-		Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
 		Canvas canvas = new Canvas();
 		canvas.setBitmap(bitmap);
 		canvas.drawBitmap(Bitmap.createScaledBitmap(drawBmp, w, h, false),0, 0, null);	
@@ -110,7 +110,7 @@ public class BitmapUtil {
 	public static Bitmap mergeBitmap(Context context,Bitmap bgBmp,Bitmap drawBmp,Bitmap textBmp){
 		int w =context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_width);
 		int h = context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_height);
-		Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+		Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
 		Canvas canvas = new Canvas();
 		canvas.setBitmap(bitmap);
 		canvas.drawBitmap(Bitmap.createScaledBitmap(bgBmp, w, h, false),0, 0, null);	
