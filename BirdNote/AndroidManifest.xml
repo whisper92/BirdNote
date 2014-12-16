@@ -12,7 +12,8 @@
         android:name="com.bird.note.utils.NoteApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
+        android:theme="@style/show_note_activity" 
+        >
         <activity
             android:name="com.bird.note.ui.EditNoteActivity"
             android:label="@string/app_name"

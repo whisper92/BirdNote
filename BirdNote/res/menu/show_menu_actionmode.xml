@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/id_show_menu_multi_delete_confirm"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/show_menu_delete"
+        android:showAsAction="always"/>
+    <item
+        android:id="@+id/id_show_menu_multi_delete_selectall"
+        android:title="@string/show_menu_delete_selectall"
+        android:showAsAction="always"/>
+    <item
+        android:id="@+id/id_show_menu_multi_delete_diselectall"
+        android:title="@string/show_menu_delete_diselectall"
+        android:showAsAction="always"/>
+
+</menu>

@@ -1,16 +1,20 @@
 package com.bird.note.model;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -32,35 +36,30 @@ import com.bird.note.ui.ShowNotesActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.NoteApplication;
 
-public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener{
+public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener,OnMultiChoiceClickListener{
 	private List<BirdNote> mListData;
 	private GridView mGridView;
 	private Context mContext;
 	private LayoutInflater mInflater;
 	private BirdInputTitleDialog mBirdInputTitleDialog;
-	private boolean mDeleteState=false;
-	/*
-	 * 用于保存要删除的笔记的id：如果要删除，则该位置的id为笔记id，否则为-1
-	 */
-	private String[] mDeleteIds = null;
+	private ActionMode mActionMode = null;
+	OnConfirmDeleteListener mOnConfirmDeleteListener = null;
+
+
+	public void selectAll() {
+		for (int i = 0; i < mListData.size(); i++) {
+			mGridView.setItemChecked(i, true);
+		}
+		notifyDataSetChanged();
+	}
 	
-	private Map<Integer, Boolean> mToDeleteNote =new HashMap<Integer, Boolean>();
-	public boolean ismDeleteState() {
-		return mDeleteState;
+	public void diselectAll() {
+		for (int i = 0; i < mListData.size(); i++) {
+			mGridView.setItemChecked(i, false);
+		}
+		notifyDataSetChanged();
 	}
 
-	public void setDeleteState(boolean mDeleteState) {
-		this.mDeleteState = mDeleteState;
-		mDeleteIds = new String[mListData.size()];
-		/*初始化设置所有位置为-1*/
-		for (int i = 0; i < mListData.size(); i++) {
-			mDeleteIds[i]=String.valueOf(-1);
-		}
-	}
-	
-	public boolean getDeleteState(){
-		return mDeleteState;
-	}
 
 	public ShowNoteAdapter(Activity context, List<BirdNote> listData,
 			GridView gridView) {
@@ -71,8 +70,9 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		this.mGridView = gridView;
 		mGridView.setOnItemClickListener(this);
 		mGridView.setOnItemLongClickListener(this);
+		mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
 		this.mInflater=context.getLayoutInflater();
-
+		
 	}
 
 	/*
@@ -119,14 +119,79 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position,long arg3) {
 		mChoosePosition = position;
-		setSingleNoteId(getItem(position)._id);
 		operatePosition= position;
 		rootView = view;
-		PopMenuManager.createItemOperationDialog(mContext, R.string.item_operation, itemOperateListener);
+        //Start the CAB using the ActionMode.Callback defined above  
+        mActionMode = ((Activity) mContext).startActionMode(mCallback);  
+        mGridView.setItemChecked(position, true);
 		return true;
 	}
 
-	AlertDialog.Builder builder = null;
+	private ActionMode.Callback mCallback = new ActionMode.Callback() {
+
+		@Override
+		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+			diselectAll();
+			return false;
+		}
+
+		@Override
+		public void onDestroyActionMode(ActionMode mode) {
+
+			mActionMode = null;
+			diselectAll();
+		}
+
+		@Override
+		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+			MenuInflater inflater = mode.getMenuInflater();
+			inflater.inflate(R.menu.show_menu_actionmode, menu);
+			return true;
+		}
+
+		@Override
+		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+			if (item.getItemId() == R.id.id_show_menu_multi_delete_confirm) {
+
+				if (mOnConfirmDeleteListener!=null) {
+					mOnConfirmDeleteListener.confirmDelete(getSelectNoteIds());
+				} else {
+
+				}
+				mode.finish();
+			}
+			if (item.getItemId() == R.id.id_show_menu_multi_delete_selectall) {
+				selectAll();
+			}
+			if (item.getItemId() == R.id.id_show_menu_multi_delete_diselectall) {
+				diselectAll();
+			} 
+			return false;
+		}
+	};
+	
+
+	public interface OnConfirmDeleteListener{
+		public void confirmDelete(String[] noteids);
+	}
+	
+	public void setOnConfirmDeleteListener(OnConfirmDeleteListener listener){
+		this.mOnConfirmDeleteListener = listener;
+	}
+	
+	public String[] getSelectNoteIds(){
+		String[] noteids = new String[mListData.size()];
+		for (int i = 0; i < noteids.length; i++) {
+			if (mGridView.isItemChecked(i)) {
+				noteids[i] = mListData.get(i)._id+"";
+			} else {
+				noteids[i] = String.valueOf(-1);
+			}		
+		}
+		return noteids;
+	}
+	
+/*	AlertDialog.Builder builder = null;
 	AlertDialog alertDialog = null;
 	public android.content.DialogInterface.OnClickListener itemOperateListener = new android.content.DialogInterface.OnClickListener() {
 		
@@ -173,9 +238,10 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			}
 		}
 	};
+	*/
 	
 	
-	public String mNewTitleString = "";
+/*	public String mNewTitleString = "";
 	public OnClickListener ConfirmUpdateTitleListener = new OnClickListener() {	
 		@Override
 		public void onClick(View v) {
@@ -195,51 +261,19 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			
 		}
 	};
-	
-	/**
-	 * 全选
-	 */
-	public void selectAll(){
-		if (mDeleteState) {
-			for (int i = 0; i <getCount(); i++) {				
-				mDeleteIds[i]=getItem(i)._id+"";
-				notifyDataSetChanged();
-			}
-		}
-		
-	}
-	/**
-	 * 取消
-	 */
-	public void cancelDelete(){
-		for (int i = 0; i < getCount(); i++) {
-			mDeleteIds[i]=String.valueOf(-1);
-			notifyDataSetChanged();
-		}
-	}
-	
-	/**
-	 * 获取要删除的笔记id数组
-	 * @return
-	 */
-	public String[] getSelectedNote(){
-		return mDeleteIds;
-	}
-	
-	public void confirm(){
-		
-	}
-	@Override
-	public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
-		if (mDeleteState) {
-			if (mDeleteIds[position].equals(String.valueOf(-1))) {
-				mDeleteIds[position] = mListData.get(position)._id+"";
-				view.findViewById(R.id.id_note_item_title_tv).setBackgroundColor(Color.BLACK);
-			} else {
-				mDeleteIds[position] = String.valueOf(-1);
-				view.findViewById(R.id.id_note_item_title_tv).setBackgroundResource(getMarkByLevel(mListData.get(position).level));
-			}
+	*/
 
+
+	@Override
+	public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {	
+		boolean flag = mGridView.isItemChecked(position)?false:true;	
+		if (mActionMode != null) {
+			if (flag == true) {
+				mGridView.setItemChecked(position, false);
+			} else {
+				mGridView.setItemChecked(position, true);
+			}
+			notifyDataSetChanged();
 		}else {
 			Intent intent=new Intent();
 			intent.setClass(mContext, EditNoteActivity.class);
@@ -296,17 +330,15 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	        holder.title.setText(birdNote.title);
 	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
 	        
-	        if (mDeleteState) {
-			   if (!mDeleteIds[position].equals(String.valueOf(-1))) {
-				    holder.title.setBackgroundColor(Color.BLACK);			
-		    	}
-		    } else if ((mDeleteIds!=null)){
-		    	if(mDeleteIds[position].equals(String.valueOf(-1))){
-
-		    	} 
-		    }
-
-        
+	      
+	        
+        if (mActionMode!=null) {
+        	if (mGridView.isItemChecked(position)) {
+        		holder.title.setBackgroundColor(Color.BLACK);
+			} else {
+			    holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
+			}
+         }
 
 		return convertView;
 	}
@@ -335,9 +367,16 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		}
 		return prebg;
 	}
+	
 	@Override
 	public int getItemViewType(int position) {	
 		return getItem(position).level;
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

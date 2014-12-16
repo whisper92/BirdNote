@@ -35,11 +35,12 @@ import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.model.SavedPaint;
+import com.bird.note.ui.EditNoteActivity.OnClickTitleMenuListener;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
 
-public class EditQuadrantFragment extends Fragment implements OnClickListener {
+public class EditQuadrantFragment extends Fragment {
 	private static String TAG = "EditQuadrantFragment";
 	private EditText mInputTitleEditText;
 	private NoteApplication mNoteApplication;
@@ -70,19 +71,17 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	private int mCurrentType = BirdMessage.START_TYPE_CREATE_VALUE;
 	public int mCurrentQuadrant;
 	private int[] mEditedQuadrants;
-	private PopPenBox mPopPenBox;
-	private PopEraserBox mPopEraserBox;
-	private boolean mPenBoxOpened = false;
-	private boolean mEraserBoxOpened = false;
-	private int mPenHasSelected = 0;
-	private int mEraserHasSelected = 0;
-	private SavedPaint mSavedPaint;
+
+
+
 	public String mTitleString = "";
 	private BirdInputTitleDialog mBirdInputTitleDialog;
 	private Handler mainHandler = null;
 	private BirdNote mBirdNote;
 	public ChooseEditBgPopMenu chooseEditBgPopMenu;
 	private DbHelper mDbHelper ;
+	
+	private EditNoteActivity mEditNoteActivity = null;
 
 	/**
 	 * 创建笔记时实例化的方式
@@ -127,7 +126,8 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	AlertDialog.Builder saveNewNoteBuilder = null;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-		mainHandler = ((EditNoteActivity) getActivity()).editHandler;
+		mEditNoteActivity = ((EditNoteActivity) getActivity());
+		mainHandler =mEditNoteActivity.editHandler;
 		mDbHelper = new DbHelper(getActivity());
 		chooseEditBgPopMenu = new ChooseEditBgPopMenu(getActivity());
 		saveNewNoteBuilder = PopMenuManager.createSaveNewNoteAlertDialog(getActivity(), R.string.input_title_dialog_title, mInputTitleEditText, null);
@@ -151,7 +151,7 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mNoteApplication.setEditedQuadrants(mEditedQuadrants);
 			initView(mCurrentType);
 			changeCurrentMode(mCurrentMode);
-			changeOtherIconState(mCurrentMode);
+			//changeOtherIconState(mCurrentMode);
 		}
 
 		
@@ -169,9 +169,9 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		mPenView.setOnPathListChangeListenr(new OnPathListChangeListener() {
 			@Override
 			public void changeState(int undocount, int redocount) {
-				mUndoState = undocount > 0 ? true : false;
+				/*mUndoState = undocount > 0 ? true : false;
 				mRedoState = redocount > 0 ? true : false;
-				changeStateOfUndoRedo(mUndoState, mRedoState);
+				changeStateOfUndoRedo(mUndoState, mRedoState);*/
 
 			}
 		});
@@ -204,9 +204,13 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 
 	public void initEditFragmentView(View view) {
+		((EditNoteActivity)getActivity()).setOnClickTitleMenuListener(mOnClickTitleMenuListener);
 		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
 		mWrapFrameLayout.setBackgroundResource(mNoteApplication.getEditBackground());
 		mEditText = (EditText) view.findViewById(R.id.id_edit_main_et);
+/*		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
+		mWrapFrameLayout.setBackgroundResource(mNoteApplication.getEditBackground());
+		
 		edit_Pen = (ImageView) view.findViewById(R.id.id_edit_title_pen);
 		edit_Text = (ImageView) view.findViewById(R.id.id_edit_title_text);
 		edit_Clean = (ImageView) view.findViewById(R.id.id_edit_title_clean);
@@ -224,9 +228,9 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		menu_Save.setOnClickListener(this);
 
 		menu_Undo.setEnabled(false);
-		menu_Redo.setEnabled(false);
+		menu_Redo.setEnabled(false);*/
 
-		mSavedPaint = new SavedPaint(getActivity());
+
 
 		chooseEditBgPopMenu
 				.setOnChangeBackgroundListener(new OnChangeBackgroundListener() {
@@ -310,6 +314,14 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	}
 	
 
+	public OnClickTitleMenuListener mOnClickTitleMenuListener = new OnClickTitleMenuListener() {
+		
+		@Override
+		public void clickMenu(int menuid) {
+			changeCurrentMode(menuid);			
+		}
+	};
+	
 	/**
 	 * 设置当前的编辑模式
 	 * 
@@ -317,7 +329,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 	 */
 	public void changeCurrentMode(int clickID) {
 		mCurrentMode = clickID;
-		changeOtherIconState(mCurrentMode);
 		if (mNoteApplication != null) {
 			mNoteApplication.setCurrentEditMode(mCurrentMode);
 		}
@@ -331,9 +342,9 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
 			mPenView.initDrawPaint();
-			changeStateOfUndoRedo(mUndoState, mRedoState);
-			mPenHasSelected += 1;
-			mEraserHasSelected = 0;
+			//changeStateOfUndoRedo(mUndoState, mRedoState);
+/*			mEditNoteActivity.setmPenHasSelected(mEditNoteActivity.getmPenHasSelected()+1);
+			mEditNoteActivity.setmEraserHasSelected(0);*/
 		}
 		if (clickID == R.id.id_edit_title_text) {
 			mEditText.bringToFront();
@@ -342,8 +353,9 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mEditText.setFocusableInTouchMode(true);
 			mEditText.requestFocus();
 			showInputMethod();
-			mPenHasSelected = 0;
-			mEraserHasSelected = 0;
+/*			mEditNoteActivity.setmPenHasSelected(0);
+			mEditNoteActivity.setmEraserHasSelected(0);*/
+
 		}
 		if (clickID == R.id.id_edit_title_clean) {
 			hideInputMethod();
@@ -354,46 +366,14 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
 			mPenView.setCleanPaint();
-			changeStateOfUndoRedo(mUndoState, mRedoState);
-			mPenHasSelected = 0;
-			mEraserHasSelected += 1;
+			//changeStateOfUndoRedo(mUndoState, mRedoState);
+/*			mEditNoteActivity.setmPenHasSelected(0);
+			mEditNoteActivity.setmEraserHasSelected(mEditNoteActivity.getmPenHasSelected()+1);*/
+
 		}
 
 	}
 
-	@Override
-	public void onClick(View v) {
-		changeOtherIconState(v.getId());
-		switch (v.getId()) {
-		case R.id.id_edit_title_pre:
-			mPenView.undo();
-			break;
-		case R.id.id_edit_title_next:
-			mPenView.redo();
-			break;
-		case R.id.id_edit_title_more:
-			getActivity().openOptionsMenu();
-			hideInputMethod();
-			break;
-		case R.id.id_edit_title_save:
-			saveNote();
-			break;
-		case R.id.id_edit_title_pen:
-			changeCurrentMode(v.getId());
-			togglePenBox(mCurrentMode);
-			break;
-		case R.id.id_edit_title_text:
-			changeCurrentMode(v.getId());
-			break;
-		case R.id.id_edit_title_clean:
-			changeCurrentMode(v.getId());
-			toggleEraserBox(mCurrentMode);
-			break;
-		default:
-			break;
-		}
-		
-	}
 
 	public void saveNote() {
 		hideInputMethod();
@@ -406,94 +386,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		
 	}
 
-	public void createPenBox() {
-		mPopPenBox = new PopPenBox(getActivity());
-		mPopPenBox.setOnPaintChangedListener(new OnPaintChangedListener() {
-			@Override
-			public void changePaint(Paint paint) {
-				mPenView.setDrawPaintColor(paint.getColor());
-				mPenView.setDrawPaintWidth(paint.getStrokeWidth());
-				mSavedPaint.savePaintColor(paint.getColor());
-				mSavedPaint.savePaintWidth(paint.getStrokeWidth());
-			}
-		});
-	}
-
-	public void createEraserBox() {
-		mPopEraserBox = new PopEraserBox(getActivity(), new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mPopEraserBox.isShowing()) {
-					mPopEraserBox.dismiss();
-				}
-				PopMenuManager.createDeleteAlertDialog(getActivity(), R.string.alert_clear_all, ConfirmClearAllListener);
-			}
-		});
-		mPopEraserBox.setOnPaintChangedListener(new OnEraserChangedListener() {
-			@Override
-			public void changePaint(Paint paint) {
-				mPenView.setCleanPaintWidth(paint.getStrokeWidth());
-				mSavedPaint.saveCleanPaintWidth(paint.getStrokeWidth());
-			}
-		});
-	}
-
-	/**
-	 * 开关笔刷设置框
-	 * 
-	 * @param mode
-	 */
-	public void togglePenBox(int mode) {
-		createPenBox();
-		if (mode == BirdMessage.START_MODE_DRAW_KEY) {
-			if (!mPenBoxOpened || (!mPopPenBox.isShowing())) {
-				if (mPenHasSelected > 1) {
-					mPenHasSelected = 1;
-					mPopPenBox.showAsDropDown(edit_Pen);
-					mPenBoxOpened = true;
-				}
-			} else {
-				mPopPenBox.dismiss();
-				mPenBoxOpened = false;
-			}
-		} else {
-			mPopPenBox.dismiss();
-			mPenBoxOpened = false;
-		}
-	}
-
-	/**
-	 * 开关橡皮擦设置框
-	 * 
-	 * @param mode
-	 */
-	public void toggleEraserBox(int mode) {
-		createEraserBox();
-		if (mode == BirdMessage.START_MODE_CLEAN_KEY) {
-			if (!mEraserBoxOpened || (!mPopEraserBox.isShowing())) {
-				if (mEraserHasSelected > 1) {
-					mPopEraserBox.showAsDropDown(edit_Clean);
-					mEraserBoxOpened = true;
-					mEraserHasSelected = 1;
-				}
-			} else {
-				mPopEraserBox.dismiss();
-				mEraserBoxOpened = false;
-			}
-		} else {
-			mPopEraserBox.dismiss();
-			mEraserBoxOpened = false;
-		}
-	}
-	
-	public void closeBox(){
-        if (mPopEraserBox!=null && mPopEraserBox.isShowing()) {
-        	mPopEraserBox.dismiss();
-		}
-        if (mPopPenBox!=null && mPopPenBox.isShowing()) {
-        	mPopPenBox.dismiss();
-		}
-	}
 
 	public void saveNewNote() {
 	   mBirdInputTitleDialog = new BirdInputTitleDialog(getActivity(),android.R.style.Theme_Holo_Light_Dialog);
@@ -516,41 +408,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 		menu_Redo.setEnabled(redoState);
 	}
 
-	/**
-	 * 进入某一种模式的时候，要改变其他模式对应的图标的状态
-	 */
-	public void changeOtherIconState(int clickID) {
-		switch (clickID) {
-		case R.id.id_edit_title_pen:
-			edit_Pen.setSelected(true);
-			edit_Text.setSelected(false);
-			edit_Clean.setSelected(false);
-			menu_Undo.setClickable(true);
-			menu_Redo.setClickable(true);
-			mEraserHasSelected = 0;
-			break;
-		case R.id.id_edit_title_text:
-			edit_Text.setSelected(true);
-			edit_Pen.setSelected(false);
-			edit_Clean.setSelected(false);
-			menu_Undo.setEnabled(false);
-			menu_Redo.setEnabled(false);
-			mPenHasSelected = 0;
-			mEraserHasSelected = 0;
-			break;
-		case R.id.id_edit_title_clean:
-			edit_Clean.setSelected(true);
-			edit_Text.setSelected(false);
-			edit_Pen.setSelected(false);
-			menu_Undo.setClickable(true);
-			menu_Redo.setClickable(true);
-			mPenHasSelected = 0;
-			break;
-
-		default:
-			break;
-		}
-	}
 
 	/**
 	 * 返回当前象限的文本内容
@@ -619,18 +476,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener {
 			mainHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
 		}
 	}
-
-
-	public android.content.DialogInterface.OnClickListener ConfirmClearAllListener = new android.content.DialogInterface.OnClickListener() {
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			if (which == -1) {
-				mPenView.clearAll();
-			    mNoteApplication.setEdited(true);
-			}
-			
-		}
-	};
 
 	public void showInputMethod() {
 		if (mEditText != null) {

@@ -231,7 +231,7 @@ public final class R {
         public static final int id_choose_eraser_circle=0x7f0b0006;
         public static final int id_choose_eraser_clean_all=0x7f0b0007;
         public static final int id_choose_eraser_seekbar=0x7f0b0005;
-        public static final int id_choose_mark_ll=0x7f0b0039;
+        public static final int id_choose_mark_ll=0x7f0b0037;
         public static final int id_choose_pen_circle=0x7f0b000a;
         public static final int id_choose_pen_line=0x7f0b0008;
         public static final int id_choose_pen_seekbar=0x7f0b0009;
@@ -252,20 +252,18 @@ public final class R {
         public static final int id_color_14=0x7f0b0013;
         public static final int id_color_15=0x7f0b001b;
         public static final int id_edit_ac_root=0x7f0b0030;
-        public static final int id_edit_level_flag=0x7f0b0032;
         public static final int id_edit_main_editfragment=0x7f0b0031;
         public static final int id_edit_main_et=0x7f0b0025;
         public static final int id_edit_main_fl=0x7f0b0023;
         public static final int id_edit_main_fl_warpper=0x7f0b0024;
-        public static final int id_edit_menu_change_bg=0x7f0b0044;
-        public static final int id_edit_menu_delete=0x7f0b0047;
-        public static final int id_edit_menu_removefavor=0x7f0b0046;
-        public static final int id_edit_menu_saveas=0x7f0b0045;
-        public static final int id_edit_menu_star=0x7f0b0048;
+        public static final int id_edit_menu_change_bg=0x7f0b003e;
+        public static final int id_edit_menu_delete=0x7f0b0041;
+        public static final int id_edit_menu_removefavor=0x7f0b0040;
+        public static final int id_edit_menu_saveas=0x7f0b003f;
+        public static final int id_edit_menu_star=0x7f0b0042;
         public static final int id_edit_note_fragment_root=0x7f0b0022;
         public static final int id_edit_note_input_title=0x7f0b002f;
         public static final int id_edit_note_input_title_root=0x7f0b002e;
-        public static final int id_edit_quathumb=0x7f0b0033;
         public static final int id_edit_title_clean=0x7f0b0029;
         public static final int id_edit_title_header_rl=0x7f0b0026;
         public static final int id_edit_title_more=0x7f0b002d;
@@ -276,31 +274,30 @@ public final class R {
         public static final int id_edit_title_text=0x7f0b0028;
         public static final int id_img=0x7f0b001c;
         public static final int id_img_select=0x7f0b001d;
-        public static final int id_note_item_ll=0x7f0b003f;
-        public static final int id_note_item_thumb_iv=0x7f0b0040;
-        public static final int id_note_item_title_tv=0x7f0b0041;
+        public static final int id_note_item_ll=0x7f0b0039;
+        public static final int id_note_item_thumb_iv=0x7f0b003a;
+        public static final int id_note_item_title_tv=0x7f0b003b;
         public static final int id_penbox_choosecolor_ll=0x7f0b000b;
         public static final int id_popmenu_items=0x7f0b0020;
         public static final int id_popmenu_root=0x7f0b001f;
-        public static final int id_show_gv=0x7f0b003e;
-        public static final int id_show_menu_all_star=0x7f0b004b;
-        public static final int id_show_menu_mutil_delete=0x7f0b0049;
-        public static final int id_show_menu_search=0x7f0b004c;
-        public static final int id_show_menu_sort=0x7f0b004a;
-        public static final int id_show_note_root=0x7f0b0037;
-        public static final int id_show_title_count=0x7f0b0036;
-        public static final int id_show_title_delete_cancle=0x7f0b003d;
-        public static final int id_show_title_delete_confirm=0x7f0b003b;
-        public static final int id_show_title_delete_menu_rl=0x7f0b003a;
-        public static final int id_show_title_delete_select_all=0x7f0b003c;
-        public static final int id_show_title_new_pen=0x7f0b0042;
-        public static final int id_show_title_new_text=0x7f0b0043;
-        public static final int id_show_title_rl=0x7f0b0034;
-        public static final int id_starnotes_title_back=0x7f0b0035;
+        public static final int id_show_gv=0x7f0b0038;
+        public static final int id_show_menu_all_star=0x7f0b0045;
+        public static final int id_show_menu_multi_delete_confirm=0x7f0b0047;
+        public static final int id_show_menu_multi_delete_diselectall=0x7f0b0049;
+        public static final int id_show_menu_multi_delete_selectall=0x7f0b0048;
+        public static final int id_show_menu_mutil_delete=0x7f0b0043;
+        public static final int id_show_menu_search=0x7f0b0046;
+        public static final int id_show_menu_sort=0x7f0b0044;
+        public static final int id_show_note_root=0x7f0b0035;
+        public static final int id_show_title_count=0x7f0b0034;
+        public static final int id_show_title_new_pen=0x7f0b003c;
+        public static final int id_show_title_new_text=0x7f0b003d;
+        public static final int id_show_title_rl=0x7f0b0032;
+        public static final int id_starnotes_title_back=0x7f0b0033;
         public static final int id_text=0x7f0b001e;
         public static final int id_wait_dialog_content=0x7f0b0004;
         public static final int progressBar1=0x7f0b0003;
-        public static final int search_edt=0x7f0b0038;
+        public static final int search_edt=0x7f0b0036;
     }
     public static final class layout {
         public static final int bird_input_title_dialog=0x7f030000;
@@ -320,17 +317,17 @@ public final class R {
         public static final int search_notes_header=0x7f03000e;
         public static final int search_notes_main=0x7f03000f;
         public static final int show_notes_choos_markcolor=0x7f030010;
-        public static final int show_notes_delete_header=0x7f030011;
-        public static final int show_notes_gridview=0x7f030012;
-        public static final int show_notes_gridview_item=0x7f030013;
-        public static final int show_notes_header=0x7f030014;
-        public static final int show_notes_main=0x7f030015;
+        public static final int show_notes_gridview=0x7f030011;
+        public static final int show_notes_gridview_item=0x7f030012;
+        public static final int show_notes_header=0x7f030013;
+        public static final int show_notes_main=0x7f030014;
     }
     public static final class menu {
         public static final int create_newnote_menu=0x7f0a0000;
         public static final int edit_menu_cancelstar=0x7f0a0001;
         public static final int edit_menu_tostar=0x7f0a0002;
         public static final int show_menu=0x7f0a0003;
+        public static final int show_menu_actionmode=0x7f0a0004;
     }
     public static final class string {
         public static final int alert_clear_all=0x7f08001c;
@@ -338,11 +335,11 @@ public final class R {
         public static final int alert_input_newname=0x7f080016;
         public static final int alert_sort=0x7f080020;
         public static final int app_name=0x7f080000;
-        public static final int bg_txt00=0x7f080026;
-        public static final int bg_txt01=0x7f080027;
-        public static final int bg_txt02=0x7f080028;
-        public static final int bg_txt03=0x7f080029;
-        public static final int bg_txt04=0x7f08002a;
+        public static final int bg_txt00=0x7f080027;
+        public static final int bg_txt01=0x7f080028;
+        public static final int bg_txt02=0x7f080029;
+        public static final int bg_txt03=0x7f08002a;
+        public static final int bg_txt04=0x7f08002b;
         public static final int choose_mark_color=0x7f080025;
         public static final int deleteing_note=0x7f08001a;
         public static final int edit_menu_change_bg=0x7f080006;
@@ -375,6 +372,7 @@ public final class R {
         public static final int show_menu_cancel=0x7f080014;
         public static final int show_menu_confirm=0x7f080013;
         public static final int show_menu_delete=0x7f08000f;
+        public static final int show_menu_delete_diselectall=0x7f080026;
         public static final int show_menu_delete_selectall=0x7f080017;
         public static final int show_menu_search=0x7f080010;
         public static final int show_menu_sort=0x7f080011;
@@ -382,8 +380,11 @@ public final class R {
         public static final int stared_note_count=0x7f080002;
     }
     public static final class style {
+        public static final int ShowNotesActionBarTitleText=0x7f090005;
         public static final int popmenuanim=0x7f090000;
         public static final int seekBarEraserHorizontal=0x7f090002;
         public static final int seekBarHorizontal=0x7f090001;
+        public static final int show_note_actionbar=0x7f090004;
+        public static final int show_note_activity=0x7f090003;
     }
 }

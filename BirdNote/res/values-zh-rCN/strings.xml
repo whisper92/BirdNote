@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">随笔</string>
-    <string name="show_note_count">笔记本(%1$s)</string>
+    <string name="show_note_count">随笔(%1$s)</string>
     <string name="stared_note_count">收藏(%1$s)</string>
     <string name="edit_menu_delete">删除</string>
     <string name="edit_menu_favor">添加至收藏</string>
@@ -27,6 +27,7 @@
     
     <string name="alert_input_newname">输入新标题</string>
     <string name="show_menu_delete_selectall">全选</string>
+    <string name="show_menu_delete_diselectall">全不选</string>
     
     <string name="alert_delete_content">当前笔记将被删除!</string>
     <string name="input_title_dialog_title">请输入标题!</string>
