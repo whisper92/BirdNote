@@ -82,8 +82,8 @@ public class ColorLine extends View {
 		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
 		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 		
-		int widthSize  = MeasureSpec.getSize(widthMeasureSpec);
-		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+		int widthSize  = 312;//MeasureSpec.getSize(widthMeasureSpec);
+		int heightSize = 72;//MeasureSpec.getSize(heightMeasureSpec);
 
 		int width,height;
 		width = widthSize;

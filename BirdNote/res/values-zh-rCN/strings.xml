@@ -41,8 +41,8 @@
     <string name="alert_sort">正在更新数据...</string>
     
     <string name="exit_ensure">确认退出？</string>
-    <string name="exit_without_save">不保存</string>
-    <string name="exit_with_save">且保存</string>
+    <string name="exit_without_save">保存</string>
+    <string name="exit_with_save">舍弃</string>
     <string name="item_operation">操作</string>
     <string name="choose_mark_color">选择标签颜色</string>
     

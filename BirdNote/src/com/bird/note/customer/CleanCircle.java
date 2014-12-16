@@ -60,10 +60,10 @@ public class CleanCircle extends View {
 		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 		
 		Drawable gb = getBackground();
-		//int bgW = BitmapUtil.decodeDrawableToBitmap(gb).getWidth();
-		//int bgH = BitmapUtil.decodeDrawableToBitmap(gb).getHeight();
-		int bgW = 50;
-		int bgH = 50;
+		
+		int bgW = 50;//BitmapUtil.decodeDrawableToBitmap(gb).getWidth();
+		int bgH = 50;//BitmapUtil.decodeDrawableToBitmap(gb).getHeight();
+
 		int width,height;
 		if (widthMode == MeasureSpec.EXACTLY) {
 			width = widthSize;

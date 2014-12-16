@@ -16,6 +16,7 @@ import com.bird.note.R;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.ReadStaredNoteAdapter;
+import com.bird.note.model.ShowNoteAdapter;
 
 /**
  * 首页
@@ -24,7 +25,7 @@ import com.bird.note.model.ReadStaredNoteAdapter;
  */
 public class ReadStaredNotesActivity extends Activity{
 	
-	private ReadStaredNoteAdapter mNoteAdapter=null;
+	private ShowNoteAdapter mNoteAdapter=null;
 	private DbHelper mDbHelper=null;
 	private GridView mGridView=null;
 	private List<BirdNote> mBirdNotes=null;
@@ -42,7 +43,7 @@ public class ReadStaredNotesActivity extends Activity{
 		mActionBar.setTitle(String.format(getString(R.string.stared_note_count), mBirdNotes.size()));
 		mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
 		mActionBar.setDisplayHomeAsUpEnabled(true);
-	    mNoteAdapter = new ReadStaredNoteAdapter(this,mBirdNotes,mGridView);
+	    mNoteAdapter = new ShowNoteAdapter(this,mBirdNotes,mGridView);
 	    mGridView.setAdapter(mNoteAdapter);
 		mNoteAdapter.notifyDataSetChanged();
 
@@ -60,7 +61,7 @@ public class ReadStaredNotesActivity extends Activity{
 	@Override
 	protected void onRestart() {
 		mBirdNotes=mDbHelper.queryStaredShowNotes();
-		mNoteAdapter= new ReadStaredNoteAdapter(this,mBirdNotes,mGridView);
+		mNoteAdapter= new ShowNoteAdapter(this,mBirdNotes,mGridView);
 	    mNoteAdapter.notifyDataSetChanged();
 	    if (mGridView!=null) {
 			mActionBar.setTitle(String.format(getString(R.string.stared_note_count), mBirdNotes.size()));

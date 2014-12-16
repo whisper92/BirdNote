@@ -31,6 +31,7 @@
 
     <string name="alert_input_newname">Input New title!</string>
     <string name="show_menu_delete_selectall">All</string>
+    <string name="show_menu_delete_diselectall">None</string>
 
     <string name="alert_delete_content">The note willd be deleted!</string>
     
@@ -48,4 +49,11 @@
     <string name="exit_with_save">With Save</string>
     <string name="item_operation">Operation</string>
     <string name="choose_mark_color">Choos Color</string>
+    
+    <string name="bg_txt00">Style1</string>
+    <string name="bg_txt01">Style2</string>
+    <string name="bg_txt02">Style3</string>
+    <string name="bg_txt03">Style4</string>
+    <string name="bg_txt04">Style5</string>
+    
 </resources>

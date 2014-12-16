@@ -69,10 +69,9 @@ public class ColorCircle extends View {
 		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 		
 		Drawable gb = getBackground();
-		//int bgW = BitmapUtil.decodeDrawableToBitmap(gb).getWidth();
-		//int bgH = BitmapUtil.decodeDrawableToBitmap(gb).getHeight();
-		int bgW = 312;
-		int bgH = 72;
+		int bgW = 50;//BitmapUtil.decodeDrawableToBitmap(gb).getWidth();
+		int bgH = 50;//BitmapUtil.decodeDrawableToBitmap(gb).getHeight();
+
 		int width,height;
 		if (widthMode == MeasureSpec.EXACTLY) {
 			width = widthSize;

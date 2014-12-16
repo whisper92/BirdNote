@@ -303,7 +303,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public void toggleEraserBox(int mode) {
 		createEraserBox();
 		if (mode == BirdMessage.START_MODE_CLEAN_KEY) {
-			Log.e("wxp","come here"+"  opened  :"+mPenBoxOpened+"   mEraserHasSelected:   "+mEraserHasSelected);
 			if (!mEraserBoxOpened || (!mPopEraserBox.isShowing())) {
 				if (mEraserHasSelected > 1) {
 					mPopEraserBox.showAsDropDown(edit_Clean);
@@ -675,6 +674,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 				}
 			}
 		}
+		System.gc();
 	}
 	public boolean onCreateOptionsMenu(android.view.Menu menu) {
 		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {

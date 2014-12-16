@@ -18,6 +18,7 @@ import com.bird.note.R;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.ReadStaredNoteAdapter;
+import com.bird.note.model.ShowNoteAdapter;
 
 /**
  * 首页
@@ -28,7 +29,7 @@ public class SearchNotesActivity extends Activity{
 
 
  
-	private ReadStaredNoteAdapter mNoteAdapter=null;
+	private ShowNoteAdapter mNoteAdapter=null;
 	private DbHelper mDbHelper=null;
 	private GridView mGridView=null;
 	private List<BirdNote> mBirdNotes=null;
@@ -68,7 +69,7 @@ public class SearchNotesActivity extends Activity{
 					.getWindowToken(),
 					InputMethodManager.HIDE_NOT_ALWAYS);
 					mBirdNotes = mDbHelper.searchNotesByTag(mSearchEditText.getText().toString());
-				    mNoteAdapter = new ReadStaredNoteAdapter(SearchNotesActivity.this,mBirdNotes,mGridView);
+				    mNoteAdapter = new ShowNoteAdapter(SearchNotesActivity.this,mBirdNotes,mGridView);
 				    mGridView.setAdapter(mNoteAdapter);
 					mNoteAdapter.notifyDataSetChanged();
 				}
@@ -84,7 +85,7 @@ public class SearchNotesActivity extends Activity{
 	protected void onRestart() {
 		if (mSearchEditText!=null&&(!mSearchEditText.getText().toString().equals(""))&&(mSearchEditText.getText().toString()!=null)) {
 			mBirdNotes = mDbHelper.searchNotesByTag(mSearchEditText.getText().toString());
-		    mNoteAdapter = new ReadStaredNoteAdapter(SearchNotesActivity.this,mBirdNotes,mGridView);
+		    mNoteAdapter = new ShowNoteAdapter(SearchNotesActivity.this,mBirdNotes,mGridView);
 			mNoteAdapter.notifyDataSetChanged();
 		}
 		

@@ -1,6 +1,7 @@
 package com.bird.note.utils;
 
 import java.io.File;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public class CommonUtils {
 	
 	
 	public static String getCurrentTime(){
-		SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("yyMMddhhmmss");     
+		SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");     
 		String   date   =   sDateFormat.format(new   java.util.Date()); 
 		return date;
 	}
@@ -66,6 +67,12 @@ public class CommonUtils {
 		String   date   =   sDateFormat.format(new   java.util.Date()); 
 		return date;
 	}
+	
+	public static String formatUpdateTime(String dateString){
+		String d1= dateString.substring(0, 10);
+		return d1;
+	}
+	
 	public static String getDefaultTitle(){
 		return "N"+getCurrentDate();
 	}

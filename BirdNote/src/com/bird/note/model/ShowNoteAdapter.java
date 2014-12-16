@@ -34,6 +34,7 @@ import com.bird.note.ui.EditNoteActivity;
 import com.bird.note.ui.PopMenuManager;
 import com.bird.note.ui.ShowNotesActivity;
 import com.bird.note.utils.BitmapUtil;
+import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
 
 public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener,OnMultiChoiceClickListener{
@@ -99,10 +100,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		return drawableID;
 	}
 	
-	class NoteHolder{
-             ImageView thumbnail;
-             TextView title;
-	}
+
 	
 	int singleNoteId=-1;
 	public int getSingleNoteId() {
@@ -312,38 +310,44 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	public View getView(int position, View convertView, ViewGroup parent) {
 		NoteHolder holder=null;
 		BirdNote birdNote=(BirdNote)getItem(position);
-		
 		if(convertView == null){
 			holder =new NoteHolder();
-            convertView=mInflater.inflate(R.layout.show_notes_gridview_item, parent,false);
-            holder.thumbnail=(ImageView)convertView.findViewById(R.id.id_note_item_thumb_iv);
+            convertView=mInflater.inflate(R.layout.show_notes_item, parent,false);
+            holder.thumbnail=(ImageView)convertView.findViewById(R.id.id_note_item_cover_iv);
+            holder.fav=(ImageView)convertView.findViewById(R.id.id_note_item_cover_fav);
             holder.title=(TextView)convertView.findViewById(R.id.id_note_item_title_tv);
+            holder.updatedate=(TextView)convertView.findViewById(R.id.id_note_item_date_tv);
             convertView.setTag(holder);
 
 		}else {
 			holder=(NoteHolder)convertView.getTag();
 		}
 
-			holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
-			/*后期缩略图的背景要切一个小一点的图片*/
-	        holder.thumbnail.setBackgroundResource(BitmapUtil.getPreBgByBg(birdNote.background));
+			holder.thumbnail.setImageResource(BitmapUtil.getCoverBgByLevel(birdNote.level));
+			holder.fav.setVisibility(birdNote.star==0?(View.GONE):(View.VISIBLE));
 	        holder.title.setText(birdNote.title);
-	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
-	        
+	        holder.updatedate.setText(CommonUtils.formatUpdateTime(birdNote.update_time));
 	      
 	        
         if (mActionMode!=null) {
         	if (mGridView.isItemChecked(position)) {
-        		holder.title.setBackgroundColor(Color.BLACK);
+        		holder.thumbnail.setBackgroundResource(R.drawable.th01_cover_sel);
 			} else {
-			    holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
+				holder.thumbnail.setBackground(null);
 			}
+         }else {
+        	 holder.thumbnail.setBackground(null);
          }
 
 		return convertView;
 	}
 	
-
+	class NoteHolder{
+        ImageView thumbnail;
+        TextView title;
+        TextView updatedate;
+        ImageView fav;
+}
 	
 	@Override
 	public int getItemViewType(int position) {	

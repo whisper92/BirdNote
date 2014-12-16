@@ -51,6 +51,27 @@ public class BitmapUtil {
 		return prebg;
 	}
 	
+	public static int getCoverBgByLevel(int bg){
+		int prebg = BitmapUtil.SHOW_COVER[0];
+		switch (bg) {
+		case R.drawable.th01_skin_00:
+			prebg = BitmapUtil.SHOW_COVER[0];
+			break;
+		case R.drawable.th01_skin_01:
+			prebg = BitmapUtil.SHOW_COVER[1];
+			break;
+		case R.drawable.th01_skin_02:
+			prebg = BitmapUtil.SHOW_COVER[2];
+			break;
+		case R.drawable.th01_skin_03:
+			prebg = BitmapUtil.SHOW_COVER[3];
+			break;
+			
+		default:
+			break;
+		}
+		return prebg;
+	}
 	
 	public static byte[] decodeBitmapToBytes(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -157,4 +178,7 @@ public class BitmapUtil {
 		R.drawable.th01_skin_small_01, R.drawable.th01_skin_small_02,
 		R.drawable.th01_skin_small_03, R.drawable.th01_skin_small_04 };
 	public static int[] EDIT_BGS= new int[]{R.drawable.th01_skin_00,R.drawable.th01_skin_01,R.drawable.th01_skin_02,R.drawable.th01_skin_03,R.drawable.th01_skin_04};
+	public static int[] SHOW_COVER= new int[]{R.drawable.th01_cover_00,
+		R.drawable.th01_cover_01, R.drawable.th01_cover_02,
+		R.drawable.th01_cover_03};
 }

@@ -75,9 +75,9 @@ public class DbHelper {
 			birdNote._id=cursor.getInt(cursor.getColumnIndex(NotesTable._ID));
 			birdNote.level=cursor.getInt(cursor.getColumnIndex(NotesTable.LEVEL));
 			birdNote.title=cursor.getString(cursor.getColumnIndex(NotesTable.TITLE));
-			birdNote.thumbnail=cursor.getBlob(cursor.getColumnIndex(NotesTable.THUMBNAIL));
 			birdNote.background=cursor.getInt(cursor.getColumnIndex(NotesTable.BG_ID));
 			birdNote.star=cursor.getInt(cursor.getColumnIndex(NotesTable.STAR));
+			birdNote.update_time=cursor.getString(cursor.getColumnIndex(NotesTable.UPDATE_TIME));
 			birdNotesList.add(birdNote);	
 		}
 		return birdNotesList;
@@ -88,7 +88,7 @@ public class DbHelper {
 	 */
 	public List<BirdNote> queryShowNotes(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, "_id desc");
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.BG_ID,NotesTable.STAR,NotesTable.UPDATE_TIME}, null, null, null, null, "_id desc");
 		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;
@@ -100,7 +100,7 @@ public class DbHelper {
 	 */
 	public List<BirdNote> queryStaredShowNotes(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, NotesTable.STAR+"=?", new String[]{"1"}, null, null, "_id desc");
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.BG_ID,NotesTable.STAR,NotesTable.UPDATE_TIME}, NotesTable.STAR+"=?", new String[]{"1"}, null, null, "_id desc");
 		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;
@@ -125,7 +125,7 @@ public class DbHelper {
 	 */
 	public List<BirdNote> sortShowNotesByCreateTime(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, NotesTable.CREATE_TIME+" desc");
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.BG_ID,NotesTable.STAR,NotesTable.UPDATE_TIME}, null, null, null, null, NotesTable.CREATE_TIME+" desc");
 		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;
@@ -137,7 +137,7 @@ public class DbHelper {
 	 */
 	public List<BirdNote> sortShowNotesByUpdateTime(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, NotesTable.UPDATE_TIME+" desc");
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.BG_ID,NotesTable.STAR,NotesTable.UPDATE_TIME}, null, null, null, null, NotesTable.UPDATE_TIME+" desc");
 		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;
@@ -149,14 +149,14 @@ public class DbHelper {
 	 */
 	public List<BirdNote> sortShowNotesByLevel(){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, NotesTable.LEVEL+" desc");
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.BG_ID,NotesTable.STAR,NotesTable.UPDATE_TIME}, null, null, null, null, NotesTable.LEVEL+" desc");
 		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;
 	}
 	
 	public Cursor queryShowNoteCursor(){
-		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable.LEVEL,NotesTable.TITLE,NotesTable.THUMBNAIL,NotesTable.BG_ID,NotesTable.STAR}, null, null, null, null, null);
+		Cursor cursor=dbRead.query(NotesTable.TABLE_NAME, new String[]{NotesTable._ID,NotesTable.LEVEL,NotesTable.TITLE,NotesTable.BG_ID,NotesTable.STAR,NotesTable.UPDATE_TIME}, null, null, null, null, null);
         return cursor;
 	}
 	
