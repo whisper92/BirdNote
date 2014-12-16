@@ -37,12 +37,12 @@
     </style>
 
     <style name="show_note_actionbar" parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/actionbar_green</item>
+        <item name="android:background">@drawable/th01_actionbar_green</item>
         <item name="android:titleTextStyle">@style/ShowNotesActionBarTitleText</item>
     </style>
 
     <style name="edit_note_actionbar" parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/actionbar_white</item>
+        <item name="android:background">@drawable/th01_actionbar_white</item>
         <item name="android:titleTextStyle">@style/ShowNotesActionBarTitleText</item>
     </style>
 

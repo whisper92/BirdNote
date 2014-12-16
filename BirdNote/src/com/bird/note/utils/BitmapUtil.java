@@ -29,19 +29,19 @@ public class BitmapUtil {
 	public static int getPreBgByBg(int bg){
 		int prebg = BitmapUtil.EDIT_BGS_PRE[0];
 		switch (bg) {
-		case R.drawable.skin_00:
+		case R.drawable.th01_skin_00:
 			prebg = BitmapUtil.EDIT_BGS_PRE[0];
 			break;
-		case R.drawable.skin_01:
+		case R.drawable.th01_skin_01:
 			prebg = BitmapUtil.EDIT_BGS_PRE[1];
 			break;
-		case R.drawable.skin_02:
+		case R.drawable.th01_skin_02:
 			prebg = BitmapUtil.EDIT_BGS_PRE[2];
 			break;
-		case R.drawable.skin_03:
+		case R.drawable.th01_skin_03:
 			prebg = BitmapUtil.EDIT_BGS_PRE[3];
 			break;
-		case R.drawable.skin_04:
+		case R.drawable.th01_skin_04:
 			prebg = BitmapUtil.EDIT_BGS_PRE[4];
 			break;
 			
@@ -153,8 +153,8 @@ public class BitmapUtil {
 	/**
 	 * 内置背景图片
 	 */
-	public static int[] EDIT_BGS_PRE= new int[]{R.drawable.skin_small_00,
-		R.drawable.skin_small_01, R.drawable.skin_small_02,
-		R.drawable.skin_small_03, R.drawable.skin_small_04 };
-	public static int[] EDIT_BGS= new int[]{R.drawable.skin_00,R.drawable.skin_01,R.drawable.skin_02,R.drawable.skin_03,R.drawable.skin_04};
+	public static int[] EDIT_BGS_PRE= new int[]{R.drawable.th01_skin_small_00,
+		R.drawable.th01_skin_small_01, R.drawable.th01_skin_small_02,
+		R.drawable.th01_skin_small_03, R.drawable.th01_skin_small_04 };
+	public static int[] EDIT_BGS= new int[]{R.drawable.th01_skin_00,R.drawable.th01_skin_01,R.drawable.th01_skin_02,R.drawable.th01_skin_03,R.drawable.th01_skin_04};
 }

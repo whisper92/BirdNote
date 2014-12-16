@@ -13,7 +13,7 @@
         android:background="@drawable/action_bt_style01_left"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/green_icon_pen" />
+        android:src="@drawable/th01_green_icon_pen" />
 
     <ImageView
         android:id="@+id/id_edit_title_text"
@@ -23,7 +23,7 @@
         android:background="@drawable/action_bt_style01_mid"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/green_icon_text" />
+        android:src="@drawable/th01_green_icon_text" />
 
     <ImageView
         android:id="@+id/id_edit_title_clean"
@@ -33,7 +33,7 @@
         android:background="@drawable/action_bt_style01_right"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/green_icon_clean" />
+        android:src="@drawable/th01_green_icon_clean" />
 
     <ImageView
         android:id="@+id/id_edit_title_pre"
@@ -44,7 +44,7 @@
         android:background="@drawable/action_bt_style01_left"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/green_icon_pre" />
+        android:src="@drawable/th01_green_icon_pre" />
 
     <ImageView
         android:id="@+id/id_edit_title_next"
@@ -54,7 +54,7 @@
         android:background="@drawable/action_bt_style01_right"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/green_icon_next" />
+        android:src="@drawable/th01_green_icon_next" />
 
     <ImageView
         android:id="@+id/id_edit_title_save"
@@ -64,7 +64,7 @@
         android:background="@drawable/action_bt_style01_left"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/green_icon_save" />
+        android:src="@drawable/th01_green_icon_save" />
 
     <ImageView
         android:id="@+id/id_edit_title_more"
@@ -75,6 +75,6 @@
         android:background="@drawable/action_bt_style01_right"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/green_icon_more" />
+        android:src="@drawable/th01_green_icon_more" />
 
 </RelativeLayout>
