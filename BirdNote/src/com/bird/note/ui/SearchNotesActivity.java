@@ -2,7 +2,9 @@ package com.bird.note.ui;
 
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ActionBar.LayoutParams;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,12 +34,19 @@ public class SearchNotesActivity extends Activity{
 	private List<BirdNote> mBirdNotes=null;
     private EditText mSearchEditText;
 	private ImageView mBackImageView;
+	private ActionBar mActionBar = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_notes_main);
-		mBackImageView = (ImageView)findViewById(R.id.id_starnotes_title_back);
-		mSearchEditText = (EditText) findViewById(R.id.search_edt);
+		mActionBar = getActionBar();
+		View headView = getLayoutInflater().inflate(R.layout.search_notes_header, null);
+			mActionBar.setCustomView(headView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+			mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);  
+			mActionBar.setDisplayShowCustomEnabled(true); 
+			
+		mBackImageView = (ImageView)headView.findViewById(R.id.id_starnotes_title_back);
+		mSearchEditText = (EditText) headView.findViewById(R.id.search_edt);
 		mDbHelper=new DbHelper(this);
 		mGridView = (GridView) findViewById(R.id.id_show_gv);
 		mBackImageView.setOnClickListener(new OnClickListener() {

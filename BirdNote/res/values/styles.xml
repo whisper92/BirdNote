@@ -24,18 +24,30 @@
         <item name="android:thumbOffset">10.0dip</item>
     </style>
 
-     <style name="show_note_activity" parent="android:style/Theme.Holo.Light">
-         <item name="android:actionOverflowButtonStyle">@null</item>
-         <item name="android:actionBarStyle">@style/show_note_actionbar</item> 
+    <style name="show_note_activity" parent="android:style/Theme.Holo.Light">
+        <item name="android:actionOverflowButtonStyle">@null</item>
+        <item name="android:actionBarStyle">@style/show_note_actionbar</item>
+        <item name="android:homeAsUpIndicator">@drawable/back</item>
     </style>
 
-     <style name="show_note_actionbar" parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-         <item name="android:background">@drawable/action_bar</item>
-         <item name="android:titleTextStyle">@style/ShowNotesActionBarTitleText</item>
-     </style>
-     
-      <style name="ShowNotesActionBarTitleText" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">  
-        <item name="android:textColor">@color/color_show_title_text</item>  
+    <style name="edit_note_activity" parent="android:style/Theme.Holo.Light">
+        <item name="android:actionOverflowButtonStyle">@null</item>
+        <item name="android:actionBarStyle">@style/edit_note_actionbar</item>
+        <item name="android:homeAsUpIndicator">@drawable/back</item>
+    </style>
+
+    <style name="show_note_actionbar" parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@drawable/actionbar_green</item>
+        <item name="android:titleTextStyle">@style/ShowNotesActionBarTitleText</item>
+    </style>
+
+    <style name="edit_note_actionbar" parent="android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@drawable/actionbar_white</item>
+        <item name="android:titleTextStyle">@style/ShowNotesActionBarTitleText</item>
+    </style>
+
+    <style name="ShowNotesActionBarTitleText" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/color_show_title_text</item>
     </style>
 
 </resources>

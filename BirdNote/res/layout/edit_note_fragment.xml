@@ -10,14 +10,12 @@
     <FrameLayout
         android:id="@+id/id_edit_main_fl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/note_bg" >
+        android:layout_height="match_parent" >
 
         <FrameLayout
             android:id="@+id/id_edit_main_fl_warpper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
              >
 
             <com.bird.note.customer.FullText

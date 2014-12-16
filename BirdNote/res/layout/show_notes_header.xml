@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    android:background="@drawable/action_bar" >
+    android:background="@drawable/actionbar_green" >
 
     <TextView
         android:id="@+id/id_show_title_count"
@@ -24,7 +24,7 @@
         android:background="@drawable/action_bt_style01_left"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/icon_new_pen" />
+        android:src="@drawable/green_icon_new_pen" />
 
     <ImageView
         android:id="@+id/id_show_title_new_text"
@@ -36,6 +36,6 @@
         android:background="@drawable/action_bt_style01_right"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/icon_new_text" />
+        android:src="@drawable/green_icon_new_text" />
 
 </RelativeLayout>

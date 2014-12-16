@@ -326,7 +326,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 
 			holder.thumbnail.setImageBitmap(BitmapUtil.decodeBytesToBitmap(birdNote.thumbnail));
 			/*后期缩略图的背景要切一个小一点的图片*/
-	        holder.thumbnail.setBackgroundResource(getPreBgByBg(birdNote.background));
+	        holder.thumbnail.setBackgroundResource(BitmapUtil.getPreBgByBg(birdNote.background));
 	        holder.title.setText(birdNote.title);
 	        holder.title.setBackgroundResource(getMarkByLevel(birdNote.level));
 	        
@@ -343,30 +343,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		return convertView;
 	}
 	
-	public int getPreBgByBg(int bg){
-		int prebg = R.drawable.preview_style00;
-		switch (bg) {
-		case R.drawable.note_bg_style00:
-			prebg = R.drawable.preview_style00;
-			break;
-		case R.drawable.note_bg_style01:
-			prebg = R.drawable.preview_style01;
-			break;
-		case R.drawable.note_bg_style02:
-			prebg = R.drawable.preview_style02;
-			break;
-		case R.drawable.note_bg_style03:
-			prebg = R.drawable.preview_style03;
-			break;
-		case R.drawable.note_bg_style04:
-			prebg = R.drawable.preview_style04;
-			break;
-			
-		default:
-			break;
-		}
-		return prebg;
-	}
+
 	
 	@Override
 	public int getItemViewType(int position) {	

@@ -29,6 +29,7 @@ import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.ShowNoteAdapter;
 import com.bird.note.model.ShowNoteAdapter.OnConfirmDeleteListener;
+import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.NoteApplication;
 import com.bird.note.utils.PreferenceUtil;
 
@@ -205,12 +206,12 @@ public boolean onOptionsItemSelected(MenuItem item) {
 		switch (v.getId()) {
 		case R.id.id_show_title_new_pen:
 			intent.putExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_pen);
-			mNoteApplication.setEditBackground(R.drawable.note_bg_style00);
+			mNoteApplication.setEditBackground(BitmapUtil.EDIT_BGS[0]);
 			startActivity(intent);
 			break;
 		case R.id.id_show_title_new_text:
 			intent.putExtra(BirdMessage.START_MODE_KEY, R.id.id_edit_title_text);
-			mNoteApplication.setEditBackground(R.drawable.note_bg_style00);
+			mNoteApplication.setEditBackground(BitmapUtil.EDIT_BGS[0]);
 			startActivity(intent);
 			break;
 

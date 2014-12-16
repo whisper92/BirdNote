@@ -208,30 +208,6 @@ public class EditQuadrantFragment extends Fragment {
 		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
 		mWrapFrameLayout.setBackgroundResource(mNoteApplication.getEditBackground());
 		mEditText = (EditText) view.findViewById(R.id.id_edit_main_et);
-/*		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
-		mWrapFrameLayout.setBackgroundResource(mNoteApplication.getEditBackground());
-		
-		edit_Pen = (ImageView) view.findViewById(R.id.id_edit_title_pen);
-		edit_Text = (ImageView) view.findViewById(R.id.id_edit_title_text);
-		edit_Clean = (ImageView) view.findViewById(R.id.id_edit_title_clean);
-		menu_Undo = (ImageView) view.findViewById(R.id.id_edit_title_pre);
-		menu_Redo = (ImageView) view.findViewById(R.id.id_edit_title_next);
-		menu_More = (ImageView) view.findViewById(R.id.id_edit_title_more);
-		menu_Save = (ImageView) view.findViewById(R.id.id_edit_title_save);
-
-		edit_Pen.setOnClickListener(this);
-		edit_Text.setOnClickListener(this);
-		edit_Clean.setOnClickListener(this);
-		menu_Undo.setOnClickListener(this);
-		menu_Redo.setOnClickListener(this);
-		menu_More.setOnClickListener(this);
-		menu_Save.setOnClickListener(this);
-
-		menu_Undo.setEnabled(false);
-		menu_Redo.setEnabled(false);*/
-
-
-
 		chooseEditBgPopMenu
 				.setOnChangeBackgroundListener(new OnChangeBackgroundListener() {
 
