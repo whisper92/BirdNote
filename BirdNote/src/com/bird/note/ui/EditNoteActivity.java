@@ -261,9 +261,10 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		case R.id.id_edit_title_next:
 			break;
 		case R.id.id_edit_title_more:
+			openOptionsMenu();
 			break;
 		case R.id.id_edit_title_save:
-			
+			mEditQuaFragment.saveNote();
 			break;
 		default:
 			break;
@@ -555,9 +556,9 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public BirdNote generateNewNote() {
 		BirdNote birdNote = new BirdNote();
 		int[] edited = mNoteApplication.getEditedQuadrants();
-		int level = mLevelFlag.mCurrentLevel;
+		//int level = mLevelFlag.mCurrentLevel;
 		String title = mEditQuaFragment.mTitleString;
-		birdNote.level = level;
+		//birdNote.level = level;
 		if (mCurrentType == BirdMessage.START_TYPE_CREATE_VALUE) {
 			birdNote.title = title;
 		} else {
