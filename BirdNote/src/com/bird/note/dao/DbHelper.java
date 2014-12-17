@@ -37,9 +37,8 @@ public class DbHelper {
 	 * @param qua1 : 1象限绘制内容
 	 * @param qua2 : 2象限绘制内容
 	 * @param qua3 : 3象限绘制内容
-	 * @param thumbnail : 缩略图
 	 */
-	public void insertNewNote(int level,String title,String text_content,byte[] qua0,byte[] qua1,byte[]qua2,byte[] qua3,byte[] thumbnail,int bg_id,int star,String creatTime,String updateTime){
+	public void insertNewNote(int level,String title,String text_content,byte[] qua0,byte[] qua1,byte[]qua2,byte[] qua3,int bg_id,int star,String creatTime,String updateTime){
 		ContentValues values=new ContentValues();
 		values.put(NotesTable.LEVEL, level);
 		values.put(NotesTable.TITLE, title);
@@ -48,7 +47,6 @@ public class DbHelper {
 		values.put(NotesTable.QUA1, qua1);
 		values.put(NotesTable.QUA2, qua2);
 		values.put(NotesTable.QUA3, qua3);
-		values.put(NotesTable.THUMBNAIL, thumbnail);
 		values.put(NotesTable.BG_ID, bg_id);
 		values.put(NotesTable.STAR, star);
 		values.put(NotesTable.CREATE_TIME, creatTime);
@@ -64,7 +62,7 @@ public class DbHelper {
 	public void insertNewNote(BirdNote birdNote){
 		birdNote.create_time = CommonUtils.getCurrentTime();
 		birdNote.update_time = CommonUtils.getCurrentTime();
-		insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.thumbnail,birdNote.background,birdNote.star,birdNote.create_time,birdNote.update_time);
+		insertNewNote(birdNote.level, birdNote.title, birdNote.textcontents, birdNote.qua0, birdNote.qua1, birdNote.qua2, birdNote.qua3, birdNote.background,birdNote.star,birdNote.create_time,birdNote.update_time);
 	}
 	
 	
@@ -83,7 +81,7 @@ public class DbHelper {
 		return birdNotesList;
 	}
 	/**
-	 * 查询所有笔记的id，level,title,以及thumbnail，用于首页展示。
+	 * 查询所有笔记的id，level,title，用于首页展示。
 	 * @return
 	 */
 	public List<BirdNote> queryShowNotes(){
@@ -95,7 +93,7 @@ public class DbHelper {
 	}
 	
 	/**
-	 * 查询所有收藏的笔记的id，level,title,以及thumbnai
+	 * 查询所有收藏的笔记的id，level,title
 	 * @return
 	 */
 	public List<BirdNote> queryStaredShowNotes(){
@@ -256,7 +254,6 @@ public class DbHelper {
 		values.put(NotesTable.QUA1, birdNote.qua1);
 		values.put(NotesTable.QUA2, birdNote.qua2);
 		values.put(NotesTable.QUA3, birdNote.qua3);
-		values.put(NotesTable.THUMBNAIL, birdNote.thumbnail);
 		values.put(NotesTable.BG_ID, birdNote.background);
 		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});

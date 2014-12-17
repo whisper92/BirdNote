@@ -192,8 +192,11 @@ public class EditQuadrantFragment extends Fragment {
 	 */
 	public void initUpdateView(int type, QuadrantContent quadrantContent) {
 		mPenView = new PenView(getActivity());
-		mPenView.setExistBitmap(BitmapUtil
-				.decodeBytesToBitmap(quadrantContent.quadrantdraw));
+		Bitmap bitmap = BitmapUtil.decodeBytesToBitmap(quadrantContent.quadrantdraw);
+		mPenView.setExistBitmap(bitmap);
+		
+		BitmapUtil.writeBytesToFile(quadrantContent.quadrantdraw, "别搞我"+bitmap.getWidth());
+		
 		mPenView.invalidateExistBitmap();
 		mEditText.setText(quadrantContent.textcontent);
 		
@@ -274,6 +277,8 @@ public class EditQuadrantFragment extends Fragment {
 			BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap),"/" + mBirdInputTitleDialog.getContent());
 			bitmap.recycle();
 			mainHandler.obtainMessage(BirdMessage.SAVE_AS_OVER, mSavePath).sendToTarget();
+			bitmap.recycle();
+			System.gc();
 		}
 	};
 
@@ -281,12 +286,14 @@ public class EditQuadrantFragment extends Fragment {
 		return mSavePath;
 	}
 
-	public Bitmap getAllBitmapWithouBg() {
+/*	public Bitmap getAllBitmapWithouBg() {
        return BitmapUtil.mergeBitmap(getActivity(), mPenView.mDrawBitmap, getTextBitmap());
-	}
+	}*/
 	
 	public Bitmap getAllBitmap() {
-		return BitmapUtil.mergeBitmap(getActivity(), BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(mNoteApplication.getEditBackground())),mPenView.mDrawBitmap, getTextBitmap());
+		Bitmap bitmap =mPenView.mDrawBitmap;
+		Log.e("wxp","bitmap . w" + bitmap.getWidth());
+		return BitmapUtil.mergeBitmap(getActivity(), BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(mNoteApplication.getEditBackground())),bitmap, getTextBitmap());
 	}
 	
 
@@ -404,6 +411,7 @@ public class EditQuadrantFragment extends Fragment {
 	 * 
 	 * @return
 	 */
+	/*需回收*/
 	public byte[] getQuadrantDrawContentBytes() {
 		return BitmapUtil.decodeBitmapToBytes(mPenView.mDrawBitmap);
 	}

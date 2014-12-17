@@ -1,5 +1,6 @@
 package com.bird.note.utils;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,7 +26,8 @@ import com.bird.note.R;
 public class BitmapUtil {
 
 	private static String TAG = "BitmapUtil";
-	
+	/*压缩率*/
+	private static final int COMPOPTION = 100;
 	public static int getPreBgByBg(int bg){
 		int prebg = BitmapUtil.EDIT_BGS_PRE[0];
 		switch (bg) {
@@ -73,6 +75,7 @@ public class BitmapUtil {
 		return prebg;
 	}
 	
+
 	public static byte[] decodeBitmapToBytes(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		if (bitmap != null) {
@@ -129,34 +132,9 @@ public class BitmapUtil {
 		}
 	}
 
-	/**
-	 * 生成缩略图
-	 * @param context
-	 * @param origBitmap
-	 * @return byte[]
-	 */
-	public static Bitmap generateThumbnailBytes(Context context,Bitmap origBitmap){
-		//int width = context.getResources().getDrawable(R.drawable.preview_style00).getIntrinsicWidth();
-		//int height = context.getResources().getDrawable(R.drawable.preview_style00).getIntrinsicHeight();
-		//Log.e("wxp","width : "+width+" ; height : "+height);
-		//Bitmap thumbBitmap=Bitmap.createScaledBitmap(origBitmap, (int) context.getResources().getDimension(R.dimen.dimen_create_thumbnail_width), (int)context.getResources().getDimension(R.dimen.dimen_create_thumbnail_height), false);
-		Bitmap thumbBitmap=Bitmap.createScaledBitmap(origBitmap,153, 253, false);
-		return thumbBitmap;
-	}
+
 	
-	/**
-	 * 合并图层
-	 */
-	public static Bitmap mergeBitmap(Context context,Bitmap drawBmp,Bitmap textBmp){
-		int w =context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_width);
-		int h = context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_height);
-		Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
-		Canvas canvas = new Canvas();
-		canvas.setBitmap(bitmap);
-		canvas.drawBitmap(Bitmap.createScaledBitmap(drawBmp, w, h, false),0, 0, null);	
-		canvas.drawBitmap(Bitmap.createScaledBitmap(textBmp, w, h, false),0, 0, null);
-		return bitmap;
-	}
+
 	/**
 	 * 合并图层
 	 */
@@ -167,18 +145,18 @@ public class BitmapUtil {
 		Canvas canvas = new Canvas();
 		canvas.setBitmap(bitmap);
 		canvas.drawBitmap(Bitmap.createScaledBitmap(bgBmp, w, h, false),0, 0, null);	
-		canvas.drawBitmap(Bitmap.createScaledBitmap(drawBmp, w, h, false),0, 0, null);	
+		canvas.drawBitmap(Bitmap.createBitmap(drawBmp, 0,0,w,h),0, 0, null);	
 		canvas.drawBitmap(Bitmap.createScaledBitmap(textBmp, w, h, false),0, 0, null);
 		return bitmap;
 	}
+	
+	
 	/**
 	 * 内置背景图片
 	 */
-	public static int[] EDIT_BGS_PRE= new int[]{R.drawable.th01_skin_small_00,
-		R.drawable.th01_skin_small_01, R.drawable.th01_skin_small_02,
-		R.drawable.th01_skin_small_03, R.drawable.th01_skin_small_04 };
+	public static int[] EDIT_BGS_PRE= new int[]{R.drawable.th01_skin_small_00,R.drawable.th01_skin_small_01, R.drawable.th01_skin_small_02,R.drawable.th01_skin_small_03, R.drawable.th01_skin_small_04 };
+	
 	public static int[] EDIT_BGS= new int[]{R.drawable.th01_skin_00,R.drawable.th01_skin_01,R.drawable.th01_skin_02,R.drawable.th01_skin_03,R.drawable.th01_skin_04};
-	public static int[] SHOW_COVER= new int[]{R.drawable.th01_cover_00,
-		R.drawable.th01_cover_01, R.drawable.th01_cover_02,
-		R.drawable.th01_cover_03};
+	
+	public static int[] SHOW_COVER= new int[]{R.drawable.th01_cover_00,R.drawable.th01_cover_01, R.drawable.th01_cover_02,R.drawable.th01_cover_03};
 }

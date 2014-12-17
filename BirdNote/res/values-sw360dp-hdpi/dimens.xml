@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 画板的宽高 -->
-    <dimen name="dimen_edit_canvas_width">1050px</dimen>
-    <dimen name="dimen_edit_canvas_height">1730px</dimen>
+    <dimen name="dimen_edit_canvas_width">540px</dimen>
+    <dimen name="dimen_edit_canvas_height">886px</dimen>
 </resources>

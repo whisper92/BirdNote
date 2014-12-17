@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -119,6 +120,7 @@ public class PenView extends View {
 	 * 如果是更新笔记的话，要设置已经存在的内容
 	 */
 	public void setExistBitmap(Bitmap backBitmap) {
+		Log.e("wxp", "backBitmap .w "+backBitmap.getWidth());
 		this.mExistBitmap = backBitmap;
 	}
 
@@ -227,8 +229,7 @@ public class PenView extends View {
 	public void clearAll() {
 		mSavePath.clear();
 		mDeletePath.clear();
-		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,
-				Bitmap.Config.ARGB_4444);
+		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_4444);
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		mExistBitmap = null;
 		mDrawCanvas.drawBitmap(mDrawBitmap, 0, 0, mCleanPaint);
@@ -299,6 +300,7 @@ public class PenView extends View {
 			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_4444);
 		}
 		mDrawCanvas.setBitmap(mDrawBitmap);
+		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap), "invalidate");
 		postInvalidate();
 	}
 

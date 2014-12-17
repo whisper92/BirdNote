@@ -145,6 +145,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			mTitleString = mBirdNote.title;
 			/* 查询获取完整的Note */
 			mBirdNote = dbHelper.queryNoteById(mBirdNote, mBirdNote._id + "");
+			BitmapUtil.writeBytesToFile(mBirdNote.qua0, "qua0");
 		} else {
 
 		}
@@ -469,6 +470,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			quadrantContent = (QuadrantContent) iterator.next();
 			if (quadrantContent != null) {
 				EditQuadrantFragment editQuadrantFragment = EditQuadrantFragment.newInstance(mCurrMode, quadrantContent);
+				BitmapUtil.writeBytesToFile(quadrantContent.quadrantdraw, "初始化");
 				mEditQuaFragmentsList.remove(quadrantContent.quadrant);
 				mEditQuaFragmentsList.add(quadrantContent.quadrant,
 						editQuadrantFragment);
@@ -610,21 +612,11 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			e.printStackTrace();
 		}
 		birdNote.textcontents = text_content;
-		birdNote.thumbnail = createThumbnailByQuadrant();
 		birdNote.background = mNoteApplication.getEditBackground();
 		birdNote.star = 0;
 		return birdNote;
 	}
 
-	/**
-	 * 根据第一象限的内容生成预览图
-	 * 
-	 * @return
-	 */
-	public byte[] createThumbnailByQuadrant() {
-		return  BitmapUtil.decodeBitmapToBytes(BitmapUtil.generateThumbnailBytes(this, mEditQuaFragmentsList.get(0).getAllBitmapWithouBg()));
-		//return BitmapUtil.decodeBitmapToBytes(mEditQuaFragmentsList.get(0).getAllBitmapWithouBg());
-	}
 
 	public final Handler editHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {

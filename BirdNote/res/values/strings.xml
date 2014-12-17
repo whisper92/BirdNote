@@ -45,8 +45,8 @@
     <string name="alert_sort">Updateing Data...</string>
     
     <string name="exit_ensure">Exit？</string>
-    <string name="exit_without_save">Without Save</string>
-    <string name="exit_with_save">With Save</string>
+    <string name="exit_without_save">Drop</string>
+    <string name="exit_with_save">Save</string>
     <string name="item_operation">Operation</string>
     <string name="choose_mark_color">Choos Color</string>
     
