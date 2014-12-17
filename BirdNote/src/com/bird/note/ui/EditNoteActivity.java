@@ -32,6 +32,8 @@ import android.widget.Toast;
 
 import com.bird.note.R;
 import com.bird.note.customer.BirdWaitDialog;
+import com.bird.note.customer.ChangeQua;
+import com.bird.note.customer.ChangeQua.OnChangeQuaListener;
 import com.bird.note.customer.LevelFlag;
 import com.bird.note.customer.PenView;
 import com.bird.note.customer.PopEraserBox;
@@ -51,7 +53,7 @@ import com.bird.note.utils.JsonUtil;
 import com.bird.note.utils.NoteApplication;
 
 public class EditNoteActivity extends FragmentActivity implements OnClickListener {
-
+   private String TAG ="EditNoteActivity";
 	public LevelFlag mLevelFlag;
 	private QuadrantThumbnail quadrantThumbnail;
 	/*
@@ -106,7 +108,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	private boolean mPenBoxOpened = false;
 	private boolean mEraserBoxOpened = false;
 	private SavedPaint mSavedPaint;
-	
+	private ChangeQua mChangeQua = null;
 	
 	public int getmPenHasSelected() {
 		return mPenHasSelected;
@@ -129,7 +131,8 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 
 		setContentView(R.layout.edit_note_main);
 		mActionBar = getActionBar();
-	
+		mChangeQua = (ChangeQua) findViewById(R.id.id_edit_change_qua);
+		mChangeQua.setOnChangeQuaListener(mOnChangeQuaListener);
 		mWaitDialog = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mNoteApplication = (NoteApplication) getApplication();
 		mNoteApplication.setEdited(false);
@@ -145,7 +148,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			mTitleString = mBirdNote.title;
 			/* 查询获取完整的Note */
 			mBirdNote = dbHelper.queryNoteById(mBirdNote, mBirdNote._id + "");
-			BitmapUtil.writeBytesToFile(mBirdNote.qua0, "qua0");
 		} else {
 
 		}
@@ -160,6 +162,15 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		initActionBar();
 	}
 
+	OnChangeQuaListener mOnChangeQuaListener = new OnChangeQuaListener() {
+		
+		@Override
+		public void changeQua(int qua) {
+			mCurrentQuadrant = qua;
+			changeToQuadrantAt(qua);		
+		}
+	};
+	
 	public void initActionBar(){
 		  View headView = getLayoutInflater().inflate(R.layout.edit_note_header, null);
 			mActionBar.setCustomView(headView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -470,7 +481,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			quadrantContent = (QuadrantContent) iterator.next();
 			if (quadrantContent != null) {
 				EditQuadrantFragment editQuadrantFragment = EditQuadrantFragment.newInstance(mCurrMode, quadrantContent);
-				BitmapUtil.writeBytesToFile(quadrantContent.quadrantdraw, "初始化");
 				mEditQuaFragmentsList.remove(quadrantContent.quadrant);
 				mEditQuaFragmentsList.add(quadrantContent.quadrant,
 						editQuadrantFragment);
@@ -657,15 +667,16 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
 			if (mEditQuaFragmentsList.get(i)!=null) {
 				if (mEditQuaFragmentsList.get(i).mPenView!=null) {
-					if (mEditQuaFragmentsList.get(i).mPenView.mExistBitmap!=null) {
+					if (mEditQuaFragmentsList.get(i).mPenView.mExistBitmap!=null&&!mEditQuaFragmentsList.get(i).mPenView.mExistBitmap.isRecycled()) {
 						mEditQuaFragmentsList.get(i).mPenView.mExistBitmap.recycle();
 					}
-					if (mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap!=null) {
+					if (mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap!=null&&mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap.isRecycled()) {
 						mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap.recycle();
 					}
 				}
 			}
 		}
+		Log.e(TAG, "recycle--existbitmap;drawbitmap");
 		System.gc();
 	}
 	public boolean onCreateOptionsMenu(android.view.Menu menu) {

@@ -222,9 +222,9 @@ public class PenView extends View {
 		postInvalidate();
 	}
 
-	public void savePicture(int mCurrentQuadrant, String filename) {
+/*	public void savePicture(int mCurrentQuadrant, String filename) {
 		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap), "/" + filename+ "" + mCurrentQuadrant);
-	}
+	}*/
 
 	public void clearAll() {
 		mSavePath.clear();
@@ -300,7 +300,6 @@ public class PenView extends View {
 			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_4444);
 		}
 		mDrawCanvas.setBitmap(mDrawBitmap);
-		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap), "invalidate");
 		postInvalidate();
 	}
 

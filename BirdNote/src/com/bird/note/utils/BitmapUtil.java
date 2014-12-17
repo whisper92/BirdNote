@@ -87,6 +87,7 @@ public class BitmapUtil {
 		}
 	}
 
+	/*已回收*/
 	public static Bitmap decodeBytesToBitmap(byte[] b) {
 		if (b.length != 0) {
 			return BitmapFactory.decodeByteArray(b, 0, b.length);
@@ -95,24 +96,16 @@ public class BitmapUtil {
 		}
 	}
 
+	/*已回收*/
 	public static Bitmap decodeDrawableToBitmap(Drawable drawable) {
 		int w = drawable.getIntrinsicWidth();
 		int h = drawable.getIntrinsicHeight();
-		Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_4444: Bitmap.Config.RGB_565;
+		Bitmap.Config config =  Bitmap.Config.ARGB_4444;
 		Bitmap bitmap = Bitmap.createBitmap(w, h, config);
 		Canvas canvas = new Canvas(bitmap);
 		drawable.setBounds(0, 0, w, h);
 		drawable.draw(canvas);
 		return bitmap;
-	}
-	
-	public static Drawable decodeBitmapToDrawable(Context context,Bitmap bitmap){
-			 BitmapDrawable bd= new BitmapDrawable(context.getResources(), bitmap);
-			 return bd;
-	}
-
-	public static byte[] decodeDrawableToBytes(Context context, int sourceID) {
-		return decodeBitmapToBytes(decodeDrawableToBitmap(context.getResources().getDrawable(sourceID)));
 	}
 
 	/**
@@ -136,7 +129,7 @@ public class BitmapUtil {
 	
 
 	/**
-	 * 合并图层
+	 * 合并图层,bitmap已回收
 	 */
 	public static Bitmap mergeBitmap(Context context,Bitmap bgBmp,Bitmap drawBmp,Bitmap textBmp){
 		int w =context.getResources().getDimensionPixelSize(R.dimen.dimen_edit_canvas_width);
@@ -144,9 +137,9 @@ public class BitmapUtil {
 		Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
 		Canvas canvas = new Canvas();
 		canvas.setBitmap(bitmap);
-		canvas.drawBitmap(Bitmap.createScaledBitmap(bgBmp, w, h, false),0, 0, null);	
-		canvas.drawBitmap(Bitmap.createBitmap(drawBmp, 0,0,w,h),0, 0, null);	
-		canvas.drawBitmap(Bitmap.createScaledBitmap(textBmp, w, h, false),0, 0, null);
+		canvas.drawBitmap(bgBmp,0, 0, null);	
+		canvas.drawBitmap(drawBmp,0, 0, null);	
+		canvas.drawBitmap(textBmp,0, 0, null);
 		return bitmap;
 	}
 	

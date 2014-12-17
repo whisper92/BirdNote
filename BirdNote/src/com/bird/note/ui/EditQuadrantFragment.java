@@ -190,12 +190,11 @@ public class EditQuadrantFragment extends Fragment {
 	 * @param type
 	 * @param mBirdNote
 	 */
+	private Bitmap quarBitmap = null;
 	public void initUpdateView(int type, QuadrantContent quadrantContent) {
 		mPenView = new PenView(getActivity());
-		Bitmap bitmap = BitmapUtil.decodeBytesToBitmap(quadrantContent.quadrantdraw);
-		mPenView.setExistBitmap(bitmap);
-		
-		BitmapUtil.writeBytesToFile(quadrantContent.quadrantdraw, "别搞我"+bitmap.getWidth());
+		quarBitmap = BitmapUtil.decodeBytesToBitmap(quadrantContent.quadrantdraw);
+		mPenView.setExistBitmap(quarBitmap);
 		
 		mPenView.invalidateExistBitmap();
 		mEditText.setText(quadrantContent.textcontent);
@@ -206,6 +205,16 @@ public class EditQuadrantFragment extends Fragment {
 
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (quarBitmap!=null&&!quarBitmap.isRecycled()) {
+			quarBitmap.recycle();
+			Log.e(TAG,"recycled-quarBitmap");
+		}
+		System.gc();
+	}
+	
 	public void initEditFragmentView(View view) {
 		((EditNoteActivity)getActivity()).setOnClickTitleMenuListener(mOnClickTitleMenuListener);
 		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
@@ -267,17 +276,23 @@ public class EditQuadrantFragment extends Fragment {
 	};
 
 	public String mSavePath = "";
-
+	Bitmap bgBitmap = null;
 	public class SaveAsThread extends Thread {
 
 		@Override
 		public void run() {
-			Bitmap bitmap = getAllBitmap();
+			Bitmap allbitmap = getAllBitmap();
 			mSavePath = CommonUtils.getSavePath() + "/"+ mBirdInputTitleDialog.getContent() + ".png";
-			BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(bitmap),"/" + mBirdInputTitleDialog.getContent());
-			bitmap.recycle();
+			BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(allbitmap),"/" + mBirdInputTitleDialog.getContent());
 			mainHandler.obtainMessage(BirdMessage.SAVE_AS_OVER, mSavePath).sendToTarget();
-			bitmap.recycle();
+			
+			if (bgBitmap!=null&&!bgBitmap.isRecycled()) {
+				bgBitmap.recycle();
+			}
+			if (allbitmap!=null&&!allbitmap.isRecycled()) {
+				allbitmap.recycle();
+			}
+			Log.e(TAG, "recycle--bgBitmap;allbitmap");
 			System.gc();
 		}
 	};
@@ -286,14 +301,11 @@ public class EditQuadrantFragment extends Fragment {
 		return mSavePath;
 	}
 
-/*	public Bitmap getAllBitmapWithouBg() {
-       return BitmapUtil.mergeBitmap(getActivity(), mPenView.mDrawBitmap, getTextBitmap());
-	}*/
-	
+
 	public Bitmap getAllBitmap() {
-		Bitmap bitmap =mPenView.mDrawBitmap;
-		Log.e("wxp","bitmap . w" + bitmap.getWidth());
-		return BitmapUtil.mergeBitmap(getActivity(), BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(mNoteApplication.getEditBackground())),bitmap, getTextBitmap());
+		/*已回收*/
+		bgBitmap = BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(mNoteApplication.getEditBackground()));
+		return BitmapUtil.mergeBitmap(getActivity(), bgBitmap,mPenView.mDrawBitmap, getTextBitmap());
 	}
 	
 

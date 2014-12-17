@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/id_change_qua_pre"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/page_pre_bg" />
+
+    <TextView
+        android:id="@+id/id_change_qua_index"
+        android:layout_width="50dp"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:background="@drawable/page_mid_nor"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="1/4"
+        android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/id_change_qua_next"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/page_next_bg" />
+
+</LinearLayout>
