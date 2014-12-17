@@ -107,7 +107,7 @@ public class PenView extends View {
 	 * @return
 	 */
 	public Bitmap getWholeBitmap() {
-		Bitmap wholeBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_4444);
+		Bitmap wholeBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		Canvas wholeCanvas = new Canvas(wholeBitmap);
 		if (mExistBitmap != null) {
 			wholeCanvas.drawBitmap(mExistBitmap, 0, 0, null);
@@ -120,7 +120,6 @@ public class PenView extends View {
 	 * 如果是更新笔记的话，要设置已经存在的内容
 	 */
 	public void setExistBitmap(Bitmap backBitmap) {
-		Log.e("wxp", "backBitmap .w "+backBitmap.getWidth());
 		this.mExistBitmap = backBitmap;
 	}
 
@@ -135,7 +134,7 @@ public class PenView extends View {
 		mSavedPaint = new SavedPaint(context);
 		mPath = new Path();
 		initDrawPaint();
-		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_4444);
+		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		mDrawBitmap.eraseColor(Color.TRANSPARENT);
 		mDrawCanvas = new Canvas();
 		mDrawCanvas.setBitmap(mDrawBitmap);
@@ -229,7 +228,7 @@ public class PenView extends View {
 	public void clearAll() {
 		mSavePath.clear();
 		mDeletePath.clear();
-		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_4444);
+		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		mExistBitmap = null;
 		mDrawCanvas.drawBitmap(mDrawBitmap, 0, 0, mCleanPaint);
@@ -241,6 +240,7 @@ public class PenView extends View {
 	}
 
 	public void undo() {
+		Log.e("wxp", "undo...");
 		int nSize = mSavePath.size();
 		if (nSize >= 1) {
 			mDeletePath.add(0, mSavePath.get(nSize - 1));
@@ -249,9 +249,12 @@ public class PenView extends View {
 			return;
 		}
 		if (mExistBitmap != null) {
-			mDrawBitmap = Bitmap.createBitmap(mExistBitmap, 0, 0, mCanvasWidth,mCanvasHeight).copy(Bitmap.Config.ARGB_4444, true);
+			Log.e("wxp", "redo...mExistBitmap != null");
+			mDrawBitmap = Bitmap.createBitmap(mExistBitmap, 0, 0, mCanvasWidth,mCanvasHeight).copy(Bitmap.Config.ARGB_8888, true);
+			Log.e("wxp", "mCanvasWidth..."+mCanvasWidth);
 		} else {
-			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_4444);
+			Log.e("wxp", "redo...mExistBitmap = null");
+			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		}
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		Iterator<PenDrawPath> iter = mSavePath.iterator();
@@ -266,6 +269,7 @@ public class PenView extends View {
 	}
 
 	public void redo() {
+		Log.e("wxp", "redo...");
 		int nSize = mDeletePath.size();
 		if (nSize >= 1) {
 			mSavePath.add(mDeletePath.get(0));
@@ -274,9 +278,12 @@ public class PenView extends View {
 			return;
 
 		if (mExistBitmap != null) {
-			mDrawBitmap = Bitmap.createBitmap(mExistBitmap, 0, 0, mCanvasWidth,mCanvasHeight).copy(Bitmap.Config.ARGB_4444, true);
+			Log.e("wxp", "redo...mExistBitmap != null");
+			mDrawBitmap = Bitmap.createBitmap(mExistBitmap, 0, 0, mCanvasWidth,mCanvasHeight).copy(Bitmap.Config.ARGB_8888, true);
+			Log.e("wxp", "mCanvasWidth..."+mCanvasWidth);
 		} else {
-			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_4444);
+			Log.e("wxp", "redo...mExistBitmap = null");
+			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		}
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		Iterator<PenDrawPath> iter = mSavePath.iterator();
@@ -297,7 +304,7 @@ public class PenView extends View {
 		if (mExistBitmap != null) {
 			mDrawBitmap = Bitmap.createBitmap(getWholeBitmap(), 0, 0,mCanvasWidth, mCanvasHeight);
 		} else {
-			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_4444);
+			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		}
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		postInvalidate();

@@ -151,7 +151,6 @@ public class EditQuadrantFragment extends Fragment {
 			mNoteApplication.setEditedQuadrants(mEditedQuadrants);
 			initView(mCurrentType);
 			changeCurrentMode(mCurrentMode);
-			//changeOtherIconState(mCurrentMode);
 		}
 
 		
@@ -166,22 +165,13 @@ public class EditQuadrantFragment extends Fragment {
 		if (type == BirdMessage.START_TYPE_UPDATE_VALUE) {
 			initUpdateView(type, quadrantContent);
 		}
-		mPenView.setOnPathListChangeListenr(new OnPathListChangeListener() {
-			@Override
-			public void changeState(int undocount, int redocount) {
-				/*mUndoState = undocount > 0 ? true : false;
-				mRedoState = redocount > 0 ? true : false;
-				changeStateOfUndoRedo(mUndoState, mRedoState);*/
-
-			}
-		});
+		mPenView.setOnPathListChangeListenr(((EditNoteActivity)getActivity()).mOnPathListChangeListener);
 		mPenView.setLayoutParams(new FrameLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 	}
 
 	public void initCreateView(int type) {
 		mPenView = new PenView(getActivity());
-
 	}
 
 	/**
@@ -337,9 +327,6 @@ public class EditQuadrantFragment extends Fragment {
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
 			mPenView.initDrawPaint();
-			//changeStateOfUndoRedo(mUndoState, mRedoState);
-/*			mEditNoteActivity.setmPenHasSelected(mEditNoteActivity.getmPenHasSelected()+1);
-			mEditNoteActivity.setmEraserHasSelected(0);*/
 		}
 		if (clickID == R.id.id_edit_title_text) {
 			mEditText.bringToFront();
@@ -348,9 +335,6 @@ public class EditQuadrantFragment extends Fragment {
 			mEditText.setFocusableInTouchMode(true);
 			mEditText.requestFocus();
 			showInputMethod();
-/*			mEditNoteActivity.setmPenHasSelected(0);
-			mEditNoteActivity.setmEraserHasSelected(0);*/
-
 		}
 		if (clickID == R.id.id_edit_title_clean) {
 			hideInputMethod();
@@ -361,9 +345,6 @@ public class EditQuadrantFragment extends Fragment {
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
 			mPenView.setCleanPaint();
-			//changeStateOfUndoRedo(mUndoState, mRedoState);
-/*			mEditNoteActivity.setmPenHasSelected(0);
-			mEditNoteActivity.setmEraserHasSelected(mEditNoteActivity.getmPenHasSelected()+1);*/
 
 		}
 
@@ -395,13 +376,6 @@ public class EditQuadrantFragment extends Fragment {
 		new SaveUpdateNoteThread().start();
 	}
 
-	/**
-	 * 保存和回复撤销和重做图标的状态
-	 */
-	public void changeStateOfUndoRedo(boolean undoState, boolean redoState) {
-		menu_Undo.setEnabled(undoState);
-		menu_Redo.setEnabled(redoState);
-	}
 
 
 	/**

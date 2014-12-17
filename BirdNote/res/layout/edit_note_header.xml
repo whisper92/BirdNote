@@ -44,7 +44,7 @@
         android:background="@drawable/action_bt_style01_left"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/th01_green_icon_pre" />
+        android:src="@drawable/th01_state_menu_uodo" />
 
     <ImageView
         android:id="@+id/id_edit_title_next"
@@ -54,7 +54,7 @@
         android:background="@drawable/action_bt_style01_right"
         android:clickable="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/th01_green_icon_next" />
+        android:src="@drawable/th01_state_menu_redo" />
 
     <ImageView
         android:id="@+id/id_edit_title_save"

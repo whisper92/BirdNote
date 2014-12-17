@@ -258,7 +258,7 @@ public class DbHelper {
 		values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
 		Log.e(TAG,"update note success..."+CommonUtils.getCurrentTime());
-		dbWrite.close();
+
 	}
 	
 	/**

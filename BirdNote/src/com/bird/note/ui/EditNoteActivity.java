@@ -39,10 +39,9 @@ import com.bird.note.customer.PenView;
 import com.bird.note.customer.PopEraserBox;
 import com.bird.note.customer.PopPenBox;
 import com.bird.note.customer.LevelFlag.OnLevelChangeListener;
-import com.bird.note.customer.QuadrantThumbnail;
+import com.bird.note.customer.PenView.OnPathListChangeListener;
 import com.bird.note.customer.PopEraserBox.OnEraserChangedListener;
 import com.bird.note.customer.PopPenBox.OnPaintChangedListener;
-import com.bird.note.customer.QuadrantThumbnail.OnQuadrantChangeListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
@@ -55,7 +54,6 @@ import com.bird.note.utils.NoteApplication;
 public class EditNoteActivity extends FragmentActivity implements OnClickListener {
    private String TAG ="EditNoteActivity";
 	public LevelFlag mLevelFlag;
-	private QuadrantThumbnail quadrantThumbnail;
 	/*
 	 * 当前所处模式：绘图或文字
 	 */
@@ -206,6 +204,26 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public void changeCurrentMode(){
 		
 	}
+	
+	public OnPathListChangeListener mOnPathListChangeListener = new OnPathListChangeListener() {
+		@Override
+		public void changeState(int undocount, int redocount) {
+			mUndoState = undocount > 0 ? true : false;
+			mRedoState = redocount > 0 ? true : false;
+			changeStateOfUndoRedo(mUndoState, mRedoState);
+			
+		}
+	};
+	
+	/**
+	 * 保存和回复撤销和重做图标的状态
+	 */
+	public void changeStateOfUndoRedo(boolean undoState, boolean redoState) {
+		menu_Undo.setEnabled(undoState);
+		menu_Redo.setEnabled(redoState);
+	}
+
+	
 	/**
 	 * 进入某一种模式的时候，要改变其他模式对应的图标的状态
 	 */
@@ -269,8 +287,10 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			
 			break;
 		case R.id.id_edit_title_pre:
+			mEditQuaFragment.mPenView.undo();
 			break;
 		case R.id.id_edit_title_next:
+			mEditQuaFragment.mPenView.redo();
 			break;
 		case R.id.id_edit_title_more:
 			openOptionsMenu();
@@ -412,15 +432,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			}
 		});*/
 		
-/*		quadrantThumbnail = (QuadrantThumbnail) findViewById(R.id.id_edit_quathumb);
-		quadrantThumbnail.setQuadrantChangeListener(new OnQuadrantChangeListener() {
-					@Override
-					public void changeQua(int qua) {
-						mCurrentQuadrant = qua;
-						changeToQuadrantAt(qua);
-					}
-				});*/
-
 		if (type == BirdMessage.START_TYPE_CREATE_VALUE) {
 			initCreateView(type);
 		}
@@ -673,6 +684,9 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 					if (mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap!=null&&mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap.isRecycled()) {
 						mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap.recycle();
 					}
+/*					if (mEditQuaFragmentsList.get(i).mPenView.wholeBitmap!=null&&mEditQuaFragmentsList.get(i).mPenView.wholeBitmap.isRecycled()) {
+						mEditQuaFragmentsList.get(i).mPenView.wholeBitmap.recycle();
+					}*/
 				}
 			}
 		}
@@ -737,5 +751,10 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 				break;
 			}
 		}
+	};
+	
+	
+	protected void onDestroy() {
+		super.onDestroy();
 	};
 }
