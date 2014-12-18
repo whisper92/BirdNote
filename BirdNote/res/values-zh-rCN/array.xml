@@ -31,11 +31,7 @@
         <item>@string/show_menu_search</item>
     </string-array>
     
-    <string-array name="sortby_array">
-        <item>"创建时间"</item>
-        <item>"更新时间"</item>
-        <item>"优先级"</item>
-    </string-array>
+
     
     <string-array name="bg_array">
         <item>@string/bg_txt00</item>

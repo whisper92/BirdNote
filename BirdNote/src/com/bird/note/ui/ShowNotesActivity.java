@@ -70,6 +70,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		mWaitDialogUpdate  = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mWaitDialogDelete = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mDbHelper=new DbHelper(this);
+		mCurrentSort = PreferenceUtil.getSortBy();
 		mBirdNotes=queryByCurrentSort(mCurrentSort);
 		initActionBar();
 	}
@@ -81,11 +82,11 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);  
 		mActionBar.setDisplayShowCustomEnabled(true); 
 		mActionBar.setTitle(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
-
+       mNoteApplication.setNotescount(mBirdNotes.size());
 		mShowTitle=(RelativeLayout)headView.findViewById(R.id.id_show_title_rl);
         mTitleNoteCount =(TextView) headView.findViewById(R.id.id_show_title_count);
 		mGridView = (GridView) findViewById(R.id.id_show_gv);
-		mCurrentSort = PreferenceUtil.getSortBy();
+		
 		
 		mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
 	    mNoteAdapter = new ShowNoteAdapter(this,mBirdNotes,mGridView);
@@ -227,6 +228,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 			mDbHelper.deleteNoteByIds(mNotesId);
 			mBirdNotes.clear();
 			mBirdNotes = queryByCurrentSort(mCurrentSort);
+			mNoteApplication.setNotescount(mBirdNotes.size());
 			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes ,mGridView); 
 		    mNoteAdapter.notifyDataSetChanged();
 		    mNoteAdapter.setOnConfirmDeleteListener(mConfirmDeleteListener );
@@ -262,6 +264,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 		@Override
 		public void run() {
 			mBirdNotes=queryByCurrentSort(mCurrentSort);
+			mNoteApplication.setNotescount(mBirdNotes.size());
 			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes,mGridView); 
 			mNoteAdapter.setOnConfirmDeleteListener(mConfirmDeleteListener );
 			showHandler.sendEmptyMessage(BirdMessage.QUERY_RUNNABLE_OVER);

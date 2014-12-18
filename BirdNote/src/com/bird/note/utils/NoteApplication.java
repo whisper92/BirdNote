@@ -111,5 +111,13 @@ public class NoteApplication extends Application{
 		undoredo = new boolean[][]{{false,false},{false,false},{false,false},{false,false}};
 	}
 	
+	public int notescount = 0;
+	public int getNotescount() {
+		return notescount;
+	}
+	public void setNotescount(int notescount) {
+		this.notescount = notescount;
+	}
+	
 	
 }

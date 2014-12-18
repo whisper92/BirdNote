@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">BirdNote</string>
-    <string name="show_note_count">BirdNote(%1$s)</string>
+    <string name="app_name">Note</string>
+    <string name="show_note_count">Note(%1$s)</string>
     <string name="stared_note_count">Favourite(%1$s)</string>
     <string name="edit_menu_delete">Delete</string>
     <string name="edit_menu_favor">Favor</string>
@@ -56,4 +56,7 @@
     <string name="bg_txt03">Style4</string>
     <string name="bg_txt04">Style5</string>
     
+    <string name="sortby_createtime">CreateTime(Old-New)</string>
+    <string name="sortby_updatetime">UpdateTime(New-Old)</string>
+    <string name="changequatoast">Change To The %1$s Quadrant</string>
 </resources>

@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bird.note.R;
+
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Environment;
@@ -73,10 +75,17 @@ public class CommonUtils {
 		return d1;
 	}
 	
-	public static String getDefaultTitle(){
-		return "N"+getCurrentDate();
+	public static String getDefaultTitle(Context context){
+		return context.getString(R.string.app_name)+""+((NoteApplication)context.getApplicationContext()).getNotescount();
 	}
 	
+	public static String spliteTitle(String origTitle){
+		if (origTitle.length()>=10) {
+			return origTitle.substring(0, 10)+"...";
+		} else {
+			return origTitle;
+		}
+	}
 	public static int dpToPx(Context context,int dp) {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
 				context.getResources().getDisplayMetrics());

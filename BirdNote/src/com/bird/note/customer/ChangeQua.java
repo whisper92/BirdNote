@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 
@@ -25,8 +26,10 @@ public class ChangeQua extends LinearLayout implements OnClickListener,OnTouchLi
 	Button mNextButton = null;
 	TextView mIndex = null;
 	int qua = 0;
+	Context mContext = null;
 	public ChangeQua(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		mContext = context;
 		mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = mInflater.inflate(R.layout.edit_note_change_qua, this);
 		mPreButton = (Button)view.findViewById(R.id.id_change_qua_pre);
@@ -86,6 +89,16 @@ public class ChangeQua extends LinearLayout implements OnClickListener,OnTouchLi
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 	}
 
+	Toast mToast = null;
+	public void showToast(int qua){
+		String toastString = String.format(mContext.getString(R.string.changequatoast), qua);
+		if (mToast == null) {
+			mToast = Toast.makeText(mContext, toastString, Toast.LENGTH_SHORT);
+		} else {
+			mToast.setText(toastString);
+		}
+		mToast.show();
+	}
 	OnChangeQuaListener mOnChangeQuaListener = null;
 	@Override
 	public void onClick(View v) {
@@ -94,6 +107,7 @@ public class ChangeQua extends LinearLayout implements OnClickListener,OnTouchLi
 				Log.e(TAG, "qua : "+qua);
 				qua = qua -1;
 				mIndex.setText((qua+1)+"/4");
+				showToast(qua+1);			
 				mOnChangeQuaListener.changeQua(qua);
 				mNextButton.setEnabled(true);
 				if (qua-1<0) {
@@ -105,6 +119,7 @@ public class ChangeQua extends LinearLayout implements OnClickListener,OnTouchLi
 				Log.e(TAG, "qua : "+qua);
 				qua = qua +1;
 				mIndex.setText((qua+1)+"/4");
+				showToast(qua+1);
 				mOnChangeQuaListener.changeQua(qua);
 				mPreButton.setEnabled(true);
 				if (qua+1>3) {

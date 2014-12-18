@@ -19,16 +19,17 @@
         android:gravity="center"
         android:text="@string/app_name"
         android:textColor="@color/color_show_item"
-        android:textSize="@dimen/dimen_show_titile_text_size" />
+        android:padding="15px"
+        android:textSize="@dimen/dimen_show_gridview_title_textsize" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_show_gridview_datebg_height"
+        android:layout_height="wrap_content"
         android:background="@drawable/datebackground"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="50dp" >
+        android:layout_marginRight="5dp" >
 
         <TextView
             android:id="@+id/id_note_item_date_tv"
@@ -42,8 +43,10 @@
 
         <ImageView
             android:id="@+id/id_note_item_cover_fav"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/favorite_sel"
             android:contentDescription="@string/app_name"/>

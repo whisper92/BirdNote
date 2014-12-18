@@ -26,7 +26,6 @@ import com.bird.note.R;
 public class BitmapUtil {
 
 	private static String TAG = "BitmapUtil";
-	/*压缩率*/
 	private static final int COMPOPTION = 100;
 	public static int getPreBgByBg(int bg){
 		int prebg = BitmapUtil.EDIT_BGS_PRE[0];
@@ -69,7 +68,7 @@ public class BitmapUtil {
 		}
 	}
 
-	/*已回收*/
+
 	public static Bitmap decodeBytesToBitmap(byte[] b) {
 		if (b.length != 0) {
 			return BitmapFactory.decodeByteArray(b, 0, b.length);
@@ -78,7 +77,7 @@ public class BitmapUtil {
 		}
 	}
 
-	/*已回收*/
+
 	public static Bitmap decodeDrawableToBitmap(Drawable drawable) {
 		int w = drawable.getIntrinsicWidth();
 		int h = drawable.getIntrinsicHeight();
@@ -135,6 +134,4 @@ public class BitmapUtil {
 	public static int[] EDIT_BGS_PRE= new int[]{R.drawable.th01_skin_small_00,R.drawable.th01_skin_small_01, R.drawable.th01_skin_small_02,R.drawable.th01_skin_small_03, R.drawable.th01_skin_small_04 };
 	
 	public static int[] EDIT_BGS= new int[]{R.drawable.th01_skin_00,R.drawable.th01_skin_01,R.drawable.th01_skin_02,R.drawable.th01_skin_03,R.drawable.th01_skin_04};
-	
-	//public static int[] SHOW_COVER= new int[]{R.drawable.th01_cover_00,R.drawable.th01_cover_01, R.drawable.th01_cover_02,R.drawable.th01_cover_03};
 }

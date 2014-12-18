@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/id_edit_title_pen"
-        android:layout_width="50dp"
+        android:layout_width="@dimen/dimen_edit_title_menu_big"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_edit_title_menu_margin"
         android:background="@drawable/action_bt_style01_left"
@@ -17,7 +17,7 @@
 
     <ImageView
         android:id="@+id/id_edit_title_text"
-        android:layout_width="50dp"
+        android:layout_width="@dimen/dimen_edit_title_menu_big"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/id_edit_title_pen"
         android:background="@drawable/action_bt_style01_mid"
@@ -27,7 +27,7 @@
 
     <ImageView
         android:id="@+id/id_edit_title_clean"
-        android:layout_width="50dp"
+        android:layout_width="@dimen/dimen_edit_title_menu_big"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/id_edit_title_text"
         android:background="@drawable/action_bt_style01_right"
@@ -38,7 +38,7 @@
     <ImageView
         android:id="@+id/id_edit_title_pre"
         android:layout_marginLeft="10dp"
-        android:layout_width="50dp"
+        android:layout_width="@dimen/dimen_edit_title_menu_big"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/id_edit_title_clean"
         android:background="@drawable/action_bt_style01_left"
@@ -48,7 +48,7 @@
 
     <ImageView
         android:id="@+id/id_edit_title_next"
-        android:layout_width="50dp"
+        android:layout_width="@dimen/dimen_edit_title_menu_big"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/id_edit_title_pre"
         android:background="@drawable/action_bt_style01_right"
@@ -58,7 +58,7 @@
 
     <ImageView
         android:id="@+id/id_edit_title_save"
-        android:layout_width="40dp"
+        android:layout_width="@dimen/dimen_edit_title_menu_small"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/id_edit_title_more"
         android:background="@drawable/action_bt_style01_left"
@@ -68,7 +68,7 @@
 
     <ImageView
         android:id="@+id/id_edit_title_more"
-        android:layout_width="40dp"
+        android:layout_width="@dimen/dimen_edit_title_menu_small"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dimen_edit_title_menu_margin"

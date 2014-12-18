@@ -54,4 +54,9 @@
     <string name="edit_menu_change_cover">更改封面样式</string>
     <string name="edit_menu_change_page">切换页面</string>
     
+    <string name="sortby_createtime">创建时间(旧-新)</string>
+    <string name="sortby_updatetime">更新时间(新-旧)</string>
+    
+    <string name="changequatoast">切换至第%1$s象限</string>
+    
 </resources>

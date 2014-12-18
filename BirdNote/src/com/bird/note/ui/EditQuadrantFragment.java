@@ -242,7 +242,7 @@ public class EditQuadrantFragment extends Fragment {
 		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
 			mBirdInputTitleDialog.setInputContent(((EditNoteActivity) getActivity()).mBirdNote.title+ "_qua" + mCurrentQuadrant);
 		} else {
-			mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle() + "_qua" + mCurrentQuadrant);
+			mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle(getActivity()) + "_qua" + mCurrentQuadrant);
 		}
 	}
 	
@@ -371,7 +371,7 @@ public class EditQuadrantFragment extends Fragment {
 	    mBirdInputTitleDialog.setTitle(R.string.input_title_dialog_title);
         mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveNewNoteClickListener);
 		mBirdInputTitleDialog.show();
-		mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle());
+		mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle(getActivity()));
 	}
 
 	public void saveUpdateNote() {

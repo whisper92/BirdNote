@@ -30,11 +30,9 @@
         <item>@string/show_menu_search</item>
     </string-array>
     <string-array name="sortby_array">
-        <item>"Create Time"</item>
-        <item>"Update Time"</item>
-        <item>"Level"</item>
+        <item>@string/sortby_createtime</item>
+        <item>@string/sortby_updatetime</item>
     </string-array>
-    
     <string-array name="bg_array">
         <item>@string/bg_txt00</item>
         <item>@string/bg_txt01</item>

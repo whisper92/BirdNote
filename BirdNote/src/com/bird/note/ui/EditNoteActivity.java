@@ -218,9 +218,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 				if (which == -1) {
 					dbHelper.updateLevelById(mBirdNote._id+"", mChangeCover.getSelectCover());
 				}
-				if (which == -2) {
-					
-				}
 			}
 
 		}

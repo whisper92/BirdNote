@@ -20,10 +20,14 @@
     <dimen name="dimen_show_note_item_paddingtop">-180dp</dimen>   
     <dimen name="dimen_show_note_item_space">10dp</dimen>
     <dimen name="dimen_show_gridview_margin">5dp</dimen>
-    <dimen name="dimen_show_gridview_datebg_height">50dp</dimen>
-    <dimen name="dimen_show_gridview_date_textsize">10dp</dimen>
+    <dimen name="dimen_show_gridview_datebg_height">25dp</dimen>
+    <dimen name="dimen_show_gridview_title_textsize">15dp</dimen>
+    <dimen name="dimen_show_gridview_date_textsize">13dp</dimen>
     
     <!-- 编辑界面 -->
+    <dimen name="dimen_edit_title_menu_big">50dp</dimen>
+    <dimen name="dimen_edit_title_menu_small">40dp</dimen>
+    
     <dimen name="dimen_edit_title_menu_margin">5dp</dimen>
     <dimen name="dimen_edit_qudrant_margin_right">8dp</dimen>
     <dimen name="dimen_edit_qudrant_margin_bottom">10dp</dimen>
