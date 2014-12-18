@@ -217,6 +217,9 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public void changeStateOfUndoRedo(boolean undoState, boolean redoState) {
 		menu_Undo.setEnabled(undoState);
 		menu_Redo.setEnabled(redoState);
+		
+		mNoteApplication.undoredo[mCurrentQuadrant][0] = undoState;
+		mNoteApplication.undoredo[mCurrentQuadrant][1] = redoState;
 	}
 
 	
@@ -480,6 +483,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			public void run() {
 				mEditQuaFragment.changeCurrentMode(mNoteApplication
 						.getCurrentEditMode());
+				changeStateOfUndoRedo(mNoteApplication.undoredo[mCurrentQuadrant][0], mNoteApplication.undoredo[mCurrentQuadrant][1]);
 			}
 		});
 

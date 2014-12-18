@@ -315,9 +315,6 @@ public class EditQuadrantFragment extends Fragment {
 	public void changeCurrentMode(int clickID) {
 		
 		mCurrentMode = clickID;
-		if (mNoteApplication != null) {
-			
-		}
 		
 		if (clickID == R.id.id_edit_title_pen) {
 			Log.e(TAG, "changeCurrentMode----->id_edit_title_pen");

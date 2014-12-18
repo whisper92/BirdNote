@@ -107,4 +107,6 @@ public class NoteApplication extends Application{
 		this.undoredo = undoredo;
 	}
 	
+	
+	
 }
