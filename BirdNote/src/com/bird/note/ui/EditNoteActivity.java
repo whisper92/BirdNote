@@ -770,5 +770,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	
 	protected void onDestroy() {
 		super.onDestroy();
+		mNoteApplication.initUndoRedo();
 	};
 }

@@ -107,6 +107,13 @@ public class NoteApplication extends Application{
 		this.undoredo = undoredo;
 	}
 	
+	public void initUndoRedo(){
+		for (int i = 0; i < 3; i++) {
+			for (int j= 0; j < 1; j++) {
+				undoredo[i][j] = false;
+			}
+		}
+	}
 	
 	
 }
