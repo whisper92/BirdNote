@@ -54,25 +54,7 @@ public class BitmapUtil {
 	}
 	
 	public static int getCoverBgByLevel(int bg){
-		int prebg = BitmapUtil.SHOW_COVER[0];
-		switch (bg) {
-		case R.drawable.th01_skin_00:
-			prebg = BitmapUtil.SHOW_COVER[0];
-			break;
-		case R.drawable.th01_skin_01:
-			prebg = BitmapUtil.SHOW_COVER[1];
-			break;
-		case R.drawable.th01_skin_02:
-			prebg = BitmapUtil.SHOW_COVER[2];
-			break;
-		case R.drawable.th01_skin_03:
-			prebg = BitmapUtil.SHOW_COVER[3];
-			break;
-			
-		default:
-			break;
-		}
-		return prebg;
+		return BitmapUtil.EDIT_COVER_PRE[bg];
 	}
 	
 
@@ -147,9 +129,12 @@ public class BitmapUtil {
 	/**
 	 * 内置背景图片
 	 */
+	
+	public static int[] EDIT_COVER_PRE= new int[]{R.drawable.th01_cover_00,R.drawable.th01_cover_01, R.drawable.th01_cover_02,R.drawable.th01_cover_03 };
+
 	public static int[] EDIT_BGS_PRE= new int[]{R.drawable.th01_skin_small_00,R.drawable.th01_skin_small_01, R.drawable.th01_skin_small_02,R.drawable.th01_skin_small_03, R.drawable.th01_skin_small_04 };
 	
 	public static int[] EDIT_BGS= new int[]{R.drawable.th01_skin_00,R.drawable.th01_skin_01,R.drawable.th01_skin_02,R.drawable.th01_skin_03,R.drawable.th01_skin_04};
 	
-	public static int[] SHOW_COVER= new int[]{R.drawable.th01_cover_00,R.drawable.th01_cover_01, R.drawable.th01_cover_02,R.drawable.th01_cover_03};
+	//public static int[] SHOW_COVER= new int[]{R.drawable.th01_cover_00,R.drawable.th01_cover_01, R.drawable.th01_cover_02,R.drawable.th01_cover_03};
 }

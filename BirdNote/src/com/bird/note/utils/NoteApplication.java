@@ -108,11 +108,7 @@ public class NoteApplication extends Application{
 	}
 	
 	public void initUndoRedo(){
-		for (int i = 0; i < 3; i++) {
-			for (int j= 0; j < 1; j++) {
-				undoredo[i][j] = false;
-			}
-		}
+		undoredo = new boolean[][]{{false,false},{false,false},{false,false},{false,false}};
 	}
 	
 	

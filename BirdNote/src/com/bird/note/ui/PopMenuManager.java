@@ -29,8 +29,8 @@ public class PopMenuManager {
 		return builder;
 	}
 	
-	public static AlertDialog.Builder createChooseMarkAlertDialog(Context context,int titleSrc){
-		AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(context.getString(titleSrc)).setIcon(android.R.drawable.ic_dialog_info);
+	public static AlertDialog.Builder createChooseMarkAlertDialog(Context context,int titleSrc,android.content.DialogInterface.OnClickListener listener){
+		AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(context.getString(titleSrc)).setIcon(android.R.drawable.ic_dialog_info).setPositiveButton(context.getString(R.string.show_menu_confirm), listener).setNegativeButton(context.getString(R.string.show_menu_cancel), listener);
 		return builder;
 	}
 	

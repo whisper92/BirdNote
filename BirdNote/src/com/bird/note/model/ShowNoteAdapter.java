@@ -323,6 +323,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			holder=(NoteHolder)convertView.getTag();
 		}
 
+		Log.e("wxp", "LEVEL:"+birdNote.level);
 			holder.thumbnail.setImageResource(BitmapUtil.getCoverBgByLevel(birdNote.level));
 			holder.fav.setVisibility(birdNote.star==0?(View.GONE):(View.VISIBLE));
 	        holder.title.setText(birdNote.title);

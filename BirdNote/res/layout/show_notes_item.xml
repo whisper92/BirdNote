@@ -8,7 +8,6 @@
         android:id="@+id/id_note_item_cover_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/th01_cover_00"
         android:contentDescription="@string/app_name" />
 
     <TextView
@@ -27,6 +26,8 @@
         android:layout_height="@dimen/dimen_show_gridview_datebg_height"
         android:background="@drawable/datebackground"
         android:layout_alignParentBottom="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginBottom="50dp" >
 
         <TextView

@@ -8,6 +8,7 @@ import org.json.JSONException;
 
 import android.R.integer;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.ActionBar.LayoutParams;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 import com.bird.note.R;
 import com.bird.note.customer.BirdWaitDialog;
+import com.bird.note.customer.ChangeCover;
 import com.bird.note.customer.ChangeQua;
 import com.bird.note.customer.ChangeQua.OnChangeQuaListener;
 import com.bird.note.customer.LevelFlag;
@@ -133,6 +135,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		mChangeQua.setOnChangeQuaListener(mOnChangeQuaListener);
 		mWaitDialog = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mNoteApplication = (NoteApplication) getApplication();
+		mNoteApplication.initUndoRedo();
 		mNoteApplication.setEdited(false);
 		mNoteEditType = mNoteApplication.getCurrentNoteEidtType();
 		mEditedQuadrant = mNoteApplication.getEditedQuadrants();
@@ -169,6 +172,9 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		}
 	};
 	
+	AlertDialog.Builder builder = null;
+	View mCoverView = null;
+	ChangeCover mChangeCover = null;
 	public void initActionBar(){
 		  View headView = getLayoutInflater().inflate(R.layout.edit_note_header, null);
 			mActionBar.setCustomView(headView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -196,11 +202,30 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			
 			mSavedPaint = new SavedPaint(this);
 			
+			builder = PopMenuManager.createChooseMarkAlertDialog(EditNoteActivity.this, R.string.edit_menu_change_cover,mChooseCoverListener);
+
+			
 			changeOtherIconState(mCurrMode);
 			createEraserBox();
 			createPenBox();
 	}
 	
+	android.content.DialogInterface.OnClickListener mChooseCoverListener = new android.content.DialogInterface.OnClickListener(){
+
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			if (mChangeCover !=null) {
+				if (which == -1) {
+					dbHelper.updateLevelById(mBirdNote._id+"", mChangeCover.getSelectCover());
+				}
+				if (which == -2) {
+					
+				}
+			}
+
+		}
+		
+	};
 	public OnPathListChangeListener mOnPathListChangeListener = new OnPathListChangeListener() {
 		@Override
 		public void changeState(int undocount, int redocount) {
@@ -720,11 +745,19 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		return true;
 	};
 	
+	public int getCoverByLevel(int level){
+		return BitmapUtil.EDIT_COVER_PRE[level];
+	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.id_edit_menu_change_cover:
-			//mEditQuaFragment.showChangeBg();
+
+			mChangeCover = new ChangeCover(this);
+			mChangeCover.setCoverChecked(getCoverByLevel(mBirdNote.level));
+			builder.setView(mChangeCover);
+			builder.create().show();
+			
 			break;
 		case R.id.id_edit_menu_change_bg:
 			mEditQuaFragment.showChangeBg();
@@ -769,6 +802,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	
 	
 	protected void onDestroy() {
+		Log.e(TAG, "ed-activity--des");
 		super.onDestroy();
 		mNoteApplication.initUndoRedo();
 	};
