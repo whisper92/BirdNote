@@ -201,10 +201,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			createPenBox();
 	}
 	
-	public void changeCurrentMode(){
-		
-	}
-	
 	public OnPathListChangeListener mOnPathListChangeListener = new OnPathListChangeListener() {
 		@Override
 		public void changeState(int undocount, int redocount) {
@@ -228,8 +224,9 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	 * 进入某一种模式的时候，要改变其他模式对应的图标的状态
 	 */
 	public void changeOtherIconState(int clickID) {
+		Log.e(TAG,"changeOtherIconState----->");
 		mCurrMode = clickID;
-		mNoteApplication.setCurrentEditMode(mCurrMode);
+		
 		switch (clickID) {
 		case R.id.id_edit_title_pen:
 			edit_Pen.setSelected(true);
@@ -240,6 +237,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			mPenHasSelected +=1;
 			mEraserHasSelected = 0;
 			break;
+			
 		case R.id.id_edit_title_text:
 			edit_Text.setSelected(true);
 			edit_Pen.setSelected(false);
@@ -249,6 +247,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			mPenHasSelected = 0;
 			mEraserHasSelected = 0;
 			break;
+			
 		case R.id.id_edit_title_clean:
 			edit_Clean.setSelected(true);
 			edit_Text.setSelected(false);
@@ -268,36 +267,44 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public void onClick(View v) {
 		mOnClickTitleMenuListener.clickMenu(v.getId());
 		mCurrMode = v.getId();
-		changeOtherIconState(v.getId());
+		changeOtherIconState(mCurrMode);
          switch (v.getId()) {
 		case R.id.id_edit_title_pen:
+			mNoteApplication.setCurrentEditMode(mCurrMode);
 			togglePenBox(mCurrMode);		
 			mPenHasSelected+=1;			
-			mEraserHasSelected = 0;
-				
+			mEraserHasSelected = 0;				
 			break;
-		case R.id.id_edit_title_text:		
+			
+		case R.id.id_edit_title_text:
+			mNoteApplication.setCurrentEditMode(mCurrMode);
 			mPenHasSelected = 0;
 			mEraserHasSelected = 0;
 			break;
+			
 		case R.id.id_edit_title_clean:
+			mNoteApplication.setCurrentEditMode(mCurrMode);
 			toggleEraserBox(mCurrMode);
 			mPenHasSelected = 0;
-			mEraserHasSelected += 1;
-			
+			mEraserHasSelected += 1;		
 			break;
+			
 		case R.id.id_edit_title_pre:
 			mEditQuaFragment.mPenView.undo();
 			break;
+			
 		case R.id.id_edit_title_next:
 			mEditQuaFragment.mPenView.redo();
 			break;
+			
 		case R.id.id_edit_title_more:
 			openOptionsMenu();
 			break;
+			
 		case R.id.id_edit_title_save:
 			mEditQuaFragment.saveNote();
 			break;
+			
 		default:
 			break;
 		}
@@ -712,6 +719,9 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.id_edit_menu_change_cover:
+			//mEditQuaFragment.showChangeBg();
+			break;
 		case R.id.id_edit_menu_change_bg:
 			mEditQuaFragment.showChangeBg();
 			break;

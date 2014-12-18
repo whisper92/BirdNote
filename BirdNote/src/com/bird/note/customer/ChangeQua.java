@@ -14,8 +14,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 
-public class ChangeQua extends LinearLayout implements OnClickListener{
+public class ChangeQua extends LinearLayout implements OnClickListener,OnTouchListener{
 
 	private String TAG = "ChangeQua";
 	
@@ -35,8 +36,11 @@ public class ChangeQua extends LinearLayout implements OnClickListener{
 		mPreButton.setOnClickListener(this);
 		mNextButton.setOnClickListener(this);
 		
+		mIndex.setOnTouchListener(this);
+		
 		mIndex.setText((qua+1)+"/4");
 		mPreButton.setEnabled(false);
+		
 		
 
 	}
@@ -56,7 +60,19 @@ public class ChangeQua extends LinearLayout implements OnClickListener{
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		// TODO Auto-generated method stub
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			Log.e("wxp","Sel---->ACTION_DOWN------>ll");
+			break;
+		case MotionEvent.ACTION_MOVE:
+			Log.e("wxp","Sel---->ACTION_MOVE------>ll");
+			break;
+		case MotionEvent.ACTION_UP:
+			Log.e("wxp","Sel---->ACTION_UP------>ll");
+			break;
+		default:
+			break;
+		}
 		return super.onTouchEvent(event);
 	}
 	
@@ -96,6 +112,10 @@ public class ChangeQua extends LinearLayout implements OnClickListener{
 				}
 			
 			break;
+			
+		case R.id.id_change_qua_index:
+			Log.e("wxp","onclick------>");
+			break;
 		default:
 			break;
 		}
@@ -111,6 +131,41 @@ public class ChangeQua extends LinearLayout implements OnClickListener{
 	
 	public void setOnChangeQuaListener(OnChangeQuaListener listener){
 		this.mOnChangeQuaListener = listener ;
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		if (v.getId() == R.id.id_change_qua_index) {
+			switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				Log.e("wxp","ACTION_DOWN------>index");
+				break;
+			case MotionEvent.ACTION_MOVE:
+				Log.e("wxp","ACTION_MOVE------>index");
+				break;
+			case MotionEvent.ACTION_UP:
+				Log.e("wxp","ACTION_UP------>index");
+				break;
+			default:
+				break;
+			}
+			return true;
+		} else {
+			switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				Log.e("wxp","ACTION_DOWN------>ll");
+				break;
+			case MotionEvent.ACTION_MOVE:
+				Log.e("wxp","ACTION_MOVE------>ll");
+				break;
+			case MotionEvent.ACTION_UP:
+				Log.e("wxp","ACTION_UP------>ll");
+				break;
+			default:
+				break;
+			}
+		}
+		return false;
 	}
 
 }

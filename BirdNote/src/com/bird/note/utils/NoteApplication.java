@@ -99,5 +99,12 @@ public class NoteApplication extends Application{
 		this.edited = edited;
 	}
 	
+	public boolean[][] undoredo = new boolean[][]{{false,false},{false,false},{false,false},{false,false}};
+	public boolean[][] getUndoredo() {
+		return undoredo;
+	}
+	public void setUndoredo(boolean[][] undoredo) {
+		this.undoredo = undoredo;
+	}
 	
 }

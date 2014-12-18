@@ -313,12 +313,15 @@ public class EditQuadrantFragment extends Fragment {
 	 * @param clickID
 	 */
 	public void changeCurrentMode(int clickID) {
+		
 		mCurrentMode = clickID;
 		if (mNoteApplication != null) {
-			mNoteApplication.setCurrentEditMode(mCurrentMode);
+			
 		}
 		
 		if (clickID == R.id.id_edit_title_pen) {
+			Log.e(TAG, "changeCurrentMode----->id_edit_title_pen");
+			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			hideInputMethod();
 			if (mFirstComeIn) {
 				mWrapFrameLayout.addView(mPenView);
@@ -327,16 +330,18 @@ public class EditQuadrantFragment extends Fragment {
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
 			mPenView.initDrawPaint();
-		}
-		if (clickID == R.id.id_edit_title_text) {
+		} else if (clickID == R.id.id_edit_title_text) {
+			Log.e(TAG, "changeCurrentMode----->id_edit_title_text");
+			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			mEditText.bringToFront();
 			mEditText.setCursorVisible(true);
 			mEditText.setFocusable(true);
 			mEditText.setFocusableInTouchMode(true);
 			mEditText.requestFocus();
 			showInputMethod();
-		}
-		if (clickID == R.id.id_edit_title_clean) {
+		} else if (clickID == R.id.id_edit_title_clean) {
+			Log.e(TAG, "changeCurrentMode----->id_edit_title_clean");
+			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			hideInputMethod();
 			if (mFirstComeIn) {
 				mWrapFrameLayout.addView(mPenView);
@@ -345,7 +350,8 @@ public class EditQuadrantFragment extends Fragment {
 			mPenView.bringToFront();
 			mEditText.setCursorVisible(false);
 			mPenView.setCleanPaint();
-
+		} else {
+			Log.e(TAG, "changeCurrentMode----->else");
 		}
 
 	}

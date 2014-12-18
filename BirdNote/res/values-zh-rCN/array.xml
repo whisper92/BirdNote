@@ -22,7 +22,6 @@
     <string-array name="itemmenu_array">
         <item>@string/edit_menu_delete</item>
         <item>@string/item_menu_rename</item>
-        <item>@string/edit_menu_mark_colr</item>
     </string-array>
     
     <string-array name="showmenu_array">

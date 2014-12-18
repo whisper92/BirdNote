@@ -4,12 +4,7 @@
     <string name="app_name">随笔</string>
     <string name="show_note_count">随笔(%1$s)</string>
     <string name="stared_note_count">收藏(%1$s)</string>
-    <string name="edit_menu_delete">删除</string>
-    <string name="edit_menu_favor">添加至收藏</string>
-    <string name="edit_menu_removefavor">取消收藏</string>
-    <string name="edit_menu_change_bg">更改背景</string>
-    <string name="edit_menu_change_page">切换页面</string>
-    <string name="edit_menu_mark_colr">标签颜色</string>
+
     <string name="edit_menu_saveas">另存为</string>
     <string name="pop_pen_title">笔设置</string>
     <string name="pop_eraser_title">橡皮擦</string>
@@ -52,6 +47,11 @@
     <string name="bg_txt03">清茶绿</string>
     <string name="bg_txt04">粉嘟嘟</string>
 
-    
+    <string name="edit_menu_delete">删除</string>
+    <string name="edit_menu_favor">添加至收藏</string>
+    <string name="edit_menu_removefavor">取消收藏</string>
+    <string name="edit_menu_change_bg">更改页面背景</string>
+    <string name="edit_menu_change_cover">更改封面样式</string>
+    <string name="edit_menu_change_page">切换页面</string>
     
 </resources>
