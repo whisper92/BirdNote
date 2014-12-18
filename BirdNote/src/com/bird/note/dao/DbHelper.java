@@ -110,7 +110,7 @@ public class DbHelper {
 	 */
 	public List<BirdNote> searchNotesByTag(String tag){
 		List<BirdNote> birdNotesList=new ArrayList<BirdNote>();
-		Cursor cursor=dbRead.rawQuery("select * from show_notes where title like '%"+tag+"%' or textcontents like '%"+tag+"%';", null);
+		Cursor cursor=dbRead.rawQuery("select * from show_notes where title like '%"+tag+"%';", null);
 		birdNotesList = getBirdNoteListFromCursor(cursor);
 		cursor.close();
 		return birdNotesList;
@@ -271,12 +271,19 @@ public class DbHelper {
 	}
 	
 	public void deleteNoteByIds(String[] note_ids){
-		for (int i = 0; i < note_ids.length; i++) {
-			if (!note_ids[i].equals(String.valueOf(-1))) {
-				Log.e(TAG,"delete notes..."+note_ids[i]);
-				dbWrite.delete(NotesTable.TABLE_NAME, "_id=?", new String[]{note_ids[i]});
-			}		
-		}
+		dbWrite.beginTransaction();
+		  try {
+				for (int i = 0; i < note_ids.length; i++) {
+					if (!note_ids[i].equals(String.valueOf(-1))) {
+						Log.e(TAG,"delete notes..."+note_ids[i]);
+						dbWrite.delete(NotesTable.TABLE_NAME, "_id=?", new String[]{note_ids[i]});
+					}		
+				}
+			  dbWrite.setTransactionSuccessful();
+		 } finally {
+			 dbWrite.endTransaction();
+		} 
+		  
 		Log.e(TAG,"delete notes success...");
 	}
 	
@@ -293,6 +300,29 @@ public class DbHelper {
 		cursor.close();
         return star;
 	}
+	
+
+	public void putStarToNoteById(String[] note_ids,int star){
+		
+		dbWrite.beginTransaction();
+		  try {
+				for (int i = 0; i < note_ids.length; i++) {
+					if (!note_ids[i].equals(String.valueOf(-1))) {
+						Log.e(TAG,"star note success..."+note_ids[i]);
+						ContentValues values=new ContentValues();
+						values.put(NotesTable.STAR, star);
+						values.put(NotesTable.UPDATE_TIME, CommonUtils.getCurrentTime());
+						dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_ids[i]+""});
+					}		
+				}
+			  dbWrite.setTransactionSuccessful();
+		 } finally {
+			 dbWrite.endTransaction();
+		} 
+		  
+		Log.e(TAG,"star note success..."+CommonUtils.getCurrentTime());
+	}
+
 	
 	/**
 	 * 添加至收藏
@@ -316,7 +346,6 @@ public class DbHelper {
 		dbWrite.update(NotesTable.TABLE_NAME, values, "_id=?", new String[]{note_id});
 		Log.e(TAG,"star note success..."+CommonUtils.getCurrentTime());
 	}
-	
 	
 	/**
 	 * 更改等级

@@ -62,7 +62,18 @@ public class NoteApplication extends Application{
 	 */
 	public int editBackground = BitmapUtil.EDIT_BGS[0];
 	public int getEditBackground() {
-		return editBackground;
+		boolean  flag = false;
+		for (int i = 0; i < BitmapUtil.EDIT_BGS.length; i++) {
+			if (editBackground == BitmapUtil.EDIT_BGS[i]) {
+				flag = true;
+			}
+		}
+		if (flag) {
+			return editBackground;
+		} else {
+			return BitmapUtil.EDIT_BGS[0];
+		}
+		
 	}
 	public void setEditBackground(int editBackground) {
 		this.editBackground = editBackground;

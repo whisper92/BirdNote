@@ -59,4 +59,6 @@
     <string name="sortby_createtime">CreateTime(Old-New)</string>
     <string name="sortby_updatetime">UpdateTime(New-Old)</string>
     <string name="changequatoast">Change To The %1$s Quadrant</string>
+    <string name="searchnothing">Find Nothing</string>
+    <string name="starchnothing">Star Nothing</string>
 </resources>

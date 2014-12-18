@@ -173,7 +173,6 @@ public class PenView extends View {
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			Log.e("wxp","Penview---->ACTION_DOWN------");
 			mCleanCircleRadius = mSavedPaint.getSavedCleanPaintWidth()/2;
 			downx = event.getRawX();
 			downy = event.getRawY();
@@ -192,7 +191,6 @@ public class PenView extends View {
 
 			break;
 		case MotionEvent.ACTION_MOVE:
-			Log.e("wxp","Penview---->ACTION_MOVE------");
 			isMoving = true;
 			float dx = Math.abs(x - posX);
 			float dy = Math.abs(y - posY);
@@ -204,7 +202,6 @@ public class PenView extends View {
 			postInvalidate();
 			break;
 		case MotionEvent.ACTION_UP:
-			Log.e("wxp","Penview---->ACTION_UP------");
 			isMoving = false;
 			if ((Math.abs(downx - event.getX())) >= 4|| (Math.abs(downy - event.getY())) > 4) {
 				mPath.lineTo(posX, posY);
@@ -243,7 +240,6 @@ public class PenView extends View {
 	}
 
 	public void undo() {
-		Log.e("wxp", "undo...");
 		int nSize = mSavePath.size();
 		if (nSize >= 1) {
 			mDeletePath.add(0, mSavePath.get(nSize - 1));
@@ -252,11 +248,8 @@ public class PenView extends View {
 			//return;
 		}
 		if (mExistBitmap != null) {
-			Log.e("wxp", "redo...mExistBitmap != null");
 			mDrawBitmap = Bitmap.createBitmap(mExistBitmap, 0, 0, mCanvasWidth,mCanvasHeight).copy(Bitmap.Config.ARGB_8888, true);
-			Log.e("wxp", "mCanvasWidth..."+mCanvasWidth);
 		} else {
-			Log.e("wxp", "redo...mExistBitmap = null");
 			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		}
 		mDrawCanvas.setBitmap(mDrawBitmap);
@@ -272,7 +265,6 @@ public class PenView extends View {
 	}
 
 	public void redo() {
-		Log.e("wxp", "redo...");
 		int nSize = mDeletePath.size();
 		if (nSize >= 1) {
 			mSavePath.add(mDeletePath.get(0));
@@ -281,11 +273,8 @@ public class PenView extends View {
 			return;
 
 		if (mExistBitmap != null) {
-			Log.e("wxp", "redo...mExistBitmap != null");
 			mDrawBitmap = Bitmap.createBitmap(mExistBitmap, 0, 0, mCanvasWidth,mCanvasHeight).copy(Bitmap.Config.ARGB_8888, true);
-			Log.e("wxp", "mCanvasWidth..."+mCanvasWidth);
 		} else {
-			Log.e("wxp", "redo...mExistBitmap = null");
 			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
 		}
 		mDrawCanvas.setBitmap(mDrawBitmap);

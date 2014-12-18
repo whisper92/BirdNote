@@ -36,6 +36,7 @@ import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.customer.ChangeCover;
 import com.bird.note.customer.ChangeQua;
 import com.bird.note.customer.ChangeQua.OnChangeQuaListener;
+import com.bird.note.customer.BirdInputTitleDialog;
 import com.bird.note.customer.LevelFlag;
 import com.bird.note.customer.PenView;
 import com.bird.note.customer.PopEraserBox;
@@ -50,6 +51,7 @@ import com.bird.note.model.BirdNote;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.model.SavedPaint;
 import com.bird.note.utils.BitmapUtil;
+import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.JsonUtil;
 import com.bird.note.utils.NoteApplication;
 
@@ -81,8 +83,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	private BirdWaitDialog mWaitDialog = null;
     private ActionBar mActionBar = null;
     
-    
-	private FrameLayout mWrapFrameLayout;
 	public EditText mEditText;
 
 	/*
@@ -249,7 +249,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	 * 进入某一种模式的时候，要改变其他模式对应的图标的状态
 	 */
 	public void changeOtherIconState(int clickID) {
-		Log.e(TAG,"changeOtherIconState----->");
 		mCurrMode = clickID;
 		
 		switch (clickID) {
@@ -571,7 +570,11 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			return true;
 		   }
 	  }
-
+       if (keyCode ==KeyEvent.KEYCODE_MENU) {
+    	   if (mEditQuaFragment.chooseEditBgPopMenu!=null && mEditQuaFragment.chooseEditBgPopMenu.isShowing()) {
+			mEditQuaFragment.chooseEditBgPopMenu.dismiss();
+		   }
+	  }
 		return super.onKeyDown(keyCode, event);
 	}
 
@@ -723,7 +726,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 				}
 			}
 		}
-		Log.e(TAG, "recycle--existbitmap;drawbitmap");
 		System.gc();
 	}
 	public boolean onCreateOptionsMenu(android.view.Menu menu) {
@@ -745,17 +747,56 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public int getCoverByLevel(int level){
 		return BitmapUtil.EDIT_COVER_PRE[level];
 	}
+	
+	BirdInputTitleDialog mRenameDialog = null;
+	public void renameNote(){
+
+		mRenameDialog = new BirdInputTitleDialog(this,android.R.style.Theme_Holo_Light_Dialog);
+		mRenameDialog.setTitle(R.string.alert_input_newname);
+		mRenameDialog.setOnConfirmClickListener(mUpdateTitleClickListener);
+		mRenameDialog.show();
+			if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
+				mRenameDialog.setInputContent(mBirdNote.title);
+			} else {
+				mRenameDialog.setInputContent(CommonUtils.getDefaultTitle(this));
+			}
+		
+	}
+	
+	OnClickListener mUpdateTitleClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+		      editHandler.post(updateTitleRunnable);		
+		}
+	};
+	
+	public Runnable updateTitleRunnable = new Runnable() {	
+		@Override
+		public void run() {
+			dbHelper.updateTitleById(mBirdNote._id+"",mRenameDialog.getContent());
+			editHandler.sendEmptyMessage(BirdMessage.UPDATETITLE_RUNNABLE_OVER);	
+			if (mRenameDialog!=null) {
+				mRenameDialog.dismiss();
+			}
+		}
+	};
+	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.id_edit_menu_rename:
+			renameNote();
+			break;
+			
 		case R.id.id_edit_menu_change_cover:
-
 			mChangeCover = new ChangeCover(this);
 			mChangeCover.setCoverChecked(getCoverByLevel(mBirdNote.level));
 			builder.setView(mChangeCover);
-			builder.create().show();
-			
+			builder.create().show();	
 			break;
+			
 		case R.id.id_edit_menu_change_bg:
 			mEditQuaFragment.showChangeBg();
 			break;
@@ -799,7 +840,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	
 	
 	protected void onDestroy() {
-		Log.e(TAG, "ed-activity--des");
 		super.onDestroy();
 		mNoteApplication.initUndoRedo();
 	};

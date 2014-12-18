@@ -58,5 +58,6 @@
     <string name="sortby_updatetime">更新时间(新-旧)</string>
     
     <string name="changequatoast">切换至第%1$s象限</string>
-    
+    <string name="searchnothing">没有找到相关笔记</string>
+    <string name="starchnothing">暂未收藏笔记</string>
 </resources>

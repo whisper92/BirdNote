@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +29,7 @@ import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.ShowNoteAdapter;
-import com.bird.note.model.ShowNoteAdapter.OnConfirmDeleteListener;
+import com.bird.note.model.ShowNoteAdapter.OnConfirmActionListener;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.NoteApplication;
 import com.bird.note.utils.PreferenceUtil;
@@ -60,6 +61,7 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
     private NoteApplication mNoteApplication = null;
     private ActionBar mActionBar = null;
     private ActionMode mActionMode = null;
+    private TextView mSearchTextView = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -86,31 +88,58 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		mShowTitle=(RelativeLayout)headView.findViewById(R.id.id_show_title_rl);
         mTitleNoteCount =(TextView) headView.findViewById(R.id.id_show_title_count);
 		mGridView = (GridView) findViewById(R.id.id_show_gv);
+		mSearchTextView = (TextView) findViewById(R.id.id_show_search);
 		
 		
 		mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
-	    mNoteAdapter = new ShowNoteAdapter(this,mBirdNotes,mGridView);
+	    mNoteAdapter = new ShowNoteAdapter(this,0,mBirdNotes,mGridView);
 	    mGridView.setAdapter(mNoteAdapter);
 		mNoteAdapter.notifyDataSetChanged();
 
 		addPen = (ImageView) headView.findViewById(R.id.id_show_title_new_pen);
 		addPen.setOnClickListener(this);
 		addText = (ImageView) headView.findViewById(R.id.id_show_title_new_text);
-		addText.setOnClickListener(this);        
+		addText.setOnClickListener(this);    
+		mSearchTextView.setOnClickListener(this);
 
 		mNoteAdapter.setOnConfirmDeleteListener(mConfirmDeleteListener );
 	}
 	
 	String[] mNotesId = null;
-	public OnConfirmDeleteListener mConfirmDeleteListener = new OnConfirmDeleteListener() {
+	public OnConfirmActionListener mConfirmDeleteListener = new OnConfirmActionListener() {
 		
 		@Override
-		public void confirmDelete(String[] noteids) {
+		public void confirmDo(String[] noteids,int type) {
 			mNotesId = noteids;
-			showHandler.post(DeleteNotesRunnable);	
+			if (type == 0) {				
+				showHandler.post(DeleteNotesRunnable);	
+			} else {
+				showHandler.post(StarNotesRunnable);			
+			}
+			
 		}
 	};
 	
+	public Runnable StarNotesRunnable = new Runnable() {	
+		@Override
+		public void run() {
+			if (mNoteAdapter.mActionMode != null) {
+				mNoteAdapter.mActionMode.finish();
+			}
+			mDbHelper.putStarToNoteById(mNotesId, 1);
+			mBirdNotes.clear();
+			mBirdNotes = queryByCurrentSort(mCurrentSort);
+			mNoteApplication.setNotescount(mBirdNotes.size());
+			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,0,mBirdNotes ,mGridView); 
+		    mNoteAdapter.notifyDataSetChanged();
+		    mNoteAdapter.setOnConfirmDeleteListener(mConfirmDeleteListener );
+		    if (mGridView!=null) {
+		    	mTitleNoteCount.setText(String.format(getString(R.string.show_note_count), mBirdNotes.size()));
+		    	mGridView.setAdapter(mNoteAdapter);
+			}  
+			showHandler.sendEmptyMessage(BirdMessage.UPDATETITLE_RUNNABLE_OVER);		
+		}
+	};
 	
    /**
     * 根据当前的排序方式查询数据
@@ -165,13 +194,10 @@ public class ShowNotesActivity extends Activity implements OnClickListener{
 		}
 	};
 	
+
    @Override
 public boolean onOptionsItemSelected(MenuItem item) {
 	switch ( item.getItemId()) {
-	case R.id.id_show_menu_mutil_delete:
-        
-		break;
-
 	case R.id.id_show_menu_sort:
 		AlertDialog sortDialog = PopMenuManager.createSortChooseAlertDialog(ShowNotesActivity.this, R.string.show_menu_sort, sortListener);
 		sortDialog.show();
@@ -215,6 +241,12 @@ public boolean onOptionsItemSelected(MenuItem item) {
 			mNoteApplication.setEditBackground(BitmapUtil.EDIT_BGS[0]);
 			startActivity(intent);
 			break;
+		case R.id.id_show_search:
+			Intent searchintent = new Intent();
+			searchintent.setClass(ShowNotesActivity.this, SearchNotesActivity.class);
+			searchintent.putExtra("flag", "search");
+			startActivity(searchintent);
+			break;
 
 		default:
 			break;
@@ -229,7 +261,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 			mBirdNotes.clear();
 			mBirdNotes = queryByCurrentSort(mCurrentSort);
 			mNoteApplication.setNotescount(mBirdNotes.size());
-			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes ,mGridView); 
+			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,0,mBirdNotes ,mGridView); 
 		    mNoteAdapter.notifyDataSetChanged();
 		    mNoteAdapter.setOnConfirmDeleteListener(mConfirmDeleteListener );
 		    if (mGridView!=null) {
@@ -251,7 +283,13 @@ public boolean onOptionsItemSelected(MenuItem item) {
 		super.onStart();
 	}
 	
-	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		if (mNoteAdapter.mActionMode!=null) {
+			mNoteAdapter.mActionMode.finish();
+		}
+	}
 	
 	public void closeMenu(PopupWindow popupWindow){
 		if (popupWindow!=null&&popupWindow.isShowing()) {
@@ -265,7 +303,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 		public void run() {
 			mBirdNotes=queryByCurrentSort(mCurrentSort);
 			mNoteApplication.setNotescount(mBirdNotes.size());
-			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes,mGridView); 
+			mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,0,mBirdNotes,mGridView); 
 			mNoteAdapter.setOnConfirmDeleteListener(mConfirmDeleteListener );
 			showHandler.sendEmptyMessage(BirdMessage.QUERY_RUNNABLE_OVER);
 		}
@@ -290,27 +328,6 @@ public boolean onOptionsItemSelected(MenuItem item) {
 			showHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);	
 		}
 	};
-	/*
-	public Runnable changeMarkColorRunnable = new Runnable() {	
-		@Override
-		public void run() {
-			mDbHelper.updateLevelById(mNoteAdapter.getSingleNoteId()+"",mNoteAdapter.chooseLevel);
-			mBirdNotes.get(mChoosePosition).level = mNoteAdapter.chooseLevel;
-			mNoteAdapter.notifyDataSetChanged();
-			showHandler.sendEmptyMessage(BirdMessage.UPDATETITLE_RUNNABLE_OVER);	
-		}
-	};
-	
-	public Runnable updateTitleRunnable = new Runnable() {	
-		@Override
-		public void run() {
-			mDbHelper.updateTitleById(mNoteAdapter.getSingleNoteId()+"",mNoteAdapter.mNewTitleString);
-			mBirdNotes.get(mChoosePosition).title = mNoteAdapter.mNewTitleString;
-			mNoteAdapter.notifyDataSetChanged();
-			showHandler.sendEmptyMessage(BirdMessage.UPDATETITLE_RUNNABLE_OVER);	
-		}
-	};*/
-	
 	
 	public Handler showHandler=new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -346,10 +363,11 @@ public boolean onOptionsItemSelected(MenuItem item) {
 				mChoosePosition = (Integer)msg.obj;
 				mWaitDialogUpdate.setWaitContent(getString(R.string.saveing_note));
 				mWaitDialogUpdate.show();
-			    //post(updateTitleRunnable);
+
 			}
 			if (msg.what==BirdMessage.UPDATETITLE_RUNNABLE_OVER) { 
 				mWaitDialogUpdate.dismiss();
+
 			}	
 			if (msg.what==BirdMessage.SORT_START) { 
 				mWaitDialogUpdate.setWaitContent(getString(R.string.alert_sort));
@@ -358,7 +376,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 			
 			if (msg.what==BirdMessage.SORT_OVER) { 
 				mWaitDialogUpdate.dismiss();
-				mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,mBirdNotes ,mGridView); 				    
+				mNoteAdapter= new ShowNoteAdapter(ShowNotesActivity.this,0,mBirdNotes ,mGridView); 				    
 				mNoteAdapter.notifyDataSetChanged();
 				mNoteAdapter.setOnConfirmDeleteListener(mConfirmDeleteListener );
 			    if (mGridView!=null) {
@@ -370,5 +388,8 @@ public boolean onOptionsItemSelected(MenuItem item) {
 		};
 	};
 	
+	protected void onDestroy() {
+		super.onDestroy();
+	};
 
 }

@@ -13,6 +13,9 @@
         android:id="@+id/id_edit_menu_removefavor"
         android:title="@string/edit_menu_removefavor"/>
     <item
+        android:id="@+id/id_edit_menu_rename"
+        android:title="@string/item_menu_rename"/>
+    <item
         android:id="@+id/id_edit_menu_delete"
         android:title="@string/edit_menu_delete"/>
 

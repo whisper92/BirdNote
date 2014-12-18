@@ -226,7 +226,6 @@ public class EditQuadrantFragment extends Fragment {
 				});
 	}
 
-
 	public void showChangeBg(){
 		/* 更改背景 */
 		chooseEditBgPopMenu.showAtLocation(mWrapFrameLayout,
@@ -317,7 +316,6 @@ public class EditQuadrantFragment extends Fragment {
 		mCurrentMode = clickID;
 		
 		if (clickID == R.id.id_edit_title_pen) {
-			Log.e(TAG, "changeCurrentMode----->id_edit_title_pen");
 			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			hideInputMethod();
 			if (mFirstComeIn) {
@@ -328,7 +326,6 @@ public class EditQuadrantFragment extends Fragment {
 			mEditText.setCursorVisible(false);
 			mPenView.initDrawPaint();
 		} else if (clickID == R.id.id_edit_title_text) {
-			Log.e(TAG, "changeCurrentMode----->id_edit_title_text");
 			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			mEditText.bringToFront();
 			mEditText.setCursorVisible(true);
@@ -337,7 +334,6 @@ public class EditQuadrantFragment extends Fragment {
 			mEditText.requestFocus();
 			showInputMethod();
 		} else if (clickID == R.id.id_edit_title_clean) {
-			Log.e(TAG, "changeCurrentMode----->id_edit_title_clean");
 			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			hideInputMethod();
 			if (mFirstComeIn) {
@@ -348,7 +344,6 @@ public class EditQuadrantFragment extends Fragment {
 			mEditText.setCursorVisible(false);
 			mPenView.setCleanPaint();
 		} else {
-			Log.e(TAG, "changeCurrentMode----->else");
 		}
 
 	}

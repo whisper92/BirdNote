@@ -2,6 +2,7 @@ package com.bird.note.model;
 
 import java.util.List;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -43,8 +44,13 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	private Context mContext;
 	private LayoutInflater mInflater;
 	private BirdInputTitleDialog mBirdInputTitleDialog;
-	private ActionMode mActionMode = null;
-	OnConfirmDeleteListener mOnConfirmDeleteListener = null;
+	public ActionMode mActionMode = null;
+	/*
+	 * type 0:ActionMode模式为删除
+	 * type1:ActionMode模式为取消收藏
+	 */
+	private int mType = 0;
+	private OnConfirmActionListener mOnConfirmDeleteListener = null;
 
 
 	public void selectAll() {
@@ -62,10 +68,11 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	}
 
 
-	public ShowNoteAdapter(Activity context, List<BirdNote> listData,
+	public ShowNoteAdapter(Activity context,int type, List<BirdNote> listData,
 			GridView gridView) {
 		super();
 
+		mType = type;
 		this.mContext = context;
 		this.mListData = listData;
 		this.mGridView = gridView;
@@ -76,32 +83,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		
 	}
 
-	/*
-	 * 根据笔记的等级判断他的mark的颜色
-	 */
-	public int getMarkByLevel(int level){
-		int drawableID=0;
-		switch (level) {
-		case 0:
-			drawableID=R.drawable.mark_bg_blue;
-			break;
-		case 1:
-			drawableID=R.drawable.mark_bg_green;
-			break;
-		case 2:
-			drawableID=R.drawable.mark_bg_yellow;
-			break;
-		case 3:
-			drawableID=R.drawable.mark_bg_red;
-			break;			
-		default:
-			break;
-		}
-		return drawableID;
-	}
-	
-
-	
 	int singleNoteId=-1;
 	public int getSingleNoteId() {
 		return singleNoteId;
@@ -121,11 +102,12 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		rootView = view;
         //Start the CAB using the ActionMode.Callback defined above  
         mActionMode = ((Activity) mContext).startActionMode(mCallback);  
+       
         mGridView.setItemChecked(position, true);
 		return true;
 	}
 
-	private ActionMode.Callback mCallback = new ActionMode.Callback() {
+	public ActionMode.Callback mCallback = new ActionMode.Callback() {
 
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
@@ -143,21 +125,34 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		@Override
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 			MenuInflater inflater = mode.getMenuInflater();
-			inflater.inflate(R.menu.show_menu_actionmode, menu);
+			if (mType == 0) {
+				inflater.inflate(R.menu.show_menu_actionmode, menu);
+			} else {
+				inflater.inflate(R.menu.star_menu_actionmode, menu);
+			}
+			
 			return true;
 		}
 
 		@Override
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-			if (item.getItemId() == R.id.id_show_menu_multi_delete_confirm) {
+			if (item.getItemId() == R.id.id_show_menu_multi_delete_confirm || item.getItemId() == R.id.id_star_menu_multi_rm_confirm) {
 
 				if (mOnConfirmDeleteListener!=null) {
-					mOnConfirmDeleteListener.confirmDelete(getSelectNoteIds());
+					mOnConfirmDeleteListener.confirmDo(getSelectNoteIds(),0);
 				} else {
 
 				}
 				mode.finish();
 			}
+			if (item.getItemId() == R.id.id_show_menu_multi_star_confirm) {
+				if (mOnConfirmDeleteListener!=null) {
+					mOnConfirmDeleteListener.confirmDo(getSelectNoteIds(),1);
+				} else {
+
+				}
+			}
+			
 			if (item.getItemId() == R.id.id_show_menu_multi_delete_selectall) {
 				selectAll();
 			}
@@ -169,11 +164,15 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	};
 	
 
-	public interface OnConfirmDeleteListener{
-		public void confirmDelete(String[] noteids);
+	/*
+	 * type = 0:delete notes
+	 * type = 1:start notes;
+	 */
+	public interface OnConfirmActionListener{
+		public void confirmDo(String[] noteids,int type);
 	}
 	
-	public void setOnConfirmDeleteListener(OnConfirmDeleteListener listener){
+	public void setOnConfirmDeleteListener(OnConfirmActionListener listener){
 		this.mOnConfirmDeleteListener = listener;
 	}
 	
@@ -189,79 +188,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		return noteids;
 	}
 	
-/*	AlertDialog.Builder builder = null;
-	AlertDialog alertDialog = null;
-	public android.content.DialogInterface.OnClickListener itemOperateListener = new android.content.DialogInterface.OnClickListener() {
-		
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			if (which ==0) {	
-				PopMenuManager.createDeleteAlertDialog(mContext, R.string.alert_delete_content, deleteListener);
-			}
-
-			if (which == 1) {				
-				mBirdInputTitleDialog = new BirdInputTitleDialog(mContext, android.R.style.Theme_Holo_Light_Dialog);
-				mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmUpdateTitleListener);
-				mBirdInputTitleDialog.setTitle(R.string.input_title_dialog_title);
-	       		mBirdInputTitleDialog.show();		
-	       		mBirdInputTitleDialog.setInputContent(getItem(operatePosition).title);
-			}
-			
-			if (which == 2) {				
-				LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				View view = inflater.inflate(R.layout.show_notes_choos_markcolor, null);
-				builder = PopMenuManager.createChooseMarkAlertDialog(mContext, R.string.choose_mark_color);
-				builder.setView(view);
-				LinearLayout markLayout = (LinearLayout) view.findViewById(R.id.id_choose_mark_ll);
-				for (int i = 0; i < markLayout.getChildCount(); i++) {
-					Button button = (Button)markLayout.getChildAt(i);
-					button.setId(i);
-					button.setOnClickListener(changeMarkColorListener);
-				}
-				alertDialog = builder.create();				
-				alertDialog.show();
-			}
-					
-		}
-	};
-	
-	public int chooseLevel=0;
-	public OnClickListener changeMarkColorListener =new OnClickListener() {					
-		@Override
-		public void onClick(View v) {
-		    chooseLevel=v.getId();
-		    ((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.CHANGEMARKCOLOR_RUNNABLE_START, mChoosePosition).sendToTarget();													
-		    if (alertDialog!=null) {
-		    	alertDialog.cancel();
-			}
-		}
-	};
-	*/
-	
-	
-/*	public String mNewTitleString = "";
-	public OnClickListener ConfirmUpdateTitleListener = new OnClickListener() {	
-		@Override
-		public void onClick(View v) {
-			mNewTitleString = mBirdInputTitleDialog.getContent();
-			((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.UPDATETITLE_RUNNABLE_START, mChoosePosition).sendToTarget();
-			mBirdInputTitleDialog.dismiss();
-		}
-	};
-	
-
-	public android.content.DialogInterface.OnClickListener deleteListener =new android.content.DialogInterface.OnClickListener() {					
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			if (which == -1) {
-			    ((ShowNotesActivity)mContext).showHandler.obtainMessage(BirdMessage.DELETE_SINGLE_NOTE_RUNNABLE_START, mChoosePosition).sendToTarget();													
-			}
-			
-		}
-	};
-	*/
-
-
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {	
 		boolean flag = mGridView.isItemChecked(position)?false:true;	
