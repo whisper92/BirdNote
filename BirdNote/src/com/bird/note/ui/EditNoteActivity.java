@@ -37,11 +37,9 @@ import com.bird.note.customer.ChangeCover;
 import com.bird.note.customer.ChangeQua;
 import com.bird.note.customer.ChangeQua.OnChangeQuaListener;
 import com.bird.note.customer.BirdInputTitleDialog;
-import com.bird.note.customer.LevelFlag;
 import com.bird.note.customer.PenView;
 import com.bird.note.customer.PopEraserBox;
 import com.bird.note.customer.PopPenBox;
-import com.bird.note.customer.LevelFlag.OnLevelChangeListener;
 import com.bird.note.customer.PenView.OnPathListChangeListener;
 import com.bird.note.customer.PopEraserBox.OnEraserChangedListener;
 import com.bird.note.customer.PopPenBox.OnPaintChangedListener;
@@ -55,9 +53,13 @@ import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.JsonUtil;
 import com.bird.note.utils.NoteApplication;
 
+/**
+ * @author wangxianpeng
+ * @since 19/12/14
+ *
+ */
 public class EditNoteActivity extends FragmentActivity implements OnClickListener {
-   private String TAG ="EditNoteActivity";
-	public LevelFlag mLevelFlag;
+	private String TAG = "EditNoteActivity";
 	/*
 	 * 当前所处模式：绘图或文字
 	 */
@@ -81,8 +83,8 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	private int[] mEditedQuadrant;
 	public String mTitleString = "";
 	private BirdWaitDialog mWaitDialog = null;
-    private ActionBar mActionBar = null;
-    
+	private ActionBar mActionBar = null;
+
 	public EditText mEditText;
 
 	/*
@@ -99,17 +101,16 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	private ImageView menu_More;
 	private ImageView menu_Save;
 
-
 	private int mPenHasSelected = 0;
 	private int mEraserHasSelected = 0;
-	
+
 	private PopPenBox mPopPenBox;
 	private PopEraserBox mPopEraserBox;
 	private boolean mPenBoxOpened = false;
 	private boolean mEraserBoxOpened = false;
 	private SavedPaint mSavedPaint;
 	private ChangeQua mChangeQua = null;
-	
+
 	public int getmPenHasSelected() {
 		return mPenHasSelected;
 	}
@@ -125,6 +126,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public void setmEraserHasSelected(int mEraserHasSelected) {
 		this.mEraserHasSelected = mEraserHasSelected;
 	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -133,7 +135,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		mActionBar = getActionBar();
 		mChangeQua = (ChangeQua) findViewById(R.id.id_edit_change_qua);
 		mChangeQua.setOnChangeQuaListener(mOnChangeQuaListener);
-		mWaitDialog = new BirdWaitDialog(this, android.R.style.Theme_Holo_Light_Dialog);
+		mWaitDialog = new BirdWaitDialog(this,android.R.style.Theme_Holo_Light_Dialog);
 		mNoteApplication = (NoteApplication) getApplication();
 		mNoteApplication.initUndoRedo();
 		mNoteApplication.setEdited(false);
@@ -164,64 +166,64 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	}
 
 	OnChangeQuaListener mOnChangeQuaListener = new OnChangeQuaListener() {
-		
+
 		@Override
 		public void changeQua(int qua) {
 			mCurrentQuadrant = qua;
-			changeToQuadrantAt(qua);		
+			changeToQuadrantAt(qua);
 		}
 	};
-	
+
 	AlertDialog.Builder builder = null;
 	View mCoverView = null;
 	ChangeCover mChangeCover = null;
-	public void initActionBar(){
-		  View headView = getLayoutInflater().inflate(R.layout.edit_note_header, null);
-			mActionBar.setCustomView(headView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-			mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);  
-			mActionBar.setDisplayShowCustomEnabled(true); 
-			
-			edit_Pen = (ImageView) headView.findViewById(R.id.id_edit_title_pen);
-			edit_Text = (ImageView) headView.findViewById(R.id.id_edit_title_text);
-			edit_Clean = (ImageView) headView.findViewById(R.id.id_edit_title_clean);
-			menu_Undo = (ImageView) headView.findViewById(R.id.id_edit_title_pre);
-			menu_Redo = (ImageView) headView.findViewById(R.id.id_edit_title_next);
-			menu_More = (ImageView) headView.findViewById(R.id.id_edit_title_more);
-			menu_Save = (ImageView) headView.findViewById(R.id.id_edit_title_save);
 
-			edit_Pen.setOnClickListener(this);
-			edit_Text.setOnClickListener(this);
-			edit_Clean.setOnClickListener(this);
-			menu_Undo.setOnClickListener(this);
-			menu_Redo.setOnClickListener(this);
-			menu_More.setOnClickListener(this);
-			menu_Save.setOnClickListener(this);
+	public void initActionBar() {
+		View headView = getLayoutInflater().inflate(R.layout.edit_note_header, null);
+		mActionBar.setCustomView(headView, new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		mActionBar.setDisplayShowCustomEnabled(true);
 
-			menu_Undo.setEnabled(false);
-			menu_Redo.setEnabled(false);
-			
-			mSavedPaint = new SavedPaint(this);
-			
-			builder = PopMenuManager.createChooseMarkAlertDialog(EditNoteActivity.this, R.string.edit_menu_change_cover,mChooseCoverListener);
+		edit_Pen = (ImageView) headView.findViewById(R.id.id_edit_title_pen);
+		edit_Text = (ImageView) headView.findViewById(R.id.id_edit_title_text);
+		edit_Clean = (ImageView) headView.findViewById(R.id.id_edit_title_clean);
+		menu_Undo = (ImageView) headView.findViewById(R.id.id_edit_title_pre);
+		menu_Redo = (ImageView) headView.findViewById(R.id.id_edit_title_next);
+		menu_More = (ImageView) headView.findViewById(R.id.id_edit_title_more);
+		menu_Save = (ImageView) headView.findViewById(R.id.id_edit_title_save);
 
-			
-			changeOtherIconState(mCurrMode);
-			createEraserBox();
-			createPenBox();
+		edit_Pen.setOnClickListener(this);
+		edit_Text.setOnClickListener(this);
+		edit_Clean.setOnClickListener(this);
+		menu_Undo.setOnClickListener(this);
+		menu_Redo.setOnClickListener(this);
+		menu_More.setOnClickListener(this);
+		menu_Save.setOnClickListener(this);
+
+		menu_Undo.setEnabled(false);
+		menu_Redo.setEnabled(false);
+
+		mSavedPaint = new SavedPaint(this);
+
+		builder = PopMenuManager.createChooseMarkAlertDialog( EditNoteActivity.this, R.string.edit_menu_change_cover, mChooseCoverListener);
+
+		changeOtherIconState(mCurrMode);
+		createEraserBox();
+		createPenBox();
 	}
-	
-	android.content.DialogInterface.OnClickListener mChooseCoverListener = new android.content.DialogInterface.OnClickListener(){
+
+	android.content.DialogInterface.OnClickListener mChooseCoverListener = new android.content.DialogInterface.OnClickListener() {
 
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			if (mChangeCover !=null) {
+			if (mChangeCover != null) {
 				if (which == -1) {
-					dbHelper.updateLevelById(mBirdNote._id+"", mChangeCover.getSelectCover());
+					dbHelper.updateLevelById(mBirdNote._id + "", mChangeCover.getSelectCover());
 				}
 			}
 
 		}
-		
+
 	};
 	public OnPathListChangeListener mOnPathListChangeListener = new OnPathListChangeListener() {
 		@Override
@@ -229,28 +231,27 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			mUndoState = undocount > 0 ? true : false;
 			mRedoState = redocount > 0 ? true : false;
 			changeStateOfUndoRedo(mUndoState, mRedoState);
-			
+
 		}
 	};
-	
+
 	/**
 	 * 保存和回复撤销和重做图标的状态
 	 */
 	public void changeStateOfUndoRedo(boolean undoState, boolean redoState) {
 		menu_Undo.setEnabled(undoState);
 		menu_Redo.setEnabled(redoState);
-		
+
 		mNoteApplication.undoredo[mCurrentQuadrant][0] = undoState;
 		mNoteApplication.undoredo[mCurrentQuadrant][1] = redoState;
 	}
 
-	
 	/**
 	 * 进入某一种模式的时候，要改变其他模式对应的图标的状态
 	 */
 	public void changeOtherIconState(int clickID) {
 		mCurrMode = clickID;
-		
+
 		switch (clickID) {
 		case R.id.id_edit_title_pen:
 			edit_Pen.setSelected(true);
@@ -258,10 +259,10 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			edit_Clean.setSelected(false);
 			menu_Undo.setClickable(true);
 			menu_Redo.setClickable(true);
-			mPenHasSelected +=1;
+			mPenHasSelected += 1;
 			mEraserHasSelected = 0;
 			break;
-			
+
 		case R.id.id_edit_title_text:
 			edit_Text.setSelected(true);
 			edit_Pen.setSelected(false);
@@ -271,7 +272,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			mPenHasSelected = 0;
 			mEraserHasSelected = 0;
 			break;
-			
+
 		case R.id.id_edit_title_clean:
 			edit_Clean.setSelected(true);
 			edit_Text.setSelected(false);
@@ -279,56 +280,56 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			menu_Undo.setClickable(true);
 			menu_Redo.setClickable(true);
 			mPenHasSelected = 0;
-			mEraserHasSelected +=1;
+			mEraserHasSelected += 1;
 			break;
 
 		default:
 			break;
 		}
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		mOnClickTitleMenuListener.clickMenu(v.getId());
 		mCurrMode = v.getId();
 		changeOtherIconState(mCurrMode);
-         switch (v.getId()) {
+		switch (v.getId()) {
 		case R.id.id_edit_title_pen:
 			mNoteApplication.setCurrentEditMode(mCurrMode);
-			togglePenBox(mCurrMode);		
-			mPenHasSelected+=1;			
-			mEraserHasSelected = 0;				
+			togglePenBox(mCurrMode);
+			mPenHasSelected += 1;
+			mEraserHasSelected = 0;
 			break;
-			
+
 		case R.id.id_edit_title_text:
 			mNoteApplication.setCurrentEditMode(mCurrMode);
 			mPenHasSelected = 0;
 			mEraserHasSelected = 0;
 			break;
-			
+
 		case R.id.id_edit_title_clean:
 			mNoteApplication.setCurrentEditMode(mCurrMode);
 			toggleEraserBox(mCurrMode);
 			mPenHasSelected = 0;
-			mEraserHasSelected += 1;		
+			mEraserHasSelected += 1;
 			break;
-			
+
 		case R.id.id_edit_title_pre:
 			mEditQuaFragment.mPenView.undo();
 			break;
-			
+
 		case R.id.id_edit_title_next:
 			mEditQuaFragment.mPenView.redo();
 			break;
-			
+
 		case R.id.id_edit_title_more:
 			openOptionsMenu();
 			break;
-			
+
 		case R.id.id_edit_title_save:
 			mEditQuaFragment.saveNote();
 			break;
-			
+
 		default:
 			break;
 		}
@@ -336,7 +337,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 
 	/**
 	 * 开关笔刷设置框
-	 * 
+	 *
 	 * @param mode
 	 */
 	public void togglePenBox(int mode) {
@@ -360,7 +361,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 
 	/**
 	 * 开关橡皮擦设置框
-	 * 
+	 *
 	 * @param mode
 	 */
 	public void toggleEraserBox(int mode) {
@@ -381,14 +382,15 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			mEraserBoxOpened = false;
 		}
 	}
-	
+
 	public void createPenBox() {
 		mPopPenBox = new PopPenBox(this);
 		mPopPenBox.setOnPaintChangedListener(new OnPaintChangedListener() {
 			@Override
 			public void changePaint(Paint paint) {
 				mEditQuaFragment.mPenView.setDrawPaintColor(paint.getColor());
-				mEditQuaFragment.mPenView.setDrawPaintWidth(paint.getStrokeWidth());
+				mEditQuaFragment.mPenView.setDrawPaintWidth(paint
+						.getStrokeWidth());
 				mSavedPaint.savePaintColor(paint.getColor());
 				mSavedPaint.savePaintWidth(paint.getStrokeWidth());
 			}
@@ -419,50 +421,37 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		public void onClick(DialogInterface dialog, int which) {
 			if (which == -1) {
 				mEditQuaFragment.mPenView.clearAll();
-			    mNoteApplication.setEdited(true);
+				mNoteApplication.setEdited(true);
 			}
-			
+
 		}
 	};
 
-	
-	public void closeBox(){
-        if (mPopEraserBox!=null && mPopEraserBox.isShowing()) {
-        	mPopEraserBox.dismiss();
+	public void closeBox() {
+		if (mPopEraserBox != null && mPopEraserBox.isShowing()) {
+			mPopEraserBox.dismiss();
 		}
-        if (mPopPenBox!=null && mPopPenBox.isShowing()) {
-        	mPopPenBox.dismiss();
+		if (mPopPenBox != null && mPopPenBox.isShowing()) {
+			mPopPenBox.dismiss();
 		}
 	}
 
-	
-	OnClickTitleMenuListener  mOnClickTitleMenuListener = null;
-	public interface OnClickTitleMenuListener{
+	OnClickTitleMenuListener mOnClickTitleMenuListener = null;
+
+	public interface OnClickTitleMenuListener {
 		public void clickMenu(int menuid);
 	}
-	
-	public void setOnClickTitleMenuListener(OnClickTitleMenuListener listener){
-		this.mOnClickTitleMenuListener = listener; 
+
+	public void setOnClickTitleMenuListener(OnClickTitleMenuListener listener) {
+		this.mOnClickTitleMenuListener = listener;
 	}
-	
+
 	@Override
 	public void openOptionsMenu() {
 		super.openOptionsMenu();
 	}
 
 	public void initActivityView(int type) throws JSONException {
-
-/*		mLevelFlag = (LevelFlag) findViewById(R.id.id_edit_level_flag);
-		mLevelFlag.setOnLevelChangeListener(new OnLevelChangeListener() {			
-			@Override
-			public void changeLevel(int level) {
-				if (mBirdNote != null) {
-					dbHelper.updateLevelById(mBirdNote._id+"", level);
-				}
-				
-			}
-		});*/
-		
 		if (type == BirdMessage.START_TYPE_CREATE_VALUE) {
 			initCreateView(type);
 		}
@@ -477,14 +466,14 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public void changeToQuadrantAt(int qua) {
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		if (mEditQuaFragmentsList.get(qua) == null) {
-			mEditQuaFragment = EditQuadrantFragment.newInstance(qua,mNoteApplication.getCurrentEditMode());
+			mEditQuaFragment = EditQuadrantFragment.newInstance(qua, mNoteApplication.getCurrentEditMode());
 			mEditQuaFragmentsList.remove(qua);
 			mEditQuaFragmentsList.add(qua, mEditQuaFragment);
 			transaction.add(R.id.id_edit_main_editfragment, mEditQuaFragment);
 		} else {
 			mEditQuaFragment = mEditQuaFragmentsList.get(qua);
 			if (!mEditQuaFragment.isAdded()) {
-				transaction.add(R.id.id_edit_main_editfragment,mEditQuaFragment);
+				transaction.add(R.id.id_edit_main_editfragment, mEditQuaFragment);
 
 			}
 		}
@@ -502,16 +491,14 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		editHandler.post(new Runnable() {
 			@Override
 			public void run() {
-				mEditQuaFragment.changeCurrentMode(mNoteApplication
-						.getCurrentEditMode());
-				changeStateOfUndoRedo(mNoteApplication.undoredo[mCurrentQuadrant][0], mNoteApplication.undoredo[mCurrentQuadrant][1]);
+				mEditQuaFragment.changeCurrentMode(mNoteApplication.getCurrentEditMode());
+				changeStateOfUndoRedo(mNoteApplication.undoredo[mCurrentQuadrant][0],mNoteApplication.undoredo[mCurrentQuadrant][1]);
 			}
 		});
 
 	}
 
 	public void initUpdateView(int type) throws JSONException {
-		//mLevelFlag.setCurrentLeve(mBirdNote.level);
 		mEditQuaFragmentsList.add(0, null);
 		mEditQuaFragmentsList.add(1, null);
 		mEditQuaFragmentsList.add(2, null);
@@ -525,8 +512,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			if (quadrantContent != null) {
 				EditQuadrantFragment editQuadrantFragment = EditQuadrantFragment.newInstance(mCurrMode, quadrantContent);
 				mEditQuaFragmentsList.remove(quadrantContent.quadrant);
-				mEditQuaFragmentsList.add(quadrantContent.quadrant,
-						editQuadrantFragment);
+				mEditQuaFragmentsList.add(quadrantContent.quadrant, editQuadrantFragment);
 			}
 
 		}
@@ -544,7 +530,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	}
 
 	public void initCreateView(int type) {
-		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant,mCurrMode);
+		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrMode);
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
 		mEditQuaFragmentsList.add(1, null);
 		mEditQuaFragmentsList.add(2, null);
@@ -556,45 +542,44 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 
 	}
 
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-       if (keyCode ==KeyEvent.KEYCODE_BACK) {
-    	   if (mNoteApplication!=null) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (mNoteApplication != null) {
 				if (mNoteApplication.isEdited()) {
-					PopMenuManager.createExitAlertDialog(this, R.string.exit_ensure, exitListener);
+					PopMenuManager.createExitAlertDialog(this,	R.string.exit_ensure, exitListener);
 				}
 			}
-    	   if (mEditQuaFragment.chooseEditBgPopMenu!=null && mEditQuaFragment.chooseEditBgPopMenu.isShowing()) {
-			mEditQuaFragment.chooseEditBgPopMenu.dismiss();
-			return true;
-		   }
-	  }
-       if (keyCode ==KeyEvent.KEYCODE_MENU) {
-    	   if (mEditQuaFragment.chooseEditBgPopMenu!=null && mEditQuaFragment.chooseEditBgPopMenu.isShowing()) {
-			mEditQuaFragment.chooseEditBgPopMenu.dismiss();
-		   }
-	  }
+			if (mEditQuaFragment.chooseEditBgPopMenu != null  && mEditQuaFragment.chooseEditBgPopMenu.isShowing()) {
+				mEditQuaFragment.chooseEditBgPopMenu.dismiss();
+				return true;
+			}
+		}
+		if (keyCode == KeyEvent.KEYCODE_MENU) {
+			if (mEditQuaFragment.chooseEditBgPopMenu != null  && mEditQuaFragment.chooseEditBgPopMenu.isShowing()) {
+				mEditQuaFragment.chooseEditBgPopMenu.dismiss();
+			}
+		}
 		return super.onKeyDown(keyCode, event);
 	}
 
 	android.content.DialogInterface.OnClickListener exitListener = new android.content.DialogInterface.OnClickListener() {
-		
+
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-					if (which == -1) {
-						mEditQuaFragment.saveNote();
-					}
-					if (which == -2) {
-						finish();
-					}
+			if (which == -1) {
+				mEditQuaFragment.saveNote();
+			}
+			if (which == -2) {
+				finish();
+			}
 		}
 	};
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mEditQuaFragment.hideInputMethod();	
+		mEditQuaFragment.hideInputMethod();
 	}
 
 	private Runnable deleteRunnable = new Runnable() {
@@ -604,7 +589,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 				dbHelper.deleteNoteById(mBirdNote._id + "");
 			}
 			editHandler.sendEmptyMessage(BirdMessage.DELETE_OVER);
-			
+
 		}
 	};
 
@@ -614,9 +599,9 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public BirdNote generateNewNote() {
 		BirdNote birdNote = new BirdNote();
 		int[] edited = mNoteApplication.getEditedQuadrants();
-		//int level = mLevelFlag.mCurrentLevel;
+		// int level = mLevelFlag.mCurrentLevel;
 		String title = mEditQuaFragment.mTitleString;
-		//birdNote.level = level;
+		// birdNote.level = level;
 		if (mCurrentType == BirdMessage.START_TYPE_CREATE_VALUE) {
 			birdNote.title = title;
 		} else {
@@ -648,15 +633,19 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			case 0:
 				birdNote.qua0 = qua;
 				break;
+				
 			case 1:
 				birdNote.qua1 = qua;
 				break;
+				
 			case 2:
 				birdNote.qua2 = qua;
 				break;
+				
 			case 3:
 				birdNote.qua3 = qua;
 				break;
+				
 			default:
 				break;
 			}
@@ -674,31 +663,34 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		return birdNote;
 	}
 
-
 	public final Handler editHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case BirdMessage.SAVE_AS_OVER:
 				if (mWaitDialog != null && mWaitDialog.isShowing()) {
 					mWaitDialog.dismiss();
-					Toast.makeText(EditNoteActivity.this,getString(R.string.save_as_toast_start) + msg.obj,Toast.LENGTH_LONG).show();
+					Toast.makeText(EditNoteActivity.this,getString( R.string.save_as_toast_start) + msg.obj, Toast.LENGTH_LONG).show();
 				}
 				if (mEditQuaFragment.mEditText != null) {
 					mEditQuaFragment.mEditText.setCursorVisible(true);
 				}
 				break;
+
 			case BirdMessage.SAVE_OVER:
 				recycleBitmap();
 				finish();
 				break;
+
 			case BirdMessage.DELETE_OVER:
 				recycleBitmap();
 				finish();
 				break;
+
 			case BirdMessage.SAVE_RUNNABLE_START:
 				mWaitDialog.setWaitContent(getString(R.string.saveing_note));
 				mWaitDialog.show();
 				break;
+
 			case BirdMessage.DELETE_RUNNABLE_START:
 				mWaitDialog.setWaitContent(getString(R.string.deleteing_note));
 				mWaitDialog.show();
@@ -709,25 +701,24 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			}
 		};
 	};
-	
-	public void recycleBitmap(){
+
+	public void recycleBitmap() {
 		for (int i = 0; i < mEditQuaFragmentsList.size(); i++) {
-			if (mEditQuaFragmentsList.get(i)!=null) {
-				if (mEditQuaFragmentsList.get(i).mPenView!=null) {
-					if (mEditQuaFragmentsList.get(i).mPenView.mExistBitmap!=null&&!mEditQuaFragmentsList.get(i).mPenView.mExistBitmap.isRecycled()) {
+			if (mEditQuaFragmentsList.get(i) != null) {
+				if (mEditQuaFragmentsList.get(i).mPenView != null) {
+					if (mEditQuaFragmentsList.get(i).mPenView.mExistBitmap != null && !mEditQuaFragmentsList.get(i).mPenView.mExistBitmap.isRecycled()) {
 						mEditQuaFragmentsList.get(i).mPenView.mExistBitmap.recycle();
 					}
-					if (mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap!=null&&mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap.isRecycled()) {
+					if (mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap != null && mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap.isRecycled()) {
 						mEditQuaFragmentsList.get(i).mPenView.mDrawBitmap.recycle();
 					}
-/*					if (mEditQuaFragmentsList.get(i).mPenView.wholeBitmap!=null&&mEditQuaFragmentsList.get(i).mPenView.wholeBitmap.isRecycled()) {
-						mEditQuaFragmentsList.get(i).mPenView.wholeBitmap.recycle();
-					}*/
+
 				}
 			}
 		}
 		System.gc();
 	}
+
 	public boolean onCreateOptionsMenu(android.view.Menu menu) {
 		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
 			int star = dbHelper.queryStarById(mBirdNote._id + "");
@@ -740,48 +731,47 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			getMenuInflater().inflate(R.menu.create_newnote_menu, menu);
 		}
 
-		
 		return true;
 	};
-	
-	public int getCoverByLevel(int level){
+
+	public int getCoverByLevel(int level) {
 		return BitmapUtil.EDIT_COVER_PRE[level];
 	}
-	
-	BirdInputTitleDialog mRenameDialog = null;
-	public void renameNote(){
 
-		mRenameDialog = new BirdInputTitleDialog(this,android.R.style.Theme_Holo_Light_Dialog);
+	BirdInputTitleDialog mRenameDialog = null;
+
+	public void renameNote() {
+
+		mRenameDialog = new BirdInputTitleDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mRenameDialog.setTitle(R.string.alert_input_newname);
 		mRenameDialog.setOnConfirmClickListener(mUpdateTitleClickListener);
 		mRenameDialog.show();
-			if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
-				mRenameDialog.setInputContent(mBirdNote.title);
-			} else {
-				mRenameDialog.setInputContent(CommonUtils.getDefaultTitle(this));
-			}
-		
+		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
+			mRenameDialog.setInputContent(mBirdNote.title);
+		} else {
+			mRenameDialog.setInputContent(CommonUtils.getDefaultTitle(this));
+		}
+
 	}
-	
+
 	OnClickListener mUpdateTitleClickListener = new OnClickListener() {
-		
+
 		@Override
 		public void onClick(View v) {
-		      editHandler.post(updateTitleRunnable);		
+			editHandler.post(updateTitleRunnable);
 		}
 	};
-	
-	public Runnable updateTitleRunnable = new Runnable() {	
+
+	public Runnable updateTitleRunnable = new Runnable() {
 		@Override
 		public void run() {
-			dbHelper.updateTitleById(mBirdNote._id+"",mRenameDialog.getContent());
-			editHandler.sendEmptyMessage(BirdMessage.UPDATETITLE_RUNNABLE_OVER);	
-			if (mRenameDialog!=null) {
+			dbHelper.updateTitleById(mBirdNote._id + "", mRenameDialog.getContent());
+			editHandler.sendEmptyMessage(BirdMessage.UPDATETITLE_RUNNABLE_OVER);
+			if (mRenameDialog != null) {
 				mRenameDialog.dismiss();
 			}
 		}
 	};
-	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -789,39 +779,44 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		case R.id.id_edit_menu_rename:
 			renameNote();
 			break;
-			
+
 		case R.id.id_edit_menu_change_cover:
 			mChangeCover = new ChangeCover(this);
 			mChangeCover.setCoverChecked(getCoverByLevel(mBirdNote.level));
 			builder.setView(mChangeCover);
-			builder.create().show();	
+			builder.create().show();
 			break;
-			
+
 		case R.id.id_edit_menu_change_bg:
 			mEditQuaFragment.showChangeBg();
 			break;
+
 		case R.id.id_edit_menu_saveas:
 			mEditQuaFragment.showSaveAs();
 			break;
+
 		case R.id.id_edit_menu_star:
 			dbHelper.toggleStarNoteById(mBirdNote._id + "");
 			invalidateOptionsMenu();
 			break;
+
 		case R.id.id_edit_menu_delete:
 			PopMenuManager.createDeleteAlertDialog(EditNoteActivity.this, R.string.alert_delete_content, deleteListener);
 			break;
+
 		case R.id.id_edit_menu_removefavor:
 			dbHelper.toggleStarNoteById(mBirdNote._id + "");
 			invalidateOptionsMenu();
 			break;
+
 		default:
 			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	android.content.DialogInterface.OnClickListener deleteListener = new android.content.DialogInterface.OnClickListener() {
-		
+
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			switch (which) {
@@ -829,16 +824,16 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 				editHandler.sendEmptyMessage(BirdMessage.DELETE_RUNNABLE_START);
 				editHandler.post(deleteRunnable);
 				break;
+
 			case -2:
-				
 				break;
+
 			default:
 				break;
 			}
 		}
 	};
-	
-	
+
 	protected void onDestroy() {
 		super.onDestroy();
 		mNoteApplication.initUndoRedo();

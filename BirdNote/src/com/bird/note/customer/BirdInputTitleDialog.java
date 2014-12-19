@@ -10,15 +10,15 @@ import android.widget.TextView;
 import com.bird.note.R;
 
 /**
- * 自定义输入标题对话框
+ * @author wangxianpeng
+ * @since 19/12/14
  */
 public class BirdInputTitleDialog extends Dialog {
 	private android.view.View.OnClickListener listener;
 	public EditText mEditText;
 	private String mContentString = "";
 
-	public BirdInputTitleDialog(Context context,
-			android.view.View.OnClickListener listener) {
+	public BirdInputTitleDialog(Context context,android.view.View.OnClickListener listener) {
 		super(context);
 	}
 
@@ -26,6 +26,12 @@ public class BirdInputTitleDialog extends Dialog {
 		super(context, theme);
 	}
 
+	/**
+	 * Set the content of the EditText in the dialog
+	 *
+	 * @param content
+	 *            the content to set
+	 */
 	public void setInputContent(String content) {
 		this.mContentString = content;
 		if (mEditText != null) {
@@ -34,12 +40,22 @@ public class BirdInputTitleDialog extends Dialog {
 
 	}
 
+	/**
+	 * Return the content of the EditText
+	 *
+	 * @return the text of the EditText in the dialog
+	 */
 	public String getContent() {
 		return mEditText.getText().toString();
 	}
 
-	public void setOnConfirmClickListener(
-			android.view.View.OnClickListener listener) {
+	/**
+	 * Register a callback to be invoked when the confirm button is clicked
+	 *
+	 * @param listener
+	 *            The callback that will run
+	 */
+	public void setOnConfirmClickListener(android.view.View.OnClickListener listener) {
 		this.listener = listener;
 	}
 
@@ -51,15 +67,14 @@ public class BirdInputTitleDialog extends Dialog {
 		TextView mCancleTextView = (TextView) findViewById(R.id.id_alertdiaolg_cancel);
 		TextView mConfirmTextView = (TextView) findViewById(R.id.id_alertdiaolg_confirm);
 		mEditText = (EditText) findViewById(R.id.id_alertdiaolg_input_title);
-
+		
 		mConfirmTextView.setOnClickListener(listener);
-		mCancleTextView
-				.setOnClickListener(new android.view.View.OnClickListener() {
+		mCancleTextView.setOnClickListener(new android.view.View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						dismiss();
 					}
-				});	
+				});
 		setOnCancelListener(null);
 	}
 

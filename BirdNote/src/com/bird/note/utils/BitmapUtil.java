@@ -18,10 +18,9 @@ import android.util.Log;
 import com.bird.note.R;
 
 /**
- * 关于Bitmap的工具类
- * 
  * @author wangxianpeng
- * 
+ * @since 19/12/14
+ *
  */
 public class BitmapUtil {
 
@@ -33,29 +32,33 @@ public class BitmapUtil {
 		case R.drawable.th01_skin_00:
 			prebg = BitmapUtil.EDIT_BGS_PRE[0];
 			break;
+
 		case R.drawable.th01_skin_01:
 			prebg = BitmapUtil.EDIT_BGS_PRE[1];
 			break;
+
 		case R.drawable.th01_skin_02:
 			prebg = BitmapUtil.EDIT_BGS_PRE[2];
 			break;
+
 		case R.drawable.th01_skin_03:
 			prebg = BitmapUtil.EDIT_BGS_PRE[3];
 			break;
+
 		case R.drawable.th01_skin_04:
 			prebg = BitmapUtil.EDIT_BGS_PRE[4];
 			break;
-			
+
 		default:
 			break;
 		}
 		return prebg;
 	}
-	
+
 	public static int getCoverBgByLevel(int bg){
 		return BitmapUtil.EDIT_COVER_PRE[bg];
 	}
-	
+
 
 	public static byte[] decodeBitmapToBytes(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -107,7 +110,7 @@ public class BitmapUtil {
 	}
 
 
-	
+
 
 	/**
 	 * 合并图层,bitmap已回收
@@ -118,20 +121,20 @@ public class BitmapUtil {
 		Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas();
 		canvas.setBitmap(bitmap);
-		canvas.drawBitmap(bgBmp,0, 0, null);	
-		canvas.drawBitmap(drawBmp,0, 0, null);	
+		canvas.drawBitmap(bgBmp,0, 0, null);
+		canvas.drawBitmap(drawBmp,0, 0, null);
 		canvas.drawBitmap(textBmp,0, 0, null);
 		return bitmap;
 	}
-	
-	
+
+
 	/**
 	 * 内置背景图片
 	 */
-	
+
 	public static int[] EDIT_COVER_PRE= new int[]{R.drawable.th01_cover_00,R.drawable.th01_cover_01, R.drawable.th01_cover_02,R.drawable.th01_cover_03 };
 
 	public static int[] EDIT_BGS_PRE= new int[]{R.drawable.th01_skin_small_00,R.drawable.th01_skin_small_01, R.drawable.th01_skin_small_02,R.drawable.th01_skin_small_03, R.drawable.th01_skin_small_04 };
-	
+
 	public static int[] EDIT_BGS= new int[]{R.drawable.th01_skin_00,R.drawable.th01_skin_01,R.drawable.th01_skin_02,R.drawable.th01_skin_03,R.drawable.th01_skin_04};
 }

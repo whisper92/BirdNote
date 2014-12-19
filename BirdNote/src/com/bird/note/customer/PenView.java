@@ -24,68 +24,59 @@ import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.NoteApplication;
 
 /**
- * 用于涂鸦的View
- * 
+ * The view to draw
+ *
  * @author wangxianpeng
- * 
+ * @since 19/12/14
  */
 public class PenView extends View {
 	private final float TOUCH_TOLERANCE = 0;
 	private Context mContext;
-	/*
-	 * 当前使用的Paint
-	 */
-	private Paint mCurPaint;
+	private Paint mCurentPaint;
 
 	/*
-	 * 每一笔对应的路径
+	 * the path of a stroke
 	 */
 	private Path mPath = null;
 	private float posX = 0;
 	private float posY = 0;
-	/*
-	 * 是否处在擦除模式： false：绘图模式 true：擦出模式
-	 */
+
 	private boolean mIsCleanMode = false;
 
-	/*
-	 * 绘图模式对应的paint,canvas,bitmap
-	 */
 	private Paint mDrawPaint;
 	private Canvas mDrawCanvas;
 	public Bitmap mDrawBitmap;
-	public Bitmap mExistBitmap = null;
-	/*
-	 * 擦除模式对应的paint,canvas,bitmap
-	 */
-	private Paint mCleanPaint;
-	private float mCleanPaintWidth = SavedPaint.DEFAULT_CLEAN_PAINT_WIDTH;
-	/*
-	 * 绘图模式的画笔颜色和粗细
-	 */
 	private int mDrawPaintColor = SavedPaint.DEFAULT_PAINT_COLOR;
 	private float mDrawPaintWidth = SavedPaint.DEFAULT_PAINT_WIDTH;
+	public Bitmap mExistBitmap = null;
+
+	private Paint mCleanPaint;
+	private float mCleanPaintWidth = SavedPaint.DEFAULT_CLEAN_PAINT_WIDTH;
+
 	private SavedPaint mSavedPaint;
 	private PenDrawPath mDrawPath = null;
+
 	/*
-	 * 保存绘制过的所有路径，用于撤销
+	 * Save all the stroke you drawed used to undo
 	 */
 	private List<PenDrawPath> mSavePath = null;
 	/*
-	 * 保存刚刚撤销操作的路径，用于重做
+	 * Save the undo path used to redo
 	 */
 	private List<PenDrawPath> mDeletePath = null;
 
 	public int mCanvasWidth = 0;
 	public int mCanvasHeight = 0;
+
 	/*
-	 * 清除模式的笔尖圆圈
+	 * The circle of the eraser point
 	 */
 	private Paint mCleanPoint = null;
-	boolean isMoving = false;
-	float mCleanCircleRadius = 0;
-	
+	private boolean isMoving = false;
+	private float mCleanCircleRadius = 0;
+
 	private NoteApplication mNoteApplication = null;
+
 	public PenView(Context context, AttributeSet attr, int defStyle) {
 		super(context, attr, defStyle);
 		init(context);
@@ -101,45 +92,23 @@ public class PenView extends View {
 		init(context);
 	}
 
-	/**
-	 * 获取完成的bitmap
-	 * 
-	 * @return
-	 */
-	public Bitmap getWholeBitmap() {
-		Bitmap wholeBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
-		Canvas wholeCanvas = new Canvas(wholeBitmap);
-		if (mExistBitmap != null) {
-			wholeCanvas.drawBitmap(mExistBitmap, 0, 0, null);
-		}
-		wholeCanvas.drawBitmap(mDrawBitmap, 0, 0, null);
-		return wholeBitmap;
-	}
-
-	/**
-	 * 如果是更新笔记的话，要设置已经存在的内容
-	 */
-	public void setExistBitmap(Bitmap backBitmap) {
-		this.mExistBitmap = backBitmap;
-	}
-
 	private void init(Context context) {
 		mContext = context;
-		mNoteApplication = (NoteApplication)mContext.getApplicationContext();
+		mNoteApplication = (NoteApplication) mContext.getApplicationContext();
 		mCanvasWidth = (int) getResources().getDimension(R.dimen.dimen_edit_canvas_width);
 		mCanvasHeight = (int) getResources().getDimension(R.dimen.dimen_edit_canvas_height);
-		mCurPaint = new Paint();
+		mCurentPaint = new Paint();
 		mDrawPaint = DrawPaint.getInstance();
 		mCleanPaint = CleanPaint.getInstance();
 		mSavedPaint = new SavedPaint(context);
 		mPath = new Path();
 		initDrawPaint();
-		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
+		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight, Bitmap.Config.ARGB_8888);
 		mDrawBitmap.eraseColor(Color.TRANSPARENT);
 		mDrawCanvas = new Canvas();
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		mSavePath = new ArrayList<PenDrawPath>();
-		mDeletePath = new ArrayList<PenDrawPath>();	
+		mDeletePath = new ArrayList<PenDrawPath>();
 		mCleanPoint = new Paint();
 		mCleanPoint.setColor(Color.GRAY);
 		mCleanPoint.setAntiAlias(true);
@@ -150,15 +119,50 @@ public class PenView extends View {
 		mCleanPoint.setStrokeWidth(2.0f);
 	}
 
+	/**
+	 * Return the Bitmap include exist bitmap and drawed bitmap
+	 *
+	 * @return the whole bitmap
+	 */
+	public Bitmap getWholeBitmap() {
+		Bitmap wholeBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight, Bitmap.Config.ARGB_8888);
+		Canvas wholeCanvas = new Canvas(wholeBitmap);
+		if (mExistBitmap != null) {
+			wholeCanvas.drawBitmap(mExistBitmap, 0, 0, null);
+		}
+		wholeCanvas.drawBitmap(mDrawBitmap, 0, 0, null);
+		return wholeBitmap;
+	}
+
+	/**
+	 * Set the saved bitmap of the note
+	 */
+	public void setExistBitmap(Bitmap backBitmap) {
+		this.mExistBitmap = backBitmap;
+	}
+
+	/**
+	 * Invalide the bitmap after setting existed bitmap
+	 */
+	public void invalidateExistBitmap() {
+		if (mExistBitmap != null) {
+			mDrawBitmap = Bitmap.createBitmap(getWholeBitmap(), 0, 0, mCanvasWidth, mCanvasHeight);
+		} else {
+			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight, Bitmap.Config.ARGB_8888);
+		}
+		mDrawCanvas.setBitmap(mDrawBitmap);
+		postInvalidate();
+	}
+
 	@Override
 	public void onDraw(Canvas canvas) {
-		if (isMoving == true && mIsCleanMode ==true) {
+		if (isMoving == true && mIsCleanMode == true) {
 			canvas.drawCircle(posX, posY, mCleanCircleRadius, mCleanPoint);
 		}
-		
+
 		canvas.drawBitmap(mDrawBitmap, 0, 0, null);
 		if (mPath != null) {
-			mDrawCanvas.drawPath(mPath, mCurPaint);
+			mDrawCanvas.drawPath(mPath, mCurentPaint);
 		}
 
 	}
@@ -173,23 +177,23 @@ public class PenView extends View {
 
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			mCleanCircleRadius = mSavedPaint.getSavedCleanPaintWidth()/2;
+			mCleanCircleRadius = mSavedPaint.getSavedCleanPaintWidth() / 2;
 			downx = event.getRawX();
 			downy = event.getRawY();
 			mDeletePath.clear();
 			mPath = new Path();
 			mDrawPath = new PenDrawPath();
 			mPath.moveTo(x, y);
-			mDrawPath.paint = new Paint(mCurPaint);
+			mDrawPath.paint = new Paint(mCurentPaint);
 			mDrawPath.path = mPath;
 			posX = x;
 			posY = y;
-			if (mNoteApplication!=null) {
+			if (mNoteApplication != null) {
 				mNoteApplication.setEdited(true);
 			}
 			postInvalidate();
-
 			break;
+			
 		case MotionEvent.ACTION_MOVE:
 			isMoving = true;
 			float dx = Math.abs(x - posX);
@@ -201,34 +205,41 @@ public class PenView extends View {
 			}
 			postInvalidate();
 			break;
+			
 		case MotionEvent.ACTION_UP:
 			isMoving = false;
-			if ((Math.abs(downx - event.getX())) >= 4|| (Math.abs(downy - event.getY())) > 4) {
+			if ((Math.abs(downx - event.getX())) >= 4
+					|| (Math.abs(downy - event.getY())) > 4) {
 				mPath.lineTo(posX, posY);
-				mDrawCanvas.drawPath(mPath, mCurPaint);
+				mDrawCanvas.drawPath(mPath, mCurentPaint);
 				mSavePath.add(mDrawPath);
-				pathListChangeListener.changeState(mSavePath.size(),mDeletePath.size());
+				pathListChangeListener.changeState(mSavePath.size(), mDeletePath.size());
 				mPath = null;
 				postInvalidate();
 			}
 			break;
+			
 		}
 		return true;
 	}
 
+	/**
+	 * Set current using paint
+	 *
+	 * @param paint
+	 */
 	public void setPaint(Paint paint) {
-		mCurPaint = paint;
+		mCurentPaint = paint;
 		postInvalidate();
 	}
 
-/*	public void savePicture(int mCurrentQuadrant, String filename) {
-		BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(mDrawBitmap), "/" + filename+ "" + mCurrentQuadrant);
-	}*/
-
+	/**
+	 * Clear all of the bitmap
+	 */
 	public void clearAll() {
 		mSavePath.clear();
 		mDeletePath.clear();
-		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
+		mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight, Bitmap.Config.ARGB_8888);
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		mExistBitmap = null;
 		mDrawCanvas.drawBitmap(mDrawBitmap, 0, 0, mCleanPaint);
@@ -244,13 +255,13 @@ public class PenView extends View {
 		if (nSize >= 1) {
 			mDeletePath.add(0, mSavePath.get(nSize - 1));
 			mSavePath.remove(nSize - 1);
-		}  else {
-			//return;
+		} else {
+
 		}
 		if (mExistBitmap != null) {
-			mDrawBitmap = Bitmap.createBitmap(mExistBitmap, 0, 0, mCanvasWidth,mCanvasHeight).copy(Bitmap.Config.ARGB_8888, true);
+			mDrawBitmap = Bitmap.createBitmap(mExistBitmap, 0, 0, mCanvasWidth, mCanvasHeight).copy(Bitmap.Config.ARGB_8888, true);
 		} else {
-			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
+			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight, Bitmap.Config.ARGB_8888);
 		}
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		Iterator<PenDrawPath> iter = mSavePath.iterator();
@@ -273,9 +284,9 @@ public class PenView extends View {
 			return;
 
 		if (mExistBitmap != null) {
-			mDrawBitmap = Bitmap.createBitmap(mExistBitmap, 0, 0, mCanvasWidth,mCanvasHeight).copy(Bitmap.Config.ARGB_8888, true);
+			mDrawBitmap = Bitmap.createBitmap(mExistBitmap, 0, 0, mCanvasWidth,	mCanvasHeight).copy(Bitmap.Config.ARGB_8888, true);
 		} else {
-			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
+			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight, Bitmap.Config.ARGB_8888);
 		}
 		mDrawCanvas.setBitmap(mDrawBitmap);
 		Iterator<PenDrawPath> iter = mSavePath.iterator();
@@ -284,38 +295,30 @@ public class PenView extends View {
 			temp = iter.next();
 			mDrawCanvas.drawPath(temp.path, temp.paint);
 		}
-		pathListChangeListener
-				.changeState(mSavePath.size(), mDeletePath.size());
+		pathListChangeListener.changeState(mSavePath.size(), mDeletePath.size());
 		postInvalidate();
 	}
 
 	/**
-	 * 刷新已经存在的内容
+	 * Init the Paint in Draw Mode
 	 */
-	public void invalidateExistBitmap() {
-		if (mExistBitmap != null) {
-			mDrawBitmap = Bitmap.createBitmap(getWholeBitmap(), 0, 0,mCanvasWidth, mCanvasHeight);
-		} else {
-			mDrawBitmap = Bitmap.createBitmap(mCanvasWidth, mCanvasHeight,Bitmap.Config.ARGB_8888);
-		}
-		mDrawCanvas.setBitmap(mDrawBitmap);
-		postInvalidate();
-	}
-
 	public void initDrawPaint() {
 		mIsCleanMode = false;
 		mDrawPaintColor = mSavedPaint.getSavedPaintColor();
 		mDrawPaintWidth = mSavedPaint.getSavedPaintWidth();
 		mDrawPaint.setColor(mDrawPaintColor);
 		mDrawPaint.setStrokeWidth(mDrawPaintWidth);
-		mCurPaint = mDrawPaint;
+		mCurentPaint = mDrawPaint;
 	}
 
+	/**
+	 * Init the Paint in Clean Mode
+	 */
 	public void setCleanPaint() {
 		mIsCleanMode = true;
 		mCleanPaintWidth = mSavedPaint.getSavedCleanPaintWidth();
 		mCleanPaint.setStrokeWidth(mCleanPaintWidth);
-		mCurPaint = mCleanPaint;
+		mCurentPaint = mCleanPaint;
 	}
 
 	public void setCleanPaintWidth(float width) {
@@ -351,6 +354,12 @@ public class PenView extends View {
 		public void changeState(int undocount, int redocount);
 	}
 
+	/**
+	 * Register a callback tobe invoked when you draw a stroke
+	 *
+	 * @param listener
+	 *            the callback will run
+	 */
 	public void setOnPathListChangeListenr(OnPathListChangeListener listener) {
 		this.pathListChangeListener = listener;
 	}

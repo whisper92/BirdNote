@@ -16,8 +16,8 @@ import android.util.TypedValue;
 import android.view.WindowManager;
 
 /**
- * 通用工具类
  * @author wangxianpeng
+ * @since 19/12/14
  *
  */
 public class CommonUtils {
@@ -27,10 +27,10 @@ public class CommonUtils {
 	 */
 	public static int dpToPx(Context context, float dpValue) {
 		int px = 200;
-		px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dpValue, context.getResources().getDisplayMetrics());
+		px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, context.getResources().getDisplayMetrics());
 		return px;
 	}
-
+//
 	public static int getScreenWidth(Context context) {
 		WindowManager wManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		DisplayMetrics metrics = new DisplayMetrics();
@@ -47,7 +47,7 @@ public class CommonUtils {
 
 	public static String getSavePath() {
 		String filePath = "";
-		filePath = Environment.getExternalStorageDirectory()+ "/BirdNotePicture";
+		filePath = Environment.getExternalStorageDirectory() + "/BirdNotePicture";
 		File dirFile = new File(filePath);
 		if (dirFile.exists()) {
 
@@ -56,43 +56,42 @@ public class CommonUtils {
 		}
 		return filePath;
 	}
-	
-	
-	public static String getCurrentTime(){
-		SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");     
-		String   date   =   sDateFormat.format(new   java.util.Date()); 
+
+	public static String getCurrentTime() {
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+		String date = sDateFormat.format(new java.util.Date());
 		return date;
 	}
-	
-	public static String getCurrentDate(){
-		SimpleDateFormat   sDateFormat   =   new   SimpleDateFormat("ddhhmm");     
-		String   date   =   sDateFormat.format(new   java.util.Date()); 
+
+	public static String getCurrentDate() {
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("ddhhmm");
+		String date = sDateFormat.format(new java.util.Date());
 		return date;
 	}
-	
-	public static String formatUpdateTime(String dateString){
-		String d1= dateString.substring(0, 10);
+
+	public static String formatUpdateTime(String dateString) {
+		String d1 = dateString.substring(0, 10);
 		return d1;
 	}
-	
-	public static String getDefaultTitle(Context context){
-		return context.getString(R.string.app_name)+""+((NoteApplication)context.getApplicationContext()).getNotescount();
+
+	public static String getDefaultTitle(Context context) {
+		return context.getString(R.string.app_name) + "" + ((NoteApplication) context.getApplicationContext()).getNotescount();
 	}
-	
-	public static String spliteTitle(String origTitle){
-		if (origTitle.length()>=10) {
-			return origTitle.substring(0, 10)+"...";
+
+	public static String spliteTitle(String origTitle) {
+		if (origTitle.length() >= 10) {
+			return origTitle.substring(0, 10) + "...";
 		} else {
 			return origTitle;
 		}
 	}
-	public static int dpToPx(Context context,int dp) {
-		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-				context.getResources().getDisplayMetrics());
+
+	public static int dpToPx(Context context, int dp) {
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
 	}
-	
-	public static int pxToDp(Context context,int px){
-		int dp=0;
+
+	public static int pxToDp(Context context, int px) {
+		int dp = 0;
 		dp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, px, context.getResources().getDisplayMetrics());
 		return dp;
 	}

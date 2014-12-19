@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/id_show_title_new_text"
-        android:background="@drawable/action_bt_style01_left"
+        android:background="@drawable/th01_action_bt_left"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:src="@drawable/th01_green_icon_new_pen" />
@@ -33,7 +33,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dimen_show_titile_text_margin_right"
-        android:background="@drawable/action_bt_style01_right"
+        android:background="@drawable/th01_action_bt_right"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:src="@drawable/th01_green_icon_new_text" />

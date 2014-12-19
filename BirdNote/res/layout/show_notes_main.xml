@@ -6,17 +6,17 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/id_show_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/search_bg" >
 
         <TextView
-            android:id="@+id/id_show_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/show_menu_search"
+            android:background="@drawable/search_input"
             android:gravity="center_vertical"
-            android:background="@drawable/search_input" />
+            android:hint="@string/show_menu_search" />
     </LinearLayout>
 
     <include layout="@layout/show_notes_gridview" />

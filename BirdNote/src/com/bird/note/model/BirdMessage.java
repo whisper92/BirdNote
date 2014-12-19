@@ -2,6 +2,11 @@ package com.bird.note.model;
 
 import com.bird.note.R;
 
+/**
+ * @author wangxianpeng
+ * @since 19/12/14
+ *
+ */
 public class BirdMessage {
 	/*
 	 * 要启动的某个象限的编辑类型：创建或更新

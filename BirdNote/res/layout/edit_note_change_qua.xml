@@ -8,14 +8,14 @@
         android:id="@+id/id_change_qua_pre"
         android:layout_width="40dp"
         android:layout_height="match_parent"
-        android:background="@drawable/page_pre_bg" />
+        android:background="@drawable/th01_page_pre_bg" />
 
     <TextView
         android:id="@+id/id_change_qua_index"
         android:layout_width="50dp"
-        android:gravity="center"
         android:layout_height="match_parent"
         android:background="@drawable/page_mid_nor"
+        android:gravity="center"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:textColor="#000000" />
@@ -24,6 +24,6 @@
         android:id="@+id/id_change_qua_next"
         android:layout_width="40dp"
         android:layout_height="match_parent"
-        android:background="@drawable/page_next_bg" />
+        android:background="@drawable/th01_page_next_bg" />
 
 </LinearLayout>

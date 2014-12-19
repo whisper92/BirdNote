@@ -10,7 +10,7 @@
         android:layout_width="@dimen/dimen_edit_title_menu_big"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_edit_title_menu_margin"
-        android:background="@drawable/action_bt_style01_left"
+        android:background="@drawable/th01_action_bt_left"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:src="@drawable/th01_green_icon_pen" />
@@ -20,7 +20,7 @@
         android:layout_width="@dimen/dimen_edit_title_menu_big"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/id_edit_title_pen"
-        android:background="@drawable/action_bt_style01_mid"
+        android:background="@drawable/th01_action_bt_mid"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:src="@drawable/th01_green_icon_text" />
@@ -30,18 +30,18 @@
         android:layout_width="@dimen/dimen_edit_title_menu_big"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/id_edit_title_text"
-        android:background="@drawable/action_bt_style01_right"
+        android:background="@drawable/th01_action_bt_right"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:src="@drawable/th01_green_icon_clean" />
 
     <ImageView
         android:id="@+id/id_edit_title_pre"
-        android:layout_marginLeft="10dp"
         android:layout_width="@dimen/dimen_edit_title_menu_big"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/id_edit_title_clean"
-        android:background="@drawable/action_bt_style01_left"
+        android:background="@drawable/th01_action_bt_left"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:src="@drawable/th01_state_menu_uodo" />
@@ -51,7 +51,7 @@
         android:layout_width="@dimen/dimen_edit_title_menu_big"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/id_edit_title_pre"
-        android:background="@drawable/action_bt_style01_right"
+        android:background="@drawable/th01_action_bt_right"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:src="@drawable/th01_state_menu_redo" />
@@ -61,7 +61,7 @@
         android:layout_width="@dimen/dimen_edit_title_menu_small"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/id_edit_title_more"
-        android:background="@drawable/action_bt_style01_left"
+        android:background="@drawable/th01_action_bt_left"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:src="@drawable/th01_green_icon_save" />
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dimen_edit_title_menu_margin"
-        android:background="@drawable/action_bt_style01_right"
+        android:background="@drawable/th01_action_bt_right"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:src="@drawable/th01_green_icon_more" />

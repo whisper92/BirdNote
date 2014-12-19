@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <GridView
+        android:id="@+id/id_show_gv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_margin="@dimen/dimen_show_gridview_margin"
+        android:columnWidth="90dp"
+        android:horizontalSpacing="@dimen/dimen_show_note_item_space"
+        android:numColumns="3"
+        android:padding="5dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/dimen_show_note_item_space" >
+    </GridView>
 
-        <GridView
-            android:id="@+id/id_show_gv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/dimen_show_gridview_margin"
-            android:padding="5dp"
-            android:columnWidth="90dp"
-            android:horizontalSpacing="@dimen/dimen_show_note_item_space"
-            android:numColumns="3"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="@dimen/dimen_show_note_item_space" >
-        </GridView>
-    </LinearLayout>
-
+</LinearLayout>

@@ -19,15 +19,13 @@ import android.widget.TextView;
 import com.bird.note.R;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdNote;
-import com.bird.note.model.ReadStaredNoteAdapter;
 import com.bird.note.model.ShowNoteAdapter;
 import com.bird.note.model.ShowNoteAdapter.OnConfirmActionListener;
 
 /**
- * 首页
- * 
  * @author wangxianpeng
- * 
+ * @since 19/12/14
+ *
  */
 public class SearchNotesActivity extends Activity {
 
@@ -46,15 +44,12 @@ public class SearchNotesActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_notes_main);
 		mActionBar = getActionBar();
-		View headView = getLayoutInflater().inflate(
-				R.layout.search_notes_header, null);
-		mActionBar.setCustomView(headView, new LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		View headView = getLayoutInflater().inflate(R.layout.search_notes_header, null);
+		mActionBar.setCustomView(headView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		mActionBar.setDisplayShowCustomEnabled(true);
 
-		mBackImageView = (ImageView) headView
-				.findViewById(R.id.id_starnotes_title_back);
+		mBackImageView = (ImageView) headView.findViewById(R.id.id_starnotes_title_back);
 		mSearchNothing = (TextView) findViewById(R.id.id_search_nothing);
 		mSearchEditText = (EditText) headView.findViewById(R.id.search_edt);
 		mDbHelper = new DbHelper(this);
@@ -71,10 +66,7 @@ public class SearchNotesActivity extends Activity {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
-					((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-							.hideSoftInputFromWindow(SearchNotesActivity.this
-									.getCurrentFocus().getWindowToken(),
-									InputMethodManager.HIDE_NOT_ALWAYS);
+					((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(SearchNotesActivity.this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
 					reQuery();
 				}
 
@@ -94,27 +86,31 @@ public class SearchNotesActivity extends Activity {
 	public OnConfirmActionListener onConfirmDeleteListener = new OnConfirmActionListener() {
 
 		@Override
-		public void confirmDo(String[] noteids,int type) {
-			mDbHelper.deleteNoteByIds(noteids);
+		public void confirmDo(String[] noteids, int type) {
+			if (type == 0) {
+				mDbHelper.deleteNoteByIds(noteids);
+			} else {
+				mDbHelper.putStarToNoteById(noteids, 1);
+			}
+
 			reQuery();
 		}
 	};
 
 	public void reQuery() {
-		if (mSearchEditText != null
-				&& (!mSearchEditText.getText().toString().equals(""))
-				&& (mSearchEditText.getText().toString() != null)) {
-			mBirdNotes = mDbHelper.searchNotesByTag(mSearchEditText.getText()
-					.toString());
-			mNoteAdapter = new ShowNoteAdapter(SearchNotesActivity.this, 0,
-					mBirdNotes, mGridView);
+		if (mNoteAdapter != null && mNoteAdapter.mActionMode != null) {
+			mNoteAdapter.mActionMode.finish();
+		}
+		if (mSearchEditText != null && (!mSearchEditText.getText().toString().equals("")) && (mSearchEditText.getText().toString() != null)) {
+			mBirdNotes = mDbHelper.searchNotesByTag(mSearchEditText.getText().toString());
+			mNoteAdapter = new ShowNoteAdapter(SearchNotesActivity.this, 0, mBirdNotes, mGridView);
 			showNothint(mBirdNotes.size());
 			mGridView.setAdapter(mNoteAdapter);
 			mNoteAdapter.setOnConfirmDeleteListener(onConfirmDeleteListener);
 			mNoteAdapter.notifyDataSetChanged();
 			mActionBar.setTitle(String.format(getString(R.string.stared_note_count), mBirdNotes.size()));
 		}
-		
+
 	}
 
 	@Override

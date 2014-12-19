@@ -14,7 +14,6 @@ qua0 blob,
 qua1 blob,
 qua2 blob,
 qua3 blob,
-thumbnail blob,
 background integer,
 star integer default 0,
 create_time text,
@@ -33,18 +32,6 @@ Textlines直接以json数组的方式存储,tqua表示所在的象限,tcontent�
   {"qua":"3","quatcontent":"world"}
   ]
 }
-```
-笔记等级：
-0：蓝
-1：绿
-2：黄
-3：红
-
-象限分布示意图：
-```
-0|1
----
-2|3
 ```
 
  - 画布的大小要从values下根据分辨率获取。

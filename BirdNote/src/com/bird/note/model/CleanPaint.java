@@ -5,12 +5,16 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 
+/**
+ * @author wangxianpeng
+ * @since 19/12/14
+ *
+ */
 public class CleanPaint {
 
 	private static Paint cleanPaint = new Paint();
 
-	private CleanPaint() {
-	}
+	private CleanPaint() { }
 
 	public static Paint getInstance() {
 		cleanPaint.setAntiAlias(true);

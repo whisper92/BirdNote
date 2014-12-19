@@ -1,9 +1,9 @@
 package com.bird.note.dao;
 
 /**
- * 笔记表
+ * Tbale show_notes
  * @author wangxianpeng
- *
+ * @since 19/12/14
  */
 public class NotesTable {
 	public static final String TABLE_NAME="show_notes";
@@ -19,7 +19,8 @@ public class NotesTable {
 	public static final String STAR="star";
 	public static final String CREATE_TIME="create_time";
 	public static final String UPDATE_TIME="update_time";
-    public static final String SQL_CREATE="create table "+TABLE_NAME
+
+  public static final String SQL_CREATE="create table "+TABLE_NAME
     		+"("
     		+_ID+" integer primary key autoincrement,"
     		+LEVEL+" integer,"
@@ -32,9 +33,9 @@ public class NotesTable {
     		+BG_ID+" integer,"
     		+STAR+" integer,"
     		+CREATE_TIME+" text,"
-    		+UPDATE_TIME+" text)";	
-    
-    public static final String TEXTCONTENT_HEADER="textcontents";
-    public static final String TEXTCONTENT_OBJECT_QUA="qua";
-    public static final String TEXTCONTENT_OBJECT_QUACONTENT="quacontent";
+    		+UPDATE_TIME+" text)";
+
+  public static final String TEXTCONTENT_HEADER="textcontents";
+  public static final String TEXTCONTENT_OBJECT_QUA="qua";
+  public static final String TEXTCONTENT_OBJECT_QUACONTENT="quacontent";
 }

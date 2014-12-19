@@ -4,10 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 一个笔记的主体类
- * 
  * @author wangxianpeng
- * 
+ * @since 19/12/14
+ *
  */
 public class BirdNote implements Parcelable {
 
@@ -16,7 +15,7 @@ public class BirdNote implements Parcelable {
 	 */
 	public int _id;
 	/*
-	 * 等级：1,2,3,4
+	 * 等级：用于标示不同封面
 	 */
 	public int level;
 	/*
@@ -33,10 +32,6 @@ public class BirdNote implements Parcelable {
 	public byte[] qua1=null;
 	public byte[] qua2=null;
 	public byte[] qua3=null;
-	/*
-	 * 用于显示在首页的缩略图 public Bitmap thumbnail;
-	 */
-	public byte[] thumbnail=null;
 
 	/*
 	 * 使用的背景图片id
@@ -59,8 +54,7 @@ public class BirdNote implements Parcelable {
 	}
 	
 	public BirdNote(int level, String title, String textContents, byte[] byteArrayQua0,
-			byte[] byteArrayQua1, byte[] byteArrayQua2, byte[] byteArrayQua3,
-			byte[] byteArrayThumbnail,int background,int star) {
+			byte[] byteArrayQua1, byte[] byteArrayQua2, byte[] byteArrayQua3,int background,int star) {
 	}
 
 	@Override
@@ -79,7 +73,6 @@ public class BirdNote implements Parcelable {
 		dest.writeByteArray(qua1);
 		dest.writeByteArray(qua2);
 		dest.writeByteArray(qua3);
-		dest.writeByteArray(thumbnail);
 		dest.writeInt(background);
 		dest.writeInt(star);
 		dest.writeString(create_time);
@@ -99,7 +92,6 @@ public class BirdNote implements Parcelable {
 			birdNote.qua1 = source.createByteArray();
 			birdNote.qua2 = source.createByteArray();
 			birdNote.qua3 = source.createByteArray();
-			birdNote.thumbnail = source.createByteArray();
 			birdNote.background = source.readInt();
 			birdNote.star = source.readInt();
 			birdNote.create_time = source.readString();

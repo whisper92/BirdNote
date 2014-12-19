@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/th01_bt_left_sel" android:state_enabled="true" android:state_selected="true"/>
+    <item android:drawable="@drawable/th01_bt_left_pre" android:state_enabled="true" android:state_pressed="true"/>
+    <item android:drawable="@drawable/th01_bt_left_nor" />
+</selector>

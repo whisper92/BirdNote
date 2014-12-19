@@ -17,10 +17,8 @@ import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 /**
- * 选择橡皮擦粗细的弹出框
- * 
  * @author wangxianpeng
- * 
+ * @since 19/12/14
  */
 public class PopEraserBox extends PopupWindow {
 
@@ -34,6 +32,7 @@ public class PopEraserBox extends PopupWindow {
 	private float mSelectPaintWidth = SavedPaint.DEFAULT_PAINT_WIDTH;
 	private SavedPaint mSavedPaint;
 	private Paint mChoosePaint;
+	private OnEraserChangedListener onPaintChangedListener;
 
 	public PopEraserBox(Context context, OnClickListener cleanAllListener) {
 		mChoosePaint = CleanPaint.getInstance();
@@ -47,6 +46,7 @@ public class PopEraserBox extends PopupWindow {
 		mCleanAll = (TextView) rootView.findViewById(R.id.id_choose_eraser_clean_all);
 		mCleanAll.setOnClickListener(cleanAllListener);
 		mCleanCircle = (CleanCircle) rootView.findViewById(R.id.id_choose_eraser_circle);
+		
 		this.setContentView(rootView);
 		this.setWidth(LayoutParams.WRAP_CONTENT);
 		this.setHeight(LayoutParams.WRAP_CONTENT);
@@ -55,28 +55,34 @@ public class PopEraserBox extends PopupWindow {
 		this.update();
 		this.setBackgroundDrawable(new BitmapDrawable());
 
-		mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				selectProcess = seekBar.getProgress();
-				mSavedPaint.saveCleanPaintWidth(SavedPaint.DEFAULT_PAINT_MAX_WIDTH* selectProcess / MAX);
-				onPaintChangedListener.changePaint(getChoosePaint());
-			}
-
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-			}
-
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-				mSelectPaintWidth = progress / MAX* SavedPaint.DEFAULT_PAINT_MAX_WIDTH;
-				mCleanCircle.setCleanPaintWidth(mSelectPaintWidth);
-			}
-		});
+		mSeekBar.setOnSeekBarChangeListener(mEraserBarChangeListener);
 	}
 
-	OnEraserChangedListener onPaintChangedListener;
+	private OnSeekBarChangeListener mEraserBarChangeListener = new OnSeekBarChangeListener() {
+		@Override
+		public void onStopTrackingTouch(SeekBar seekBar) {
+			selectProcess = seekBar.getProgress();
+			mSavedPaint.saveCleanPaintWidth(SavedPaint.DEFAULT_PAINT_MAX_WIDTH* selectProcess / MAX);
+			onPaintChangedListener.changePaint(getChoosePaint());
+		}
 
+		@Override
+		public void onStartTrackingTouch(SeekBar seekBar) {
+		}
+
+		@Override
+		public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+			mSelectPaintWidth = progress / MAX* SavedPaint.DEFAULT_PAINT_MAX_WIDTH;
+			mCleanCircle.setCleanPaintWidth(mSelectPaintWidth);
+		}
+	};
+
+	/**
+	 * Register a callback to be invoked when the seekbar state changed
+	 *
+	 * @param listener
+	 *            the callback will run
+	 */
 	public void setOnPaintChangedListener(OnEraserChangedListener listener) {
 		onPaintChangedListener = listener;
 	}
@@ -85,6 +91,9 @@ public class PopEraserBox extends PopupWindow {
 		public void changePaint(Paint paint);
 	}
 
+	/**
+	 * Retun the eraser paint Object
+	 */
 	public Paint getChoosePaint() {
 		mChoosePaint.setStrokeWidth(mSelectPaintWidth);
 		return mChoosePaint;

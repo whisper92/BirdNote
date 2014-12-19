@@ -8,11 +8,11 @@
 
     <TextView
         android:id="@+id/id_search_nothing"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:text="@string/searchnothing"
         android:textSize="20dp"
-        android:text="@string/searchnothing" />
+        android:visibility="gone" />
 
 </RelativeLayout>

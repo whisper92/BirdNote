@@ -1,5 +1,10 @@
 package com.bird.note.model;
 
+/**
+ * @author wangxianpeng
+ * @since 19/12/14
+ *
+ */
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -41,9 +46,9 @@ public class QuadrantContent implements Parcelable {
 		@Override
 		public QuadrantContent createFromParcel(Parcel source) {
 			QuadrantContent quadrantContent = new QuadrantContent();
-                         quadrantContent.quadrant=source.readInt();
-                         quadrantContent.quadrantdraw=source.createByteArray();
-                         quadrantContent.textcontent=source.readString();
+			quadrantContent.quadrant = source.readInt();
+			quadrantContent.quadrantdraw = source.createByteArray();
+			quadrantContent.textcontent = source.readString();
 			return quadrantContent;
 		}
 

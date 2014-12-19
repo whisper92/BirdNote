@@ -13,6 +13,12 @@ import android.view.View;
 import com.bird.note.model.SavedPaint;
 import com.bird.note.utils.BitmapUtil;
 
+/**
+ * The circle view show the with of current paint in the PopEraserBox
+ *
+ * @author wangxianpeng
+ * @since 19/12/14
+ */
 public class CleanCircle extends View {
 
 	private Paint mPaint;
@@ -20,6 +26,7 @@ public class CleanCircle extends View {
 
 	private int mWidth = 0;
 	private int mHeight = 0;
+
 	public CleanCircle(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
@@ -33,7 +40,7 @@ public class CleanCircle extends View {
 		this(context, null);
 	}
 
-	public void init(Context context) {
+	private void init(Context context) {
 		mPaint = new Paint();
 		mPaint.setAntiAlias(true);
 		mPaint.setDither(true);
@@ -46,6 +53,12 @@ public class CleanCircle extends View {
 		mPaint.setColor(Color.WHITE);
 	}
 
+	/**
+	 * Set the width of Eraser Paint
+	 *
+	 * @param width
+	 *            the width of paint
+	 */
 	public void setCleanPaintWidth(float width) {
 		this.width = width;
 		invalidate();
@@ -55,36 +68,36 @@ public class CleanCircle extends View {
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
 		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-		
-		int widthSize  = MeasureSpec.getSize(widthMeasureSpec);
-		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-		
-		Drawable gb = getBackground();
-		
-		int bgW = 50;//BitmapUtil.decodeDrawableToBitmap(gb).getWidth();
-		int bgH = 50;//BitmapUtil.decodeDrawableToBitmap(gb).getHeight();
 
-		int width,height;
+		int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+		Drawable gb = getBackground();
+
+		int bgW = 50;// BitmapUtil.decodeDrawableToBitmap(gb).getWidth();
+		int bgH = 50;// BitmapUtil.decodeDrawableToBitmap(gb).getHeight();
+
+		int width, height;
 		if (widthMode == MeasureSpec.EXACTLY) {
 			width = widthSize;
 		} else {
 			width = bgW;
 		}
-		
+
 		if (heightMode == MeasureSpec.EXACTLY) {
 			height = heightSize;
 		} else {
 			height = bgH;
 		}
-		
+
 		mWidth = width;
 		mHeight = height;
 		setMeasuredDimension(width, height);
 	}
-	
+
 	@Override
 	protected void onDraw(Canvas canvas) {
-		canvas.drawCircle(mWidth/2, mHeight/2, width / 2, mPaint);
+		canvas.drawCircle(mWidth / 2, mHeight / 2, width / 2, mPaint);
 	}
 
 }

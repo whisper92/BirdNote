@@ -11,19 +11,19 @@
         android:id="@+id/id_popmenu_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
         android:background="@drawable/th01_skin_bg"
-        android:orientation="vertical">
+        android:gravity="bottom"
+        android:orientation="vertical" >
 
-    <Gallery
-        android:id="@+id/gallery1"
-        android:spacing="10dp"
-        android:paddingLeft="0dp"
-        android:paddingTop="15dp"
-        android:gravity="center_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        <Gallery
+            android:id="@+id/gallery1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:paddingLeft="0dp"
+            android:paddingTop="15dp"
+            android:spacing="10dp" />
     </LinearLayout>
 
 </LinearLayout>

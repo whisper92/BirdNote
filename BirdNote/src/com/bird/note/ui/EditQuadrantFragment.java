@@ -40,6 +40,11 @@ import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
 
+/**
+ * @author wangxianpeng
+ * @since 19/12/14
+ *
+ */
 public class EditQuadrantFragment extends Fragment {
 	private static String TAG = "EditQuadrantFragment";
 	private EditText mInputTitleEditText;
@@ -72,15 +77,13 @@ public class EditQuadrantFragment extends Fragment {
 	public int mCurrentQuadrant;
 	private int[] mEditedQuadrants;
 
-
-
 	public String mTitleString = "";
 	private BirdInputTitleDialog mBirdInputTitleDialog;
 	private Handler mainHandler = null;
 	private BirdNote mBirdNote;
 	public ChooseEditBgPopMenu chooseEditBgPopMenu;
-	private DbHelper mDbHelper ;
-	
+	private DbHelper mDbHelper;
+
 	private EditNoteActivity mEditNoteActivity = null;
 
 	/**
@@ -89,7 +92,7 @@ public class EditQuadrantFragment extends Fragment {
 	public static EditQuadrantFragment newInstance(int qua, int mode) {
 		EditQuadrantFragment editFragment = new EditQuadrantFragment();
 		Bundle b = new Bundle();
-		b.putInt(BirdMessage.START_TYPE_KEY,BirdMessage.START_TYPE_CREATE_VALUE);
+		b.putInt(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_CREATE_VALUE);
 		b.putInt("type", BirdMessage.START_TYPE_CREATE_VALUE);
 		b.putInt("quadrant", qua);
 		b.putInt("mode", mode);
@@ -100,10 +103,10 @@ public class EditQuadrantFragment extends Fragment {
 	/**
 	 * 更新笔记时实例化的方式
 	 */
-	public static EditQuadrantFragment newInstance(int mode,QuadrantContent quadrantContent) {
+	public static EditQuadrantFragment newInstance(int mode, QuadrantContent quadrantContent) {
 		EditQuadrantFragment editFragment = new EditQuadrantFragment();
 		Bundle b = new Bundle();
-		b.putInt(BirdMessage.START_TYPE_KEY,BirdMessage.START_TYPE_UPDATE_VALUE);
+		b.putInt(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_UPDATE_VALUE);
 		b.putInt("type", BirdMessage.START_TYPE_UPDATE_VALUE);
 		b.putInt("quadrant", quadrantContent.quadrant);
 		b.putInt("mode", mode);
@@ -124,14 +127,15 @@ public class EditQuadrantFragment extends Fragment {
 	}
 
 	AlertDialog.Builder saveNewNoteBuilder = null;
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mEditNoteActivity = ((EditNoteActivity) getActivity());
-		mainHandler =mEditNoteActivity.editHandler;
+		mainHandler = mEditNoteActivity.editHandler;
 		mDbHelper = new DbHelper(getActivity());
 		chooseEditBgPopMenu = new ChooseEditBgPopMenu(getActivity());
-		saveNewNoteBuilder = PopMenuManager.createSaveNewNoteAlertDialog(getActivity(), R.string.input_title_dialog_title, mInputTitleEditText, null);
-		View view = inflater.inflate(R.layout.edit_note_fragment, container,false);
+		saveNewNoteBuilder = PopMenuManager.createSaveNewNoteAlertDialog( getActivity(), R.string.input_title_dialog_title, mInputTitleEditText, null);
+		View view = inflater.inflate(R.layout.edit_note_fragment, container, false);
 		mNoteApplication = (NoteApplication) getActivity().getApplication();
 		mEditedQuadrants = mNoteApplication.getEditedQuadrants();
 		initEditFragmentView(view);
@@ -153,8 +157,6 @@ public class EditQuadrantFragment extends Fragment {
 			changeCurrentMode(mCurrentMode);
 		}
 
-		
-
 		return view;
 	}
 
@@ -165,9 +167,8 @@ public class EditQuadrantFragment extends Fragment {
 		if (type == BirdMessage.START_TYPE_UPDATE_VALUE) {
 			initUpdateView(type, quadrantContent);
 		}
-		mPenView.setOnPathListChangeListenr(((EditNoteActivity)getActivity()).mOnPathListChangeListener);
-		mPenView.setLayoutParams(new FrameLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		mPenView.setOnPathListChangeListenr(((EditNoteActivity) getActivity()).mOnPathListChangeListener);
+		mPenView.setLayoutParams(new FrameLayout.LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 	}
 
 	public void initCreateView(int type) {
@@ -176,19 +177,20 @@ public class EditQuadrantFragment extends Fragment {
 
 	/**
 	 * 将已经存在的内容绘制到penView上去
-	 * 
+	 *
 	 * @param type
 	 * @param mBirdNote
 	 */
 	private Bitmap quarBitmap = null;
+
 	public void initUpdateView(int type, QuadrantContent quadrantContent) {
 		mPenView = new PenView(getActivity());
 		quarBitmap = BitmapUtil.decodeBytesToBitmap(quadrantContent.quadrantdraw);
 		mPenView.setExistBitmap(quarBitmap);
-		
+
 		mPenView.invalidateExistBitmap();
 		mEditText.setText(quadrantContent.textcontent);
-		
+
 		if (((EditNoteActivity) getActivity()).mBirdNote != null) {
 			mBirdNote = ((EditNoteActivity) getActivity()).mBirdNote;
 		}
@@ -198,27 +200,25 @@ public class EditQuadrantFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		if (quarBitmap!=null&&!quarBitmap.isRecycled()) {
+		if (quarBitmap != null && !quarBitmap.isRecycled()) {
 			quarBitmap.recycle();
-			Log.e(TAG,"recycled-quarBitmap");
+			Log.e(TAG, "recycled-quarBitmap");
 		}
 		System.gc();
 	}
-	
+
 	public void initEditFragmentView(View view) {
-		((EditNoteActivity)getActivity()).setOnClickTitleMenuListener(mOnClickTitleMenuListener);
+		((EditNoteActivity) getActivity()).setOnClickTitleMenuListener(mOnClickTitleMenuListener);
 		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
 		mWrapFrameLayout.setBackgroundResource(mNoteApplication.getEditBackground());
 		mEditText = (EditText) view.findViewById(R.id.id_edit_main_et);
-		chooseEditBgPopMenu
-				.setOnChangeBackgroundListener(new OnChangeBackgroundListener() {
+		chooseEditBgPopMenu.setOnChangeBackgroundListener(new OnChangeBackgroundListener() {
 
 					@Override
 					public void changeBackground(int bgRsr) {
 						mWrapFrameLayout.setBackgroundResource(bgRsr);
 						mNoteApplication.setEditBackground(bgRsr);
-						if (chooseEditBgPopMenu != null
-								&& chooseEditBgPopMenu.isShowing()) {
+						if (chooseEditBgPopMenu != null && chooseEditBgPopMenu.isShowing()) {
 							chooseEditBgPopMenu.dismiss();
 						}
 
@@ -226,28 +226,28 @@ public class EditQuadrantFragment extends Fragment {
 				});
 	}
 
-	public void showChangeBg(){
-		/* 更改背景 */
-		chooseEditBgPopMenu.showAtLocation(mWrapFrameLayout,
-				Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+	/* 更改背景 */
+	public void showChangeBg() {
+
+		chooseEditBgPopMenu.showAtLocation(mWrapFrameLayout, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 	}
-	
-	public void showSaveAs(){
-		/* 另存为 */
+
+  /* 另存为 */
+	public void showSaveAs() {
 		mBirdInputTitleDialog = new BirdInputTitleDialog(getActivity(),android.R.style.Theme_Holo_Light_Dialog);
 		mBirdInputTitleDialog.setTitle(R.string.save_as_title);
 		mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveAsPngListener);
 		mBirdInputTitleDialog.show();
 		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
-			mBirdInputTitleDialog.setInputContent(((EditNoteActivity) getActivity()).mBirdNote.title+ "_qua" + mCurrentQuadrant);
+			mBirdInputTitleDialog.setInputContent(((EditNoteActivity) getActivity()).mBirdNote.title + "_qua" + mCurrentQuadrant);
 		} else {
 			mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle(getActivity()) + "_qua" + mCurrentQuadrant);
 		}
 	}
-	
+
 	public Bitmap getTextBitmap() {
 		mEditText.setDrawingCacheEnabled(true);
-		Bitmap bmp = Bitmap.createBitmap(mEditText.getDrawingCache(), 0, 0,mEditText.getWidth(), mEditText.getHeight());
+		Bitmap bmp = Bitmap.createBitmap(mEditText.getDrawingCache(), 0, 0, mEditText.getWidth(), mEditText.getHeight());
 		mEditText.destroyDrawingCache();
 		return bmp;
 	}
@@ -266,19 +266,20 @@ public class EditQuadrantFragment extends Fragment {
 
 	public String mSavePath = "";
 	Bitmap bgBitmap = null;
+
 	public class SaveAsThread extends Thread {
 
 		@Override
 		public void run() {
 			Bitmap allbitmap = getAllBitmap();
-			mSavePath = CommonUtils.getSavePath() + "/"+ mBirdInputTitleDialog.getContent() + ".png";
-			BitmapUtil.writeBytesToFile(BitmapUtil.decodeBitmapToBytes(allbitmap),"/" + mBirdInputTitleDialog.getContent());
+			mSavePath = CommonUtils.getSavePath() + "/" + mBirdInputTitleDialog.getContent() + ".png";
+			BitmapUtil.writeBytesToFile( BitmapUtil.decodeBitmapToBytes(allbitmap), "/" + mBirdInputTitleDialog.getContent());
 			mainHandler.obtainMessage(BirdMessage.SAVE_AS_OVER, mSavePath).sendToTarget();
-			
-			if (bgBitmap!=null&&!bgBitmap.isRecycled()) {
+
+			if (bgBitmap != null && !bgBitmap.isRecycled()) {
 				bgBitmap.recycle();
 			}
-			if (allbitmap!=null&&!allbitmap.isRecycled()) {
+			if (allbitmap != null && !allbitmap.isRecycled()) {
 				allbitmap.recycle();
 			}
 			Log.e(TAG, "recycle--bgBitmap;allbitmap");
@@ -290,31 +291,29 @@ public class EditQuadrantFragment extends Fragment {
 		return mSavePath;
 	}
 
-
 	public Bitmap getAllBitmap() {
-		/*已回收*/
-		bgBitmap = BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable(mNoteApplication.getEditBackground()));
-		return BitmapUtil.mergeBitmap(getActivity(), bgBitmap,mPenView.mDrawBitmap, getTextBitmap());
+		/* 已回收 */
+		bgBitmap = BitmapUtil.decodeDrawableToBitmap(getActivity().getResources().getDrawable( mNoteApplication.getEditBackground()));
+		return BitmapUtil.mergeBitmap(getActivity(), bgBitmap, mPenView.mDrawBitmap, getTextBitmap());
 	}
-	
 
 	public OnClickTitleMenuListener mOnClickTitleMenuListener = new OnClickTitleMenuListener() {
-		
+
 		@Override
 		public void clickMenu(int menuid) {
-			changeCurrentMode(menuid);			
+			changeCurrentMode(menuid);
 		}
 	};
-	
+
 	/**
 	 * 设置当前的编辑模式
-	 * 
+	 *
 	 * @param clickID
 	 */
 	public void changeCurrentMode(int clickID) {
-		
+
 		mCurrentMode = clickID;
-		
+
 		if (clickID == R.id.id_edit_title_pen) {
 			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			hideInputMethod();
@@ -348,7 +347,6 @@ public class EditQuadrantFragment extends Fragment {
 
 	}
 
-
 	public void saveNote() {
 		hideInputMethod();
 		mNoteApplication.setEdited(false);
@@ -357,14 +355,14 @@ public class EditQuadrantFragment extends Fragment {
 		} else {
 			saveNewNote();
 		}
-		
+
 	}
 
-
 	public void saveNewNote() {
-	   mBirdInputTitleDialog = new BirdInputTitleDialog(getActivity(),android.R.style.Theme_Holo_Light_Dialog);
-	    mBirdInputTitleDialog.setTitle(R.string.input_title_dialog_title);
-        mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveNewNoteClickListener);
+		mBirdInputTitleDialog = new BirdInputTitleDialog(getActivity(),
+				android.R.style.Theme_Holo_Light_Dialog);
+		mBirdInputTitleDialog.setTitle(R.string.input_title_dialog_title);
+		mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveNewNoteClickListener);
 		mBirdInputTitleDialog.show();
 		mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle(getActivity()));
 	}
@@ -374,11 +372,9 @@ public class EditQuadrantFragment extends Fragment {
 		new SaveUpdateNoteThread().start();
 	}
 
-
-
 	/**
 	 * 返回当前象限的文本内容
-	 * 
+	 *
 	 * @return
 	 */
 	public String getTextContent() {
@@ -392,10 +388,10 @@ public class EditQuadrantFragment extends Fragment {
 
 	/**
 	 * 返回当前象限绘制的内容
-	 * 
+	 *
 	 * @return
 	 */
-	/*需回收*/
+	/* 需回收 */
 	public byte[] getQuadrantDrawContentBytes() {
 		return BitmapUtil.decodeBitmapToBytes(mPenView.mDrawBitmap);
 	}
@@ -440,16 +436,16 @@ public class EditQuadrantFragment extends Fragment {
 		@Override
 		public void run() {
 			NoteApplication noteApplication = (NoteApplication) getActivity().getApplication();
-			mDbHelper.updateNoteById(((EditNoteActivity) getActivity()).generateNewNote(),noteApplication.getEditNoteId() + "");
+			mDbHelper.updateNoteById( ((EditNoteActivity) getActivity()).generateNewNote(), noteApplication.getEditNoteId() + "");
 			mainHandler.sendEmptyMessage(BirdMessage.SAVE_OVER);
 		}
 	}
 
 	public void showInputMethod() {
 		if (mEditText != null) {
-			  InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE); 
-			  imm.showSoftInput(mEditText, InputMethodManager.RESULT_SHOWN); 
-			  imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY); 
+			InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.showSoftInput(mEditText, InputMethodManager.RESULT_SHOWN);
+			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 		}
 	}
 
@@ -460,8 +456,5 @@ public class EditQuadrantFragment extends Fragment {
 			inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
 		}
 	}
-	
-	
-	
-	
+
 }

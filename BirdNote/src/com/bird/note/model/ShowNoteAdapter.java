@@ -38,7 +38,14 @@ import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
 
-public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,OnItemLongClickListener,OnMultiChoiceClickListener{
+/**
+ * @author wangxianpeng
+ * @since 19/12/14
+ *
+ */
+public class ShowNoteAdapter extends BaseAdapter implements
+		OnItemClickListener, OnItemLongClickListener,
+		OnMultiChoiceClickListener {
 	private List<BirdNote> mListData;
 	private GridView mGridView;
 	private Context mContext;
@@ -46,12 +53,10 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	private BirdInputTitleDialog mBirdInputTitleDialog;
 	public ActionMode mActionMode = null;
 	/*
-	 * type 0:ActionMode模式为删除
-	 * type1:ActionMode模式为取消收藏
+	 * type 0:ActionMode模式为删除 type1:ActionMode模式为取消收藏
 	 */
 	private int mType = 0;
 	private OnConfirmActionListener mOnConfirmDeleteListener = null;
-
 
 	public void selectAll() {
 		for (int i = 0; i < mListData.size(); i++) {
@@ -59,7 +64,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		}
 		notifyDataSetChanged();
 	}
-	
+
 	public void diselectAll() {
 		for (int i = 0; i < mListData.size(); i++) {
 			mGridView.setItemChecked(i, false);
@@ -67,9 +72,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		notifyDataSetChanged();
 	}
 
-
-	public ShowNoteAdapter(Activity context,int type, List<BirdNote> listData,
-			GridView gridView) {
+	public ShowNoteAdapter(Activity context, int type, List<BirdNote> listData,GridView gridView) {
 		super();
 
 		mType = type;
@@ -79,11 +82,12 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		mGridView.setOnItemClickListener(this);
 		mGridView.setOnItemLongClickListener(this);
 		mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
-		this.mInflater=context.getLayoutInflater();
-		
+		this.mInflater = context.getLayoutInflater();
+
 	}
 
-	int singleNoteId=-1;
+	int singleNoteId = -1;
+
 	public int getSingleNoteId() {
 		return singleNoteId;
 	}
@@ -91,19 +95,20 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 	public void setSingleNoteId(int singleNoteId) {
 		this.singleNoteId = singleNoteId;
 	}
-	
-	int mChoosePosition = 0;
-	View rootView;
-	int operatePosition= 0 ;
+
+	private int mChoosePosition = 0;
+	private View rootView;
+	private int operatePosition = 0;
+
 	@Override
-	public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position,long arg3) {
+	public boolean onItemLongClick(AdapterView<?> adapterView, View view,int position, long arg3) {
 		mChoosePosition = position;
-		operatePosition= position;
+		operatePosition = position;
 		rootView = view;
-        //Start the CAB using the ActionMode.Callback defined above  
-        mActionMode = ((Activity) mContext).startActionMode(mCallback);  
-       
-        mGridView.setItemChecked(position, true);
+		// Start the CAB using the ActionMode.Callback defined above
+		mActionMode = ((Activity) mContext).startActionMode(mCallback);
+
+		mGridView.setItemChecked(position, true);
 		return true;
 	}
 
@@ -130,7 +135,7 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 			} else {
 				inflater.inflate(R.menu.star_menu_actionmode, menu);
 			}
-			
+
 			return true;
 		}
 
@@ -138,59 +143,58 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			if (item.getItemId() == R.id.id_show_menu_multi_delete_confirm || item.getItemId() == R.id.id_star_menu_multi_rm_confirm) {
 
-				if (mOnConfirmDeleteListener!=null) {
-					mOnConfirmDeleteListener.confirmDo(getSelectNoteIds(),0);
+				if (mOnConfirmDeleteListener != null) {
+					mOnConfirmDeleteListener.confirmDo(getSelectNoteIds(), 0);
 				} else {
 
 				}
 				mode.finish();
 			}
 			if (item.getItemId() == R.id.id_show_menu_multi_star_confirm) {
-				if (mOnConfirmDeleteListener!=null) {
-					mOnConfirmDeleteListener.confirmDo(getSelectNoteIds(),1);
+				if (mOnConfirmDeleteListener != null) {
+					mOnConfirmDeleteListener.confirmDo(getSelectNoteIds(), 1);
 				} else {
 
 				}
 			}
-			
+
 			if (item.getItemId() == R.id.id_show_menu_multi_delete_selectall) {
 				selectAll();
 			}
 			if (item.getItemId() == R.id.id_show_menu_multi_delete_diselectall) {
 				diselectAll();
-			} 
+			}
 			return false;
 		}
 	};
-	
 
 	/*
-	 * type = 0:delete notes
-	 * type = 1:start notes;
+	 * type = 0:delete notes type = 1:start notes;
 	 */
-	public interface OnConfirmActionListener{
-		public void confirmDo(String[] noteids,int type);
+	public interface OnConfirmActionListener {
+		public void confirmDo(String[] noteids, int type);
 	}
-	
-	public void setOnConfirmDeleteListener(OnConfirmActionListener listener){
+
+	public void setOnConfirmDeleteListener(OnConfirmActionListener listener) {
 		this.mOnConfirmDeleteListener = listener;
 	}
-	
-	public String[] getSelectNoteIds(){
+
+	public String[] getSelectNoteIds() {
 		String[] noteids = new String[mListData.size()];
 		for (int i = 0; i < noteids.length; i++) {
 			if (mGridView.isItemChecked(i)) {
-				noteids[i] = mListData.get(i)._id+"";
+				noteids[i] = mListData.get(i)._id + "";
 			} else {
 				noteids[i] = String.valueOf(-1);
-			}		
+			}
 		}
 		return noteids;
 	}
-	
+
 	@Override
-	public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {	
-		boolean flag = mGridView.isItemChecked(position)?false:true;	
+	public void onItemClick(AdapterView<?> adapterView, View view,
+			int position, long arg3) {
+		boolean flag = mGridView.isItemChecked(position) ? false : true;
 		if (mActionMode != null) {
 			if (flag == true) {
 				mGridView.setItemChecked(position, false);
@@ -198,26 +202,26 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 				mGridView.setItemChecked(position, true);
 			}
 			notifyDataSetChanged();
-		}else {
-			Intent intent=new Intent();
+		} else {
+			Intent intent = new Intent();
 			intent.setClass(mContext, EditNoteActivity.class);
 			intent.putExtra(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_UPDATE_VALUE);
 			intent.putExtra(BirdMessage.START_MODE_KEY, BirdMessage.START_MODE_DRAW_KEY);
 			intent.putExtra(BirdMessage.INITENT_PARCEL_NOTE, mListData.get(position));
 			intent.putExtra(BirdMessage.START_TYPE_UPDATE_TITLE_KEY, mListData.get(position).title);
 			intent.putExtra(BirdMessage.STAR, mListData.get(position).star);
-			NoteApplication noteApplication=(NoteApplication)mContext.getApplicationContext();
+			NoteApplication noteApplication = (NoteApplication) mContext.getApplicationContext();
 			noteApplication.setEditBackground(mListData.get(position).background);
 			noteApplication.setCurrentNoteEidtType(BirdMessage.NOTE_EDIT_TYPE_UPDATE);
 			noteApplication.setEditNoteId(mListData.get(position)._id);
-			noteApplication.setEditedQuadrants(new int[]{0,0,0,0});
+			noteApplication.setEditedQuadrants(new int[] { 0, 0, 0, 0 });
 			mContext.startActivity(intent);
 		}
 	}
 
 	@Override
 	public BirdNote getItem(int position) {
-		BirdNote birdNote=mListData.get(position);
+		BirdNote birdNote = mListData.get(position);
 		return birdNote;
 	}
 
@@ -226,7 +230,6 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 		return 0;
 	}
 
-
 	@Override
 	public int getCount() {
 		return mListData.size();
@@ -234,57 +237,55 @@ public class ShowNoteAdapter extends BaseAdapter implements OnItemClickListener,
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		NoteHolder holder=null;
-		BirdNote birdNote=(BirdNote)getItem(position);
-		if(convertView == null){
-			holder =new NoteHolder();
-            convertView=mInflater.inflate(R.layout.show_notes_item, parent,false);
-            holder.thumbnail=(ImageView)convertView.findViewById(R.id.id_note_item_cover_iv);
-            holder.fav=(ImageView)convertView.findViewById(R.id.id_note_item_cover_fav);
-            holder.title=(TextView)convertView.findViewById(R.id.id_note_item_title_tv);
-            holder.updatedate=(TextView)convertView.findViewById(R.id.id_note_item_date_tv);
-            convertView.setTag(holder);
+		NoteHolder holder = null;
+		BirdNote birdNote = (BirdNote) getItem(position);
+		if (convertView == null) {
+			holder = new NoteHolder();
+			convertView = mInflater.inflate(R.layout.show_notes_item, parent,false);
+			holder.cover = (ImageView) convertView.findViewById(R.id.id_note_item_cover_iv);
+			holder.fav = (ImageView) convertView.findViewById(R.id.id_note_item_cover_fav);
+			holder.title = (TextView) convertView.findViewById(R.id.id_note_item_title_tv);
+			holder.updatedate = (TextView) convertView.findViewById(R.id.id_note_item_date_tv);
+			convertView.setTag(holder);
 
-		}else {
-			holder=(NoteHolder)convertView.getTag();
+		} else {
+			holder = (NoteHolder) convertView.getTag();
 		}
 
-			holder.thumbnail.setImageResource(BitmapUtil.getCoverBgByLevel(birdNote.level));
-			holder.fav.setVisibility(birdNote.star==0?(View.GONE):(View.VISIBLE));
-	        holder.title.setText(CommonUtils.spliteTitle(birdNote.title));
-	        holder.updatedate.setText(CommonUtils.formatUpdateTime(birdNote.update_time));
-	      
-	        
-        if (mActionMode!=null) {
-        	if (mGridView.isItemChecked(position)) {
-        		holder.thumbnail.setBackgroundResource(R.drawable.th01_cover_sel);
+		holder.cover.setImageResource(BitmapUtil.getCoverBgByLevel(birdNote.level));
+		holder.fav.setVisibility(birdNote.star == 0 ? (View.GONE): (View.VISIBLE));
+		holder.title.setText(CommonUtils.spliteTitle(birdNote.title));
+		holder.updatedate.setText(CommonUtils.formatUpdateTime(birdNote.update_time));
+
+		if (mActionMode != null) {
+			if (mGridView.isItemChecked(position)) {
+				holder.cover.setBackgroundResource(R.drawable.th01_cover_sel);
 			} else {
-				holder.thumbnail.setBackground(null);
+				holder.cover.setBackground(null);
 			}
-         }else {
-        	 holder.thumbnail.setBackground(null);
-         }
+		} else {
+			holder.cover.setBackground(null);
+		}
 
 		return convertView;
 	}
-	
-	class NoteHolder{
-        ImageView thumbnail;
-        TextView title;
-        TextView updatedate;
-        ImageView fav;
-}
-	
+
+	class NoteHolder {
+		ImageView cover;
+		TextView title;
+		TextView updatedate;
+		ImageView fav;
+	}
+
 	@Override
-	public int getItemViewType(int position) {	
+	public int getItemViewType(int position) {
 		return getItem(position).level;
 	}
 
 	@Override
 	public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
 }

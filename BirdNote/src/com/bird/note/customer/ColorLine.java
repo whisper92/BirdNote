@@ -11,10 +11,10 @@ import android.view.View;
 import com.bird.note.model.SavedPaint;
 
 /**
- * 用于展示画笔粗细和颜色的线条
- * 
- * @author root
- * 
+ * The view to show the width and color of current using Paint
+ *
+ * @author wangxianpeng
+ * @since 19/12/14
  */
 public class ColorLine extends View {
 
@@ -24,12 +24,13 @@ public class ColorLine extends View {
 
 	private int mWidth = 0;
 	private int mHeight = 0;
-	
-	double mSqrt =0;
+
+	double mSqrt = 0;
 	double mRadius = 0;
-	
+
 	private RECT r1;
 	private RECT r2;
+
 	public ColorLine(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
@@ -44,7 +45,7 @@ public class ColorLine extends View {
 	}
 
 	public void init(Context context) {
-		mSqrt = Math.sqrt((double)2);
+		mSqrt = Math.sqrt((double) 2);
 		r1 = new RECT();
 		r2 = new RECT();
 		mPaint = new Paint();
@@ -81,39 +82,39 @@ public class ColorLine extends View {
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
 		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-		
-		int widthSize  = 312;//MeasureSpec.getSize(widthMeasureSpec);
-		int heightSize = 72;//MeasureSpec.getSize(heightMeasureSpec);
 
-		int width,height;
+		int widthSize = 312;// MeasureSpec.getSize(widthMeasureSpec);
+		int heightSize = 72;// MeasureSpec.getSize(heightMeasureSpec);
+
+		int width, height;
 		width = widthSize;
 		height = heightSize;
 
 		mWidth = width;
 		mHeight = height;
-		mRadius = height/mSqrt;
+		mRadius = height / mSqrt;
 
-		r1.left = (float)(mHeight-mRadius);
-		r1.top = (float)r1.left;
-		r1.right = (float)(mHeight+mRadius);
-		r1.bottom = (float)r1.right;
-		
-		r2.left = (float)(2*mHeight-mRadius);
-		r2.top = (float)(-mRadius);
-		r2.right =(float) (2*mHeight+mRadius);
-		r2.bottom = (float)mRadius;
+		r1.left = (float) (mHeight - mRadius);
+		r1.top = (float) r1.left;
+		r1.right = (float) (mHeight + mRadius);
+		r1.bottom = (float) r1.right;
+
+		r2.left = (float) (2 * mHeight - mRadius);
+		r2.top = (float) (-mRadius);
+		r2.right = (float) (2 * mHeight + mRadius);
+		r2.bottom = (float) mRadius;
 		setMeasuredDimension(width, height);
 	}
-	
+
 	@Override
 	protected void onDraw(Canvas canvas) {
-		RectF oval1 = new RectF(r1.left, r1.top , r1.right, r1.bottom);
+		RectF oval1 = new RectF(r1.left, r1.top, r1.right, r1.bottom);
 		canvas.drawArc(oval1, 225, 90, false, mPaint);
-		oval1.set(r2.left, r2.top, r2.right , r2.bottom);
+		oval1.set(r2.left, r2.top, r2.right, r2.bottom);
 		canvas.drawArc(oval1, 45, 90, false, mPaint);
 	}
-	
-	public class RECT{
+
+	public class RECT {
 		float left;
 		float top;
 		float right;

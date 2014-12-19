@@ -17,23 +17,29 @@ import android.widget.Toast;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 
+/**
+ * The view used to change to other quadrant at the bottom of EditNoteActivity.
+ *
+ * @author wangxianpeng
+ * @since 19/12/14
+ */
 public class ChangeQua extends LinearLayout implements OnClickListener,
 		OnTouchListener {
 
 	private String TAG = "ChangeQua";
 
-	LayoutInflater mInflater = null;
-	Button mPreButton = null;
-	Button mNextButton = null;
-	TextView mIndex = null;
-	int qua = 0;
-	Context mContext = null;
+	private LayoutInflater mInflater = null;
+	private Button mPreButton = null;
+	private Button mNextButton = null;
+	private TextView mIndex = null;
+	private int qua = 0;
+	private Context mContext = null;
+  private OnChangeQuaListener mOnChangeQuaListener = null;
 
 	public ChangeQua(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
-		mInflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = mInflater.inflate(R.layout.edit_note_change_qua, this);
 		mPreButton = (Button) view.findViewById(R.id.id_change_qua_pre);
 		mNextButton = (Button) view.findViewById(R.id.id_change_qua_next);
@@ -41,7 +47,6 @@ public class ChangeQua extends LinearLayout implements OnClickListener,
 
 		mPreButton.setOnClickListener(this);
 		mNextButton.setOnClickListener(this);
-
 		mIndex.setOnTouchListener(this);
 
 		mIndex.setText((qua + 1) + "/4");
@@ -49,33 +54,10 @@ public class ChangeQua extends LinearLayout implements OnClickListener,
 
 	}
 
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev) {
-		// TODO Auto-generated method stub
-		return super.dispatchTouchEvent(ev);
-	}
+	private Toast mToast = null;
 
-	@Override
-	public boolean onInterceptTouchEvent(MotionEvent ev) {
-		// TODO Auto-generated method stub
-		return super.onInterceptTouchEvent(ev);
-	}
-
-	@Override
-	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		super.onLayout(changed, l, t, r, b);
-	}
-
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-	}
-
-	Toast mToast = null;
-
-	public void showToast(int qua) {
-		String toastString = String.format(
-				mContext.getString(R.string.changequatoast), qua);
+	private void showToast(int qua) {
+		String toastString = String.format(mContext.getString(R.string.changequatoast), qua);
 		if (mToast == null) {
 			mToast = Toast.makeText(mContext, toastString, Toast.LENGTH_SHORT);
 		} else {
@@ -83,8 +65,6 @@ public class ChangeQua extends LinearLayout implements OnClickListener,
 		}
 		mToast.show();
 	}
-
-	OnChangeQuaListener mOnChangeQuaListener = null;
 
 	@Override
 	public void onClick(View v) {
@@ -98,8 +78,8 @@ public class ChangeQua extends LinearLayout implements OnClickListener,
 			if (qua - 1 < 0) {
 				mPreButton.setEnabled(false);
 			}
-
 			break;
+			
 		case R.id.id_change_qua_next:
 			qua = qua + 1;
 			mIndex.setText((qua + 1) + "/4");
@@ -109,17 +89,22 @@ public class ChangeQua extends LinearLayout implements OnClickListener,
 			if (qua + 1 > 3) {
 				mNextButton.setEnabled(false);
 			}
-
 			break;
 
 		case R.id.id_change_qua_index:
 			break;
+			
 		default:
 			break;
 		}
 
 	}
 
+	/**
+	 * Return current quadrant
+	 *
+	 * @return int
+	 */
 	public int getCurrentQua() {
 		return qua;
 	}
@@ -128,6 +113,12 @@ public class ChangeQua extends LinearLayout implements OnClickListener,
 		public void changeQua(int qua);
 	}
 
+	/**
+	 * Register a callback to invoke when the quadrant changed
+	 *
+	 * @param listener
+	 *            the callback will run
+	 */
 	public void setOnChangeQuaListener(OnChangeQuaListener listener) {
 		this.mOnChangeQuaListener = listener;
 	}

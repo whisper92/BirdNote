@@ -1,5 +1,10 @@
 package com.bird.note.model;
 
+/**
+ * @author wangxianpeng
+ * @since 19/12/14
+ *
+ */
 import android.graphics.Paint;
 import android.graphics.Path;
 

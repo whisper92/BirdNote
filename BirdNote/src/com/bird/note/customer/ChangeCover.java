@@ -24,19 +24,26 @@ import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 
+/**
+ * The view used to change the cover of the note
+ *
+ * @author wangxianpeng
+ * @since 19/12/14
+ */
 public class ChangeCover extends LinearLayout {
 
 	private String TAG = "ChangeQua";
 
-	LayoutInflater mInflater = null;
-	Button mPreButton = null;
-	Button mNextButton = null;
-	TextView mIndex = null;
-	GridView mCoverGridView = null;
-	int qua = 0;
-	ImageAdapter imageAdapter = null;
+	private LayoutInflater mInflater = null;
+	private Button mPreButton = null;
+	private Button mNextButton = null;
+	private TextView mIndex = null;
+	private GridView mCoverGridView = null;
+	private int cover = 0;
+	private ImageAdapter imageAdapter = null;
 
 	int mSelectedCover = BitmapUtil.EDIT_COVER_PRE[0];
+
 	public ChangeCover(Context context) {
 		super(context);
 		init(context);
@@ -48,35 +55,39 @@ public class ChangeCover extends LinearLayout {
 
 	}
 
-	public void init(Context context) {
-		mInflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	private void init(Context context) {
+		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = mInflater.inflate(R.layout.edit_note_choose_cover, this);
 		imageAdapter = new ImageAdapter(context);
-		mCoverGridView = (GridView) view
-				.findViewById(R.id.id_edit_note_choose_cover);
+		mCoverGridView = (GridView) view.findViewById(R.id.id_edit_note_choose_cover);
+
 		mCoverGridView.setAdapter(imageAdapter);
 		mCoverGridView.setItemChecked(1, true);
-		
 		mCoverGridView.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 				mSelectedCover = BitmapUtil.EDIT_COVER_PRE[position];
-			    imageAdapter.notifyDataSetChanged();
+				imageAdapter.notifyDataSetChanged();
 			}
 		});
-		
 
 	}
 
-	public void setCoverChecked(int pos){	
+	/**
+	 * Set the cover at position 'pos' checked
+	 *
+	 * @param pos
+	 *            the position to set
+	 */
+	public void setCoverChecked(int pos) {
 		mSelectedCover = pos;
 		imageAdapter.notifyDataSetChanged();
 	}
-	
-	public int getSelectCover(){
+
+	/**
+	 * Return the potition of selected cover
+	 */
+	public int getSelectCover() {
 		for (int i = 0; i < imageAdapter.getCount(); i++) {
 			if (mSelectedCover == BitmapUtil.EDIT_COVER_PRE[i]) {
 				return i;
@@ -84,18 +95,23 @@ public class ChangeCover extends LinearLayout {
 		}
 		return 0;
 	}
-	
-	
+
 	OnChangeQuaListener mOnChangeQuaListener = null;
 
 	public int getCurrentQua() {
-		return qua;
+		return cover;
 	}
 
 	public interface OnChangeQuaListener {
-		public void changeQua(int qua);
+		public void changeQua(int cover);
 	}
 
+	/**
+	 * Register a callback to be invoked when the cover changed
+	 *
+	 * @param listener
+	 *            the callback will run
+	 */
 	public void setOnChangeQuaListener(OnChangeQuaListener listener) {
 		this.mOnChangeQuaListener = listener;
 	}
@@ -127,19 +143,15 @@ public class ChangeCover extends LinearLayout {
 			ViewHolder holder;
 			if (convertView == null) {
 				holder = new ViewHolder();
-				convertView = View.inflate(context,
-						R.layout.edit_note_choos_cover_item, null);
-				holder.imageView = (ImageView) convertView
-						.findViewById(R.id.id_img);
-				holder.selectedImv = (ImageView) convertView
-						.findViewById(R.id.id_img_select);
+				convertView = View.inflate(context,R.layout.edit_note_choos_cover_item, null);
+				holder.imageView = (ImageView) convertView.findViewById(R.id.id_img);
+				holder.selectedImv = (ImageView) convertView.findViewById(R.id.id_img_select);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			holder.imageView
-					.setImageResource(BitmapUtil.EDIT_COVER_PRE[position]);
-			holder.selectedImv.setVisibility(mSelectedCover ==  BitmapUtil.EDIT_COVER_PRE[position]? View.VISIBLE : View.GONE);
+			holder.imageView.setImageResource(BitmapUtil.EDIT_COVER_PRE[position]);
+			holder.selectedImv.setVisibility(mSelectedCover == BitmapUtil.EDIT_COVER_PRE[position] ? View.VISIBLE : View.GONE);
 
 			return convertView;
 		}
