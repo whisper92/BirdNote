@@ -62,7 +62,7 @@ Textlines直接以json数组的方式存储,tqua表示所在的象限,tcontent�
 
 橡皮擦功能、撤销和重做功能
 
-![birdnote.gif](http://7o51ck.com1.z0.glb.clouddn.com/birdnote.gif)
+![birdnote.gif](/Media/birdnote.gif)
 
 - - -
 
