@@ -63,7 +63,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	/*
 	 * 当前所处模式：绘图或文字
 	 */
-	public int mCurrMode = 0;
+	public int mCurrentMode = 0;
 	/*
 	 * 当前的类型：创建或更新
 	 */
@@ -155,8 +155,8 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 
 		}
 
-		mCurrMode = intent.getIntExtra(BirdMessage.START_MODE_KEY,R.id.id_edit_title_pen);
-		mNoteApplication.setCurrentEditMode(mCurrMode);
+		mCurrentMode = intent.getIntExtra(BirdMessage.START_MODE_KEY,R.id.id_edit_title_pen);
+		mNoteApplication.setCurrentEditMode(mCurrentMode);
 		try {
 			initActivityView(mCurrentType);
 		} catch (JSONException e) {
@@ -207,7 +207,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 
 		builder = PopMenuManager.createChooseMarkAlertDialog( EditNoteActivity.this, R.string.edit_menu_change_cover, mChooseCoverListener);
 
-		changeOtherIconState(mCurrMode);
+		changeOtherIconState(mCurrentMode);
 		createEraserBox();
 		createPenBox();
 	}
@@ -250,8 +250,6 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	 * 进入某一种模式的时候，要改变其他模式对应的图标的状态
 	 */
 	public void changeOtherIconState(int clickID) {
-		mCurrMode = clickID;
-
 		switch (clickID) {
 		case R.id.id_edit_title_pen:
 			edit_Pen.setSelected(true);
@@ -290,26 +288,33 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 
 	@Override
 	public void onClick(View v) {
-		mOnClickTitleMenuListener.clickMenu(v.getId());
-		mCurrMode = v.getId();
-		changeOtherIconState(mCurrMode);
+
 		switch (v.getId()) {
 		case R.id.id_edit_title_pen:
-			mNoteApplication.setCurrentEditMode(mCurrMode);
-			togglePenBox(mCurrMode);
+			mCurrentMode = R.id.id_edit_title_pen;
+			mNoteApplication.setCurrentEditMode(mCurrentMode);
+			mOnClickTitleMenuListener.clickMenu(R.id.id_edit_title_pen);
+			changeOtherIconState(mCurrentMode);
+			togglePenBox(mCurrentMode);
 			mPenHasSelected += 1;
 			mEraserHasSelected = 0;
 			break;
 
 		case R.id.id_edit_title_text:
-			mNoteApplication.setCurrentEditMode(mCurrMode);
+			mCurrentMode = R.id.id_edit_title_text;
+			mNoteApplication.setCurrentEditMode(mCurrentMode);
+			mOnClickTitleMenuListener.clickMenu(R.id.id_edit_title_text);
+			changeOtherIconState(mCurrentMode);
 			mPenHasSelected = 0;
 			mEraserHasSelected = 0;
 			break;
 
 		case R.id.id_edit_title_clean:
-			mNoteApplication.setCurrentEditMode(mCurrMode);
-			toggleEraserBox(mCurrMode);
+			mCurrentMode = R.id.id_edit_title_clean;
+			mNoteApplication.setCurrentEditMode(mCurrentMode);
+			mOnClickTitleMenuListener.clickMenu(R.id.id_edit_title_clean);
+			changeOtherIconState(mCurrentMode);
+			toggleEraserBox(mCurrentMode);
 			mPenHasSelected = 0;
 			mEraserHasSelected += 1;
 			break;
@@ -389,8 +394,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			@Override
 			public void changePaint(Paint paint) {
 				mEditQuaFragment.mPenView.setDrawPaintColor(paint.getColor());
-				mEditQuaFragment.mPenView.setDrawPaintWidth(paint
-						.getStrokeWidth());
+				mEditQuaFragment.mPenView.setDrawPaintWidth(paint.getStrokeWidth());
 				mSavedPaint.savePaintColor(paint.getColor());
 				mSavedPaint.savePaintWidth(paint.getStrokeWidth());
 			}
@@ -488,9 +492,10 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			}
 		}
 		transaction.commit();
+		
 		editHandler.post(new Runnable() {
 			@Override
-			public void run() {
+			public void run() {	
 				mEditQuaFragment.changeCurrentMode(mNoteApplication.getCurrentEditMode());
 				changeStateOfUndoRedo(mNoteApplication.undoredo[mCurrentQuadrant][0],mNoteApplication.undoredo[mCurrentQuadrant][1]);
 			}
@@ -510,7 +515,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		while (iterator.hasNext()) {
 			quadrantContent = (QuadrantContent) iterator.next();
 			if (quadrantContent != null) {
-				EditQuadrantFragment editQuadrantFragment = EditQuadrantFragment.newInstance(mCurrMode, quadrantContent);
+				EditQuadrantFragment editQuadrantFragment = EditQuadrantFragment.newInstance(mNoteApplication.getCurrentEditMode(), quadrantContent);
 				mEditQuaFragmentsList.remove(quadrantContent.quadrant);
 				mEditQuaFragmentsList.add(quadrantContent.quadrant, editQuadrantFragment);
 			}
@@ -530,7 +535,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	}
 
 	public void initCreateView(int type) {
-		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mCurrMode);
+		mEditQuaFragment = EditQuadrantFragment.newInstance(mCurrentQuadrant, mNoteApplication.getCurrentEditMode());
 		mEditQuaFragmentsList.add(0, mEditQuaFragment);
 		mEditQuaFragmentsList.add(1, null);
 		mEditQuaFragmentsList.add(2, null);
@@ -614,10 +619,8 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			if (mEditQuaFragmentsList.get(i) != null) {
 				if (edited[i] == 1) {
 					/* 若编辑过，则保存新内容 */
-					text_array[i] = mEditQuaFragmentsList.get(i)
-							.getTextContent();
-					qua = mEditQuaFragmentsList.get(i)
-							.getQuadrantDrawContentBytes();
+					text_array[i] = mEditQuaFragmentsList.get(i).getTextContent();
+					qua = mEditQuaFragmentsList.get(i).getQuadrantDrawContentBytes();
 				} else {
 					/* 若未编辑过，则保存原始内容 */
 					text_array[i] = mQuaList.get(i).textcontent;

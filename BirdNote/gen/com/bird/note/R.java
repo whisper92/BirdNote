@@ -226,8 +226,8 @@ public final class R {
     public static final class id {
         public static final int  id_edit_menu_change_cover=0x7f0b0046;
         public static final int gallery1=0x7f0b0024;
-        public static final int id_alertdiaolg_cancel=0x7f0b0001;
-        public static final int id_alertdiaolg_confirm=0x7f0b0002;
+        public static final int id_alertdiaolg_cancel=0x7f0b0002;
+        public static final int id_alertdiaolg_confirm=0x7f0b0001;
         public static final int id_alertdiaolg_input_title=0x7f0b0000;
         public static final int id_change_qua_index=0x7f0b001d;
         public static final int id_change_qua_next=0x7f0b001e;
@@ -290,9 +290,8 @@ public final class R {
         public static final int id_show_gv=0x7f0b003b;
         public static final int id_show_menu_all_star=0x7f0b004c;
         public static final int id_show_menu_multi_delete_confirm=0x7f0b004e;
-        public static final int id_show_menu_multi_delete_diselectall=0x7f0b0051;
-        public static final int id_show_menu_multi_delete_selectall=0x7f0b0050;
-        public static final int id_show_menu_multi_star_confirm=0x7f0b004f;
+        public static final int id_show_menu_multi_delete_diselectall=0x7f0b0050;
+        public static final int id_show_menu_multi_delete_selectall=0x7f0b004f;
         public static final int id_show_menu_search=0x7f0b004d;
         public static final int id_show_menu_sort=0x7f0b004b;
         public static final int id_show_note_root=0x7f0b0038;
@@ -301,7 +300,7 @@ public final class R {
         public static final int id_show_title_new_pen=0x7f0b003c;
         public static final int id_show_title_new_text=0x7f0b003d;
         public static final int id_show_title_rl=0x7f0b0035;
-        public static final int id_star_menu_multi_rm_confirm=0x7f0b0052;
+        public static final int id_star_menu_multi_rm_confirm=0x7f0b0051;
         public static final int id_starnotes_title_back=0x7f0b0036;
         public static final int id_text=0x7f0b0021;
         public static final int id_wait_dialog_content=0x7f0b0004;

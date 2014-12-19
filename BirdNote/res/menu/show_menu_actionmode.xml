@@ -6,10 +6,6 @@
         android:showAsAction="always"
         android:title="@string/show_menu_delete"/>
     <item
-        android:id="@+id/id_show_menu_multi_star_confirm"
-        android:showAsAction="always"
-        android:title="@string/edit_menu_favor"/>
-    <item
         android:id="@+id/id_show_menu_multi_delete_selectall"
         android:showAsAction="always"
         android:title="@string/show_menu_delete_selectall"/>

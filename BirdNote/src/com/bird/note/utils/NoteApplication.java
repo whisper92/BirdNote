@@ -2,6 +2,7 @@ package com.bird.note.utils;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.bird.note.R;
 import com.bird.note.model.BirdMessage;
@@ -94,14 +95,14 @@ public class NoteApplication extends Application {
 	public int screenWidth = 0;
 	public int screenHeight = 0;
 
-	public int currentEditMode = R.id.id_edit_title_pen;
+	public int mCurrentEditMode = R.id.id_edit_title_pen;
 
 	public int getCurrentEditMode() {
-		return currentEditMode;
+		return mCurrentEditMode;
 	}
 
 	public void setCurrentEditMode(int currentEditMode) {
-		this.currentEditMode = currentEditMode;
+		this.mCurrentEditMode = currentEditMode;
 	}
 
 	private static Context sContext;

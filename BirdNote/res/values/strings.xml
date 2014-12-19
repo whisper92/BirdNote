@@ -7,7 +7,7 @@
     <string name="edit_menu_delete">Delete</string>
     <string name="edit_menu_favor">Favor</string>
     <string name="edit_menu_removefavor">Remove Favor</string>
-    <string name="edit_menu_change_bg">Changer NoteBackground</string>
+    <string name="edit_menu_change_bg">Change NoteBackground</string>
     <string name="edit_menu_change_cover">Change Cover</string>
     <string name="edit_menu_change_page">Pages</string>
     <string name="edit_menu_saveas">SaveAs</string>

@@ -109,9 +109,6 @@ public class BitmapUtil {
 		}
 	}
 
-
-
-
 	/**
 	 * 合并图层,bitmap已回收
 	 */

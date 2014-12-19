@@ -3,6 +3,7 @@ package com.bird.note.model;
 import java.util.List;
 
 import android.R.integer;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -112,6 +113,7 @@ public class ShowNoteAdapter extends BaseAdapter implements
 		return true;
 	}
 
+	private String[] todeletids = null;
 	public ActionMode.Callback mCallback = new ActionMode.Callback() {
 
 		@Override
@@ -144,18 +146,26 @@ public class ShowNoteAdapter extends BaseAdapter implements
 			if (item.getItemId() == R.id.id_show_menu_multi_delete_confirm || item.getItemId() == R.id.id_star_menu_multi_rm_confirm) {
 
 				if (mOnConfirmDeleteListener != null) {
-					mOnConfirmDeleteListener.confirmDo(getSelectNoteIds(), 0);
+					todeletids = getSelectNoteIds();
+					PopMenuManager.createDeleteAlertDialog(mContext, R.string.alert_delete_content, new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+
+							if (which == -1) {
+								if (todeletids != null) {
+									mOnConfirmDeleteListener.confirmDo(todeletids, 0);
+								}
+								
+							}
+							
+						}
+					});
+					
 				} else {
 
 				}
 				mode.finish();
-			}
-			if (item.getItemId() == R.id.id_show_menu_multi_star_confirm) {
-				if (mOnConfirmDeleteListener != null) {
-					mOnConfirmDeleteListener.confirmDo(getSelectNoteIds(), 1);
-				} else {
-
-				}
 			}
 
 			if (item.getItemId() == R.id.id_show_menu_multi_delete_selectall) {
@@ -184,9 +194,11 @@ public class ShowNoteAdapter extends BaseAdapter implements
 		for (int i = 0; i < noteids.length; i++) {
 			if (mGridView.isItemChecked(i)) {
 				noteids[i] = mListData.get(i)._id + "";
+				
 			} else {
 				noteids[i] = String.valueOf(-1);
 			}
+			Log.e("wxp","iiiiii : "+noteids[i]);
 		}
 		return noteids;
 	}
@@ -235,6 +247,7 @@ public class ShowNoteAdapter extends BaseAdapter implements
 		return mListData.size();
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		NoteHolder holder = null;

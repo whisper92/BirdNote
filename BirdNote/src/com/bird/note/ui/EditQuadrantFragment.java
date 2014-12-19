@@ -95,7 +95,6 @@ public class EditQuadrantFragment extends Fragment {
 		b.putInt(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_CREATE_VALUE);
 		b.putInt("type", BirdMessage.START_TYPE_CREATE_VALUE);
 		b.putInt("quadrant", qua);
-		b.putInt("mode", mode);
 		editFragment.setArguments(b);
 		return editFragment;
 	}
@@ -109,7 +108,6 @@ public class EditQuadrantFragment extends Fragment {
 		b.putInt(BirdMessage.START_TYPE_KEY, BirdMessage.START_TYPE_UPDATE_VALUE);
 		b.putInt("type", BirdMessage.START_TYPE_UPDATE_VALUE);
 		b.putInt("quadrant", quadrantContent.quadrant);
-		b.putInt("mode", mode);
 		b.putParcelable("quadrantContent", quadrantContent);
 		editFragment.setArguments(b);
 		return editFragment;
@@ -148,7 +146,7 @@ public class EditQuadrantFragment extends Fragment {
 
 			}
 
-			mCurrentMode = b.getInt("mode");
+			mCurrentMode = mNoteApplication.getCurrentEditMode();
 			mCurrentType = b.getInt("type");
 			mCurrentQuadrant = b.getInt("quadrant");
 			mEditedQuadrants[mCurrentQuadrant] = 1;
@@ -312,9 +310,10 @@ public class EditQuadrantFragment extends Fragment {
 	 */
 	public void changeCurrentMode(int clickID) {
 
-		mCurrentMode = clickID;
+		mNoteApplication = (NoteApplication) getActivity().getApplication();
 
 		if (clickID == R.id.id_edit_title_pen) {
+			mCurrentMode = R.id.id_edit_title_pen;
 			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			hideInputMethod();
 			if (mFirstComeIn) {
@@ -325,7 +324,8 @@ public class EditQuadrantFragment extends Fragment {
 			mEditText.setCursorVisible(false);
 			mPenView.initDrawPaint();
 		} else if (clickID == R.id.id_edit_title_text) {
-			mNoteApplication.setCurrentEditMode(mCurrentMode);
+			mCurrentMode = R.id.id_edit_title_text;
+			mNoteApplication.setCurrentEditMode(mCurrentMode);	
 			mEditText.bringToFront();
 			mEditText.setCursorVisible(true);
 			mEditText.setFocusable(true);
@@ -333,6 +333,7 @@ public class EditQuadrantFragment extends Fragment {
 			mEditText.requestFocus();
 			showInputMethod();
 		} else if (clickID == R.id.id_edit_title_clean) {
+			mCurrentMode = R.id.id_edit_title_clean;
 			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			hideInputMethod();
 			if (mFirstComeIn) {
@@ -343,6 +344,7 @@ public class EditQuadrantFragment extends Fragment {
 			mEditText.setCursorVisible(false);
 			mPenView.setCleanPaint();
 		} else {
+			Log.e("wxp", "changeCurrentMode : other");
 		}
 
 	}

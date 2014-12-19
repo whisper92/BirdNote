@@ -277,8 +277,6 @@ public class DbHelper {
 	 */
 	public void updateNoteById(BirdNote birdNote, String note_id) {
 		ContentValues values = new ContentValues();
-		values.put(NotesTable.LEVEL, birdNote.level);
-		values.put(NotesTable.TITLE, birdNote.title);
 		values.put(NotesTable.TEXTCONTENT, birdNote.textcontents);
 		values.put(NotesTable.QUA0, birdNote.qua0);
 		values.put(NotesTable.QUA1, birdNote.qua1);
