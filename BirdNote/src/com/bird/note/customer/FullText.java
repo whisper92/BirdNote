@@ -41,6 +41,7 @@ public class FullText extends EditText {
 	private Toast mToast = null;
 	private Context mContext;
 	private NoteApplication mNoteApplication = null;
+	private boolean flag = true;
 
 	public FullText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -131,9 +132,14 @@ public class FullText extends EditText {
 		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 		mFullTextWidth = widthSize;
 		mFullTextHeight = heightSize;
-		mMaxLines = (int) (mFullTextHeight / mLineHeight);
+		if (flag) {
+			mMaxLines = (int) (mFullTextHeight / mLineHeight);
+			flag = false;
+		}
+		
 		setMeasuredDimension(mFullTextWidth, mFullTextHeight);
 	}
+	
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

@@ -14,7 +14,7 @@
         android:label="@string/app_name"        
         >
         <activity
-            android:theme="@style/edit_note_activity" 
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" 
             android:name="com.bird.note.ui.EditNoteActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >

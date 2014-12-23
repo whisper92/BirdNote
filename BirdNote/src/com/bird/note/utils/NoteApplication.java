@@ -2,6 +2,7 @@ package com.bird.note.utils;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Paint;
 import android.util.Log;
 
 import com.bird.note.R;
@@ -127,7 +128,7 @@ public class NoteApplication extends Application {
 		this.edited = edited;
 	}
 
-	public boolean[][] undoredo = new boolean[][] { { false, false },
+	/*public boolean[][] undoredo = new boolean[][] { { false, false },
 			{ false, false }, { false, false }, { false, false } };
 
 	public boolean[][] getUndoredo() {
@@ -140,7 +141,7 @@ public class NoteApplication extends Application {
 
 	public void initUndoRedo() {
 		undoredo = new boolean[][] { { false, false }, { false, false }, { false, false }, { false, false } };
-	}
+	}*/
 
 	public int notescount = 0;
 
@@ -151,5 +152,24 @@ public class NoteApplication extends Application {
 	public void setNotescount(int notescount) {
 		this.notescount = notescount;
 	}
+	
+	public Paint currentPaint = null;
 
+	public Paint getCurrentPaint() {
+		return currentPaint;
+	}
+
+	public void setCurrentPaint(Paint currentPaint) {
+		this.currentPaint = currentPaint;
+	}
+	
+	public boolean cleanMode = false;
+
+	public boolean isCleanMode() {
+		return cleanMode;
+	}
+
+	public void setCleanMode(boolean cleanMode) {
+		this.cleanMode = cleanMode;
+	}
 }

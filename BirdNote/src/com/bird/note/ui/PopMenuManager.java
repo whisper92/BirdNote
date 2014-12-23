@@ -21,8 +21,8 @@ public class PopMenuManager {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		AlertDialog dialog = builder.setTitle(
 		        context.getString(titleSrc)).setSingleChoiceItems(context.getResources()
-						.getStringArray(R.array.sortby_array), PreferenceUtil.getSortBy(), listener)
-						.setPositiveButton(context.getString(R.string.show_menu_confirm), listener).show();
+				.getStringArray(R.array.sortby_array), PreferenceUtil.getSortBy(), listener)
+				.setPositiveButton(context.getString(R.string.show_menu_confirm), listener).show();
 		return dialog;
 	}
 

@@ -6,48 +6,31 @@ import java.util.List;
 
 import org.json.JSONException;
 
-import android.R.integer;
-import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.ActionBar.LayoutParams;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bird.note.R;
+import com.bird.note.customer.BirdInputTitleDialog;
 import com.bird.note.customer.BirdWaitDialog;
 import com.bird.note.customer.ChangeCover;
 import com.bird.note.customer.ChangeQua;
 import com.bird.note.customer.ChangeQua.OnChangeQuaListener;
-import com.bird.note.customer.BirdInputTitleDialog;
-import com.bird.note.customer.PenView;
-import com.bird.note.customer.PopEraserBox;
-import com.bird.note.customer.PopPenBox;
-import com.bird.note.customer.PenView.OnPathListChangeListener;
-import com.bird.note.customer.PopEraserBox.OnEraserChangedListener;
-import com.bird.note.customer.PopPenBox.OnPaintChangedListener;
 import com.bird.note.dao.DbHelper;
 import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.QuadrantContent;
-import com.bird.note.model.SavedPaint;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.JsonUtil;
@@ -58,7 +41,7 @@ import com.bird.note.utils.NoteApplication;
  * @since 19/12/14
  *
  */
-public class EditNoteActivity extends FragmentActivity implements OnClickListener {
+public class EditNoteActivity extends FragmentActivity {
 	private String TAG = "EditNoteActivity";
 	/*
 	 * 当前所处模式：绘图或文字
@@ -83,34 +66,17 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	private int[] mEditedQuadrant;
 	public String mTitleString = "";
 	private BirdWaitDialog mWaitDialog = null;
-	private ActionBar mActionBar = null;
+	//private ActionBar mActionBar = null;
 
 	public EditText mEditText;
 
-	/*
-	 * 撤销和重做图标的状态
-	 */
-	private boolean mUndoState;
-	private boolean mRedoState;
-	private boolean mFirstComeIn = true;
-	private ImageView edit_Pen;
-	private ImageView edit_Text;
-	private ImageView edit_Clean;
-	private ImageView menu_Undo;
-	private ImageView menu_Redo;
-	private ImageView menu_More;
-	private ImageView menu_Save;
+
 
 	private int mPenHasSelected = 0;
 	private int mEraserHasSelected = 0;
 
-	private PopPenBox mPopPenBox;
-	private PopEraserBox mPopEraserBox;
-	private boolean mPenBoxOpened = false;
-	private boolean mEraserBoxOpened = false;
-	private SavedPaint mSavedPaint;
 	private ChangeQua mChangeQua = null;
-
+	private AlertDialog.Builder builder = null;
 	public int getmPenHasSelected() {
 		return mPenHasSelected;
 	}
@@ -132,12 +98,11 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.edit_note_main);
-		mActionBar = getActionBar();
+		//mActionBar = getActionBar();
 		mChangeQua = (ChangeQua) findViewById(R.id.id_edit_change_qua);
 		mChangeQua.setOnChangeQuaListener(mOnChangeQuaListener);
 		mWaitDialog = new BirdWaitDialog(this,android.R.style.Theme_Holo_Light_Dialog);
 		mNoteApplication = (NoteApplication) getApplication();
-		mNoteApplication.initUndoRedo();
 		mNoteApplication.setEdited(false);
 		mNoteEditType = mNoteApplication.getCurrentNoteEidtType();
 		mEditedQuadrant = mNoteApplication.getEditedQuadrants();
@@ -162,7 +127,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		initActionBar();
+		builder = PopMenuManager.createChooseMarkAlertDialog( EditNoteActivity.this, R.string.edit_menu_change_cover, mChooseCoverListener);
 	}
 
 	OnChangeQuaListener mOnChangeQuaListener = new OnChangeQuaListener() {
@@ -174,43 +139,10 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		}
 	};
 
-	AlertDialog.Builder builder = null;
+
 	View mCoverView = null;
 	ChangeCover mChangeCover = null;
 
-	public void initActionBar() {
-		View headView = getLayoutInflater().inflate(R.layout.edit_note_header, null);
-		mActionBar.setCustomView(headView, new LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		mActionBar.setDisplayShowCustomEnabled(true);
-
-		edit_Pen = (ImageView) headView.findViewById(R.id.id_edit_title_pen);
-		edit_Text = (ImageView) headView.findViewById(R.id.id_edit_title_text);
-		edit_Clean = (ImageView) headView.findViewById(R.id.id_edit_title_clean);
-		menu_Undo = (ImageView) headView.findViewById(R.id.id_edit_title_pre);
-		menu_Redo = (ImageView) headView.findViewById(R.id.id_edit_title_next);
-		menu_More = (ImageView) headView.findViewById(R.id.id_edit_title_more);
-		menu_Save = (ImageView) headView.findViewById(R.id.id_edit_title_save);
-
-		edit_Pen.setOnClickListener(this);
-		edit_Text.setOnClickListener(this);
-		edit_Clean.setOnClickListener(this);
-		menu_Undo.setOnClickListener(this);
-		menu_Redo.setOnClickListener(this);
-		menu_More.setOnClickListener(this);
-		menu_Save.setOnClickListener(this);
-
-		menu_Undo.setEnabled(false);
-		menu_Redo.setEnabled(false);
-
-		mSavedPaint = new SavedPaint(this);
-
-		builder = PopMenuManager.createChooseMarkAlertDialog( EditNoteActivity.this, R.string.edit_menu_change_cover, mChooseCoverListener);
-
-		changeOtherIconState(mCurrentMode);
-		createEraserBox();
-		createPenBox();
-	}
 
 	android.content.DialogInterface.OnClickListener mChooseCoverListener = new android.content.DialogInterface.OnClickListener() {
 
@@ -225,230 +157,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 		}
 
 	};
-	public OnPathListChangeListener mOnPathListChangeListener = new OnPathListChangeListener() {
-		@Override
-		public void changeState(int undocount, int redocount) {
-			mUndoState = undocount > 0 ? true : false;
-			mRedoState = redocount > 0 ? true : false;
-			changeStateOfUndoRedo(mUndoState, mRedoState);
-
-		}
-	};
-
-	/**
-	 * 保存和回复撤销和重做图标的状态
-	 */
-	public void changeStateOfUndoRedo(boolean undoState, boolean redoState) {
-		menu_Undo.setEnabled(undoState);
-		menu_Redo.setEnabled(redoState);
-
-		mNoteApplication.undoredo[mCurrentQuadrant][0] = undoState;
-		mNoteApplication.undoredo[mCurrentQuadrant][1] = redoState;
-	}
-
-	/**
-	 * 进入某一种模式的时候，要改变其他模式对应的图标的状态
-	 */
-	public void changeOtherIconState(int clickID) {
-		switch (clickID) {
-		case R.id.id_edit_title_pen:
-			edit_Pen.setSelected(true);
-			edit_Text.setSelected(false);
-			edit_Clean.setSelected(false);
-			menu_Undo.setClickable(true);
-			menu_Redo.setClickable(true);
-			mPenHasSelected += 1;
-			mEraserHasSelected = 0;
-			break;
-
-		case R.id.id_edit_title_text:
-			edit_Text.setSelected(true);
-			edit_Pen.setSelected(false);
-			edit_Clean.setSelected(false);
-			menu_Undo.setEnabled(false);
-			menu_Redo.setEnabled(false);
-			mPenHasSelected = 0;
-			mEraserHasSelected = 0;
-			break;
-
-		case R.id.id_edit_title_clean:
-			edit_Clean.setSelected(true);
-			edit_Text.setSelected(false);
-			edit_Pen.setSelected(false);
-			menu_Undo.setClickable(true);
-			menu_Redo.setClickable(true);
-			mPenHasSelected = 0;
-			mEraserHasSelected += 1;
-			break;
-
-		default:
-			break;
-		}
-	}
-
-	@Override
-	public void onClick(View v) {
-
-		switch (v.getId()) {
-		case R.id.id_edit_title_pen:
-			mCurrentMode = R.id.id_edit_title_pen;
-			mNoteApplication.setCurrentEditMode(mCurrentMode);
-			mOnClickTitleMenuListener.clickMenu(R.id.id_edit_title_pen);
-			changeOtherIconState(mCurrentMode);
-			togglePenBox(mCurrentMode);
-			mPenHasSelected += 1;
-			mEraserHasSelected = 0;
-			break;
-
-		case R.id.id_edit_title_text:
-			mCurrentMode = R.id.id_edit_title_text;
-			mNoteApplication.setCurrentEditMode(mCurrentMode);
-			mOnClickTitleMenuListener.clickMenu(R.id.id_edit_title_text);
-			changeOtherIconState(mCurrentMode);
-			mPenHasSelected = 0;
-			mEraserHasSelected = 0;
-			break;
-
-		case R.id.id_edit_title_clean:
-			mCurrentMode = R.id.id_edit_title_clean;
-			mNoteApplication.setCurrentEditMode(mCurrentMode);
-			mOnClickTitleMenuListener.clickMenu(R.id.id_edit_title_clean);
-			changeOtherIconState(mCurrentMode);
-			toggleEraserBox(mCurrentMode);
-			mPenHasSelected = 0;
-			mEraserHasSelected += 1;
-			break;
-
-		case R.id.id_edit_title_pre:
-			mEditQuaFragment.mPenView.undo();
-			break;
-
-		case R.id.id_edit_title_next:
-			mEditQuaFragment.mPenView.redo();
-			break;
-
-		case R.id.id_edit_title_more:
-			openOptionsMenu();
-			break;
-
-		case R.id.id_edit_title_save:
-			mEditQuaFragment.saveNote();
-			break;
-
-		default:
-			break;
-		}
-	}
-
-	/**
-	 * 开关笔刷设置框
-	 *
-	 * @param mode
-	 */
-	public void togglePenBox(int mode) {
-		createPenBox();
-		if (mode == BirdMessage.START_MODE_DRAW_KEY) {
-			if (!mPenBoxOpened || (!mPopPenBox.isShowing())) {
-				if (mPenHasSelected > 1) {
-					mPenHasSelected = 1;
-					mPopPenBox.showAsDropDown(edit_Pen);
-					mPenBoxOpened = true;
-				}
-			} else {
-				mPopPenBox.dismiss();
-				mPenBoxOpened = false;
-			}
-		} else {
-			mPopPenBox.dismiss();
-			mPenBoxOpened = false;
-		}
-	}
-
-	/**
-	 * 开关橡皮擦设置框
-	 *
-	 * @param mode
-	 */
-	public void toggleEraserBox(int mode) {
-		createEraserBox();
-		if (mode == BirdMessage.START_MODE_CLEAN_KEY) {
-			if (!mEraserBoxOpened || (!mPopEraserBox.isShowing())) {
-				if (mEraserHasSelected > 1) {
-					mPopEraserBox.showAsDropDown(edit_Clean);
-					mEraserBoxOpened = true;
-					mEraserHasSelected = 1;
-				}
-			} else {
-				mPopEraserBox.dismiss();
-				mEraserBoxOpened = false;
-			}
-		} else {
-			mPopEraserBox.dismiss();
-			mEraserBoxOpened = false;
-		}
-	}
-
-	public void createPenBox() {
-		mPopPenBox = new PopPenBox(this);
-		mPopPenBox.setOnPaintChangedListener(new OnPaintChangedListener() {
-			@Override
-			public void changePaint(Paint paint) {
-				mEditQuaFragment.mPenView.setDrawPaintColor(paint.getColor());
-				mEditQuaFragment.mPenView.setDrawPaintWidth(paint.getStrokeWidth());
-				mSavedPaint.savePaintColor(paint.getColor());
-				mSavedPaint.savePaintWidth(paint.getStrokeWidth());
-			}
-		});
-	}
-
-	public void createEraserBox() {
-		mPopEraserBox = new PopEraserBox(this, new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mPopEraserBox.isShowing()) {
-					mPopEraserBox.dismiss();
-				}
-				PopMenuManager.createDeleteAlertDialog(EditNoteActivity.this, R.string.alert_clear_all, ConfirmClearAllListener);
-			}
-		});
-		mPopEraserBox.setOnPaintChangedListener(new OnEraserChangedListener() {
-			@Override
-			public void changePaint(Paint paint) {
-				mEditQuaFragment.mPenView.setCleanPaintWidth(paint.getStrokeWidth());
-				mSavedPaint.saveCleanPaintWidth(paint.getStrokeWidth());
-			}
-		});
-	}
-
-	public android.content.DialogInterface.OnClickListener ConfirmClearAllListener = new android.content.DialogInterface.OnClickListener() {
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			if (which == -1) {
-				mEditQuaFragment.mPenView.clearAll();
-				mNoteApplication.setEdited(true);
-			}
-
-		}
-	};
-
-	public void closeBox() {
-		if (mPopEraserBox != null && mPopEraserBox.isShowing()) {
-			mPopEraserBox.dismiss();
-		}
-		if (mPopPenBox != null && mPopPenBox.isShowing()) {
-			mPopPenBox.dismiss();
-		}
-	}
-
-	OnClickTitleMenuListener mOnClickTitleMenuListener = null;
-
-	public interface OnClickTitleMenuListener {
-		public void clickMenu(int menuid);
-	}
-
-	public void setOnClickTitleMenuListener(OnClickTitleMenuListener listener) {
-		this.mOnClickTitleMenuListener = listener;
-	}
+	
 
 	@Override
 	public void openOptionsMenu() {
@@ -497,7 +206,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 			@Override
 			public void run() {	
 				mEditQuaFragment.changeCurrentMode(mNoteApplication.getCurrentEditMode());
-				changeStateOfUndoRedo(mNoteApplication.undoredo[mCurrentQuadrant][0],mNoteApplication.undoredo[mCurrentQuadrant][1]);
+				mEditQuaFragment.changeOtherIconState(mNoteApplication.getCurrentEditMode());
 			}
 		});
 
@@ -604,9 +313,7 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 	public BirdNote generateNewNote() {
 		BirdNote birdNote = new BirdNote();
 		int[] edited = mNoteApplication.getEditedQuadrants();
-		// int level = mLevelFlag.mCurrentLevel;
 		String title = mEditQuaFragment.mTitleString;
-		// birdNote.level = level;
 		if (mCurrentType == BirdMessage.START_TYPE_CREATE_VALUE) {
 			birdNote.title = title;
 		} else {
@@ -839,6 +546,5 @@ public class EditNoteActivity extends FragmentActivity implements OnClickListene
 
 	protected void onDestroy() {
 		super.onDestroy();
-		mNoteApplication.initUndoRedo();
 	};
 }

@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.bird.note.R;
+import com.bird.note.model.BirdMessage;
 import com.bird.note.model.CleanPaint;
 import com.bird.note.model.DrawPaint;
 import com.bird.note.model.PenDrawPath;
@@ -156,13 +157,13 @@ public class PenView extends View {
 
 	@Override
 	public void onDraw(Canvas canvas) {
-		if (isMoving == true && mIsCleanMode == true) {
+		if (isMoving == true && mNoteApplication.isCleanMode()== true) {
 			canvas.drawCircle(posX, posY, mCleanCircleRadius, mCleanPoint);
 		}
 
 		canvas.drawBitmap(mDrawBitmap, 0, 0, null);
 		if (mPath != null) {
-			mDrawCanvas.drawPath(mPath, mCurentPaint);
+			mDrawCanvas.drawPath(mPath, mNoteApplication.getCurrentPaint());
 		}
 
 	}
@@ -184,7 +185,7 @@ public class PenView extends View {
 			mPath = new Path();
 			mDrawPath = new PenDrawPath();
 			mPath.moveTo(x, y);
-			mDrawPath.paint = new Paint(mCurentPaint);
+			mDrawPath.paint = new Paint(mNoteApplication.getCurrentPaint());
 			mDrawPath.path = mPath;
 			posX = x;
 			posY = y;
@@ -211,7 +212,7 @@ public class PenView extends View {
 			if ((Math.abs(downx - event.getX())) >= 4
 					|| (Math.abs(downy - event.getY())) > 4) {
 				mPath.lineTo(posX, posY);
-				mDrawCanvas.drawPath(mPath, mCurentPaint);
+				mDrawCanvas.drawPath(mPath, mNoteApplication.getCurrentPaint());
 				mSavePath.add(mDrawPath);
 				pathListChangeListener.changeState(mSavePath.size(), mDeletePath.size());
 				mPath = null;
@@ -304,21 +305,28 @@ public class PenView extends View {
 	 */
 	public void initDrawPaint() {
 		mIsCleanMode = false;
+		Log.e("wxp", "initDrawPaint   mIsCleanMode: "+mIsCleanMode);
 		mDrawPaintColor = mSavedPaint.getSavedPaintColor();
 		mDrawPaintWidth = mSavedPaint.getSavedPaintWidth();
 		mDrawPaint.setColor(mDrawPaintColor);
 		mDrawPaint.setStrokeWidth(mDrawPaintWidth);
 		mCurentPaint = mDrawPaint;
+		mNoteApplication.setCurrentPaint(mDrawPaint);
+		mNoteApplication.setCleanMode(false);
 	}
 
 	/**
 	 * Init the Paint in Clean Mode
 	 */
 	public void setCleanPaint() {
+	
 		mIsCleanMode = true;
+		Log.e("wxp", "setCleanPaint   mIsCleanMode: "+mIsCleanMode);
 		mCleanPaintWidth = mSavedPaint.getSavedCleanPaintWidth();
 		mCleanPaint.setStrokeWidth(mCleanPaintWidth);
 		mCurentPaint = mCleanPaint;
+		mNoteApplication.setCurrentPaint(mCleanPaint);
+		mNoteApplication.setCleanMode(true);
 	}
 
 	public void setCleanPaintWidth(float width) {

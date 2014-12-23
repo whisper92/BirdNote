@@ -75,7 +75,7 @@ public class CommonUtils {
 	}
 
 	public static String getDefaultTitle(Context context) {
-		return context.getString(R.string.app_name) + "" + ((NoteApplication) context.getApplicationContext()).getNotescount();
+		return context.getString(R.string.app_name) + "" +( ((NoteApplication) context.getApplicationContext()).getNotescount()+1);
 	}
 
 	public static String spliteTitle(String origTitle) {

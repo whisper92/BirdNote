@@ -35,7 +35,7 @@ import com.bird.note.model.BirdMessage;
 import com.bird.note.model.BirdNote;
 import com.bird.note.model.QuadrantContent;
 import com.bird.note.model.SavedPaint;
-import com.bird.note.ui.EditNoteActivity.OnClickTitleMenuListener;
+
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
@@ -45,7 +45,7 @@ import com.bird.note.utils.NoteApplication;
  * @since 19/12/14
  *
  */
-public class EditQuadrantFragment extends Fragment {
+public class EditQuadrantFragment extends Fragment implements OnClickListener{
 	private static String TAG = "EditQuadrantFragment";
 	private EditText mInputTitleEditText;
 	private NoteApplication mNoteApplication;
@@ -83,9 +83,16 @@ public class EditQuadrantFragment extends Fragment {
 	private BirdNote mBirdNote;
 	public ChooseEditBgPopMenu chooseEditBgPopMenu;
 	private DbHelper mDbHelper;
-
+	private SavedPaint mSavedPaint;
 	private EditNoteActivity mEditNoteActivity = null;
-
+	private PopPenBox mPopPenBox;
+	private PopEraserBox mPopEraserBox;
+	private int mPenHasSelected = 0;
+	private int mEraserHasSelected = 0;
+	
+	private boolean mPenBoxOpened = false;
+	private boolean mEraserBoxOpened = false;
+	
 	/**
 	 * 创建笔记时实例化的方式
 	 */
@@ -153,6 +160,7 @@ public class EditQuadrantFragment extends Fragment {
 			mNoteApplication.setEditedQuadrants(mEditedQuadrants);
 			initView(mCurrentType);
 			changeCurrentMode(mCurrentMode);
+			changeOtherIconState(mCurrentMode);
 		}
 
 		return view;
@@ -165,10 +173,28 @@ public class EditQuadrantFragment extends Fragment {
 		if (type == BirdMessage.START_TYPE_UPDATE_VALUE) {
 			initUpdateView(type, quadrantContent);
 		}
-		mPenView.setOnPathListChangeListenr(((EditNoteActivity) getActivity()).mOnPathListChangeListener);
+		mPenView.setOnPathListChangeListenr(mOnPathListChangeListener);
 		mPenView.setLayoutParams(new FrameLayout.LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 	}
 
+	public OnPathListChangeListener mOnPathListChangeListener = new OnPathListChangeListener() {
+		@Override
+		public void changeState(int undocount, int redocount) {
+			mUndoState = undocount > 0 ? true : false;
+			mRedoState = redocount > 0 ? true : false;
+			changeStateOfUndoRedo(mUndoState, mRedoState);
+
+		}
+	};
+
+	/**
+	 * 保存和回复撤销和重做图标的状态
+	 */
+	public void changeStateOfUndoRedo(boolean undoState, boolean redoState) {
+		menu_Undo.setEnabled(undoState);
+		menu_Redo.setEnabled(redoState);
+	}
+	
 	public void initCreateView(int type) {
 		mPenView = new PenView(getActivity());
 	}
@@ -206,10 +232,32 @@ public class EditQuadrantFragment extends Fragment {
 	}
 
 	public void initEditFragmentView(View view) {
-		((EditNoteActivity) getActivity()).setOnClickTitleMenuListener(mOnClickTitleMenuListener);
+
 		mWrapFrameLayout = (FrameLayout) view.findViewById(R.id.id_edit_main_fl_warpper);
 		mWrapFrameLayout.setBackgroundResource(mNoteApplication.getEditBackground());
 		mEditText = (EditText) view.findViewById(R.id.id_edit_main_et);
+		
+		edit_Pen = (ImageView) view.findViewById(R.id.id_edit_title_pen);
+		edit_Text = (ImageView) view.findViewById(R.id.id_edit_title_text);
+		edit_Clean = (ImageView) view.findViewById(R.id.id_edit_title_clean);
+		menu_Undo = (ImageView) view.findViewById(R.id.id_edit_title_pre);
+		menu_Redo = (ImageView) view.findViewById(R.id.id_edit_title_next);
+		menu_More = (ImageView) view.findViewById(R.id.id_edit_title_more);
+		menu_Save = (ImageView) view.findViewById(R.id.id_edit_title_save);
+
+		edit_Pen.setOnClickListener(this);
+		edit_Text.setOnClickListener(this);
+		edit_Clean.setOnClickListener(this);
+		menu_Undo.setOnClickListener(this);
+		menu_Redo.setOnClickListener(this);
+		menu_More.setOnClickListener(this);
+		menu_Save.setOnClickListener(this);
+
+		menu_Undo.setEnabled(false);
+		menu_Redo.setEnabled(false);
+
+		mSavedPaint = new SavedPaint(getActivity());
+		
 		chooseEditBgPopMenu.setOnChangeBackgroundListener(new OnChangeBackgroundListener() {
 
 					@Override
@@ -295,13 +343,7 @@ public class EditQuadrantFragment extends Fragment {
 		return BitmapUtil.mergeBitmap(getActivity(), bgBitmap, mPenView.mDrawBitmap, getTextBitmap());
 	}
 
-	public OnClickTitleMenuListener mOnClickTitleMenuListener = new OnClickTitleMenuListener() {
 
-		@Override
-		public void clickMenu(int menuid) {
-			changeCurrentMode(menuid);
-		}
-	};
 
 	/**
 	 * 设置当前的编辑模式
@@ -309,10 +351,11 @@ public class EditQuadrantFragment extends Fragment {
 	 * @param clickID
 	 */
 	public void changeCurrentMode(int clickID) {
-
+		Log.e("wxp", "mWrapFrameLayout.getChildCount() "+mWrapFrameLayout.getChildCount());
 		mNoteApplication = (NoteApplication) getActivity().getApplication();
 
 		if (clickID == R.id.id_edit_title_pen) {
+			Log.e("wxp", "changmode : id_edit_title_pen ");
 			mCurrentMode = R.id.id_edit_title_pen;
 			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			hideInputMethod();
@@ -320,19 +363,24 @@ public class EditQuadrantFragment extends Fragment {
 				mWrapFrameLayout.addView(mPenView);
 				mFirstComeIn = false;
 			}
-			mPenView.bringToFront();
+			changeStateOfUndoRedo(mUndoState, mRedoState);
+			mWrapFrameLayout.bringChildToFront(mPenView);		
 			mEditText.setCursorVisible(false);
 			mPenView.initDrawPaint();
+
 		} else if (clickID == R.id.id_edit_title_text) {
+			Log.e("wxp", "changmode : id_edit_title_text ");
 			mCurrentMode = R.id.id_edit_title_text;
+			mWrapFrameLayout.bringChildToFront(mEditText);			
 			mNoteApplication.setCurrentEditMode(mCurrentMode);	
-			mEditText.bringToFront();
 			mEditText.setCursorVisible(true);
 			mEditText.setFocusable(true);
 			mEditText.setFocusableInTouchMode(true);
 			mEditText.requestFocus();
+			
 			showInputMethod();
 		} else if (clickID == R.id.id_edit_title_clean) {
+			Log.e("wxp", "changmode : id_edit_title_clean ");
 			mCurrentMode = R.id.id_edit_title_clean;
 			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			hideInputMethod();
@@ -340,13 +388,15 @@ public class EditQuadrantFragment extends Fragment {
 				mWrapFrameLayout.addView(mPenView);
 				mFirstComeIn = false;
 			}
-			mPenView.bringToFront();
+			changeStateOfUndoRedo(mUndoState, mRedoState);
+			mWrapFrameLayout.bringChildToFront(mPenView);
 			mEditText.setCursorVisible(false);
 			mPenView.setCleanPaint();
+			
 		} else {
 			Log.e("wxp", "changeCurrentMode : other");
 		}
-
+		mWrapFrameLayout.requestLayout();
 	}
 
 	public void saveNote() {
@@ -457,6 +507,191 @@ public class EditQuadrantFragment extends Fragment {
 			InputMethodManager inputmanger = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 			inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
 		}
+	}
+
+	/**
+	 * 进入某一种模式的时候，要改变其他模式对应的图标的状态
+	 */
+	public void changeOtherIconState(int clickID) {
+		switch (clickID) {
+		case R.id.id_edit_title_pen:
+			edit_Pen.setSelected(true);
+			edit_Text.setSelected(false);
+			edit_Clean.setSelected(false);
+			menu_Undo.setClickable(true);
+			menu_Redo.setClickable(true);
+			mPenHasSelected += 1;
+			mEraserHasSelected = 0;
+			break;
+
+		case R.id.id_edit_title_text:
+			edit_Text.setSelected(true);
+			edit_Pen.setSelected(false);
+			edit_Clean.setSelected(false);
+			menu_Undo.setEnabled(false);
+			menu_Redo.setEnabled(false);
+			mPenHasSelected = 0;
+			mEraserHasSelected = 0;
+			break;
+
+		case R.id.id_edit_title_clean:
+			edit_Clean.setSelected(true);
+			edit_Text.setSelected(false);
+			edit_Pen.setSelected(false);
+			menu_Undo.setClickable(true);
+			menu_Redo.setClickable(true);
+			mPenHasSelected = 0;
+			mEraserHasSelected += 1;
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	/**
+	 * 开关笔刷设置框
+	 *
+	 * @param mode
+	 */
+	public void togglePenBox(int mode) {
+		createPenBox();
+		if (mode == BirdMessage.START_MODE_DRAW_KEY) {
+			if (!mPenBoxOpened || (!mPopPenBox.isShowing())) {
+				if (mPenHasSelected > 1) {
+					mPenHasSelected = 1;
+					mPopPenBox.showAsDropDown(edit_Pen);
+					mPenBoxOpened = true;
+				}
+			} else {
+				mPopPenBox.dismiss();
+				mPenBoxOpened = false;
+			}
+		} else {
+			mPopPenBox.dismiss();
+			mPenBoxOpened = false;
+		}
+	}
+
+	/**
+	 * 开关橡皮擦设置框
+	 *
+	 * @param mode
+	 */
+	public void toggleEraserBox(int mode) {
+		createEraserBox();
+		if (mode == BirdMessage.START_MODE_CLEAN_KEY) {
+			if (!mEraserBoxOpened || (!mPopEraserBox.isShowing())) {
+				if (mEraserHasSelected > 1) {
+					mPopEraserBox.showAsDropDown(edit_Clean);
+					mEraserBoxOpened = true;
+					mEraserHasSelected = 1;
+				}
+			} else {
+				mPopEraserBox.dismiss();
+				mEraserBoxOpened = false;
+			}
+		} else {
+			mPopEraserBox.dismiss();
+			mEraserBoxOpened = false;
+		}
+	}
+
+	public void createPenBox() {
+		mPopPenBox = new PopPenBox(getActivity());
+		mPopPenBox.setOnPaintChangedListener(new OnPaintChangedListener() {
+			@Override
+			public void changePaint(Paint paint) {
+				mPenView.setDrawPaintColor(paint.getColor());
+				mPenView.setDrawPaintWidth(paint.getStrokeWidth());
+				mSavedPaint.savePaintColor(paint.getColor());
+				mSavedPaint.savePaintWidth(paint.getStrokeWidth());
+			}
+		});
+	}
+
+	public void createEraserBox() {
+		mPopEraserBox = new PopEraserBox(getActivity(), new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mPopEraserBox.isShowing()) {
+					mPopEraserBox.dismiss();
+				}
+				PopMenuManager.createDeleteAlertDialog(getActivity(), R.string.alert_clear_all, ConfirmClearAllListener);
+			}
+		});
+		mPopEraserBox.setOnPaintChangedListener(new OnEraserChangedListener() {
+			@Override
+			public void changePaint(Paint paint) {
+				mPenView.setCleanPaintWidth(paint.getStrokeWidth());
+				mSavedPaint.saveCleanPaintWidth(paint.getStrokeWidth());
+			}
+		});
+	}
+
+	public android.content.DialogInterface.OnClickListener ConfirmClearAllListener = new android.content.DialogInterface.OnClickListener() {
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			if (which == -1) {
+				mPenView.clearAll();
+				mNoteApplication.setEdited(true);
+			}
+
+		}
+	};
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.id_edit_title_pen:
+			mCurrentMode = R.id.id_edit_title_pen;
+			mNoteApplication.setCurrentEditMode(mCurrentMode);
+            changeCurrentMode(R.id.id_edit_title_pen);
+			changeOtherIconState(mCurrentMode);
+			togglePenBox(mCurrentMode);
+			mPenHasSelected += 1;
+			mEraserHasSelected = 0;
+			break;
+
+		case R.id.id_edit_title_text:
+			mCurrentMode = R.id.id_edit_title_text;
+			mNoteApplication.setCurrentEditMode(mCurrentMode);
+			changeCurrentMode(R.id.id_edit_title_text);
+			changeOtherIconState(mCurrentMode);
+			mPenHasSelected = 0;
+			mEraserHasSelected = 0;
+			break;
+
+		case R.id.id_edit_title_clean:
+			mCurrentMode = R.id.id_edit_title_clean;
+			mNoteApplication.setCurrentEditMode(mCurrentMode);
+			changeCurrentMode(R.id.id_edit_title_clean);
+			changeOtherIconState(mCurrentMode);
+			toggleEraserBox(mCurrentMode);
+			mPenHasSelected = 0;
+			mEraserHasSelected += 1;
+			break;
+
+		case R.id.id_edit_title_pre:
+			mPenView.undo();
+			break;
+
+		case R.id.id_edit_title_next:
+			mPenView.redo();
+			break;
+
+		case R.id.id_edit_title_more:
+			((EditNoteActivity)getActivity()).openOptionsMenu();
+			break;
+
+		case R.id.id_edit_title_save:
+			saveNote();
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 
 }

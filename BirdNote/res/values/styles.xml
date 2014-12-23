@@ -24,7 +24,7 @@
         <item name="android:thumbOffset">10.0dip</item>
     </style>
 
-    <style name="show_note_activity" parent="android:style/Theme.Holo.Light">
+    <style name="show_note_activity" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionOverflowButtonStyle">@null</item>
         <item name="android:actionBarStyle">@style/show_note_actionbar</item>
         <item name="android:homeAsUpIndicator">@drawable/back</item>
