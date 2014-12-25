@@ -61,4 +61,7 @@
     <string name="changequatoast">Change To The %1$s Quadrant</string>
     <string name="searchnothing">Find Nothing</string>
     <string name="starchnothing">Star Nothing</string>
+    
+    <string name="intro">Introduction</string>
+    <string name="intro_content">  1.Now,the note is in drawing mode,and you can draw content on the screen with your fingers.  \n \n  2.You can click the drawing icon in the upper left hand corner of the screen,then adjust the color and with of the paint. \n\n  3.If you want to insert words,you can click the text icon and switch the note into text edit mode. \n\n  4.If you want to erase the content on the screen,you can switch into clean mode.Of course,you can use undo feature and redo feature. \n\n  5.In addition,you can switch different quadrant by buttons at the bottom of screen.</string>
 </resources>

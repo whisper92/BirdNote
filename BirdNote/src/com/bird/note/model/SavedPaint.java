@@ -41,7 +41,7 @@ public class SavedPaint {
 	Paint paint = new Paint();
 	public static final int DEFAULT_PAINT_COLOR = 0xff000000;
 	public static final float DEFAULT_PAINT_WIDTH = 5f;
-	public static final float DEFAULT_CLEAN_PAINT_WIDTH = 5f;
+	public static final float DEFAULT_CLEAN_PAINT_WIDTH = 20f;
 	public static final float DEFAULT_PAINT_MAX_WIDTH = 40f;
 
 	public Context mContext;

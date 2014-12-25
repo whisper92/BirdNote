@@ -59,5 +59,8 @@
     
     <string name="changequatoast">切换至第%1$s象限</string>
     <string name="searchnothing">没有找到相关笔记</string>
-    <string name="starchnothing">暂未收藏笔记</string>
+    <string name="starchnothng">暂未收藏笔记</string>
+    
+    <string name="intro">使用说明</string>
+    <string name="intro_content">\n\n  1.现在处于绘画模式，您可以在屏幕上绘制图像。\n \n  2.您可以点击左上角的绘画图标之后，调整画笔的颜色和粗细。 \n\n  3.如果您想插入文字的话，可以点击文字图标，切换到文本编辑模式。 \n\n  4.如若您想擦除屏幕上绘制的内容，可以切换到擦除模式。当然，也可以使用撤销和重做功能  \n\n  5.可以通过屏幕底部的按钮来切换不同象限</string>
 </resources>

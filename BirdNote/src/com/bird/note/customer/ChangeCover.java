@@ -1,28 +1,21 @@
 package com.bird.note.customer;
 
-import com.bird.note.R;
-import com.bird.note.customer.ChooseEditBgPopMenu.ViewHolder;
-import com.bird.note.utils.BitmapUtil;
-
-import android.R.integer;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
+
+import com.bird.note.R;
+import com.bird.note.utils.BitmapUtil;
 
 /**
  * The view used to change the cover of the note

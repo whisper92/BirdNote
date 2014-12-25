@@ -370,6 +370,8 @@ public final class R {
         public static final int fullscreen_edit_line_lenth=0x7f08000b;
         public static final int fulltext_max=0x7f080020;
         public static final int input_title_dialog_title=0x7f08001a;
+        public static final int intro=0x7f080031;
+        public static final int intro_content=0x7f080032;
         public static final int item_menu_rename=0x7f080015;
         public static final int item_operation=0x7f080025;
         public static final int pop_eraser_clear_all=0x7f08000e;
@@ -391,6 +393,7 @@ public final class R {
         public static final int sortby_createtime=0x7f08002c;
         public static final int sortby_updatetime=0x7f08002d;
         public static final int starchnothing=0x7f080030;
+        public static final int starchnothng=0x7f080033;
         public static final int stared_note_count=0x7f080002;
     }
     public static final class style {

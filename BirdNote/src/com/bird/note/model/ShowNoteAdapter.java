@@ -147,7 +147,7 @@ public class ShowNoteAdapter extends BaseAdapter implements
 
 				if (mOnConfirmDeleteListener != null) {
 					todeletids = getSelectNoteIds();
-					PopMenuManager.createDeleteAlertDialog(mContext, R.string.alert_delete_content, new DialogInterface.OnClickListener() {
+					PopMenuManager.createDeleteAlertDialog(mContext,(item.getItemId() == R.id.id_show_menu_multi_delete_confirm) ?R.string.alert_delete_content:R.string.edit_menu_removefavor, new DialogInterface.OnClickListener() {
 						
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -198,7 +198,6 @@ public class ShowNoteAdapter extends BaseAdapter implements
 			} else {
 				noteids[i] = String.valueOf(-1);
 			}
-			Log.e("wxp","iiiiii : "+noteids[i]);
 		}
 		return noteids;
 	}

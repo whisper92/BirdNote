@@ -3,7 +3,6 @@ package com.bird.note.customer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.R.integer;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
@@ -12,13 +11,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import com.bird.note.R;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.NoteApplication;

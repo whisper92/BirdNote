@@ -1,21 +1,18 @@
 package com.bird.note.customer;
 
-import com.bird.note.R;
-
-import android.R.integer;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
+
+import com.bird.note.R;
 
 /**
  * The view used to change to other quadrant at the bottom of EditNoteActivity.

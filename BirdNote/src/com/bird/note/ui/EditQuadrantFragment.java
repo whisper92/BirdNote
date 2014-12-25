@@ -351,11 +351,9 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener{
 	 * @param clickID
 	 */
 	public void changeCurrentMode(int clickID) {
-		Log.e("wxp", "mWrapFrameLayout.getChildCount() "+mWrapFrameLayout.getChildCount());
 		mNoteApplication = (NoteApplication) getActivity().getApplication();
 
 		if (clickID == R.id.id_edit_title_pen) {
-			Log.e("wxp", "changmode : id_edit_title_pen ");
 			mCurrentMode = R.id.id_edit_title_pen;
 			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			hideInputMethod();
@@ -369,7 +367,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener{
 			mPenView.initDrawPaint();
 
 		} else if (clickID == R.id.id_edit_title_text) {
-			Log.e("wxp", "changmode : id_edit_title_text ");
 			mCurrentMode = R.id.id_edit_title_text;
 			mWrapFrameLayout.bringChildToFront(mEditText);			
 			mNoteApplication.setCurrentEditMode(mCurrentMode);	
@@ -380,7 +377,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener{
 			
 			showInputMethod();
 		} else if (clickID == R.id.id_edit_title_clean) {
-			Log.e("wxp", "changmode : id_edit_title_clean ");
 			mCurrentMode = R.id.id_edit_title_clean;
 			mNoteApplication.setCurrentEditMode(mCurrentMode);
 			hideInputMethod();
@@ -394,7 +390,6 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener{
 			mPenView.setCleanPaint();
 			
 		} else {
-			Log.e("wxp", "changeCurrentMode : other");
 		}
 		mWrapFrameLayout.requestLayout();
 	}

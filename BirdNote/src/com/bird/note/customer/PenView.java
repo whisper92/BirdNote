@@ -305,7 +305,6 @@ public class PenView extends View {
 	 */
 	public void initDrawPaint() {
 		mIsCleanMode = false;
-		Log.e("wxp", "initDrawPaint   mIsCleanMode: "+mIsCleanMode);
 		mDrawPaintColor = mSavedPaint.getSavedPaintColor();
 		mDrawPaintWidth = mSavedPaint.getSavedPaintWidth();
 		mDrawPaint.setColor(mDrawPaintColor);
@@ -318,10 +317,8 @@ public class PenView extends View {
 	/**
 	 * Init the Paint in Clean Mode
 	 */
-	public void setCleanPaint() {
-	
+	public void setCleanPaint() {	
 		mIsCleanMode = true;
-		Log.e("wxp", "setCleanPaint   mIsCleanMode: "+mIsCleanMode);
 		mCleanPaintWidth = mSavedPaint.getSavedCleanPaintWidth();
 		mCleanPaint.setStrokeWidth(mCleanPaintWidth);
 		mCurentPaint = mCleanPaint;
