@@ -49,6 +49,7 @@ public final class R {
         /**  编辑界面 
  编辑界面 
  编辑界面 
+ 编辑界面 
          */
         public static final int dimen_edit_title_menu_big=0x7f07000f;
         public static final int dimen_edit_title_menu_margin=0x7f070011;
@@ -66,6 +67,7 @@ public final class R {
         /**  首页每一项 
  首页每一项 
  首页每一项 
+ 首页每一项 
          */
         public static final int dimen_show_note_item_height=0x7f070006;
         public static final int dimen_show_note_item_mark_height=0x7f070007;
@@ -77,6 +79,7 @@ public final class R {
         public static final int dimen_show_titile_text_margin_left=0x7f070004;
         public static final int dimen_show_titile_text_margin_right=0x7f070005;
         /**  首页标题栏
+ 首页标题栏
  首页标题栏
  首页标题栏
          */

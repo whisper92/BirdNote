@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 画板的宽高 -->
-    <dimen name="dimen_edit_canvas_width">540px</dimen>
-    <dimen name="dimen_edit_canvas_height">850px</dimen>
+    <dimen name="dimen_edit_canvas_width">720px</dimen>
+    <dimen name="dimen_edit_canvas_height">1190px</dimen>
 
     <!-- 首页标题栏-->
     <dimen name="dimen_show_titile_text_size">20dp</dimen>

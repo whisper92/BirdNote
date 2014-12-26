@@ -39,7 +39,6 @@
     <dimen name="dimen_pop_pen_item_margin_top">10dp</dimen> 
     
     <dimen name="dimen_pop_pen_color_item_size">23dp</dimen> 
-    
     <dimen name="dimen_dialog_width">300dp</dimen>
     <dimen name="dimen_waitdialog_width">300dp</dimen>  
 </resources>
