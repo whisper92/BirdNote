@@ -1,17 +1,13 @@
 package com.bird.note.utils;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import android.R.integer;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
@@ -25,7 +21,6 @@ import com.bird.note.R;
 public class BitmapUtil {
 
 	private static String TAG = "BitmapUtil";
-	private static final int COMPOPTION = 100;
 	public static int getPreBgByBg(int bg){
 		int prebg = BitmapUtil.EDIT_BGS_PRE[0];
 		switch (bg) {

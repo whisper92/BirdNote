@@ -2,18 +2,17 @@ package com.bird.note.dao;
 
 import org.json.JSONException;
 
-import com.bird.note.R;
-import com.bird.note.utils.BitmapUtil;
-import com.bird.note.utils.CommonUtils;
-import com.bird.note.utils.JsonUtil;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import com.bird.note.R;
+import com.bird.note.utils.BitmapUtil;
+import com.bird.note.utils.CommonUtils;
+import com.bird.note.utils.JsonUtil;
 
 /**
  * @author wangxianpeng

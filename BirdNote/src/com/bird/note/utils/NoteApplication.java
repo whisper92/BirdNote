@@ -3,7 +3,6 @@ package com.bird.note.utils;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Paint;
-import android.util.Log;
 
 import com.bird.note.R;
 import com.bird.note.model.BirdMessage;

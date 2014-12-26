@@ -8,11 +8,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bird.note.R;
 import com.bird.note.utils.BitmapUtil;
@@ -28,9 +26,7 @@ public class ChangeCover extends LinearLayout {
 	private String TAG = "ChangeQua";
 
 	private LayoutInflater mInflater = null;
-	private Button mPreButton = null;
-	private Button mNextButton = null;
-	private TextView mIndex = null;
+
 	private GridView mCoverGridView = null;
 	private int cover = 0;
 	private ImageAdapter imageAdapter = null;

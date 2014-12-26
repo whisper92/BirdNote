@@ -1,19 +1,15 @@
 package com.bird.note.utils;
 
 import java.io.File;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.bird.note.R;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.WindowManager;
+
+import com.bird.note.R;
 
 /**
  * @author wangxianpeng

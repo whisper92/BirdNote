@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bird.note.R;
@@ -88,7 +86,7 @@ public class ReadStaredNotesActivity extends Activity {
 
 	@Override
 	protected void onRestart() {
-		if (mNoteAdapter.mActionMode != null) {
+		if (mNoteAdapter != null &&mNoteAdapter.mActionMode != null) {
 			mNoteAdapter.mActionMode.finish();
 		}
 

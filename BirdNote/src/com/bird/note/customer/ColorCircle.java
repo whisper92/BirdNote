@@ -1,16 +1,13 @@
 package com.bird.note.customer;
 
-import android.R.integer;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.bird.note.model.SavedPaint;
-import com.bird.note.utils.BitmapUtil;
 
 /**
  * The circle view show the with of current paint in the PopPenBox
@@ -75,7 +72,6 @@ public class ColorCircle extends View {
 		int widthSize = MeasureSpec.getSize(widthMeasureSpec);
 		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-		Drawable gb = getBackground();
 		int bgW = 50;// BitmapUtil.decodeDrawableToBitmap(gb).getWidth();
 		int bgH = 50;// BitmapUtil.decodeDrawableToBitmap(gb).getHeight();
 

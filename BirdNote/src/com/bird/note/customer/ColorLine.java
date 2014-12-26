@@ -22,7 +22,6 @@ public class ColorLine extends View {
 	private float mPaintWidth = 5f;
 	private int mPaintColor = 0xff000000;
 
-	private int mWidth = 0;
 	private int mHeight = 0;
 
 	double mSqrt = 0;
@@ -80,8 +79,6 @@ public class ColorLine extends View {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 
 		int widthSize = 312;// MeasureSpec.getSize(widthMeasureSpec);
 		int heightSize = 72;// MeasureSpec.getSize(heightMeasureSpec);
@@ -90,7 +87,6 @@ public class ColorLine extends View {
 		width = widthSize;
 		height = heightSize;
 
-		mWidth = width;
 		mHeight = height;
 		mRadius = height / mSqrt;
 

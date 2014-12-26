@@ -1,8 +1,5 @@
 package com.bird.note.customer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
@@ -37,7 +34,6 @@ public class ChooseEditBgPopMenu extends PopupWindow {
 	private Gallery gallery;
 	private NoteApplication mNoteApplication = null;
 	private String[] mBgArray = null;
-	private ArrayList<HashMap<String, Object>> lstImageItem;
 	private ImageAdapter imageAdapter;
 	private OnChangeBackgroundListener mChangeBackgroundListener = null;
 	public ChooseEditBgPopMenu(Context context) {

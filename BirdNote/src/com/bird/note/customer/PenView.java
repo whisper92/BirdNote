@@ -11,17 +11,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.bird.note.R;
-import com.bird.note.model.BirdMessage;
 import com.bird.note.model.CleanPaint;
 import com.bird.note.model.DrawPaint;
 import com.bird.note.model.PenDrawPath;
 import com.bird.note.model.SavedPaint;
-import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.NoteApplication;
 
 /**

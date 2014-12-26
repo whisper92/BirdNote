@@ -2,39 +2,30 @@ package com.bird.note.model;
 
 import java.util.List;
 
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bird.note.R;
-import com.bird.note.customer.BirdInputTitleDialog;
 import com.bird.note.ui.EditNoteActivity;
 import com.bird.note.ui.PopMenuManager;
-import com.bird.note.ui.ShowNotesActivity;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
@@ -51,7 +42,6 @@ public class ShowNoteAdapter extends BaseAdapter implements
 	private GridView mGridView;
 	private Context mContext;
 	private LayoutInflater mInflater;
-	private BirdInputTitleDialog mBirdInputTitleDialog;
 	public ActionMode mActionMode = null;
 	/*
 	 * type 0:ActionMode模式为删除 type1:ActionMode模式为取消收藏
@@ -97,15 +87,10 @@ public class ShowNoteAdapter extends BaseAdapter implements
 		this.singleNoteId = singleNoteId;
 	}
 
-	private int mChoosePosition = 0;
-	private View rootView;
-	private int operatePosition = 0;
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapterView, View view,int position, long arg3) {
-		mChoosePosition = position;
-		operatePosition = position;
-		rootView = view;
+
 		// Start the CAB using the ActionMode.Callback defined above
 		mActionMode = ((Activity) mContext).startActionMode(mCallback);
 

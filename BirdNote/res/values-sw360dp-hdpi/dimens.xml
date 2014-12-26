@@ -2,5 +2,44 @@
 <resources>
     <!-- 画板的宽高 -->
     <dimen name="dimen_edit_canvas_width">540px</dimen>
-    <dimen name="dimen_edit_canvas_height">850px</dimen>
+    <dimen name="dimen_edit_canvas_height">890px</dimen>
+
+    <!-- 首页标题栏-->
+    <dimen name="dimen_show_titile_text_size">20dp</dimen>
+    <dimen name="dimen_show_titile_height">50dp</dimen>
+    <dimen name="dimen_show_titile_text_margin_left">20dp</dimen>
+    <dimen name="dimen_show_titile_text_margin_right">10dp</dimen>
+    
+    <!-- 首页每一项 -->
+    <dimen name="dimen_show_note_item_height">140dp</dimen>  
+    <dimen name="dimen_show_note_item_mark_height">40dp</dimen>
+    <dimen name="dimen_show_note_item_menu_height">180dp</dimen>
+    <dimen name="dimen_show_note_item_paddingtop">-180dp</dimen>   
+    <dimen name="dimen_show_note_item_space">10dp</dimen>
+    <dimen name="dimen_show_gridview_margin">5dp</dimen>
+    <dimen name="dimen_show_star_margin">4dp</dimen>
+    <dimen name="dimen_show_gridview_datebg_height">25dp</dimen>
+    <dimen name="dimen_show_gridview_title_textsize">15dp</dimen>
+    <dimen name="dimen_show_gridview_date_textsize">13dp</dimen>
+    
+    <!-- 编辑界面 -->
+    <dimen name="dimen_edit_title_menu_big">50dp</dimen>
+    <dimen name="dimen_edit_title_menu_small">40dp</dimen>
+    
+    <dimen name="dimen_edit_title_menu_margin">5dp</dimen>
+    <dimen name="dimen_edit_qudrant_margin_right">8dp</dimen>
+    <dimen name="dimen_edit_qudrant_margin_bottom">10dp</dimen>
+    <dimen name="dimen_edit_level_flag_margin_right">5dp</dimen>
+    <dimen name="dimen_edit_level_flag_margin_top">62dp</dimen>
+    
+    <dimen name="dimen_pop_pen_title_margintop">15dp</dimen> 
+    <dimen name="dimen_pop_pen_title_marginleft">10dp</dimen> 
+    <dimen name="dimen_pop_pen_title_height">35dp</dimen> 
+    <dimen name="dimen_pop_pen_title_size">18dp</dimen> 
+    <dimen name="dimen_pop_pen_item_margin_top">10dp</dimen> 
+    
+    <dimen name="dimen_pop_pen_color_item_size">23dp</dimen> 
+    
+    <dimen name="dimen_dialog_width">300dp</dimen>
+    <dimen name="dimen_waitdialog_width">300dp</dimen>  
 </resources>

@@ -117,7 +117,7 @@ public class SearchNotesActivity extends Activity {
 
 	@Override
 	protected void onRestart() {
-		if (mNoteAdapter.mActionMode != null) {
+		if (mNoteAdapter != null &&mNoteAdapter.mActionMode != null) {
 			mNoteAdapter.mActionMode.finish();
 		}
 		reQuery();

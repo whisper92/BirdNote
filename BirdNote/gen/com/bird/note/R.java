@@ -24,59 +24,64 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int color_alert_dialog_bg=0x7f060004;
-        public static final int color_alert_dialog_full_bg=0x7f060003;
-        public static final int color_alert_dialog_text=0x7f060002;
-        public static final int color_pop_menu_item_bg=0x7f060006;
-        public static final int color_show_item=0x7f060001;
+        public static final int color_alert_dialog_bg=0x7f060005;
+        public static final int color_alert_dialog_full_bg=0x7f060004;
+        public static final int color_alert_dialog_text=0x7f060003;
+        public static final int color_pop_menu_item_bg=0x7f060007;
+        public static final int color_search_text=0x7f060001;
+        public static final int color_show_item=0x7f060002;
         public static final int color_show_title_text=0x7f060000;
-        public static final int color_wait_dialog_bg=0x7f060005;
+        public static final int color_wait_dialog_bg=0x7f060006;
     }
     public static final class dimen {
-        public static final int dimen_create_thumbnail_height=0x7f070003;
-        /**  创建缩略图的宽高 
-         */
-        public static final int dimen_create_thumbnail_width=0x7f070002;
-        public static final int dimen_dialog_width=0x7f07001e;
+        public static final int dimen_dialog_width=0x7f07001c;
         public static final int dimen_edit_canvas_height=0x7f070001;
         /**  画板的宽高 
  画板的宽高 
  画板的宽高 
+ 画板的宽高 
          */
         public static final int dimen_edit_canvas_width=0x7f070000;
-        public static final int dimen_edit_level_flag_margin_right=0x7f070016;
-        public static final int dimen_edit_level_flag_margin_top=0x7f070017;
-        public static final int dimen_edit_qudrant_margin_bottom=0x7f070015;
-        public static final int dimen_edit_qudrant_margin_right=0x7f070014;
+        public static final int dimen_edit_level_flag_margin_right=0x7f070014;
+        public static final int dimen_edit_level_flag_margin_top=0x7f070015;
+        public static final int dimen_edit_qudrant_margin_bottom=0x7f070013;
+        public static final int dimen_edit_qudrant_margin_right=0x7f070012;
         /**  编辑界面 
+ 编辑界面 
+ 编辑界面 
          */
-        public static final int dimen_edit_title_menu_big=0x7f070011;
-        public static final int dimen_edit_title_menu_margin=0x7f070013;
-        public static final int dimen_edit_title_menu_small=0x7f070012;
-        public static final int dimen_pop_pen_color_item_size=0x7f07001d;
-        public static final int dimen_pop_pen_item_margin_top=0x7f07001c;
-        public static final int dimen_pop_pen_title_height=0x7f07001a;
-        public static final int dimen_pop_pen_title_marginleft=0x7f070019;
-        public static final int dimen_pop_pen_title_margintop=0x7f070018;
-        public static final int dimen_pop_pen_title_size=0x7f07001b;
-        public static final int dimen_show_gridview_date_textsize=0x7f070010;
-        public static final int dimen_show_gridview_datebg_height=0x7f07000e;
-        public static final int dimen_show_gridview_margin=0x7f07000d;
-        public static final int dimen_show_gridview_title_textsize=0x7f07000f;
+        public static final int dimen_edit_title_menu_big=0x7f07000f;
+        public static final int dimen_edit_title_menu_margin=0x7f070011;
+        public static final int dimen_edit_title_menu_small=0x7f070010;
+        public static final int dimen_pop_pen_color_item_size=0x7f07001b;
+        public static final int dimen_pop_pen_item_margin_top=0x7f07001a;
+        public static final int dimen_pop_pen_title_height=0x7f070018;
+        public static final int dimen_pop_pen_title_marginleft=0x7f070017;
+        public static final int dimen_pop_pen_title_margintop=0x7f070016;
+        public static final int dimen_pop_pen_title_size=0x7f070019;
+        public static final int dimen_show_gridview_date_textsize=0x7f07000e;
+        public static final int dimen_show_gridview_datebg_height=0x7f07000c;
+        public static final int dimen_show_gridview_margin=0x7f07000b;
+        public static final int dimen_show_gridview_title_textsize=0x7f07000d;
         /**  首页每一项 
+ 首页每一项 
+ 首页每一项 
          */
-        public static final int dimen_show_note_item_height=0x7f070008;
-        public static final int dimen_show_note_item_mark_height=0x7f070009;
-        public static final int dimen_show_note_item_menu_height=0x7f07000a;
-        public static final int dimen_show_note_item_paddingtop=0x7f07000b;
-        public static final int dimen_show_note_item_space=0x7f07000c;
-        public static final int dimen_show_titile_height=0x7f070005;
-        public static final int dimen_show_titile_text_margin_left=0x7f070006;
-        public static final int dimen_show_titile_text_margin_right=0x7f070007;
+        public static final int dimen_show_note_item_height=0x7f070006;
+        public static final int dimen_show_note_item_mark_height=0x7f070007;
+        public static final int dimen_show_note_item_menu_height=0x7f070008;
+        public static final int dimen_show_note_item_paddingtop=0x7f070009;
+        public static final int dimen_show_note_item_space=0x7f07000a;
+        public static final int dimen_show_star_margin=0x7f07001e;
+        public static final int dimen_show_titile_height=0x7f070003;
+        public static final int dimen_show_titile_text_margin_left=0x7f070004;
+        public static final int dimen_show_titile_text_margin_right=0x7f070005;
         /**  首页标题栏
+ 首页标题栏
+ 首页标题栏
          */
-        public static final int dimen_show_titile_text_size=0x7f070004;
-        public static final int dimen_waitdialog_width=0x7f07001f;
+        public static final int dimen_show_titile_text_size=0x7f070002;
+        public static final int dimen_waitdialog_width=0x7f07001d;
     }
     public static final class drawable {
         public static final int back=0x7f020000;
@@ -127,101 +132,100 @@ public final class R {
         public static final int pro_13=0x7f02002d;
         public static final int pro_14=0x7f02002e;
         public static final int pro_15=0x7f02002f;
-        public static final int search_bg=0x7f020030;
-        public static final int search_input=0x7f020031;
-        public static final int seekbar_drawable00=0x7f020032;
-        public static final int seekbar_drawable01=0x7f020033;
-        public static final int seekbar_drawable02=0x7f020034;
-        public static final int seekbar_drawable03=0x7f020035;
-        public static final int seekbar_drawable04=0x7f020036;
-        public static final int seekbar_drawable05=0x7f020037;
-        public static final int seekbar_drawable06=0x7f020038;
-        public static final int seekbar_drawable07=0x7f020039;
-        public static final int seekbar_drawable08=0x7f02003a;
-        public static final int seekbar_drawable09=0x7f02003b;
-        public static final int seekbar_drawable10=0x7f02003c;
-        public static final int seekbar_drawable11=0x7f02003d;
-        public static final int seekbar_drawable12=0x7f02003e;
-        public static final int seekbar_drawable13=0x7f02003f;
-        public static final int seekbar_drawable14=0x7f020040;
-        public static final int seekbar_drawable15=0x7f020041;
-        public static final int select_bg=0x7f020042;
-        public static final int selected=0x7f020043;
-        public static final int th01_action_bt_left=0x7f020044;
-        public static final int th01_action_bt_mid=0x7f020045;
-        public static final int th01_action_bt_right=0x7f020046;
-        public static final int th01_actionbar_green=0x7f020047;
-        public static final int th01_actionbar_white=0x7f020048;
-        public static final int th01_bt_left_nor=0x7f020049;
-        public static final int th01_bt_left_pre=0x7f02004a;
-        public static final int th01_bt_left_sel=0x7f02004b;
-        public static final int th01_bt_mid_nor=0x7f02004c;
-        public static final int th01_bt_mid_pre=0x7f02004d;
-        public static final int th01_bt_mid_sel=0x7f02004e;
-        public static final int th01_bt_right_nor=0x7f02004f;
-        public static final int th01_bt_right_pre=0x7f020050;
-        public static final int th01_bt_right_sel=0x7f020051;
-        public static final int th01_cover_00=0x7f020052;
-        public static final int th01_cover_01=0x7f020053;
-        public static final int th01_cover_02=0x7f020054;
-        public static final int th01_cover_03=0x7f020055;
-        public static final int th01_cover_bottom=0x7f020056;
-        public static final int th01_cover_sel=0x7f020057;
-        public static final int th01_green_icon_clean=0x7f020058;
-        public static final int th01_green_icon_more=0x7f020059;
-        public static final int th01_green_icon_new_pen=0x7f02005a;
-        public static final int th01_green_icon_new_text=0x7f02005b;
-        public static final int th01_green_icon_next=0x7f02005c;
-        public static final int th01_green_icon_next_dis=0x7f02005d;
-        public static final int th01_green_icon_pen=0x7f02005e;
-        public static final int th01_green_icon_pre=0x7f02005f;
-        public static final int th01_green_icon_pre_dis=0x7f020060;
-        public static final int th01_green_icon_save=0x7f020061;
-        public static final int th01_green_icon_save_dis=0x7f020062;
-        public static final int th01_green_icon_text=0x7f020063;
-        public static final int th01_page_next_bg=0x7f020064;
-        public static final int th01_page_pre_bg=0x7f020065;
-        public static final int th01_skin_00=0x7f020066;
-        public static final int th01_skin_01=0x7f020067;
-        public static final int th01_skin_02=0x7f020068;
-        public static final int th01_skin_03=0x7f020069;
-        public static final int th01_skin_04=0x7f02006a;
-        public static final int th01_skin_05=0x7f02006b;
-        public static final int th01_skin_bg=0x7f02006c;
-        public static final int th01_skin_small_00=0x7f02006d;
-        public static final int th01_skin_small_01=0x7f02006e;
-        public static final int th01_skin_small_02=0x7f02006f;
-        public static final int th01_skin_small_03=0x7f020070;
-        public static final int th01_skin_small_04=0x7f020071;
-        public static final int th01_skin_small_05=0x7f020072;
-        public static final int th01_state_menu_redo=0x7f020073;
-        public static final int th01_state_menu_uodo=0x7f020074;
-        public static final int tool_bg=0x7f020075;
-        public static final int tool_bt=0x7f020076;
-        public static final int tool_bt_pre=0x7f020077;
-        public static final int tool_circle=0x7f020078;
-        public static final int tool_color=0x7f020079;
-        public static final int tool_color_00=0x7f02007a;
-        public static final int tool_color_01=0x7f02007b;
-        public static final int tool_color_02=0x7f02007c;
-        public static final int tool_color_03=0x7f02007d;
-        public static final int tool_color_04=0x7f02007e;
-        public static final int tool_color_05=0x7f02007f;
-        public static final int tool_color_06=0x7f020080;
-        public static final int tool_color_07=0x7f020081;
-        public static final int tool_color_08=0x7f020082;
-        public static final int tool_color_09=0x7f020083;
-        public static final int tool_color_10=0x7f020084;
-        public static final int tool_color_11=0x7f020085;
-        public static final int tool_color_12=0x7f020086;
-        public static final int tool_color_13=0x7f020087;
-        public static final int tool_color_14=0x7f020088;
-        public static final int tool_color_15=0x7f020089;
-        public static final int tool_color_sel=0x7f02008a;
-        public static final int tool_line=0x7f02008b;
-        public static final int tool_line2=0x7f02008c;
-        public static final int tool_line_progress=0x7f02008d;
-        public static final int tool_slide=0x7f02008e;
+        public static final int search_input=0x7f020030;
+        public static final int seekbar_drawable00=0x7f020031;
+        public static final int seekbar_drawable01=0x7f020032;
+        public static final int seekbar_drawable02=0x7f020033;
+        public static final int seekbar_drawable03=0x7f020034;
+        public static final int seekbar_drawable04=0x7f020035;
+        public static final int seekbar_drawable05=0x7f020036;
+        public static final int seekbar_drawable06=0x7f020037;
+        public static final int seekbar_drawable07=0x7f020038;
+        public static final int seekbar_drawable08=0x7f020039;
+        public static final int seekbar_drawable09=0x7f02003a;
+        public static final int seekbar_drawable10=0x7f02003b;
+        public static final int seekbar_drawable11=0x7f02003c;
+        public static final int seekbar_drawable12=0x7f02003d;
+        public static final int seekbar_drawable13=0x7f02003e;
+        public static final int seekbar_drawable14=0x7f02003f;
+        public static final int seekbar_drawable15=0x7f020040;
+        public static final int select_bg=0x7f020041;
+        public static final int selected=0x7f020042;
+        public static final int th01_action_bt_left=0x7f020043;
+        public static final int th01_action_bt_mid=0x7f020044;
+        public static final int th01_action_bt_right=0x7f020045;
+        public static final int th01_actionbar_green=0x7f020046;
+        public static final int th01_actionbar_white=0x7f020047;
+        public static final int th01_bt_left_nor=0x7f020048;
+        public static final int th01_bt_left_pre=0x7f020049;
+        public static final int th01_bt_left_sel=0x7f02004a;
+        public static final int th01_bt_mid_nor=0x7f02004b;
+        public static final int th01_bt_mid_pre=0x7f02004c;
+        public static final int th01_bt_mid_sel=0x7f02004d;
+        public static final int th01_bt_right_nor=0x7f02004e;
+        public static final int th01_bt_right_pre=0x7f02004f;
+        public static final int th01_bt_right_sel=0x7f020050;
+        public static final int th01_cover_00=0x7f020051;
+        public static final int th01_cover_01=0x7f020052;
+        public static final int th01_cover_02=0x7f020053;
+        public static final int th01_cover_03=0x7f020054;
+        public static final int th01_cover_bottom=0x7f020055;
+        public static final int th01_cover_sel=0x7f020056;
+        public static final int th01_green_icon_clean=0x7f020057;
+        public static final int th01_green_icon_more=0x7f020058;
+        public static final int th01_green_icon_new_pen=0x7f020059;
+        public static final int th01_green_icon_new_text=0x7f02005a;
+        public static final int th01_green_icon_next=0x7f02005b;
+        public static final int th01_green_icon_next_dis=0x7f02005c;
+        public static final int th01_green_icon_pen=0x7f02005d;
+        public static final int th01_green_icon_pre=0x7f02005e;
+        public static final int th01_green_icon_pre_dis=0x7f02005f;
+        public static final int th01_green_icon_save=0x7f020060;
+        public static final int th01_green_icon_save_dis=0x7f020061;
+        public static final int th01_green_icon_text=0x7f020062;
+        public static final int th01_page_next_bg=0x7f020063;
+        public static final int th01_page_pre_bg=0x7f020064;
+        public static final int th01_skin_00=0x7f020065;
+        public static final int th01_skin_01=0x7f020066;
+        public static final int th01_skin_02=0x7f020067;
+        public static final int th01_skin_03=0x7f020068;
+        public static final int th01_skin_04=0x7f020069;
+        public static final int th01_skin_05=0x7f02006a;
+        public static final int th01_skin_bg=0x7f02006b;
+        public static final int th01_skin_small_00=0x7f02006c;
+        public static final int th01_skin_small_01=0x7f02006d;
+        public static final int th01_skin_small_02=0x7f02006e;
+        public static final int th01_skin_small_03=0x7f02006f;
+        public static final int th01_skin_small_04=0x7f020070;
+        public static final int th01_skin_small_05=0x7f020071;
+        public static final int th01_state_menu_redo=0x7f020072;
+        public static final int th01_state_menu_uodo=0x7f020073;
+        public static final int tool_bg=0x7f020074;
+        public static final int tool_bt=0x7f020075;
+        public static final int tool_bt_pre=0x7f020076;
+        public static final int tool_circle=0x7f020077;
+        public static final int tool_color=0x7f020078;
+        public static final int tool_color_00=0x7f020079;
+        public static final int tool_color_01=0x7f02007a;
+        public static final int tool_color_02=0x7f02007b;
+        public static final int tool_color_03=0x7f02007c;
+        public static final int tool_color_04=0x7f02007d;
+        public static final int tool_color_05=0x7f02007e;
+        public static final int tool_color_06=0x7f02007f;
+        public static final int tool_color_07=0x7f020080;
+        public static final int tool_color_08=0x7f020081;
+        public static final int tool_color_09=0x7f020082;
+        public static final int tool_color_10=0x7f020083;
+        public static final int tool_color_11=0x7f020084;
+        public static final int tool_color_12=0x7f020085;
+        public static final int tool_color_13=0x7f020086;
+        public static final int tool_color_14=0x7f020087;
+        public static final int tool_color_15=0x7f020088;
+        public static final int tool_color_sel=0x7f020089;
+        public static final int tool_line=0x7f02008a;
+        public static final int tool_line2=0x7f02008b;
+        public static final int tool_line_progress=0x7f02008c;
+        public static final int tool_slide=0x7f02008d;
     }
     public static final class id {
         public static final int  id_edit_menu_change_cover=0x7f0b0046;
