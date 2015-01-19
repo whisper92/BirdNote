@@ -35,6 +35,10 @@ import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.JsonUtil;
 import com.bird.note.utils.NoteApplication;
+/*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
+/*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 
 /**
  * @author wangxianpeng
@@ -69,9 +73,10 @@ public class EditNoteActivity extends FragmentActivity {
 	//private ActionBar mActionBar = null;
 
 	public EditText mEditText;
-
-
-
+    /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+    private AlertDialog.Builder saveNewNoteBuilder = null;
+    private EditText mInputTitleEditText = null;
+    /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 	private int mPenHasSelected = 0;
 	private int mEraserHasSelected = 0;
 
@@ -451,16 +456,27 @@ public class EditNoteActivity extends FragmentActivity {
 	BirdInputTitleDialog mRenameDialog = null;
 
 	public void renameNote() {
-
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+        //mInputTitleEditText = new EditText(this);
+        LayoutInflater inflater =getLayoutInflater();
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.bird_edit_text_layout, null);
+        mInputTitleEditText = (EditText) view.findViewById(R.id.editText);
+		saveNewNoteBuilder = PopMenuManager.createSaveNewNoteAlertDialog(this, R.string.input_title_dialog_title, view, undapteTitleDialogListener);
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 		mRenameDialog = new BirdInputTitleDialog(this, android.R.style.Theme_Holo_Light_Dialog);
 		mRenameDialog.setTitle(R.string.alert_input_newname);
 		mRenameDialog.setOnConfirmClickListener(mUpdateTitleClickListener);
-		mRenameDialog.show();
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+		//mRenameDialog.show();
+        saveNewNoteBuilder.create().show();
 		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
-			mRenameDialog.setInputContent(mBirdNote.title);
+            mInputTitleEditText.setText(mBirdNote.title);
+			//mRenameDialog.setInputContent(mBirdNote.title);
 		} else {
-			mRenameDialog.setInputContent(CommonUtils.getDefaultTitle(this));
+            mInputTitleEditText.setText(CommonUtils.getDefaultTitle(this));
+			//mRenameDialog.setInputContent(CommonUtils.getDefaultTitle(this));
 		}
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 
 	}
 
@@ -472,10 +488,22 @@ public class EditNoteActivity extends FragmentActivity {
 		}
 	};
 
+    /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+    android.content.DialogInterface.OnClickListener undapteTitleDialogListener = new android.content.DialogInterface.OnClickListener(){
+        public void onClick(DialogInterface dialog, int which){
+            if(which == -1) {
+             editHandler.post(updateTitleRunnable);
+            }
+        }
+    };
+    /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 	public Runnable updateTitleRunnable = new Runnable() {
 		@Override
 		public void run() {
-			dbHelper.updateTitleById(mBirdNote._id + "", mRenameDialog.getContent());
+            /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+			//dbHelper.updateTitleById(mBirdNote._id + "", mRenameDialog.getContent());
+			dbHelper.updateTitleById(mBirdNote._id + "", mInputTitleEditText.getText().toString());
+            /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 			editHandler.sendEmptyMessage(BirdMessage.UPDATETITLE_RUNNABLE_OVER);
 			if (mRenameDialog != null) {
 				mRenameDialog.dismiss();

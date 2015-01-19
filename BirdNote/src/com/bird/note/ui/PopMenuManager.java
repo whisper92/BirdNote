@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import com.bird.note.R;
 import com.bird.note.utils.PreferenceUtil;
-
+import android.view.View;
 /**
  * @author wangxianpeng
  * @since 19/12/14
@@ -32,11 +32,13 @@ public class PopMenuManager {
 		return dialog;
 	}
 
-	public static AlertDialog.Builder createSaveNewNoteAlertDialog( Context context, int titleSrc, EditText editText, android.content.DialogInterface.OnClickListener listener) {
-    AlertDialog.Builder builder = new AlertDialog.Builder(context)
+	public static AlertDialog.Builder createSaveNewNoteAlertDialog( Context context, int titleSrc, View editText, android.content.DialogInterface.OnClickListener listener) {
+	/*public static AlertDialog.Builder createSaveNewNoteAlertDialog( Context context, int titleSrc, EditText editText, android.content.DialogInterface.OnClickListener listener) {*/
+   AlertDialog.Builder builder = new AlertDialog.Builder(context)
 				.setTitle(context.getString(titleSrc))
-				.setIcon(android.R.drawable.ic_dialog_info)
-				.setPositiveButton(context.getString(R.string.show_menu_confirm), listener)
+				               .setView(editText)
+                //.setIcon(android.R.drawable.ic_dialog_info)
+								.setPositiveButton(context.getString(R.string.show_menu_confirm), listener)
 				.setNegativeButton(context.getString(R.string.show_menu_cancel), listener);
 		return builder;
 	}

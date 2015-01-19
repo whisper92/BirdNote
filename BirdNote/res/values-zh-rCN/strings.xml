@@ -55,11 +55,10 @@
     <string name="edit_menu_change_page">切换页面</string>
     
     <string name="sortby_createtime">创建时间(旧-新)</string>
-    <string name="sortby_updatetime">更新时间(新-旧)</string>
-    
+    <string name="sortby_updatetime">更新时间(新-旧)</string> 
     <string name="changequatoast">切换至第%1$s象限</string>
     <string name="searchnothing">没有找到相关笔记</string>
-    <string name="starchnothng">暂未收藏笔记</string>
+    <string name="starchnothing">暂未收藏笔记</string>
     
     <string name="intro">使用说明</string>
     <string name="intro_content">\n\n  1）不仅仅是文字，随时随地，您还可以用手写来记录心情和捕捉灵感； \n\n  2）为不同优先级的便签设置一个不同风格的便签封面，简单直观，重要事项从此不会再被遗漏；\n\n  3）觉得默认的便签背景太单调乏味？您可以从“选项”自定义便签背景，风格各异的款式总有一款适合您；\n\n\n\n  随手便签，记录您生活中的珍贵点滴</string>

@@ -43,6 +43,8 @@ public class ReadStaredNotesActivity extends Activity {
 		mSearchNothing = (TextView) findViewById(R.id.id_search_nothing);
 		mBirdNotes = mDbHelper.queryStaredShowNotes();
 		mActionBar.setTitle(String.format(getString(R.string.stared_note_count), mBirdNotes.size()));
+		
+	
 		mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 

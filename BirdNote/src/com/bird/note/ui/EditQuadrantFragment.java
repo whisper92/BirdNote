@@ -39,7 +39,10 @@ import com.bird.note.model.SavedPaint;
 import com.bird.note.utils.BitmapUtil;
 import com.bird.note.utils.CommonUtils;
 import com.bird.note.utils.NoteApplication;
-
+/*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
+/*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 /**
  * @author wangxianpeng
  * @since 19/12/14
@@ -47,7 +50,7 @@ import com.bird.note.utils.NoteApplication;
  */
 public class EditQuadrantFragment extends Fragment implements OnClickListener{
 	private static String TAG = "EditQuadrantFragment";
-	private EditText mInputTitleEditText;
+    //private EditText mInputTitleEditText;//[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107
 	private NoteApplication mNoteApplication;
 	/*
 	 * 包含编辑区域以及象限切换菜单的布局
@@ -92,7 +95,10 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener{
 	
 	private boolean mPenBoxOpened = false;
 	private boolean mEraserBoxOpened = false;
-	
+	/*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+    private EditText mInputNewNoteTitleEditText = null;
+    private EditText mInputSaveAsTitleEditText = null;
+    /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 	/**
 	 * 创建笔记时实例化的方式
 	 */
@@ -139,7 +145,10 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener{
 		mainHandler = mEditNoteActivity.editHandler;
 		mDbHelper = new DbHelper(getActivity());
 		chooseEditBgPopMenu = new ChooseEditBgPopMenu(getActivity());
-		saveNewNoteBuilder = PopMenuManager.createSaveNewNoteAlertDialog( getActivity(), R.string.input_title_dialog_title, mInputTitleEditText, null);
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+        //saveNewNoteBuilder = PopMenuManager.createSaveNewNoteAlertDialog( getActivity(), R.string.input_title_dialog_title,
+           // mInputTitleEditText, null);
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 		View view = inflater.inflate(R.layout.edit_note_fragment, container, false);
 		mNoteApplication = (NoteApplication) getActivity().getApplication();
 		mEditedQuadrants = mNoteApplication.getEditedQuadrants();
@@ -280,16 +289,41 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener{
 
   /* 另存为 */
 	public void showSaveAs() {
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+        //mInputSaveAsTitleEditText = new EditText(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.bird_edit_text_layout, null);
+        mInputSaveAsTitleEditText = (EditText) view.findViewById(R.id.editText);
+		saveNewNoteBuilder = PopMenuManager.createSaveNewNoteAlertDialog( getActivity(), R.string.input_title_dialog_title, view, saveAsDialogListener);
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 		mBirdInputTitleDialog = new BirdInputTitleDialog(getActivity(),android.R.style.Theme_Holo_Light_Dialog);
 		mBirdInputTitleDialog.setTitle(R.string.save_as_title);
 		mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveAsPngListener);
-		mBirdInputTitleDialog.show();
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+		//mBirdInputTitleDialog.show();
+        saveNewNoteBuilder.create().show();
 		if (mCurrentType == BirdMessage.START_TYPE_UPDATE_VALUE) {
-			mBirdInputTitleDialog.setInputContent(((EditNoteActivity) getActivity()).mBirdNote.title + "_qua" + mCurrentQuadrant);
+            mInputSaveAsTitleEditText.setText(((EditNoteActivity) getActivity()).mBirdNote.title + "_qua" + mCurrentQuadrant);
+			//mBirdInputTitleDialog.setInputContent(((EditNoteActivity) getActivity()).mBirdNote.title + "_qua" + mCurrentQuadrant);
 		} else {
-			mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle(getActivity()) + "_qua" + mCurrentQuadrant);
+            mInputSaveAsTitleEditText.setText(CommonUtils.getDefaultTitle(getActivity()) + "_qua" + mCurrentQuadrant);
+			//mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle(getActivity()) + "_qua" + mCurrentQuadrant);
 		}
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 	}
+    /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+    android.content.DialogInterface.OnClickListener saveAsDialogListener = new android.content.DialogInterface.OnClickListener(){
+        public void onClick(DialogInterface dialog, int which){
+            if(which == -1) {
+			mainHandler.sendEmptyMessage(BirdMessage.SAVE_RUNNABLE_START);
+			if (mEditText != null) {
+				mEditText.setCursorVisible(false);
+			}
+			new SaveAsThread().start();
+            }
+        }
+    };
+    /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 
 	public Bitmap getTextBitmap() {
 		mEditText.setDrawingCacheEnabled(true);
@@ -318,8 +352,12 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener{
 		@Override
 		public void run() {
 			Bitmap allbitmap = getAllBitmap();
-			mSavePath = CommonUtils.getSavePath() + "/" + mBirdInputTitleDialog.getContent() + ".png";
-			BitmapUtil.writeBytesToFile( BitmapUtil.decodeBitmapToBytes(allbitmap), "/" + mBirdInputTitleDialog.getContent());
+            /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+			/*mSavePath = CommonUtils.getSavePath() + "/" + mBirdInputTitleDialog.getContent() + ".png";
+			BitmapUtil.writeBytesToFile( BitmapUtil.decodeBitmapToBytes(allbitmap), "/" + mBirdInputTitleDialog.getContent());*/
+			mSavePath = CommonUtils.getSavePath() + "/" + mInputSaveAsTitleEditText.getText().toString() + ".png";
+			BitmapUtil.writeBytesToFile( BitmapUtil.decodeBitmapToBytes(allbitmap), "/" + mInputSaveAsTitleEditText.getText().toString());
+            /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 			mainHandler.obtainMessage(BirdMessage.SAVE_AS_OVER, mSavePath).sendToTarget();
 
 			if (bgBitmap != null && !bgBitmap.isRecycled()) {
@@ -406,13 +444,36 @@ public class EditQuadrantFragment extends Fragment implements OnClickListener{
 	}
 
 	public void saveNewNote() {
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+        //mInputNewNoteTitleEditText = new EditText(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.bird_edit_text_layout, null);
+        mInputNewNoteTitleEditText = (EditText) view.findViewById(R.id.editText);
+		saveNewNoteBuilder = PopMenuManager.createSaveNewNoteAlertDialog(getActivity(), R.string.input_title_dialog_title, view, saveNewNoteDialogListener);
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 		mBirdInputTitleDialog = new BirdInputTitleDialog(getActivity(),
 				android.R.style.Theme_Holo_Light_Dialog);
 		mBirdInputTitleDialog.setTitle(R.string.input_title_dialog_title);
 		mBirdInputTitleDialog.setOnConfirmClickListener(ConfirmSaveNewNoteClickListener);
-		mBirdInputTitleDialog.show();
-		mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle(getActivity()));
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+		//mBirdInputTitleDialog.show();
+        saveNewNoteBuilder.create().show();
+        mInputNewNoteTitleEditText.setText(CommonUtils.getDefaultTitle(getActivity()));
+		//mBirdInputTitleDialog.setInputContent(CommonUtils.getDefaultTitle(getActivity()));
+        /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 	}
+
+    /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 begin*/
+    android.content.DialogInterface.OnClickListener saveNewNoteDialogListener = new android.content.DialogInterface.OnClickListener(){
+        public void onClick(DialogInterface dialog, int which){
+            if(which == -1) {
+                mTitleString = mInputNewNoteTitleEditText.getText().toString();
+				mainHandler.sendEmptyMessage(BirdMessage.SAVE_RUNNABLE_START);
+				new SaveNewNoteThread().start();
+            }
+        }
+    };
+    /*[BIRD][BIRD_ALI_IOS8_SYSTEMUI][bug-106178][随笔删除提示框显示问题] huangzhangbin 20150107 end*/
 
 	public void saveUpdateNote() {
 		mainHandler.sendEmptyMessage(BirdMessage.SAVE_RUNNABLE_START);
